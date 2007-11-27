@@ -26,7 +26,7 @@ don't, the internal format for both will change, so the above routines
 should be used.
 
 
-Notes for version 5.46:
+Notes for version 5.48:
   Several bug fixes.
 
   ############################################################################

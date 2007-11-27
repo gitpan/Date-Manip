@@ -790,12 +790,26 @@ Version 5.45  DEVELOPMENT
    New timezones. Robin Norwood <rnorwood@redhat.com>
    Fixed russian timezones. Yuri Kovalenko <Yu.V.Kovalenko@inp.nsk.su>
    Lots of spelling fixes. Asaf Bartov <ijon@forum2.org>
-   Revised some of the docs about Y2K (given that it's in the past) and
-      the 2007 US daylight saving time rule changes. Suggested by
 
 Version 5.46  2007-02-21
    Released
 
+Version 5.47  DEVELOPMENT
+   Revised some of the docs about Y2K (given that it's in the past) and
+      the 2007 US daylight saving time rule changes. Suggested by
+   Fixed a problem in the WEST timezone.  Cristina Nunes
+      <cristina.nunes@segula.pt>
+   Added timzezone. Kimmo R. M. Hovi <kimmo.hovi@kronodoc.com>
+   Fixed the version number.  John R. Daily <jdaily@apparatus.net>
+   Fixed a warning when the date command not present.  Daniel Hahler
+      <daniel@thequod.de>
+   Fixed a bug where recurrences of the form 0:1*, 0:0:1*, etc.,
+      incorrectly required a base date.  Gerry Lawrence <gwl@ufl.edu>
+   Fixed a bug where "substring" was used instead of "substr".
+      <lbenton@csu.edu.au>
+
+Version 5.48  2007-11-27
+   Released
 
 #########################################################################
 # Backwards incompatibilities

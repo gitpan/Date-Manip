@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl -w
+#!/usr/bin/perl -w
 
 require 5.001;
 use Date::Manip;
@@ -11,10 +11,10 @@ if ( -f "t/test.pl" ) {
 } else {
   die "ERROR: cannot find test.pl\n";
 }
-$ntest=100;
+$ntest=104;
 
 print "1..$ntest\n"  if (! $runtests);
-&Date_Init(@Date::Manip::TestArgs);
+Date_Init(@Date::Manip::TestArgs);
 
 $tests ="
 
@@ -819,9 +819,69 @@ Jan 1 2010
    2004010100:00:00
    2008010100:00:00
 
+0:1*1:1:12:0:0
+nil
+Sep 1 2007
+Nov 20 2007
+   ~
+   2007090312:00:00
+   2007100112:00:00
+   2007110512:00:00
+
+0:0:1*1:12:30:0
+nil
+Sep 1 2007
+Sep 30 2007
+   ~
+   2007090312:30:00
+   2007091012:30:00
+   2007091712:30:00
+   2007092412:30:00
+
+0:1:0*1:12:0:0
+nil
+Sep 1 2007
+Dec 15 2007
+   ~
+   2007090112:00:00
+   2007100112:00:00
+   2007110112:00:00
+   2007120112:00:00
+
+0:0:0:0:1*30:0
+nil
+Jan 1 1990 12:12
+Jan 2 1990 01:32
+   ~
+   1990010112:30:00
+   1990010113:30:00
+   1990010114:30:00
+   1990010115:30:00
+   1990010116:30:00
+   1990010117:30:00
+   1990010118:30:00
+   1990010119:30:00
+   1990010120:30:00
+   1990010121:30:00
+   1990010122:30:00
+   1990010123:30:00
+   1990010200:30:00
+   1990010201:30:00
+
 ";
 
 print "ParseRecur...\n";
-&test_Func($ntest,\&ParseRecur,$tests,$runtests);
+test_Func($ntest,\&ParseRecur,$tests,$runtests);
 
 1;
+# Local Variables:
+# mode: cperl
+# indent-tabs-mode: nil
+# cperl-indent-level: 3
+# cperl-continued-statement-offset: 2
+# cperl-continued-brace-offset: 0
+# cperl-brace-offset: 0
+# cperl-brace-imaginary-offset: 0
+# cperl-label-offset: -2
+# End:
+

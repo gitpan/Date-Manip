@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl -w
+#!/usr/bin/perl -w
 
 require 5.001;
 use Date::Manip;
@@ -14,7 +14,7 @@ if ( -f "t/test.pl" ) {
 $ntest=6;
 
 print "1..$ntest\n"  if (! $runtests);
-&Date_Init(@Date::Manip::TestArgs);
+Date_Init(@Date::Manip::TestArgs);
 
 $calcs="
 
@@ -45,6 +45,17 @@ $calcs="
 ";
 
 print "DateCalc (delta,delta,approx)...\n";
-&test_Func($ntest,\&DateCalc,$calcs,$runtests,1);
+test_Func($ntest,\&DateCalc,$calcs,$runtests,1);
 
 1;
+# Local Variables:
+# mode: cperl
+# indent-tabs-mode: nil
+# cperl-indent-level: 3
+# cperl-continued-statement-offset: 2
+# cperl-continued-brace-offset: 0
+# cperl-brace-offset: 0
+# cperl-brace-imaginary-offset: 0
+# cperl-label-offset: -2
+# End:
+

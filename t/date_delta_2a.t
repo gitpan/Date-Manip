@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl -w
+#!/usr/bin/perl -w
 
 require 5.001;
 use Date::Manip;
@@ -11,10 +11,10 @@ if ( -f "t/test.pl" ) {
 } else {
   die "ERROR: cannot find test.pl\n";
 }
-$ntest=24;
+$ntest=25;
 
 print "1..$ntest\n"  if (! $runtests);
-&Date_Init(@Date::Manip::TestArgs);
+Date_Init(@Date::Manip::TestArgs);
 
 $calcs="
 
@@ -114,10 +114,24 @@ Wed Nov 20 1996 noon
 + business 4 hours
   2002120613:00:00
 
+20060616
++1 business day
+  2006061908:00:00
 ";
 
-&Date_Init("WorkDayBeg=08:00","WorkDayEnd=17:00");
+Date_Init("WorkDayBeg=08:00","WorkDayEnd=17:00");
 print "DateCalc (date,delta,business 8:00-5:00)...\n";
-&test_Func($ntest,\&DateCalc,$calcs,$runtests,2);
+test_Func($ntest,\&DateCalc,$calcs,$runtests,2);
 
 1;
+# Local Variables:
+# mode: cperl
+# indent-tabs-mode: nil
+# cperl-indent-level: 3
+# cperl-continued-statement-offset: 2
+# cperl-continued-brace-offset: 0
+# cperl-brace-offset: 0
+# cperl-brace-imaginary-offset: 0
+# cperl-label-offset: -2
+# End:
+

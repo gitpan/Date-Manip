@@ -11,33 +11,29 @@ if ( -f "t/test.pl" ) {
 } else {
   die "ERROR: cannot find test.pl\n";
 }
-$ntest=4;
+$ntest=1;
 
 print "1..$ntest\n"  if (! $runtests);
 Date_Init(@Date::Manip::TestArgs);
 
-$calcs="
+$tests="
 
-2001020304:05:06
-+ 2 hours
-  2001020306:05:06
-
-2001020304:05:06
-- 2 hours
-  2001020302:05:06
-
-2001020304:05:06
-+ -2 hours
-  2001020302:05:06
-
-2001020304:05:06
-- -2 hours
-  2001020306:05:06
++0:0:0:0:9:9:1
+   +0:0:0:0:9:9:1
 
 ";
 
-print "DateCalc (date,delta)...\n";
-test_Func($ntest,\&DateCalc,$calcs,$runtests);
+print "Normalize After Business Day...\n";
+test_Func($ntest,\&Test_Normalize,$tests,$runtests);
+
+sub Test_Normalize {
+  my(@args)=@_;
+  my($tmp,$err);
+  $tmp=ParseDateDelta(@args);
+  $tmp=DateCalc("today","+ 1 business days",\$err);
+  $tmp=ParseDateDelta(@args);
+  return $tmp;
+}
 
 1;
 # Local Variables:

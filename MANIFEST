@@ -40,6 +40,7 @@ t/events.t
 t/getnext.t
 t/getprev.t
 t/nthday.t
+t/normalize_business.t
 t/recur_0.t
 t/recur_1.t
 t/runtests

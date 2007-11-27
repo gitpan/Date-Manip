@@ -745,7 +745,10 @@ then the last week of 2003 is 2003-12-28 to 2004-01-03.  This week is
 assigned to 2003 since 4 of the days in it are in 2003 and only 3 of them
 are in 2004.  The first week of 2004 starts on 2004-01-04.
 
-The %U and %W formats return a week-of-year number from 01 to 53.
+The %U and %W formats return a week-of-year number from 01 to 53. %L and
+%G return the corresponding year, and to get this type of information,
+you should always use the (%W,%G) combination or (%U,%L) combination. %Y
+should not be used as it will yield incorrect results.
 
 %J returns the full ISO-8601 format (%G-W%W-%w).
 
@@ -1769,7 +1772,7 @@ Sharnoff, and Paul Foley (with several additions by myself).
       SWT     +0100    Swedish Winter
       BST     +0100    British Summer              bst=Brazil standard  -0300
       GB      +0100    GMT with daylight saving
-      WEST    +0000    Western European Daylight
+      WEST    +0100    Western European Daylight
       CEST    +0200    Central European Summer
       EET     +0200    Eastern Europe, USSR Zone 1
       FST     +0200    French Summer
@@ -1779,6 +1782,7 @@ Sharnoff, and Paul Foley (with several additions by myself).
       SAST    +0200    South African Standard
       SST     +0200    Swedish Summer              sst=South Sumatra    +0700
       EEST    +0300    Eastern Europe Summer
+      EETDST  +0300    An alias for eest used by HP-UX
       BT      +0300    Baghdad, USSR Zone 2
       MSK     +0300    Moscow
       EAT     +0300    East Africa
@@ -2146,7 +2150,7 @@ YYtoYYYY, you can actually have it any positive or negative value to force
 it into any century you want.
 
 YYtoYYYY can also be set to "C" to force it into the current century, or
-to "C##" to force it into a specific century.  So, no (1998), "C" forces
+to "C##" to force it into a specific century.  So, in 1998, "C" forces
 2 digit years to be 1900-1999 and "C18" would force it to be 1800-1899.
 
 It can also be set to the form "C####" to force it into a specific 100
@@ -2641,7 +2645,7 @@ Perhaps the most common problem occurs when you get the error:
 
 Date::Manip tries hard to determine the local time zone, but on some
 machines, it cannot do this (especially non-Unix systems).  To fix this,
-just set the TZ variable, either at the top of the Manip.pm file, in the
+just set the TZ variable, either at the top of the Manip.pm file,, in the
 DateManip.cnf file, or in a call to Date_Init.  I suggest using the form
 "EST5EDT" so you don't have to change it every 6 months when going to or
 from daylight saving time.
@@ -2814,18 +2818,6 @@ be wrong (especially elapsed time).
 I hope to fix these problems in a future release so that it would convert
 everything to the current zones (EST or EDT).
 
-=item Date::Manip fails for dates in the year 9999 or 0001.
-
-In one section of the code, week-of-year values must be calculated which
-actually involve looking into the future or past up to 1 week.  Since
-Date::Manip only works for dates with a year between 0001 and 9999, the
-first week of 0001 and the last week of 9999 fail.
-
-No effort will be made to correct this because the added functionality is
-simply not that important (to me), especially since the Gregorian calendar
-doesn't apply in the 0001 case, and may not apply in the 9999 case (see
-the section below WHAT DATES ARE DATE::MANIP USEFULE FOR?).
-
 =back
 
 =head1 BUGS AND QUESTIONS
@@ -2880,16 +2872,19 @@ Given the 4-digit limitation, Date::Manip definitely can't handle BC dates,
 or dates past Dec 31, 9999.  So Date::Manip works during the years 0001 to
 9999.
 
-One caveat to this as described above is that in one part of the code
-(calculating week-of-year values), Date::Manip actually uses values one
-week after and one week before the date being manipulated. As such, the
-first week in the year 0001 fail (because a week before is in the year 1
-BC), and the last week in the year 9999 fail (because a week later is in
-10,000). To be absolutely safe, I will state that Date::Manip works as
-described in this manual during the years 0002 to 9998 (unless you've
-encountered a bug, or are using the module incorrectly). If you submit a
-"bug" using a date that is not in this range, I will not attempt to fix it
-unless it also affects dates that are within the years 0002 to 9998.
+One caveat to this is that in one part of the code (calculating
+week-of-year values), Date::Manip actually uses values one week after and
+one week before the date being manipulated. As such, the first week in the
+year 0001 fail (because a week before is in the year 1 BC), and the last
+week in the year 9999 fail (because a week later is in 10,000). No effort
+will be made to correct this because the added functionality is simply not
+that important (to me), especially since the Gregorian calendar doesn't
+really apply in either instance (see the next paragraph).  To be absolutely
+safe, I will state that Date::Manip works as described in this manual
+during the years 0002 to 9998 (unless you've encountered a bug, or are
+using the module incorrectly). If you submit a "bug" using a date that is
+not in this range, I will not attempt to fix it unless it also affects
+dates that are within the years 0002 to 9998.
 
 In practical terms however, Date::Manip deals with the Gregorian calendar,
 and is therefore useful in the period that that calendar has been, or will

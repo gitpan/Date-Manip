@@ -1,4 +1,4 @@
-#!/usr/local/bin/perl -w
+#!/usr/bin/perl -w
 
 require 5.001;
 use Date::Manip;
@@ -14,7 +14,7 @@ if ( -f "t/test.pl" ) {
 $ntest=16;
 
 print "1..$ntest\n"  if (! $runtests);
-&Date_Init(@Date::Manip::TestArgs,"ForceDate=1997-03-08-12:30:00");
+Date_Init(@Date::Manip::TestArgs,"ForceDate=1997-03-08-12:30:00");
 
 $dates="
 
@@ -68,7 +68,18 @@ $dates="
 ";
 
 print "Date (Russian)...\n";
-&Date_Init("Language=Russian","DateFormat=non-US","Internal=0");
-&test_Func($ntest,\&ParseDate,$dates,$runtests);
+Date_Init("Language=Russian","DateFormat=non-US","Internal=0");
+test_Func($ntest,\&ParseDate,$dates,$runtests);
 
 1;
+# Local Variables:
+# mode: cperl
+# indent-tabs-mode: nil
+# cperl-indent-level: 3
+# cperl-continued-statement-offset: 2
+# cperl-continued-brace-offset: 0
+# cperl-brace-offset: 0
+# cperl-brace-imaginary-offset: 0
+# cperl-label-offset: -2
+# End:
+
