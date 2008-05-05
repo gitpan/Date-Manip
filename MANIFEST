@@ -1,13 +1,16 @@
+Build.PL
 DateManip.cnf
 HISTORY
 INSTALL
-MANIFEST
+LICENSE
 Makefile.PL
+MANIFEST			This list of files
 Manip.pm
 Manip.pod
+META.yml
 README
-TODO
-t/Manip.cnf
+README.FIRST
+t/convtz.t
 t/date.t
 t/date_date_0.t
 t/date_date_1.t
@@ -17,9 +20,9 @@ t/date_delta_0.t
 t/date_delta_1.t
 t/date_delta_2a.t
 t/date_delta_2b.t
-t/date_delta_sign.t
 t/date_delta_french.t
 t/date_delta_russian.t
+t/date_delta_sign.t
 t/date_french.t
 t/date_german.t
 t/date_misc_a.t
@@ -39,8 +42,11 @@ t/delta_romanian.t
 t/events.t
 t/getnext.t
 t/getprev.t
-t/nthday.t
+t/Manip.cnf
 t/normalize_business.t
+t/nthday.t
+t/pod.t
+t/pod_coverage.t
 t/recur_0.t
 t/recur_1.t
 t/runtests
@@ -48,3 +54,4 @@ t/runtests.bat
 t/settime.t
 t/test.pl
 t/unixdate.t
+TODO

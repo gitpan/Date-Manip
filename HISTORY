@@ -318,7 +318,7 @@ Version 5.20  1997-10-12
       *** All ISO 8601 formats
       "Friday"    suggested by Rob Perelman <robp@electriciti.com>
       "12th"      suggested by Rob Perelman <robp@electriciti.com>
-      12th (12th day of current month)
+                  12th (12th day of current month)
       "last day of MONTH"  suggested by Chadd Westhoff <CWESTHOFF@cyprus.com>
    Added ParseDateString for speed (and simplicity for modifying ParseDate)
    Changed all week handling to meet ISO 8601 standards.
@@ -809,6 +809,22 @@ Version 5.47  DEVELOPMENT
       <lbenton@csu.edu.au>
 
 Version 5.48  2007-11-27
+   Released
+
+Version 5.49  DEVELOPMENT
+   Corrected typo in %G and %L format descriptions.  Troy A. Bollinger
+      <troy@austin.ibm.com>
+   Added "ereyesterday". Ed Avis <eda@waniasset.com>
+   Added timezones. Damyan Ivanov <dam@modsoftsys.com>
+   Added timezone. Ernesto Hernandez-Novich <emhnemhn@gmail.com>
+   Added timezone. Gregor Herrmann <gregor+debian@comodo.priv.at>
+   Added timezone. Nicholas Riley <njriley@uiuc.edu>
+   Added timezone. Enrique Verdes <everdes@uygroup.com.uy>
+   Added timezone. Alexander Litvinov <lan@academsoft.ru>
+   Added Build.PL and several other things to meet requirements on
+      http://cpants.perl.org/
+
+Version 5.50  2008-05-05
    Released
 
 #########################################################################

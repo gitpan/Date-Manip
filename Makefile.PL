@@ -1,10 +1,19 @@
+
 use ExtUtils::MakeMaker;
+
 WriteMakefile(
-   NAME => "Date::Manip",
-   VERSION_FROM => "Manip.pm",
-   ($] >= 5.005
-      ? (ABSTRACT   => 'Routines for parsing/manipulating dates and time.',
-         AUTHOR     => 'Sullivan Beck (sbeck@cpan.org)')
-      : ()),
-  'dist' => {COMPRESS=>'gzip',SUFFIX=>'gz'}
+	NAME             => 'Date::Manip',
+	VERSION_FROM     => 'Manip.pm',
+	($] >= 5.005
+	? (ABSTRACT=>'date manipulation routines',
+	   AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')
+	: ()),
+	'dist' => {COMPRESS=>'gzip',SUFFIX=>'gz'},
+	PREREQ_PM => {
+		'Carp'                => '0',
+		'IO::File'            => '0',
+		'Test::More'          => '0',
+		'Test::Pod'           => '0',
+		'Test::Pod::Coverage' => '0',
+	},
 );

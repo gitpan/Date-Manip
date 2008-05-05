@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2007 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2008 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -136,7 +136,7 @@ is made to correct for that, and my great great great grandchildren will be
 long dead before this even occurs, so it's not an immediate concern.  Yes,
 this is the same type of attitude that caused the great Y2K problem... but
 I have an excuse: I don't know what the correction will be, so I can't
-possible implement it.  Nobody doubted that the year after 1999 would be
+possibly implement it.  Nobody doubted that the year after 1999 would be
 known as 2000 :-).
 
 Date::Manip is therefore not equipped to truly deal with historical dates,
@@ -646,19 +646,11 @@ The format options are:
  Year
      %y     year                     - 00 to 99
      %Y     year                     - 0001 to 9999
-     %G     year, Sunday as first
-            day of week              - 0001 to 9999 (see below)
-     %L     year, Monday as first
-            day of week              - 0001 to 9999 (see below)
  Month, Week
      %m     month of year            - 01 to 12
      %f     month of year            - " 1" to "12"
      %b,%h  month abbreviation       - Jan to Dec
      %B     month name               - January to December
-     %U     week of year, Sunday
-            as first day of week     - 01 to 53 (see below)
-     %W     week of year, Monday
-            as first day of week     - 01 to 53 (see below)
  Day
      %j     day of the year          - 001 to 366
      %d     day of month             - 01 to 31
@@ -678,11 +670,12 @@ The format options are:
  Minute, Second, Time zone
      %M     minute                   - 00 to 59
      %S     second                   - 00 to 59
+     %Z     time zone                - "EDT"
+     %z     time zone as GMT offset  - "+0100"
+ Epoch (see NOTE 3 below)
      %s     seconds from 1/1/1970 GMT- negative if before 1/1/1970
      %o     seconds from Jan 1, 1970
             in the current time zone
-     %Z     time zone                - "EDT"
-     %z     time zone as GMT offset  - "+0100"
  Date, Time
      %c     %a %b %e %H:%M:%S %Y     - Fri Apr 28 17:23:15 1995
      %C,%u  %a %b %e %H:%M:%S %z %Y  - Fri Apr 28 17:25:57 EDT 1995
@@ -690,7 +683,7 @@ The format options are:
      %D     %m/%d/%y                 - 04/28/95
      %x     %m/%d/%y or %d/%m/%y     - 04/28/95 or 28/04/28
                                        (Depends on DateFormat variable)
-     %l     date in ls(1) format
+     %l     date in ls(1) format (see NOTE 1 below)
               %b %e $H:$M            - Apr 28 17:23  (if within 6 months)
               %b %e  %Y              - Apr 28  1993  (otherwise)
      %r     %I:%M:%S %p              - 05:39:55 PM
@@ -702,8 +695,17 @@ The format options are:
      %P     %Y%m%d%H%M%S             - 1996102517:40:58
      %O     %Y-%m-%dT%H:%M:%S        - 1996-10-25T17:40:58
      %F     %A, %B %e, %Y            - Sunday, January  1, 1996
-     %J     %G-W%W-%w                - 1997-W02-2
      %K     %Y-%j                    - 1997-045
+ Special Year/Week formats (see NOTE 2 below)
+     %G     year, Monday as first
+            day of week              - 0001 to 9999
+     %W     week of year, Monday
+            as first day of week     - 01 to 53
+     %L     year, Sunday as first
+            day of week              - 0001 to 9999
+     %U     week of year, Sunday
+            as first day of week     - 01 to 53
+     %J     %G-W%W-%w                - 1997-W02-2
  Other formats
      %n     insert a newline character
      %t     insert a tab character
@@ -716,10 +718,18 @@ The format options are:
 
 If a lone percent is the final character in a format, it is ignored.
 
-Note that the ls format (%l) applies to date within the past OR future 6
-months!
+The formats used in this routine were originally based on date.pl (version
+3.2) by Terry McGonigal, as well as a couple taken from different versions
+of the Solaris date(1) command.  Also, several have been added which are
+unique to Date::Manip.
 
-The %U, %W, %L, and %G formats are used to support the ISO-8601 format:
+NOTE 1:
+
+The ls format (%l) applies to date within the past OR future 6 months!
+
+NOTE 2:
+
+The %U, %W, %L, %G, and %J formats are used to support the ISO-8601 format:
 YYYY-wWW-D.  In this format, a date is written as a year, the week of the
 year, and the day of the week.  Technically, the week may be considered to
 start on any day of the week, but Sunday and Monday are the both common
@@ -752,15 +762,12 @@ should not be used as it will yield incorrect results.
 
 %J returns the full ISO-8601 format (%G-W%W-%w).
 
+NOTE 3:
+
 The %s and %o formats return negative values if the date is before
 the start of the epoch.  Other Unix utilities would return an error, or
 a zero, so if you are going to use Date::Manip in conjunction with these,
 be sure to check for a negative value.
-
-The formats used in this routine were originally based on date.pl (version
-3.2) by Terry McGonigal, as well as a couple taken from different versions
-of the Solaris date(1) command.  Also, several have been added which are
-unique to Date::Manip.
 
 =item ParseDateDelta
 
@@ -1184,21 +1191,33 @@ many types of dates can be interpreted as deltas (and vice versa), it is
 a good idea to pass the input through ParseDate or ParseDateDelta as
 appropriate. For example, the string "09:00:00" can be interpreted either
 as a date (today at 9:00:00) or a delta (9 hours). To avoid unexpected
-results, pass it in either as ParseDate("09:00:00") or
-ParseDateDelta("09:00:00").
+results, avoid calling DateCalc as:
 
-Note that in many cases, it is somewhat ambiguous what the delta actually
-refers to.  Although it is ALWAYS known how many months in a year, hours in
-a day, etc., it is NOT known how many days form a month.  As a result, the
-part of the delta containing month/year and the part with sec/min/hr/day
-must be treated separately.  For example, "Mar 31, 12:00:00" plus a delta
-of 1month 2days would yield "May 2 12:00:00".  The year/month is first
-handled while keeping the same date.  Mar 31 plus one month is Apr 31 (but
-since Apr only has 30 days, it becomes Apr 30).  Apr 30 + 2 days is May 2.
-As a result, in the case where two dates are entered, the resulting delta
-can take on two different forms.  By default ($mode=0), an absolutely
-correct delta (ignoring daylight saving time) is returned in weeks, days,
-hours, minutes, and seconds.
+  $d = DateCalc("09:00:00",$someothervalue);
+
+Instead, call it as:
+
+  $d = DateCalc(ParseDate("09:00:00"),$someothervalue);
+
+to force it to be a date, or:
+
+  $d = DateCalc(ParseDateDelta("09:00:00"),$someothervalue);
+
+to force it to be a delta. This will avoid unexpected results.
+
+Note that in many cases, it is somewhat ambiguous what the delta
+actually refers to.  Although it is ALWAYS known how many months in a
+year, hours in a day, etc., it is NOT known (in the generals case) how
+many days are in a month.  As a result, the part of the delta
+containing month/year and the part with sec/min/hr/day must be treated
+separately.  For example, "Mar 31, 12:00:00" plus a delta of 1month
+2days would yield "May 2 12:00:00".  The year/month is first handled
+while keeping the same date.  Mar 31 plus one month is Apr 31 (but
+since Apr only has 30 days, it becomes Apr 30).  Apr 30 + 2 days is
+May 2.  As a result, in the case where two dates are entered, the
+resulting delta can take on two different forms.  By default
+($mode=0), an absolutely correct delta (ignoring daylight saving time)
+is returned in weeks, days, hours, minutes, and seconds.
 
 If $mode is 1, the math is done using an approximate mode where a delta is
 returned using years and months as well.  The year and month part is
@@ -1735,7 +1754,9 @@ Sharnoff, and Paul Foley (with several additions by myself).
       EST     -0500    Eastern Standard
       ACT     -0500    Brazil, Acre
       PET     -0500    Peruvian Time
+      VET     -0430    Venezuela
       SAT     -0400    Chile
+      CLT     -0400    Chile Standard
       CLST    -0400    Chile Standard
       BOT     -0400    Bolivia
       EDT     -0400    Eastern Daylight
@@ -1754,6 +1775,7 @@ Sharnoff, and Paul Foley (with several additions by myself).
       ART     -0300    Argentina
       UYT     -0300    Uruguay
       NDT     -0230    Newfoundland Daylight
+      ARST    -0200    Argentina Daylight
       AT      -0200    Azores
       BRST    -0200    Brazil Daylight (official time)
       FNT     -0200    Brazil, Fernando de Noronha
@@ -1790,9 +1812,12 @@ Sharnoff, and Paul Foley (with several additions by myself).
       ZP4     +0400    USSR Zone 3
       MSD     +0300    Moscow Daylight
       ZP5     +0500    USSR Zone 4
+      YEKT    +0500    Yeakaterinburg time zone, Russia
+      YEKST   +0500    Yeakaterinburg summer time zone, Russia
       IST     +0530    Indian Standard
       ZP6     +0600    USSR Zone 5
       NOVT    +0600    Novosibirsk winter time zone, Russia
+      OMST    +0600    Omsk time zone, Russia
       NST     +0630    North Sumatra               nst=Newfoundland Std -0330
      #SST     +0700    South Sumatra, USSR Zone 6  sst=Swedish Summer   +0200
       JAVT    +0700    Java
@@ -2411,7 +2436,7 @@ various stages.  Major differences are marked with bullets.
 
 =over 4
 
-=item * Recurrences revisited
+=item (*) Recurrences revisited
 
 The behavior of some elements of recurrences changed. These included
 making the week element (N) refer to the Nth occurrence of a day of the
@@ -2461,7 +2486,7 @@ The Date_DaysSince999 function (deprecated in 5.35) has been removed.
 In fixing support for the years 0000-0999, I rewrote Date_DaysSince999 to
 be Date_DaysSince1BC.  The Date_DaysSince999 function will be removed.
 
-=item * Added PathSep variable
+=item (*) Added PathSep variable
 
 In order to better support Win32 platforms, I added the PathSep config
 variable.  This will allow the use of paths such as "c:\date" on Win32
@@ -2475,7 +2500,7 @@ the personal config file.
 
 =over 4
 
-=item * All Date::Manip variables are no longer accessible
+=item (*) All Date::Manip variables are no longer accessible
 
 Previously, Date::Manip variables were declared using a full package name.
 Now, they are declared with the my() function.  This means that internal
@@ -2509,7 +2534,7 @@ between DD and YY is no longer optional, so
    Dec1065     returns December 1, 1065
    Dec10/65    returns December 10, 1965
 
-=item * Date_Cmp added
+=item (*) Date_Cmp added
 
 This is not a backwards incompatibility... but is added to help prepare for
 a future incompatibility.  In one of the next versions of Date::Manip, the
@@ -2529,7 +2554,7 @@ when comparing dates that include the time zone).
 The old style Date_Init arguments that were deprecated in version 5.07
 have been removed.
 
-=item * DateManip.cnf change
+=item (*) DateManip.cnf change
 
 Changed .DateManip.cnf to Manip.cnf (to get rid of problems on OS's
 that insist on 8.3 filenames) for all non-Unix platforms (Wintel, VMS,
@@ -2542,7 +2567,7 @@ look in the user's home directory on VMS and Unix.
 
 =over 4
 
-=item * Delta format changed
+=item (*) Delta format changed
 
 A week field has been added to the internal format of the delta.  It now
 reads "Y:M:W:D:H:MN:S" instead of "Y:M:D:H:MN:S".
@@ -2571,7 +2596,7 @@ number according to ISO 8601.
 
 =over 4
 
-=item * ParseDate formats removed (ISO 8601 compatibility)
+=item (*) ParseDate formats removed (ISO 8601 compatibility)
 
 Full support for ISO 8601 formats was added.  As a result, some formats
 which previously worked may no longer be parsed since they conflict with an
@@ -2582,7 +2607,7 @@ YY-MM-DD before being parsed.  Whenever parsing dates using dashes as
 separators, they will be treated as ISO 8601 dates.  You can get around
 this by converting all dashes to slashes.
 
-=item * Week day numbering
+=item (*) Week day numbering
 
 The day numbering was changed from 0-6 (sun-sat) to 1-7 (mon-sun) to be
 ISO 8601 compatible.  Weeks start on Monday (though this can be overridden
@@ -2677,6 +2702,52 @@ have to look elsewhere for the time zone.
 When running outside the tests, Date::Manip has to rely on its other
 methods for determining the time zone.
 
+=item Missing date formats
+
+Due to the number of date formats that Date::Manip CAN process, people
+often get bitten when they put in a date format that they expect to
+work and it doesn't.
+
+If this happens, I'm willing to entertain the suggestion that they be
+added. I'm a little less willing to add date formats at this point due
+to the ever increasing complexity of the parsing routines, but I
+always consider each request, and if the format isn't too abstract, I
+often add them.
+
+There is one exception to this rule though.
+
+I have frequently been asked to add formats such as "the 15th of last
+month", or "Monday of next week". I will NOT add these date formats to
+Date::Manip. Since I have received the request several times, I
+decided to include my reasoning here.
+
+Date::Manip can parse pretty much any static date format that I could
+think of or find reference to. Dates such as "today", "Jan 12", or
+"2001-01-01" are all well understood.
+
+These are fairly limited however. Many very common date formats are
+best thought of as a date plus a modification. For example,
+"yesterday" is actually determined internally as "today" plus a delta
+of "- 1 day".  "2nd Sunday in June" is determined as "June 1" modified
+to the 2nd Sunday.
+
+As these types of formats were added over time, I quickly realized
+that the number of possible date plus modification formats was
+huge. The number of combinations has caused the parsing in Date::Manip
+to be quite complex, and adding new formats occasionally causes
+unexpected conflicts with other formats.
+
+The first time I received a request similar to "the 15th of last
+month", as I analyzed it to see about adding it to Date::Manip, I
+realized that this needed to be expressed as a date plus TWO
+modifications. In other words, today modified to last month modifed to
+the 15th day of the month.
+
+As bad as date plus modification formats are, date plus TWO
+modifications would be exponentially worse. On realizing that, I
+made a firm decision that Date::Manip will NOT support this type
+of format now, or at any time in the future.
+
 =item Complaining about getpwnam/getpwuid
 
 Another problem is when running on Micro$oft OS'es.  I have added many
@@ -2712,11 +2783,9 @@ days, today at noon, etc.).  These take a lot longer to parse.
    little memory... but the ratios should be reliable on a faster computer).
 
 Business date calculations are extremely slow.  You should consider
-alternatives if possible (i.e. doing the calculation in exact mode and then
-multiplying by 5/7).  There will be an approximate business mode in one of
-the next versions which will be much faster (though less accurate) which
-will do something like this.  Whenever possible, use this mode.  And who
-needs a business date more accurate than "6 to 8 weeks" anyway huh :-)
+alternatives if possible (i.e. doing the calculation in exact mode and
+then multiplying by 5/7).  Who needs a business date more accurate
+than "6 to 8 weeks" anyway, right :-)
 
 Never call Date_Init more than once.  Unless you're doing something very
 strange, there should never be a reason to anyway.
@@ -2754,7 +2823,7 @@ note below for an easy way to correct this).  Instead, you should parse the
 dates with ParseDate, sort them using a normal string comparison, and then
 convert them back to the format desired using UnixDate.
 
-2nd NOTE: It has been reported to me that you can still use ParseDate
+NOTE: It has been reported to me that you can still use ParseDate
 to sort dates in this way, and be quite efficient through the use of
 Memoize.  Just add the following lines to your code:
 
@@ -2840,7 +2909,7 @@ When filing a bug report, please include the following information:
 
 If you have a problem using Date::Manip that perhaps isn't a bug (can't
 figure out the syntax, etc.), you're in the right place.  Go right back to
-the top of this man page and start reading.  If this still doesn't answer
+the top of this manual and start reading.  If this still doesn't answer
 your question, mail me (again, please mail me rather than post to the
 newsgroup).
 
@@ -2954,6 +3023,11 @@ Irving (Programming with Perl Modules -- part of the O'Reilly Perl Resource
 Kit); and Tom Christiansen and Nathan Torkington (The Perl Cookbook).
 Also, thanks to any other authors who've written about Date::Manip who's
 books I haven't seen.
+
+=head1 LICENSE
+
+This script is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
 
 =head1 AUTHOR
 
