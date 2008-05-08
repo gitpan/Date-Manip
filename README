@@ -127,8 +127,8 @@ DESCRIPTION
     in 1918. Note that the Gregorian calendar is itself imperfect and at
     some point may need to be corrected. No attempt is made to correct for
     that, and my great great great grandchildren will be long dead before
-    this even occurs, so it's not an immediate concern. Yes, this is the
-    same type of attitude that caused the great Y2K problem... but I have an
+    this even occurs, so it's not an immediate concern. Yes, this is similar
+    to the attitude that caused the great Y2K problem... but I have an
     excuse: I don't know what the correction will be, so I can't possibly
     implement it. Nobody doubted that the year after 1999 would be known as
     2000 :-).
@@ -2379,15 +2379,13 @@ BACKWARDS INCOMPATIBILITIES
 
     VERSION 5.44
 
-        *   Recurrences revisited
-
+        (*) Recurrences revisited
             The behavior of some elements of recurrences changed. These
             included making the week element (N) refer to the Nth occurrence
             of a day of the week in the week, month, or year. It is now
             possible to look at the 3rd Friday of every month for example.
 
-        *   Changed %x format in UnixDate
-
+        Changed %x format in UnixDate
             The %x format used to be equivalent to %D (%m/%d/%y), but it has
             been modified to use the DateFormat config variable, so it may
             return %d/%m/%y if a non-US DateFormat is specified.
@@ -2416,7 +2414,7 @@ BACKWARDS INCOMPATIBILITIES
             Date_DaysSince999 to be Date_DaysSince1BC. The Date_DaysSince999
             function will be removed.
 
-        * Added PathSep variable
+        (*) Added PathSep variable
             In order to better support Win32 platforms, I added the PathSep
             config variable. This will allow the use of paths such as
             "c:\date" on Win32 platforms. Old config files on Win32
@@ -2426,34 +2424,29 @@ BACKWARDS INCOMPATIBILITIES
 
     VERSION 5.34
 
-        *   All Date::Manip variables are no longer accessible
-
+        (*) All Date::Manip variables are no longer accessible
             Previously, Date::Manip variables were declared using a full
             package name. Now, they are declared with the my() function.
             This means that internal variables are no longer accessible
             outside of the module.
 
-        *   Week interpretation in business mode deltas
-
+        Week interpretation in business mode deltas
             A business mode delta containing a week value used to be treated
             as 7 days. A much more likely interpretation of a week is Monday
             to Monday, regardless of holidays, so this is now the behavior.
 
-        *   %z UnixDate format
-
+        %z UnixDate format
             The %z UnixDate format used to return the time zone
             abbreviation. It now returns it as a GMT offset (i.e. -0500). %Z
             still returns the time zone abbreviation.
 
-        *   Formats "22nd Sunday" returns the intuitive value
-
+        Formats "22nd Sunday" returns the intuitive value
             The date "22nd Sunday" used to return the Sunday of the 22nd
             week of the year (which could be the 21st, 22nd, or 23rd Sunday
             of the year depending on how weeks were defined). Now, it
             returns the 22nd Sunday of the year regardless.
 
-        *   Separator in DD/YYmmm and mmmDD/YY formats no longer optional
-
+        Separator in DD/YYmmm and mmmDD/YY formats no longer optional
             Previously, the date "Dec1065" would return Dec 10, 1965. After
             adding the YYYYmmm and mmmYYYY formats, this was no longer
             possible. The separator between DD and YY is no longer optional,
@@ -2462,8 +2455,7 @@ BACKWARDS INCOMPATIBILITIES
                Dec1065     returns December 1, 1065
                Dec10/65    returns December 10, 1965
 
-        *   Date_Cmp added
-
+        (*) Date_Cmp added
             This is not a backwards incompatibility... but is added to help
             prepare for a future incompatibility. In one of the next
             versions of Date::Manip, the internal format of the date will
@@ -2478,7 +2470,7 @@ BACKWARDS INCOMPATIBILITIES
             The old style Date_Init arguments that were deprecated in
             version 5.07 have been removed.
 
-        * DateManip.cnf change
+        (*) DateManip.cnf change
             Changed .DateManip.cnf to Manip.cnf (to get rid of problems on
             OS's that insist on 8.3 filenames) for all non-Unix platforms
             (Wintel, VMS, Mac). For all Unix platforms, it's still
@@ -2487,8 +2479,7 @@ BACKWARDS INCOMPATIBILITIES
 
     VERSION 5.30
 
-        *   Delta format changed
-
+        (*) Delta format changed
             A week field has been added to the internal format of the delta.
             It now reads "Y:M:W:D:H:MN:S" instead of "Y:M:D:H:MN:S".
 
@@ -2506,8 +2497,7 @@ BACKWARDS INCOMPATIBILITIES
 
     VERSION 5.20
 
-        *   ParseDate formats removed (ISO 8601 compatibility)
-
+        (*) ParseDate formats removed (ISO 8601 compatibility)
             Full support for ISO 8601 formats was added. As a result, some
             formats which previously worked may no longer be parsed since
             they conflict with an ISO 8601 format. These include MM-DD-YY
@@ -2518,8 +2508,7 @@ BACKWARDS INCOMPATIBILITIES
             they will be treated as ISO 8601 dates. You can get around this
             by converting all dashes to slashes.
 
-        *   Week day numbering
-
+        (*) Week day numbering
             The day numbering was changed from 0-6 (sun-sat) to 1-7
             (mon-sun) to be ISO 8601 compatible. Weeks start on Monday
             (though this can be overridden using the FirstDay config
@@ -2861,7 +2850,11 @@ WHAT DATES ARE DATE::MANIP USEFULE FOR?
 
     One other note is that Date::Manip will NOT handle 3 digit years. So, if
     you store the year as an offset from 1900 (which is 3 digits long as of
-    the year 2000), these will NOT be parsable by Date::Manip.
+    the year 2000), these will NOT be parsable by Date::Manip. Please note
+    that the perl functions localtime and gmtime DO return the year as an
+    offset from 1900, so the output from these will need to be corrected
+    (probably by adding 1900 to the result) before they can be passed to any
+    Date::Manip routine.
 
 VERSION NUMBERS
     A note about version numbers.
@@ -2878,8 +2871,7 @@ VERSION NUMBERS
     Odd numbered will be development versions available from my web site.
     For example, after 5.40 was released, I started making changes, and
     called the development version 5.41. When released to CPAN, it was
-    called 5.42. I may add a third digit to development versions (i.e.
-    5.41.9) to keep track of important changes in the development version.
+    called 5.42.
 
 ACKNOWLEDGMENTS
     There are many people who have contributed to Date::Manip over the years
@@ -2912,6 +2904,10 @@ ACKNOWLEDGMENTS
     Cookbook). Also, thanks to any other authors who've written about
     Date::Manip who's books I haven't seen.
 
+LICENSE
+    This script is free software; you can redistribute it and/or modify it
+    under the same terms as Perl itself.
+
 AUTHOR
     Sullivan Beck (sbeck@cpan.org)
 
@@ -2920,23 +2916,4 @@ AUTHOR
     page:
 
     http://www.cise.ufl.edu/~sbeck/
-
-POD ERRORS
-    Hey! The above document had some coding errors, which are explained
-    below:
-
-    Around line 2446:
-        Expected '=item *'
-
-    Around line 2509:
-        Expected '=item *'
-
-    Around line 2515:
-        Expected '=item *'
-
-    Around line 2521:
-        Expected '=item *'
-
-    Around line 2528:
-        Expected '=item *'
 

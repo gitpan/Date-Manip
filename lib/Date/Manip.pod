@@ -134,7 +134,7 @@ British Empire in 1752, Russia in 1918.  Note that the Gregorian calendar
 is itself imperfect and at some point may need to be corrected.  No attempt
 is made to correct for that, and my great great great grandchildren will be
 long dead before this even occurs, so it's not an immediate concern.  Yes,
-this is the same type of attitude that caused the great Y2K problem... but
+this is similar to the attitude that caused the great Y2K problem... but
 I have an excuse: I don't know what the correction will be, so I can't
 possibly implement it.  Nobody doubted that the year after 1999 would be
 known as 2000 :-).
@@ -2670,7 +2670,7 @@ Perhaps the most common problem occurs when you get the error:
 
 Date::Manip tries hard to determine the local time zone, but on some
 machines, it cannot do this (especially non-Unix systems).  To fix this,
-just set the TZ variable, either at the top of the Manip.pm file,, in the
+just set the TZ variable, either at the top of the Manip.pm file, in the
 DateManip.cnf file, or in a call to Date_Init.  I suggest using the form
 "EST5EDT" so you don't have to change it every 6 months when going to or
 from daylight saving time.
@@ -2942,18 +2942,19 @@ or dates past Dec 31, 9999.  So Date::Manip works during the years 0001 to
 9999.
 
 One caveat to this is that in one part of the code (calculating
-week-of-year values), Date::Manip actually uses values one week after and
-one week before the date being manipulated. As such, the first week in the
-year 0001 fail (because a week before is in the year 1 BC), and the last
-week in the year 9999 fail (because a week later is in 10,000). No effort
-will be made to correct this because the added functionality is simply not
-that important (to me), especially since the Gregorian calendar doesn't
-really apply in either instance (see the next paragraph).  To be absolutely
-safe, I will state that Date::Manip works as described in this manual
-during the years 0002 to 9998 (unless you've encountered a bug, or are
-using the module incorrectly). If you submit a "bug" using a date that is
-not in this range, I will not attempt to fix it unless it also affects
-dates that are within the years 0002 to 9998.
+week-of-year values), Date::Manip actually uses values one week after
+and one week before the date being manipulated. As such, the first
+week in the year 0001 fail (because a week before is in the year 1
+BC), and the last week in the year 9999 fail (because a week later is
+in 10,000). No effort will be made to correct this because the added
+functionality is simply not that important (to me), especially since
+the Gregorian calendar doesn't really apply in either instance (see
+the next paragraph).  To be absolutely safe, I will state that
+Date::Manip works as described in this manual during the years 0002 to
+9998 (unless you've encountered a bug, or are using the module
+incorrectly). If you submit a "bug" using a date that is not in this
+range, I will not attempt to fix it unless it also affects dates that
+are within the years 0002 to 9998.
 
 In practical terms however, Date::Manip deals with the Gregorian calendar,
 and is therefore useful in the period that that calendar has been, or will
@@ -2970,8 +2971,11 @@ in calculating time intervals, so the difference between two times may
 not be strictly accurate due to the addition of a leap second.
 
 One other note is that Date::Manip will NOT handle 3 digit years.  So, if
-you store the year as an offset from 1900 (which is 3 digits long as of
-the year 2000), these will NOT be parsable by Date::Manip.
+you store the year as an offset from 1900 (which is 3 digits long as of the
+year 2000), these will NOT be parsable by Date::Manip. Please note that the
+perl functions localtime and gmtime DO return the year as an offset from
+1900, so the output from these will need to be corrected (probably by adding
+1900 to the result) before they can be passed to any Date::Manip routine.
 
 =head1 VERSION NUMBERS
 
@@ -2989,8 +2993,6 @@ As of 5.41/5.42, all versions released to CPAN will be even numbered.  Odd
 numbered will be development versions available from my web site.  For
 example, after 5.40 was released, I started making changes, and called
 the development version 5.41.  When released to CPAN, it was called 5.42.
-I may add a third digit to development versions (i.e. 5.41.9) to keep
-track of important changes in the development version.
 
 =head1 ACKNOWLEDGMENTS
 

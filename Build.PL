@@ -3,7 +3,7 @@ use Module::Build;
 
 my $build = Module::Build->new(
 	license            => 'perl',
-	dist_version       => '5.49',
+	dist_version       => '5.52',
 	dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
 	module_name        => 'Date::Manip',
 	dist_abstract      => 'date manipulation routines',

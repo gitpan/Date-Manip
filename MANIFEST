@@ -2,11 +2,11 @@ Build.PL
 DateManip.cnf
 HISTORY
 INSTALL
+lib/Date/Manip.pm
+lib/Date/Manip.pod
 LICENSE
 Makefile.PL
 MANIFEST			This list of files
-Manip.pm
-Manip.pod
 META.yml
 README
 README.FIRST

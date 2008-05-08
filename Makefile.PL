@@ -3,7 +3,7 @@ use ExtUtils::MakeMaker;
 
 WriteMakefile(
 	NAME             => 'Date::Manip',
-	VERSION_FROM     => 'Manip.pm',
+	VERSION	         => '5.52',
 	($] >= 5.005
 	? (ABSTRACT=>'date manipulation routines',
 	   AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')

@@ -827,6 +827,13 @@ Version 5.49  DEVELOPMENT
 Version 5.50  2008-05-05
    Released
 
+Version 5.51  DEVELOPMENT
+   Additional changes to meet requirements on http://cpants.perl.org/
+   Fixed bug where the wrong version was in Build.PL
+
+Version 5.52  2008-05-08
+   Released
+
 #########################################################################
 # Backwards incompatibilities
 #########################################################################
