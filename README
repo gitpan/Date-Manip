@@ -2559,7 +2559,7 @@ KNOWN PROBLEMS
         Date::Manip tries hard to determine the local time zone, but on some
         machines, it cannot do this (especially non-Unix systems). To fix
         this, just set the TZ variable, either at the top of the Manip.pm
-        file,, in the DateManip.cnf file, or in a call to Date_Init. I
+        file, in the DateManip.cnf file, or in a call to Date_Init. I
         suggest using the form "EST5EDT" so you don't have to change it
         every 6 months when going to or from daylight saving time.
 

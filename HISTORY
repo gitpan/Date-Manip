@@ -834,6 +834,14 @@ Version 5.51  DEVELOPMENT
 Version 5.52  2008-05-08
    Released
 
+Version 5.53  DEVELOPMENT
+   Final changes to meet requirements on http://cpants.perl.org/
+   Bug fix so it won't fail with "Too early to specify a build action"
+
+Version 5.54  2008-05-09
+
+Version 5.55  DEVELOPMENT
+
 #########################################################################
 # Backwards incompatibilities
 #########################################################################

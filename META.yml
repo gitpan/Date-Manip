@@ -1,6 +1,6 @@
 ---
 name: Date-Manip
-version: 5.52
+version: 5.54
 author:
   - 'Sullivan Beck <sbeck@cpan.org>'
 abstract: date manipulation routines
@@ -16,7 +16,7 @@ build_requires:
 provides:
   Date::Manip:
     file: lib/Date/Manip.pm
-    version: 5.52
+    version: 5.54
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
