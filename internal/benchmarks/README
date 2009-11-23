@@ -1,0 +1,26 @@
+These files are used for running benchmarks and performance testing of Date::Manip.
+They are not generally useful, and are not installed anywhere.
+
+Date::Calc    no parsing
+              no timezones
+              almost no time handling (primarily Y/M/D)
+
+Date::Pcalc   same as Date::Calc
+
+TimeDate      no calculations
+  Date::Parse
+  Time::Zone
+
+
+
+
+DateTime
+DateTime-TimeZone
+DateTime-Format
+
+Date::Components
+
+Date::Handler
+
+Time::Format
+

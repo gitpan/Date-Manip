@@ -1,0 +1,290 @@
+# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# This program is free software; you can redistribute it and/or modify it
+# under the same terms as Perl itself.
+
+=pod
+
+=head1 NAME
+
+Date::Manip::Misc - Miscellaneous information about Date::Manip
+
+=head1 SHOULD I USE DATE::MANIP
+
+If you look in CPAN, you'll find that there are a number of Date and
+Time packages.  Is Date::Manip the one you should be using?  In my
+opinion, the answer usually no.  This may sound odd coming from
+the author of the software, but read on.
+
+Date::Manip is written entirely in Perl.  It's the most powerful of the
+date modules.  It's also the biggest and probably the slowest.
+
+Since Date::Manip is written entirely in Perl, and has very few
+dependencies on other module not in a standard Perl distribution,
+Date::Manip is easy to install.  Other modules have dependencies on a
+C compiler or other Perl modules.  Since it is fairly easy to satisfy
+these dependencies for anyone who is reasonably familiar with Perl
+modules, this is not a huge advantage that Date::Manip has.
+
+On the other hand, simpler Perl modules tend to be faster than Date::Manip,
+and modules written in C are significantly faster than their Perl
+counterparts (at least if they're done right).  The TimeDate and
+Time-modules modules are written in Perl, but are much simpler (and hence,
+faster) than Date::Manip.  The Date::Calc module is written in C and is a
+good module for doing many date calculations much faster than Date::Manip.
+Between these three, most of your common date operations can be done.
+
+Date::Manip is certainly the most powerful of the Date modules.  To the
+best of my knowledge, it will do everything that any other date module will
+do (not just the ones I listed above), and there are a number of features
+that Date::Manip has that none of the other modules have.  Date::Manip is
+the "Swiss Army Knife" of Date modules.  I'm trying to build a library
+which can do _EVERY_ conceivable date/time manipulation that you'll run
+into in everyday life.
+
+Although I am working on making Date::Manip faster, it will never be as
+fast as other modules.  And before anyone asks, Date::Manip will never be
+translated to C (at least by me).  I write C because I have to.  I write
+Perl because I like to.  Date::Manip is something I do because it interests
+me, not something I'm paid for.
+
+Date::Manip is also big.  It's true that Date::Manip will do almost
+every date operation you could imagine... but you rarely need all that
+power.
+
+If you are going to be using the module in cases where performance is an
+important factor (started up in a CGI program being run by your web server
+5,000 times a second), you should check out one of the other Date or Time
+modules in CPAN.  If you're only doing fairly simple date operations
+(parsing common date formats, finding the difference between two dates,
+etc.), the other modules will almost certainly suffice.  If you're doing
+one operation very repetitively (parsing 10,000 dates from a database), you
+are probably better off writing your own functions (perhaps bypassing all
+date modules entirely) designed specifically for your needs.
+
+On the other hand, if you want one solution for all your date needs, don't
+need peak speed, or are trying to do more exotic date operations,
+Date::Manip is for you.  Operations on things like business dates, foreign
+language dates, holidays and other recurring events, etc. are available
+more-or-less exclusively in Date::Manip.
+
+=head1 YEAR 2000 AND YEAR 2007 DST CHANGE
+
+Did Date::Manip have any problems with Y2K compliance? Did it have any
+problems with the revised daylight savings time changes made in 2007?
+
+Date::Manip is basically just a parser.  You give it a date and it'll
+manipulate it.  Date::Manip does store the date internally as a 4 digit
+year, and performs all operations using this internal representation, so
+Date::Manip had no problems with the Y2K issue. Of course, applications
+written which stored the year as 2 digits (whether or not it used
+Date::Manip) may have had problems, but they were not because of this
+module.
+
+Similarly for the 2007 changes in daylight savings time made in the United
+States, Date::Manip was not affected. Date::Manip makes use of the
+current time zone, but it gets that information from the operating system
+the application is running on. If the operating system knows about the
+new daylight saving time rules... so does Date::Manip.
+
+=head1 WHAT DATES ARE DATE::MANIP USEFUL FOR?
+
+Date::Manip applies to the Gregorian calendar, and stores the year as
+4 digits.
+
+The 4-digit limit is NOT a limitation due to the Gregorian calendar.
+I needed a way to store dates internally, and the 4-digit
+representation was chosen. I realize that the 4-digit limitation does
+create a time when it will break (quite similar to those who chose a
+2-digit representation set themselves up for the Y2K problem). Frankly,
+I'm not too concerned about this since that date is 8000 years in the
+future! Date::Manip won't exist then.  Perl won't exist then. And it's
+quite possible that the Gregorian calendar won't exist then. That's
+a much different situation than the Y2K choice in which programmers
+chose a representation that would break within the lifetime of the
+programs they were writing.
+
+Given the 4-digit limitation, Date::Manip definitely can't handle BC
+dates, or dates past Dec 31, 9999.  So Date::Manip works during the
+period Jan 1, 0001 to Dec 31, 9999. There are a few caveats:
+
+=over 4
+
+=item Gregorian calendar issue
+
+In practical terms, Date::Manip deals with the Gregorian calendar, and
+is most useful in the period that that calendar has been, or will be,
+in effect.  The Gregorian calendar was first adopted by the Catholic
+church in 1582, but some countries were still using the Julian
+calendar as late as the early part of the 20th century.  Also, at some
+point, the Gregorian system may need to be modified slightly (though
+since leap seconds exist, this may not need to happen for a very long
+time).  So...  in practical terms, Date::Manip is probably useful from
+around 1900 on, and will remain useful for the foreseeable future.
+
+=item First/last week
+
+In one part of the code (calculating week-of-year values), Date::Manip
+references dates one week after and one week before the date actually
+being worked on. As such, the first week in the year 0001 fail
+(because a week before is in the year 1 BC), and the last week in the
+year 9999 fail (because a week later is in 10,000).
+
+No effort will be made to correct this because the added functionality
+is simply not that important (to me), especially since the Gregorian
+calendar doesn't really apply in either instance. To be absolutely
+safe, I will state that Date::Manip works as described in this manual
+during the period Feb 1, 0001 to Nov 30, 9999, and I will only support
+dates within that range (i.e. if you submit a bug using a date that is
+not in that range, I will will consider myself free to ignore it).
+
+=item Leap seconds
+
+Date::Manip does NOT make use of the leap seconds in calculating time
+intervals, so the difference between two times may not be strictly
+accurate due to the addition of a leap second.
+
+=item Three-digit years
+
+Date::Manip will parse both 2- and 4-digit years, but it will NOT
+handle 3 digit years.  So, if you store the year as an offset from
+1900 (which is 3 digits long as of the year 2000), these will NOT be
+parseable by Date::Manip. Since the perl functions localtime and gmtime
+DO return the year as an offset from 1900, the output from these will
+need to be corrected (probably by adding 1900 to the result) before
+they can be passed to any Date::Manip routine.
+
+=back
+
+=head1 VERSION NUMBERS
+
+A note about version numbers.
+
+Prior to version 5.00, Date::Manip was distributed as a perl4 library.
+There were no numbering conventions in place, so I used a simple
+MAJOR.MINOR numbering scheme.
+
+With version 5.00, I switched to a perl5 module and at that time switched
+to the perl5 numbering convention of a major version followed by a 2 digit
+minor version.
+
+As of 5.41/5.42, all versions released to CPAN were even numbered.
+Odd numbered were development versions available from my web site.
+For example, after 5.40 was released, I started making changes, and
+called the development version 5.41.  When released to CPAN, it was
+called 5.42.
+
+As of 6.00, I'm abandoning the even/odd behavior started in 5.41. Every
+release meant changing the version number twice. I had to change it from
+the odd (development version) to the even (release version). Then I had
+to package it up. Then I had to change it to the next odd (development
+version). It's more error prone, and more of a nuisance, and I've seen
+no benefit from it.
+
+=head1 FUTURE IDEAS
+
+A number of changes are being considered for future inclusion in
+Date::Manip.  As a rule, the changes listed below are not finalized,
+and are open to discussion.
+
+=over 4
+
+=item Rewrite parsing for better language support
+
+Currently, all of Date::Manip's parsing is based on English language
+forms of dates. Even if the words have been replaced by the equivalent
+in some other language.
+
+I am considering rewriting the parsing routines in order to allow
+date forms that might be used in other languages but do not have a
+common English equivalent.
+
+=item Making the primary interface OO
+
+Currently, the Date::Manip module is the original functional interface
+(though it now uses all of the OO modules to do the actual work).
+
+I am considering writing a primary OO interface. In this case, the
+functional interface will still be available, perhaps as Date::Manip::Compat.
+
+When (and if) I do this, it will be in a new major-number release (i.e.
+Date::Manip 7.00 or higher).
+
+I keep going back and forth on whether this would be useful, so at
+this point, there is no definite plan to make this change.
+
+=item Adding granularity
+
+The granularity of a time basically refers to how accurate you wish to
+treat a date.  For example, if you want to compare two dates to see if
+they are identical at a granularity of days, then they only have to occur
+on the same day.  At a granularity of an hour, they have to occur within
+an hour of each other, etc.
+
+I'm not sure how useful this would be, but it's one of the oldest
+unimplemented ideas, so I'm not discarding it completely.
+
+=back
+
+=head1 ACKNOWLEDGMENTS
+
+There are many people who have contributed to Date::Manip over the years
+that I'd like to thank.  The most important contributions have come in the
+form of suggestions and bug reports by users.  I have tried to include the
+name of every person who first suggested each improvement or first reported
+each bug.  These are included in the HISTORY file in the Date::Manip
+distribution in the order the changes are made.  The list is simply too
+long to appear here, but I appreciate their help.
+
+A number of people have made suggestions or reported bugs which are not
+mentioned in the HISTORY file.  These include suggestions which have not
+been implemented and people who have made a suggestion or bug report which
+has already been suggested/reported by someone else.  For those who's
+suggestions have not yet been implemented, they will be added to the
+HISTORY file when (if) their suggestions are implemented.  For everyone
+else, thank you too.  I'd much rather have a suggestion made twice than not
+at all.
+
+Thanks to Alan Cezar and Greg Schiedler for paying me to implement the
+Events_List routine.  They gave me the idea, and were then willing to pay
+me for my time to get it implemented quickly.
+
+I'd also like to thank a couple of authors.  Date::Manip has gotten
+some really good press in a couple of books.  Since no one's paying me
+to write Date::Manip, seeing my module get a good review in a book
+written by someone else really makes my day.  My thanks to Nate
+Padwardhan and Clay Irving (Programming with Perl Modules -- part of
+the O'Reilly Perl Resource Kit); and Tom Christiansen and Nathan
+Torkington (The Perl Cookbook).  Also, thanks to any other authors
+who've written about Date::Manip who's books I haven't seen.
+
+I'd also like to thank the people who are maintaining the zoneinfo
+database (and who replied quickly to several inquiries).
+
+I have borrowed from other modules. I originally borrowed the code for
+determining if a year was a leap year from code written by David Muir Sharnoff.
+I borrowed many of the original date printf formats from code written by
+Terry McGonigal as well as the Solaris date command.
+
+More recently, I borrowed the code to do time zone registry lookups on
+Windows from the DateTime-TimeZone module, though I rewrote it to work
+better with Date::Manip.
+
+=head1 BUGS AND QUESTIONS
+
+Please refer to the Date::Manip::Problems documentation for
+information on submitting bug reports or questions to the author.
+
+=head1 SEE ALSO
+
+Date::Manip        - main module documentation
+
+=head1 LICENSE
+
+This script is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+
+=head1 AUTHOR
+
+Sullivan Beck (sbeck@cpan.org)
+
+=cut

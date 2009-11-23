@@ -1,0 +1,67 @@
+The files in this directory are for primary use by me, the author
+of Date::Manip to prepare a new release.
+
+There is no reason for an end user to need to do this. However, it
+is documented for the sake of completeness, and to remind me of the
+steps I need to do.
+
+It's also available in case someone ever chooses to fork the
+module (though I hope that won't be necessary).
+
+#########################################################################
+Before every release, spellcheck the documents:
+
+   for i in `find lib -type f -name \*.pod` ;do
+      podspell $i > $i.txt
+      ispell -p internal/manip.isp $i.txt
+      rm -f $i.txt $i.txt.bak
+   done
+
+#########################################################################
+Get the newest tzdata package.
+
+The tzdata/tzcode archives are obtained from
+
+   ftp://elsie.nci.nih.gov/pub/
+
+In order to create the appropriate Date::Manip modules, run the
+following commands:
+
+   ./internal/tzdata -f           : to download the packages
+   ./internal/tzdata -b           : to build the package
+   ./internal/tzdata -l           : to get a list of all the zones that need modules
+   ./internal/tzdata -d           : to dump all zones
+   ./internal/tzdata -m           : to create the individual zone modules
+   ./internal/tzdata -o           : to create the individual offset modules
+   ./internal/tzdata -z           : to create the main Zone module
+   ./internal/tzdata -c           : to clean up everything after this is done
+
+All of the above steps can be run in the correct sequence by running:
+
+   ./internal/tzdata -a
+
+NOTE: although the tzdata script runs on my computer, it is quite possible
+that it will not run on other systems due to differences in what tools are
+available.
+
+Since the tzdata script is designed only to create the modules which are
+then distributed as part of Date::Manip, there is no reason for anyone other
+than me to run the above commands. If you DO choose to run them, please do
+not report problems due to differences in operating systems, or packages that
+are installed on your system. If you discover a bug in tzdata, I am interested
+in knowing about it however.
+
+#########################################################################
+Remove tzdata directory
+
+In internal/benchmarks directory
+    rm -f nytprof.out
+    rm -rf nytprof
+
+#########################################################################
+Set the release date
+Update the copyright
+
+#########################################################################
+Run the kwalitee tests
+

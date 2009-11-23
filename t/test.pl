@@ -1,173 +1,458 @@
 #!/usr/bin/perl -w
+# Copyright (c) 1996-2009 Sullivan Beck. All rights reserved.
+# This program is free software; you can redistribute it and/or modify it
+# under the same terms as Perl itself.
 
-# Sets a couple standard arguments:
-@Date::Manip::TestArgs=();
-@Date::Manip::TestArgs=qw( PersonalCnf=Manip.cnf
-                           PathSep=!
-                           PersonalCnfPath=./t!.
-                           IgnoreGlobalCnf=1
-                           TZ=EST
-                         );
+# SB_TEST.PL
+###############################################################################
+# HISTORY
+#
+# 1996-??-??  Wrote initial version for Date::Manip module
+#
+# 1996-2001   Numerous changes
+#
+# 2001-03-29  Rewrote to make it easier to drop in for any module.
+#
+# 2001-06-19  Modifications to make space delimited stuff work better.
+#
+# 2001-08-23  Added support for undef args.
+#
+# 2007-08-14  Better support for undef/blank args.
+#
+# 2008-01-02  Better handling of $runtests.
+#
+# 2008-01-24  Better handling of undef/blank args when arguements are
+#             entered as lists instead of strings.
+#
+# 2008-01-25  Created a global $testnum variable to store the test number
+#             in.
+#
+# 2008-11-05  Slightly better handling of blank/undef in returned values.
+#
+# 2009-09-01  Added "-l" value to $runtests.
+#
+# 2009-09-30  Much better support for references.
 
-# This takes a list of strings of the form:
-#   ARG1
-#   ...
-#   ARGn
-#   NOTE
-#   EXP
-# or
-#   ARG1
-#   ...
-#   ARGn
-#   NOTE
-#   ~
-#   EXP1
-#   ...
-#   EXPm
-# where ARGi are a list of arguments to pass to the appropriate function,
-# NOTE is an optional note to print if the test fails, and EXP is the
-# expected result (or list of results).  NOTE must begin with the character
-# ">".  All tests must be separated by a blank line from the next test.  If
-# EXP starts with a "~", it is treated as approximate.
+###############################################################################
+
+use Storable qw(dclone);
+
+# Usage: test_Func($funcref,$tests,$runtests,@extra)=@_;
 #
-# $funcref is the function to pass the arguments to, $tests is the list of
-# newline separated strings, $runtests is a value passed in if it is called
-# using the runtests command, @extra are extra arguments which are added
-# to the function call.
+# This takes a series of tests, runs them, compares the output of the tests
+# with expected output, and reports any differences.  Each test consists of
+# several parts:
+#    a function passed in as a reference ($funcref)
+#    a series of arguments to be passed to the function
+#    the expected output from the function call
 #
-# If $runtests=0, everything is printed.  If it equals -N, only test N is
-# run.  If it equals N, start at test N.
+# Tests may be passed in in two methods: as a string, or as a reference.
 #
-# $ntest is the total number of tests.
+# Using the string case, $tests is a newline delimited string.  Each test
+# takes one or more lines of the string.  Tests are separated from each
+# other by a blank line.
+#
+# Arguments and return value(s) may be written as a single line:
+#    ARG1 ARG2 ... ARGn ~ VAL1 VAL2 ... VALm
+# or as multiple lines:
+#    ARG1
+#    ARG2
+#    ...
+#    ARGn
+#    ~
+#    VAL1
+#    VAL2
+#    ...
+#    VALm
+#
+# If any of the arguments OR values have spaces in them, only the multiline
+# form may be used.
+#
+# If there is exactly one return value, the separating tilde is
+# optional:
+#    ARG1 ARG2 ... ARGn VAL1
+# or:
+#    ARG1
+#    ARG2
+#    ...
+#    ARGn
+#    VAL
+#
+# It is valid to have a function with no arguments or with no return
+# value (or both).  The "~" must be used:
+#
+#    ARG1 ARG2 ... ARGn ~
+#
+#    ~ VAL1 VAL2 ... VALm
+#
+#    ~
+#
+# Leading and trailing space is ignored in the multi-line format.
+#
+# If desired, any of the ARGs or VALs may be the word "_undef_" which
+# will be strictly interpreted as the perl undef value. The word "_blank_"
+# may also be used to designate a defined but empty string.
+#
+# They may also be (in the multiline format) of the form:
+#
+#   \ STRING           : a string reference
+#
+#   [] LIST            : a list reference (where LIST is a
+#                        comma separated list)
+#
+#   [SEP] LIST         : a list reference (where SEP is a
+#                        single character separator)
+#
+#   {} HASH            : a hash reference (where HASH is
+#                        a comma separated list)
+#
+#   {SEP} HASH         : a hash reference (where SEP is a
+#                        single character separator)
+#
+# Alternately, the tests can be passed in as a list reference:
+#    $tests = [
+#               [
+#                 [ @ARGS1 ],
+#                 [ @VALS1 ]
+#               ],
+#               [
+#                 [ @ARGS2 ],
+#                 [ @VALS2 ]
+#               ], ...
+#             ]
+#
+# @extra are extra arguments which are added to the function call.
+#
+# There are several ways to run the tests, depending on the value of
+# $runtests.
+#
+# If $runtests is 0, the tests are run in a non-interactive way suitable
+# for running as part of a "make test".
+#
+# If $runtests is a positive number, it runs runs all tests starting at
+# that value in a way suitable for running interactively.
+#
+# If $runtests is a negative number, it runs all tests starting at that
+# value, but providing feedback at each test.
+#
+# If $runtests is a string "=N" (where N is a number), it runs only
+# that test.
+#
+# If $runtests is the string "-l", it lists the tests and the expected
+# output without running any.
+
 sub test_Func {
-  my($ntest,$funcref,$tests,$runtests,@extra)=@_;
-  my(@tests)=split(/\n/,$tests);
-  my($comment)="#";
-  my($test,@args,$note,$exp,$ans,$approx,$ans1,$ans2,$t,@exp)=();
+   my($funcref,$tests,$runtests,@extra)=@_;
+   my(@tests);
 
-  $t=0;
-  while (@tests) {
+   $runtests     = 0  if (! $runtests);
+   my($starttest,$feedback,$endtest,$runtest);
+   if      ($runtests eq "0"  or  $runtests eq "-0") {
+      $starttest = 1;
+      $feedback  = 1;
+      $endtest   = 0;
+      $runtest   = 1;
+   } elsif ($runtests =~ /^\d+$/){
+      $starttest = $runtests;
+      $feedback  = 0;
+      $endtest   = 0;
+      $runtest   = 1;
+   } elsif ($runtests =~ /^-(\d+)$/) {
+      $starttest = $1;
+      $feedback  = 1;
+      $endtest   = 0;
+      $runtest   = 1;
+   } elsif ($runtests =~ /^=(\d+)$/) {
+      $starttest = $1;
+      $feedback  = 1;
+      $endtest   = $1;
+      $runtest   = 1;
+   } elsif ($runtests eq "-l") {
+      $starttest = 1;
+      $feedback  = 1;
+      $endtest   = 0;
+      $runtest   = 0;
+   } else {
+      die "ERROR: unknown argument(s): $runtests";
+   }
 
-    # Find the first argument
-    while(@tests) {
-      $test=$tests[0];
-      $test =~ s/^\s+//;
-      shift(@tests), next  if ($test eq ""  or  $test =~ /^$comment/);
-      last;
-    }
+   if (ref($tests) eq "ARRAY") {
+      @tests = @$tests;
 
-    $t++;
-    # Read all arguments, note, and expected value
-    @args=();
-    @exp=();
-    $exp=-1;
-    while(@tests) {
-      $test=shift(@tests);
-      $test =~ s/^\s+//;
-      last  if ($test eq "");
-      next  if ($test =~ /^$comment/);
-      if ($test eq "nil") {
-        push(@args,"");
-      } elsif ($test eq "~") {
-        $exp=$#args;
-      } else {
-        push(@args,$test);
-      }
-    }
+   } else {
+      # Separate tests.
 
-    next  if (defined $runtests and $runtests<0 and $t!=-$runtests);
-    next  if (defined $runtests and $runtests>0 and $t<$runtests);
+      my($comment)="#";
+      my(@lines)=split(/\n/,$tests);
+      my(@test);
+      while (@lines) {
+         my $line = shift(@lines);
+         $line =~ s/^\s*//;
+         $line =~ s/\s*$//;
+         next  if ($line =~ /^$comment/);
 
-    # Separate out the note and expected value
-    if ($exp == -1) {
-      @exp=();
-      $exp=pop(@args);
-      $exp=~ s/\s+//g;
-      $exp=~ s/_/ /g;
-    } else {
-      @exp=splice(@args,$exp+1);
-      $exp=join(" ",@exp);
-    }
-    $exp=~s/  +/ /g;
-
-    $note="";
-    if ($args[$#args] =~ /^>/) {
-      $note=pop(@args);
-      $note =~ s/^>\s*//;
-    }
-
-    # An approximate answer is good to within 10 seconds.
-    $approx=0;
-    if ($exp =~ /^~/) {
-      $approx=1;
-      $exp=~ s/^~//;
-      $ans1=DateCalc($exp,"-10");
-      $ans2=DateCalc($exp,"+10");
-    }
-
-    my(@out,@ans,$tmp,%tmp,@tmp);
-    @ans=&$funcref(@args,@extra);
-    while (@ans) {
-      $tmp=shift(@ans);
-      if (ref $tmp) {
-         if (ref $tmp eq "SCALAR") {
-            unshift(@ans,$$tmp);
-         } elsif (ref $tmp eq "ARRAY") {
-            unshift(@ans,"[",@$tmp,"]");
-         } elsif (ref $tmp eq "HASH") {
-            %tmp=%$tmp;
-            @tmp=();
-            foreach $tmp (sort keys %tmp) {
-               push(@tmp,$tmp,"=>",$tmp{$tmp});
-            }
-            unshift(@ans,"{",@tmp,"}");
-         } else {
-           push @out,ref $tmp;
+         if ($line ne "") {
+            push(@test,$line);
+            next;
          }
+
+         if (@test) {
+            push(@tests,[ @test ]);
+            @test=();
+         }
+      }
+      if (@test) {
+         push(@tests,[ @test ]);
+      }
+
+      # Get arg/val lists for each test.
+
+      foreach my $test (@tests) {
+         my(@tmp)=@$test;
+         my(@arg,@val);
+
+         # single line test
+         @tmp = split(/\s+/,$tmp[0])  if ($#tmp == 0);
+
+         my($sep)=-1;
+         my($i);
+         for ($i=0; $i<=$#tmp; $i++) {
+            if ($tmp[$i] eq "~") {
+               $sep=$i;
+               last;
+            }
+         }
+
+         if ($sep<0) {
+            @val=pop(@tmp);
+            @arg=@tmp;
+         } else {
+            @arg=@tmp[0..($sep-1)];
+            @val=@tmp[($sep+1)..$#tmp];
+         }
+         $test = [ [@arg],[@val] ];
+      }
+   }
+
+   my($ntest)=$#tests + 1;
+   print "1..$ntest\n"  if ($feedback  &&  $runtest);
+
+   my(@t);
+   if ($endtest) {
+      @t = ($starttest..$endtest);
+   } else {
+      @t = ($starttest..$ntest);
+   }
+
+   foreach my $t (@t) {
+      $::testnum  = $t;
+
+      my $arg     = dclone($tests[$t-1][0]);
+      my @arg     = @$arg;
+      print_to_vals(\@arg);
+
+      my $argprt  = dclone(\@arg);
+      my @argprt  = @$argprt;
+      vals_to_print(\@argprt);
+
+      my $exp     = dclone($tests[$t-1][1]);
+      my @exp     = @$exp;
+      print_to_vals(\@exp);
+      vals_to_print(\@exp);
+
+      # Run the test
+
+      my ($ans,@ans);
+      if ($runtest) {
+         @ans = &$funcref(@arg,@extra);
+      }
+      vals_to_print(\@ans);
+
+      # Compare the results
+
+      foreach my $arg (@arg) {
+         $arg = "_undef_"  if (! defined $arg);
+         $arg = "_blank_"  if ($arg eq "");
+      }
+      $arg = join("\n           ",@argprt,@extra);
+      $ans = join("\n           ",@ans);
+      $exp = join("\n           ",@exp);
+
+      if (! $runtest) {
+         print "########################\n";
+         print "Test     = $t\n";
+         print "Args     = $arg\n";
+         print "Expected = $exp\n";
+      } elsif ($ans ne $exp) {
+         print "not ok $t\n";
+         warn "########################\n";
+         warn "Args     = $arg\n";
+         warn "Expected = $exp\n";
+         warn "Got      = $ans\n";
+         warn "########################\n";
       } else {
-        push @out,$tmp;
+         print "ok $t\n"  if ($feedback);
       }
-    }
-    $ans=join(" ",@out);
-    $ans=~s/  +/ /g;
-#   if (@exp) {
-#     $ans=join(" ",&$funcref(@args,@extra));
-#   } else {
-#     $ans=&$funcref(@args,@extra);
-#   }
+   }
+}
 
-    $bad=1;
-    $bad=0  if ($exp eq $ans  or  $exp eq "nil" && $ans eq "");
-    $bad=0  if ($approx  and  $ans ge $ans1 && $ans le $ans2);
+# The following is similar but it takes input from an input file and
+# sends output to an output file.
+#
+# $files is a reference to a list of tests.  If one of the tests is named
+# "foobar", the input is from "foobar.in", output is to "foobar.out", and
+# the expected output is in "foobar.exp".
+#
+# The function stored in $funcref is called as:
+#    &$funcref($in,$out,@extra)
+# where $in is the name of the input file, $out is the name of the output
+# file, and @extra are any additional arguments that are required.
+#
+# The function should return 0 on success, or an error message.
 
-    if ($bad) {
-      warn "########################\n";
-      warn "Expected = $exp\n";
-      warn "Got      = $ans\n";
-      warn "========================\n";
-      foreach $test (@args) {
-        if (defined $test) {
-          warn "Test     = $test\n";
-        } else {
-          warn "Test     = nil\n";
-        }
+sub test_File {
+   my($funcref,$files,$runtests,@extra)=@_;
+   my(@files)=@$files;
+
+   $runtests=0  if (! $runtests);
+
+   my($ntest)=$#files + 1;
+   print "1..$ntest\n"  if (! $runtests);
+
+   my(@t);
+   if ($runtests > 0) {
+      @t = ($runtests..$ntest);
+   } elsif ($runtests < 0) {
+      @t = (-$runtests);
+   } else {
+      @t = (1..$ntest);
+   }
+
+   foreach my $t (@t) {
+      $::testnum = $t;
+      my $test = $files[$t-1];
+      my $expf = "$test.exp";
+      my $outf = "$test.out";
+
+      if (! -f $test  ||  ! -f $expf) {
+         print "not ok $t\n";
+         warn  "Test: $test: missing input/outpuf information\n";
+         next;
       }
-      foreach $test (@extra) {
-        if (defined $test) {
-          warn "Extra    = $test\n";
-        } else {
-          warn "Extra    = nil\n";
-        }
+
+      my $err  = &$funcref($test,$outf,@extra);
+      if ($err) {
+         print "not ok $t\n";
+         warn  "Test: $test: $err\n";
+         next;
       }
-      warn "Note     = $note\n"   if ($note);
-      warn "########################\n";
-      print "not ok $t\n";
-    } else {
-      print "ok $t\n"  if (! defined $runtests or $runtests==0);
-    }
-  }
-  print "$t tests\n"  if (defined $runtests);
-  print "ntest: $ntest\n"  if (defined $runtests && $ntest != $t);
+
+      local *FH;
+      open(FH,$expf)  ||  do {
+         print "not ok $t\n";
+         warn  "Test: $test: $!\n";
+         next;
+      };
+      my @exp = <FH>;
+      close(FH);
+      my $exp = join("",@exp);
+      open(FH,$outf)  ||  do {
+         print "not ok $t\n";
+         warn  "Test: $test: $!\n";
+         next;
+      };
+      my @out = <FH>;
+      close(FH);
+      my $out = join("",@out);
+
+      if ($out ne $exp) {
+         print "not ok $t\n";
+         warn  "Test: $test: output differs from expected value\n";
+         next;
+      }
+
+      print "ok $t\n"  if (! $runtests);
+   }
+}
+
+# Converts a printable version of arguments to actual arguments
+sub print_to_vals {
+   my($listref) = @_;
+
+   foreach my $arg (@$listref) {
+      next  if (! defined($arg));
+      if ($arg eq "_undef_") {
+         $arg = undef;
+
+      } elsif ($arg eq "_blank_") {
+         $arg = "";
+
+      } elsif ($arg =~ /^\\\s*(.*)/) {
+         $str = $1;
+         $arg = \$str;
+
+      } elsif ($arg =~ /^\[(.?)\]\s*(.*)/) {
+         my($sep,$str) = ($1,$2);
+         $sep = ","  if (! $sep);
+         my @list = split(/\Q$sep\E/,$str);
+         foreach my $e (@list) {
+            $e = ""     if ($e eq "_blank_");
+            $e = undef  if ($e eq "_undef_");
+         }
+         $arg = \@list;
+
+      } elsif ($arg =~ /^\{(.?)\}\s*(.*)/) {
+         my($sep,$str) = ($1,$2);
+         $sep = ","  if (! $sep);
+         my %hash = split(/\Q$sep\E/,$str);
+         foreach my $key (keys %hash) {
+            my $val = $hash{$key};
+            $hash{$key} = undef  if ($val eq "_undef_");
+            $hash{$key} = ""     if ($val eq "_blank_");
+         }
+         $arg = \%hash;
+      }
+   }
+}
+
+# Converts arguments to a printable version.
+sub vals_to_print {
+   my($listref) = @_;
+
+   foreach my $arg (@$listref) {
+      if (! defined $arg) {
+         $arg = "_undef_";
+
+      } elsif (! ref($arg)) {
+         $arg = "_blank_"  if ($arg eq "");
+
+      } else {
+         my $ref = ref($arg);
+         if      ($ref eq "SCALAR") {
+            $arg = "\\ $$arg";
+
+         } elsif ($ref eq "ARRAY") {
+            my @list = @$arg;
+            foreach my $e (@list) {
+               $e = "_undef_", next   if (! defined($e));
+               $e = "_blank_"         if ($e eq "");
+            }
+            $arg = join(" ","[",join(", ",@list),"]");
+
+         } elsif ($ref eq "HASH") {
+            %hash = %$arg;
+            foreach my $key (keys %hash) {
+               my $val = $hash{$key};
+               $hash{$key} = "_undef_", next  if (! defined($val));
+               $hash{$key} = "_blank_"        if ($val eq "_blank_");
+            }
+            $arg = join(" ","{",
+                        join(", ",map { "$_ => $hash{$_}" }
+                             (sort keys %hash)), "}");
+            $arg =~ s/  +/ /g;
+         }
+      }
+   }
 }
 
 1;
