@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -302,14 +302,19 @@ improve the speed of parsing. These include:
    $err = $date->parse_date($string);
 
 This parses a string which contains a valid date and sets the date
-part of the object (but does not change the time portion).
+part of the object.
+
+If the object contained a valid date, the time is kept unchanged. If the
+object did NOT contain a valid date, a time of 00:00:00 is used.
 
 =item parse_time
 
    $err = $date->parse_time($string);
 
 This parses a string and sets the time portion of $date to contain it.
-$date must be a valid date.
+
+If the object contained a valid date, the Y/M/D portion is left unchanged.
+Otherwise, the current date is used.
 
 =item parse_format
 
@@ -617,6 +622,9 @@ is either the system time zone, or the zone specified with the
 SetDate or ForceDate config variables).
 
 If $type is "gmt", the date is returned in the GMT time zone.
+
+An empty string or list is returned i the case of an error (and
+an error code is set).
 
 =item week_of_year
 

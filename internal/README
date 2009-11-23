@@ -60,7 +60,26 @@ In internal/benchmarks directory
 
 #########################################################################
 Set the release date
+
+   v=`cat internal/VERSION`
+   for i in \
+       internal/tzdata \
+       lib/Date/*.pm \
+       lib/Date/Manip/*.pm \
+       lib/Date/Manip/Lang/*.pm \
+   ;do
+      sed -e "s,VERSION=\".*\",VERSION=\"$v\"," $i > z
+      mv z $i
+   done
+
+#########################################################################
 Update the copyright
+
+   y=`date '+%Y'`
+   for i in `find . -type f | xargs egrep -l 'Copyright \(c\) ....\-.... Sullivan Beck'` ;do
+     sed -e "s,\(Copyright (c) ....\)\-.... \(Sullivan Beck\),\1-$y \2," $i > z
+     mv z $i
+   done
 
 #########################################################################
 Run the kwalitee tests

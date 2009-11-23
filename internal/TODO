@@ -1,8 +1,10 @@
 ########################################################################
-# Prior to release of 6.01
+# Prior to release of 6.10
 ########################################################################
 
-Write script to update copyright and VERSION.
+In Date::parse, separate all of the regular expressions for "in 5 days"
+type (i.e. relative to today), and these are the only ones you update
+NOW.
 
 Cache Date::Manip::TZ::zone for ($abbrev,isdst), ($abbrev,$isdst,$offset),
 other???
@@ -37,7 +39,7 @@ Rewrite Problems.pod (Date Manip is slow)
 Fix docs for Sorting Problems.  It should use Date_Cmp instead of cmp.
 
 ########################################################################
-# Prior to release of 6.02
+# Prior to release of 6.20
 ########################################################################
 
 Everywhere a timezone can be entered, allow:

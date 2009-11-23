@@ -1,5 +1,5 @@
 package Date::Manip::Base;
-# Copyright (c) 1995-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -23,7 +23,7 @@ use feature "switch";
 require Date::Manip::Lang::index;
 
 use vars qw($VERSION);
-$VERSION="6.00";
+$VERSION="6.01";
 
 ###############################################################################
 # BASE METHODS
@@ -1660,7 +1660,7 @@ sub _config_var_setdate {
    my $da2rx = qr/(\d\d\d\d)\-(\d\d)\-(\d\d)\-(\d\d):(\d\d):(\d\d)/;
    my $time  = time;
 
-   my($op,$date,$dstflag,$zone,@date,$offset);
+   my($op,$date,$dstflag,$zone,@date,$offset,$abb);
 
    #
    # Parse the argument
@@ -1790,13 +1790,14 @@ sub _config_var_setdate {
             return 1;
          }
          $isdst  = $$per[5];
+         $abb    = $$per[4];
          $offset = $$per[3];
       }
 
       when ("zone") {
          # Convert to that zone
          my($err);
-         ($err,$date,$offset,$isdst) = $dmt->convert_from_gmt($date,$zone);
+         ($err,$date,$offset,$isdst,$abb) = $dmt->convert_from_gmt($date,$zone);
          if ($err) {
             warn "ERROR: [config_var] invalid SetDate date/offset values\n";
             return 1;
@@ -1809,8 +1810,9 @@ sub _config_var_setdate {
    #
 
    $$self{"data"}{"now"}{"date"}   = $date;
-   $$self{"data"}{"now"}{"tz"}     = $zone;
+   $$self{"data"}{"now"}{"tz"}     = $dmt->_zone($zone);
    $$self{"data"}{"now"}{"isdst"}  = $isdst;
+   $$self{"data"}{"now"}{"abb"}    = $abb;
    $$self{"data"}{"now"}{"offset"} = $offset;
 
    #

@@ -1,5 +1,5 @@
 package Date::Manip::TZ;
-# Copyright (c) 2008-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -25,7 +25,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 use vars qw($VERSION);
-$VERSION="6.00";
+$VERSION="6.01";
 
 ########################################################################
 # BASE METHODS
@@ -358,7 +358,7 @@ sub _set_curr_zone {
    my $dmb   = $$self{"objs"}{"base"};
    my $currzone = $self->_get_curr_zone();
 
-   $$dmb{"data"}{"now"}{"systz"} = $currzone;
+   $$dmb{"data"}{"now"}{"systz"} = $self->_zone($currzone);
 }
 
 # This determines the system timezone using all of the methods
@@ -575,7 +575,10 @@ use warnings;
 sub zone {
    my($self,@args) = @_;
    my $dmb         = $$self{"objs"}{"base"};
-   return $dmb->_now("tz")  if (! @args);
+   if (! @args) {
+      my $tz = $dmb->_now("tz");
+      return $$self{"data"}{"ZoneNames"}{$tz}
+   }
 
    # Parse the arguments
 

@@ -1,5 +1,5 @@
 package Date::Manip::TZdata;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -13,7 +13,7 @@ use integer;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION="6.00";
+$VERSION="6.01";
 
 ###############################################################################
 # GLOBAL VARIABLES

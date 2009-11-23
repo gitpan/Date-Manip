@@ -2,7 +2,6 @@ Build.PL
 examples/README.examples
 HISTORY
 INSTALL
-internal/.README.swp
 internal/benchmarks/parse-1.dm.pl
 internal/benchmarks/parse-1.dm5.pl
 internal/benchmarks/parse-1.dt.pl
@@ -18,6 +17,7 @@ internal/manip.isp
 internal/README
 internal/TODO
 internal/tzdata
+internal/VERSION
 lib/Date/Manip.pm
 lib/Date/Manip.pod
 lib/Date/Manip/Base.pm
@@ -1057,6 +1057,7 @@ t/date.secs_since_1970_GMT.1.t
 t/date.set.0.t
 t/date.set.1.t
 t/date.set.2.t
+t/date.set.3.t
 t/date.week_of_year.0.t
 t/date.week_of_year.1.t
 t/delta.calc.delta_delta_approx.t
@@ -1105,5 +1106,4 @@ t/tz.zone.t
 t/tzdata._ruleinfo.tx
 t/tzdata._zoneinfo.tx
 t/xtra.now.tx
-VERSION
 META.yml

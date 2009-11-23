@@ -1,5 +1,6 @@
 
 use ExtUtils::MakeMaker;
+use 5.010000;
 
 WriteMakefile(
         NAME             => 'Date::Manip',

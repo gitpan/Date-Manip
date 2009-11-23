@@ -781,3 +781,7 @@ Version 6.00  2009-11-23
    Delta_Format initialization done outside of the function.  Eric Boehm
    Added $subtract to calculation routines. First suggested by Steve Berlage.
 
+Version 6.01  2009-11-23
+   A quick bug fix to correct a couple of problems that showed up with the
+      testers.
+
