@@ -5,7 +5,7 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 20 14:21:12 EST 2009
+#    Generated on: Tue Nov 24 11:05:29 EST 2009
 #    Data version: tzdata2009s
 #    Code version: tzcode2009r
 

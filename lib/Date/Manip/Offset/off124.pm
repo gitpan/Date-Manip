@@ -5,7 +5,7 @@ package Date::Manip::Offset::off124;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 20 14:20:54 EST 2009
+#    Generated on: Tue Nov 24 11:05:16 EST 2009
 #    Data version: tzdata2009s
 #    Code version: tzcode2009r
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 use vars qw($Offset %Offset);
 

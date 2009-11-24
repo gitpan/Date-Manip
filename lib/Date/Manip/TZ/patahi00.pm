@@ -5,7 +5,7 @@ package Date::Manip::TZ::patahi00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 20 14:19:25 EST 2009
+#    Generated on: Tue Nov 24 11:04:13 EST 2009
 #    Data version: tzdata2009s
 #    Code version: tzcode2009r
 
@@ -34,18 +34,20 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 %Dates         = (
    1    =>
      [
         [ [1,1,2,0,0,0],[1,1,1,14,1,44],'-09:58:16',[-9,-58,-16],
-          'LMT',0,[1912,10,1,9,58,15],[1912,9,30,23,59,59] ],
+          'LMT',0,[1912,10,1,9,58,15],[1912,9,30,23,59,59],
+          '0001010200:00:00','0001010114:01:44','1912100109:58:15','1912093023:59:59' ],
      ],
    1912 =>
      [
         [ [1912,10,1,9,58,16],[1912,9,30,23,58,16],'-10:00:00',[-10,0,0],
-          'TAHT',0,[9999,12,31,0,0,0],[9999,12,30,14,0,0] ],
+          'TAHT',0,[9999,12,31,0,0,0],[9999,12,30,14,0,0],
+          '1912100109:58:16','1912093023:58:16','9999123100:00:00','9999123014:00:00' ],
      ],
 );
 

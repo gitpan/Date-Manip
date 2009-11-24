@@ -12,20 +12,19 @@ package Date::Manip::TZ;
 ########################################################################
 
 use Date::Manip::Obj;
-@ISA = ("Date::Manip::Obj");
+@ISA = ('Date::Manip::Obj');
 
 require 5.010000;
 use warnings;
 use strict;
-use Storable qw(dclone);
-use feature "switch";
+use feature 'switch';
 
 use IO::File;
 require Date::Manip::Zones;
 use Date::Manip::Base;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 ########################################################################
 # BASE METHODS
@@ -34,26 +33,26 @@ $VERSION="6.02";
 sub _init {
    my($self) = @_;
 
-   $$self{"data"} =
+   $$self{'data'} =
      {
       # These are the variables defined in Date::Manip::Zones
-      "Module"         => \%Date::Manip::Zones::Module,
-      "ZoneNames"      => \%Date::Manip::Zones::ZoneNames,
-      "Alias"          => \%Date::Manip::Zones::Alias,
-      "Abbrev"         => \%Date::Manip::Zones::Abbrev,
-      "Offmod"         => \%Date::Manip::Zones::Offmod,
-      "FirstDate"      => $Date::Manip::Zones::FirstDate,
-      "LastDate"       => $Date::Manip::Zones::LastDate,
-      "LastYear"       => $Date::Manip::Zones::LastYear,
+      'Module'         => \%Date::Manip::Zones::Module,
+      'ZoneNames'      => \%Date::Manip::Zones::ZoneNames,
+      'Alias'          => \%Date::Manip::Zones::Alias,
+      'Abbrev'         => \%Date::Manip::Zones::Abbrev,
+      'Offmod'         => \%Date::Manip::Zones::Offmod,
+      'FirstDate'      => $Date::Manip::Zones::FirstDate,
+      'LastDate'       => $Date::Manip::Zones::LastDate,
+      'LastYear'       => $Date::Manip::Zones::LastYear,
 
       # These override values from Date::Manip::Zones
-      "MyAlias"        => {},
-      "MyAbbrev"       => {},
-      "MyOffsets"      => {},
+      'MyAlias'        => {},
+      'MyAbbrev'       => {},
+      'MyOffsets'      => {},
 
       # Each timezone/offset module that is loaded goes here
-      "Zones"          => {},
-      "Offsets"        => {},
+      'Zones'          => {},
+      'Offsets'        => {},
 
       # methods     a list of methods used for determining the
       #             current zone
@@ -66,20 +65,20 @@ sub _init {
       #             timezone offset
       # zrx         the regular expression to match all timezone
       #             information
-      "methods"        => [],
-      "zonerx"         => undef,
-      "abbrx"          => undef,
-      "offrx"          => undef,
-      "zrx"            => undef,
+      'methods'        => [],
+      'zonerx'         => undef,
+      'abbrx'          => undef,
+      'offrx'          => undef,
+      'zrx'            => undef,
      };
 
    # OS specific stuff
 
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
    my $os  = $dmb->_os();
 
-   if ($os eq "Unix") {
-      $$self{"data"}{"methods"} = [
+   if ($os eq 'Unix') {
+      $$self{'data'}{'methods'} = [
                                    qw(main TZ
                                       env  TZ
                                       file /etc/TIMEZONE
@@ -97,16 +96,16 @@ sub _init {
                                     ),
                                   ];
 
-   } elsif ($os eq "Windows") {
-      $$self{"data"}{"methods"} = [
+   } elsif ($os eq 'Windows') {
+      $$self{'data'}{'methods'} = [
                                    qw(main TZ
                                       env  TZ
                                       registry
                                       gmtoff),
                                   ];
 
-   } elsif ($os eq "VMS") {
-      $$self{"data"}{"methods"} = [
+   } elsif ($os eq 'VMS') {
+      $$self{'data'}{'methods'} = [
                                    qw(main TZ
                                       env  TZ
                                       env  SYS$TIMEZONE_RULE
@@ -120,7 +119,7 @@ sub _init {
                                   ];
 
    } else {
-      $$self{"data"}{"methods"} = [
+      $$self{'data'}{'methods'} = [
                                    qw(main TZ
                                       env  TZ
                                       gmtoff
@@ -140,30 +139,30 @@ no strict 'refs';
 #
 sub _offmod {
    my($self,$offset) = @_;
-   return  if (exists $$self{"data"}{"Offsets"}{$offset});
+   return  if (exists $$self{'data'}{'Offsets'}{$offset});
 
-   my $mod  = $$self{"data"}{"Offmod"}{$offset};
+   my $mod  = $$self{'data'}{'Offmod'}{$offset};
    eval "require Date::Manip::Offset::${mod}";
    my %off  = %{ "Date::Manip::Offset::${mod}::Offset" };
 
-   $$self{"data"}{"Offsets"}{$offset} = { %off };
+   $$self{'data'}{'Offsets'}{$offset} = { %off };
 }
 
 # This loads data from a zone module (takes a lowercase zone)
 #
 sub _module {
    my($self,$zone) = @_;
-   return  if (exists $$self{"data"}{"Zones"}{$zone}{"Loaded"});
+   return  if (exists $$self{'data'}{'Zones'}{$zone}{'Loaded'});
 
-   my $mod   = $$self{"data"}{"Module"}{$zone};
+   my $mod   = $$self{'data'}{'Module'}{$zone};
    eval "require Date::Manip::TZ::${mod}";
    my %dates = %{ "Date::Manip::TZ::${mod}::Dates" };
    my %last  = %{ "Date::Manip::TZ::${mod}::LastRule" };
-   $$self{"data"}{"Zones"}{$zone} =
+   $$self{'data'}{'Zones'}{$zone} =
      {
-      "Dates"    => { %dates },
-      "LastRule" => { %last },
-      "Loaded"   => 1
+      'Dates'    => { %dates },
+      'LastRule' => { %last },
+      'Loaded'   => 1
      };
 }
 use strict 'refs';
@@ -176,12 +175,12 @@ sub _zone {
    my($self,$zone) = @_;
    $zone = lc($zone);
 
-   if (exists $$self{"data"}{"MyAlias"}{$zone}) {
-      return $$self{"data"}{"MyAlias"}{$zone};
-   } elsif (exists $$self{"data"}{"Alias"}{$zone}) {
-      return  $$self{"data"}{"Alias"}{$zone};
+   if (exists $$self{'data'}{'MyAlias'}{$zone}) {
+      return $$self{'data'}{'MyAlias'}{$zone};
+   } elsif (exists $$self{'data'}{'Alias'}{$zone}) {
+      return  $$self{'data'}{'Alias'}{$zone};
    } else {
-      return "";
+      return '';
    }
 }
 
@@ -199,22 +198,22 @@ sub define_alias {
    my($self,$alias,$zone) = @_;
    $alias = lc($alias);
 
-   if ($alias eq "reset") {
-      $$self{"data"}{"MyAlias"} = {};
-      $$self{"data"}{"zonerx"}  = undef;
+   if ($alias eq 'reset') {
+      $$self{'data'}{'MyAlias'} = {};
+      $$self{'data'}{'zonerx'}  = undef;
       return 0;
    }
-   if (lc($zone) eq "reset") {
-      delete $$self{"data"}{"MyAlias"}{$alias};
-      $$self{"data"}{"zonerx"} = undef;
+   if (lc($zone) eq 'reset') {
+      delete $$self{'data'}{'MyAlias'}{$alias};
+      $$self{'data'}{'zonerx'} = undef;
       return 0;
    }
 
    $zone  = $self->_zone($zone);
 
    return 1  if (! $zone);
-   $$self{"data"}{"MyAlias"}{$alias} = $zone;
-   $$self{"data"}{"zonerx"} = undef;
+   $$self{'data'}{'MyAlias'}{$alias} = $zone;
+   $$self{'data'}{'zonerx'} = undef;
    return 0;
 }
 
@@ -222,23 +221,23 @@ sub define_abbrev {
    my($self,$abbrev,@zone) = @_;
    $abbrev = lc($abbrev);
 
-   if ($abbrev eq "reset") {
-      $$self{"data"}{"MyAbbrev"} = {};
-      $$self{"data"}{"abbrx"}    = undef;
+   if ($abbrev eq 'reset') {
+      $$self{'data'}{'MyAbbrev'} = {};
+      $$self{'data'}{'abbrx'}    = undef;
       return 0;
    }
-   if ($#zone == 0  &&  lc($zone[0]) eq "reset") {
-      delete $$self{"data"}{"MyAbbrev"}{$abbrev};
-      $$self{"data"}{"abbrx"} = undef;
+   if ($#zone == 0  &&  lc($zone[0]) eq 'reset') {
+      delete $$self{'data'}{'MyAbbrev'}{$abbrev};
+      $$self{'data'}{'abbrx'} = undef;
       return (0);
    }
 
-   if (! exists $$self{"data"}{"Abbrev"}{$abbrev}) {
+   if (! exists $$self{'data'}{'Abbrev'}{$abbrev}) {
       return (1);
    }
 
    my (@z,%z);
-   my %zone = map { $_,1 } @{ $$self{"data"}{"Abbrev"}{$abbrev} };
+   my %zone = map { $_,1 } @{ $$self{'data'}{'Abbrev'}{$abbrev} };
    foreach my $z (@zone) {
       my $zone = $self->_zone($z);
       return (2,$z)  if (! $zone);
@@ -248,21 +247,21 @@ sub define_abbrev {
       push(@z,$zone);
    }
 
-   $$self{"data"}{"MyAbbrev"}{$abbrev} = [ @z ];
-   $$self{"data"}{"abbrx"}             = undef;
+   $$self{'data'}{'MyAbbrev'}{$abbrev} = [ @z ];
+   $$self{'data'}{'abbrx'}             = undef;
    return ();
 }
 
 sub define_offset {
    my($self,$offset,@args) = @_;
-   my $dmb                 = $$self{"objs"}{"base"};
+   my $dmb                 = $$self{'objs'}{'base'};
 
-   if (lc($offset) eq "reset") {
-      $$self{"data"}{"MyOffsets"} = {};
+   if (lc($offset) eq 'reset') {
+      $$self{'data'}{'MyOffsets'} = {};
       return (0);
    }
-   if ($#args == 0  &&  lc($args[0]) eq "reset") {
-      delete $$self{"data"}{"MyOffsets"}{$offset};
+   if ($#args == 0  &&  lc($args[0]) eq 'reset') {
+      delete $$self{'data'}{'MyOffsets'}{$offset};
       return (0);
    }
 
@@ -270,12 +269,12 @@ sub define_offset {
    # appropriate module.
 
    if (ref($offset)) {
-      $offset = $dmb->join("offset",$offset);
+      $offset = $dmb->join('offset',$offset);
    } else {
-      $offset = $dmb->_delta_convert("offset",$offset);
+      $offset = $dmb->_delta_convert('offset',$offset);
    }
    return (9)  if (! $offset);
-   return (1)  if (! exists $$self{"data"}{"Offmod"}{$offset});
+   return (1)  if (! exists $$self{'data'}{'Offmod'}{$offset});
 
    $self->_offmod($offset);
 
@@ -284,16 +283,16 @@ sub define_offset {
    my(@isdst) = (0,1);
    if ($args[0] =~ /^std|dst|stdonly|dstonly$/i) {
       my $tmp = lc(shift(@args));
-      if ($tmp eq "stdonly") {
+      if ($tmp eq 'stdonly') {
          @isdst = (0);
-      } elsif ($tmp eq "dstonly") {
+      } elsif ($tmp eq 'dstonly') {
          @isdst = (1);
       }
    }
    my @zone = @args;
 
    if ($#isdst == 0  &&
-       ! exists($$self{"data"}{"Offsets"}{$offset}{$isdst[0]})) {
+       ! exists($$self{'data'}{'Offsets'}{$offset}{$isdst[0]})) {
       return (2);
    }
 
@@ -301,14 +300,14 @@ sub define_offset {
 
    my %tmp;
    foreach my $isdst (0,1) {
-      next  if (! exists $$self{"data"}{"Offsets"}{$offset}{$isdst});
-      my @z = @{ $$self{"data"}{"Offsets"}{$offset}{$isdst} };
+      next  if (! exists $$self{'data'}{'Offsets'}{$offset}{$isdst});
+      my @z = @{ $$self{'data'}{'Offsets'}{$offset}{$isdst} };
       $tmp{$isdst} = { map { $_,1 } @z };
    }
 
    foreach my $z (@zone) {
       my $lcz = lc($z);
-      if (! exists $$self{"data"}{"ZoneNames"}{$lcz}) {
+      if (! exists $$self{'data'}{'ZoneNames'}{$lcz}) {
          return (3,$z);
       } elsif (! exists $tmp{0}{$lcz}  &&
                ! exists $tmp{1}{$lcz}) {
@@ -327,7 +326,7 @@ sub define_offset {
       foreach my $z (@zone) {
          push(@z,$z)  if (exists $tmp{$isdst}{$z});
       }
-      $$self{"data"}{"MyOffsets"}{$offset}{$isdst} = [ @z ];
+      $$self{'data'}{'MyOffsets'}{$offset}{$isdst} = [ @z ];
    }
 
    return (0);
@@ -339,13 +338,13 @@ sub define_offset {
 
 sub curr_zone {
    my($self,$reset) = @_;
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
    if ($reset) {
       $self->_set_curr_zone();
    }
 
-   return $dmb->_now("systz");
+   return $dmb->_now('systz');
 }
 
 sub curr_zone_methods {
@@ -356,15 +355,15 @@ sub curr_zone_methods {
       return;
    }
 
-   $$self{"data"}{"methods"}  = [ @methods ];
+   $$self{'data'}{'methods'}  = [ @methods ];
 }
 
 sub _set_curr_zone {
    my($self) = @_;
-   my $dmb   = $$self{"objs"}{"base"};
+   my $dmb   = $$self{'objs'}{'base'};
    my $currzone = $self->_get_curr_zone();
 
-   $$dmb{"data"}{"now"}{"systz"} = $self->_zone($currzone);
+   $$dmb{'data'}{'now'}{'systz'} = $self->_zone($currzone);
 }
 
 # This determines the system timezone using all of the methods
@@ -372,21 +371,21 @@ sub _set_curr_zone {
 #
 sub _get_curr_zone {
    my($self) = @_;
-   my $dmb   = $$self{"objs"}{"base"};
+   my $dmb   = $$self{'objs'}{'base'};
 
    my $t = time;
    my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($t);
-   my $currzone = "";
-   my $dstflag = ($isdst ? "dstonly" : "stdonly");
+   my $currzone = '';
+   my $dstflag = ($isdst ? 'dstonly' : 'stdonly');
 
-   my (@methods) = @{ $$self{"data"}{"methods"} };
+   my (@methods) = @{ $$self{'data'}{'methods'} };
  METHOD: while (@methods) {
       my $method = shift(@methods);
       my @zone   = ();
 
       given ($method) {
 
-         when ("main") {
+         when ('main') {
             if (! @methods) {
                warn "ERROR: [_set_curr_zone] main requires argument\n";
                return;
@@ -395,7 +394,7 @@ sub _get_curr_zone {
             push(@zone,$$::var)  if (defined $$::var);
          }
 
-         when ("env") {
+         when ('env') {
             if (! @methods) {
                warn "ERROR: [_set_curr_zone] env requires argument\n";
                return;
@@ -404,7 +403,7 @@ sub _get_curr_zone {
             push(@zone,$ENV{$var})  if (exists $ENV{$var});
          }
 
-         when ("file") {
+         when ('file') {
             if (! @methods) {
                warn "ERROR: [_set_curr_zone] file requires argument\n";
                return;
@@ -435,7 +434,7 @@ sub _get_curr_zone {
             close(IN);
          }
 
-         when ("command") {
+         when ('command') {
             if (! @methods) {
                warn "ERROR: [_set_curr_zone] command requires argument\n";
                return;
@@ -445,7 +444,7 @@ sub _get_curr_zone {
             push(@zone,$out)  if ($out);
          }
 
-         when ("cmdfield") {
+         when ('cmdfield') {
             if ($#methods < 1) {
                warn "ERROR: [_set_curr_zone] cmdfield requires 2 arguments\n";
                return;
@@ -461,7 +460,7 @@ sub _get_curr_zone {
             }
          }
 
-         when ("gmtoff") {
+         when ('gmtoff') {
             my($secUT,$minUT,$hourUT,$mdayUT,$monUT,$yearUT,$wdayUT,$ydayUT,
                $isdstUT) = gmtime($t);
             if ($mdayUT>($mday+1)) {
@@ -475,12 +474,12 @@ sub _get_curr_zone {
             $secUT  = (($mdayUT*24 + $hourUT)*60 + $minUT)*60 + $secUT;
             my $off = $sec-$secUT;
 
-            $off    = $dmb->_delta_convert("time","0:0:$off");
-            $off    = $dmb->_delta_convert("offset",$off);
+            $off    = $dmb->_delta_convert('time',"0:0:$off");
+            $off    = $dmb->_delta_convert('offset',$off);
             push(@zone,$off);
          }
 
-         when ("registry") {
+         when ('registry') {
             my $z = $self->_windows_registry_val();
             push(@zone,$z)  if ($z);
          }
@@ -499,8 +498,8 @@ sub _get_curr_zone {
          last METHOD  if ($currzone);
 
          # If we got an abbreviation (EST)
-         if (exists $$self{"data"}{"Abbrev"}{$zone}) {
-            $currzone = $$self{"data"}{"Abbrev"}{$zone}[0];
+         if (exists $$self{'data'}{'Abbrev'}{$zone}) {
+            $currzone = $$self{'data'}{'Abbrev'}{$zone}[0];
             last METHOD;
          }
 
@@ -526,10 +525,10 @@ sub _windows_registry_val {
 
    require Win32::TieRegistry;
 
-   my $lmachine = new Win32::TieRegistry "LMachine",
+   my $lmachine = new Win32::TieRegistry 'LMachine',
                       { Access => Win32::TieRegistry::KEY_READ(),
-                        Delimiter => "/" }
-      or return "";
+                        Delimiter => '/' }
+      or return '';
 
    my $tzinfo = $lmachine->Open('SYSTEM/CurrentControlSet/Control/TimeZoneInformation/');
 
@@ -580,19 +579,19 @@ use warnings;
 
 sub zone {
    my($self,@args) = @_;
-   my $dmb         = $$self{"objs"}{"base"};
+   my $dmb         = $$self{'objs'}{'base'};
    if (! @args) {
-      my $tz = $dmb->_now("tz");
-      return $$self{"data"}{"ZoneNames"}{$tz}
+      my $tz = $dmb->_now('tz');
+      return $$self{'data'}{'ZoneNames'}{$tz}
    }
 
    # Parse the arguments
 
-   my($zone,$abbrev,$offset,$dstflag) = ("","","","");
+   my($zone,$abbrev,$offset,$dstflag) = ('','','','');
    my(@abbrev,$date,$tmp);
    foreach my $arg (@args) {
 
-      if (ref($arg) eq "ARRAY") {
+      if (ref($arg) eq 'ARRAY') {
          if ($#$arg == 5) {
             # [Y,M,D,H,Mn,S]
             return undef  if ($date);
@@ -601,7 +600,7 @@ sub zone {
          } elsif ($#$arg == 2) {
             # [H,Mn,S]
             return undef  if ($offset);
-            $offset = $dmb->join("offset",$arg);
+            $offset = $dmb->join('offset',$arg);
             return undef  if (! $offset);
 
          } else {
@@ -622,20 +621,20 @@ sub zone {
             return undef  if ($zone);
             $zone = $tmp;
 
-         } elsif (exists $$self{"data"}{"MyAbbrev"}{$arg}) {
+         } elsif (exists $$self{'data'}{'MyAbbrev'}{$arg}) {
             return undef  if (@abbrev);
             $abbrev = $arg;
-            @abbrev = @{ $$self{"data"}{"MyAbbrev"}{$arg} };
-         } elsif (exists $$self{"data"}{"Abbrev"}{$arg}) {
+            @abbrev = @{ $$self{'data'}{'MyAbbrev'}{$arg} };
+         } elsif (exists $$self{'data'}{'Abbrev'}{$arg}) {
             return undef  if (@abbrev);
             $abbrev = $arg;
-            @abbrev = @{ $$self{"data"}{"Abbrev"}{$arg} };
+            @abbrev = @{ $$self{'data'}{'Abbrev'}{$arg} };
 
-         } elsif ($tmp = $dmb->split("offset",$arg)) {
+         } elsif ($tmp = $dmb->split('offset',$arg)) {
             return undef  if ($offset);
-            $offset = $dmb->_delta_convert("offset",$arg);
+            $offset = $dmb->_delta_convert('offset',$arg);
 
-         } elsif ($tmp = $dmb->split("date",$arg)) {
+         } elsif ($tmp = $dmb->split('date',$arg)) {
             return undef  if ($date);
             $date = $tmp;
 
@@ -658,17 +657,17 @@ sub zone {
       if (! $zone  &&
           ! $abbrev  &&
           ! $offset) {
-         @zone = (lc($dmb->_now("tz")));
+         @zone = (lc($dmb->_now('tz')));
       }
 
       # $dstflag
 
       my(@isdst);
-      if      ($dstflag eq "stdonly") {
+      if      ($dstflag eq 'stdonly') {
          @isdst = (0);
-      } elsif ($dstflag eq "dstonly") {
+      } elsif ($dstflag eq 'dstonly') {
          @isdst = (1);
-      } elsif ($dstflag eq "dst") {
+      } elsif ($dstflag eq 'dst') {
          @isdst = (1,0);
       } else {
          @isdst = (0,1);
@@ -706,16 +705,16 @@ sub zone {
       # $offset
 
       if ($offset) {
-         return undef  if (! exists $$self{"data"}{"Offmod"}{$offset});
+         return undef  if (! exists $$self{'data'}{'Offmod'}{$offset});
          $self->_offmod($offset);
 
          my @z;
          foreach my $isdst (@isdst) {
             my @tmp;
-            if      (exists $$self{"data"}{"MyOffsets"}{$offset}{$isdst}) {
-               @tmp = @{ $$self{"data"}{"MyOffsets"}{$offset}{$isdst} };
-            } elsif (exists $$self{"data"}{"Offsets"}{$offset}{$isdst}) {
-               @tmp = @{ $$self{"data"}{"Offsets"}{$offset}{$isdst} };
+            if      (exists $$self{'data'}{'MyOffsets'}{$offset}{$isdst}) {
+               @tmp = @{ $$self{'data'}{'MyOffsets'}{$offset}{$isdst} };
+            } elsif (exists $$self{'data'}{'Offsets'}{$offset}{$isdst}) {
+               @tmp = @{ $$self{'data'}{'Offsets'}{$offset}{$isdst} };
             }
             @tmp = $self->_check_offset_abbrev_isdst($offset,$abbrev,$isdst,@tmp)
               if ($abbrev);
@@ -747,9 +746,9 @@ sub zone {
          # multiple periods.
 
          my @tmp;
-         my $isdst = "";
-         $isdst    = 0  if ($dstflag eq "stdonly");
-         $isdst    = 1  if ($dstflag eq "dstonly");
+         my $isdst = '';
+         $isdst    = 0  if ($dstflag eq 'stdonly');
+         $isdst    = 1  if ($dstflag eq 'dstonly');
        ZONE: foreach my $z (@zone) {
             $self->_module($z);
             my $y       = $$date[0];
@@ -759,9 +758,9 @@ sub zone {
                my($begUT,$begLT,$off,$offref,$abb,$dst,$endUT,$endLT) = @$period;
                next  if ($dmb->cmp($date,$begLT) == -1  ||
                          $dmb->cmp($date,$endLT) == 1 ||
-                         ($offset ne ""  &&  $offset ne $off)  ||
-                         ($isdst  ne ""  &&  $isdst  ne $dst)  ||
-                         ($abbrev ne ""  &&  lc($abbrev) ne lc($abb))
+                         ($offset ne ''  &&  $offset ne $off)  ||
+                         ($isdst  ne ''  &&  $isdst  ne $dst)  ||
+                         ($abbrev ne ''  &&  lc($abbrev) ne lc($abb))
                         );
                push(@tmp,$z);
                next ZONE;
@@ -779,13 +778,13 @@ sub zone {
    if (wantarray) {
       my @ret;
       foreach my $z (@zone) {
-         push(@ret,$$self{"data"}{"ZoneNames"}{$z});
+         push(@ret,$$self{'data'}{'ZoneNames'}{$z});
       }
       return @ret;
    }
 
-   return "" if (! @zone);
-   return $$self{"data"}{"ZoneNames"}{$zone[0]}
+   return '' if (! @zone);
+   return $$self{'data'}{'ZoneNames'}{$zone[0]}
 }
 
 # This returns a list of all timezones which have the correct
@@ -798,8 +797,8 @@ sub _check_abbrev_isdst {
  ZONE: foreach my $zone (@zones) {
       $self->_module($zone);
 
-      foreach my $y (sort keys %{ $$self{"data"}{"Zones"}{$zone}{"Dates"} }) {
-         my @periods = @{ $$self{"data"}{"Zones"}{$zone}{"Dates"}{$y} };
+      foreach my $y (sort keys %{ $$self{'data'}{'Zones'}{$zone}{'Dates'} }) {
+         my @periods = @{ $$self{'data'}{'Zones'}{$zone}{'Dates'}{$y} };
          foreach my $period (@periods) {
             my($dateUT,$dateLT,$off,$offref,$abb,$dst,$endUT,$endLT) = @$period;
             next  if (lc($abbrev)  ne lc($abb)  ||
@@ -823,8 +822,8 @@ sub _check_offset_abbrev_isdst {
  ZONE: foreach my $zone (@zones) {
       $self->_module($zone);
 
-      foreach my $y (sort keys %{ $$self{"data"}{"Zones"}{$zone}{"Dates"} }) {
-         my @periods = @{ $$self{"data"}{"Zones"}{$zone}{"Dates"}{$y} };
+      foreach my $y (sort keys %{ $$self{'data'}{'Zones'}{$zone}{'Dates'} }) {
+         my @periods = @{ $$self{'data'}{'Zones'}{$zone}{'Dates'}{$y} };
          foreach my $period (@periods) {
             my($dateUT,$dateLT,$off,$offref,$abb,$dst,$endUT,$endLT) = @$period;
             next  if (lc($abbrev)  ne lc($abb)  ||
@@ -889,7 +888,7 @@ sub _all_periods {
    my($self,$zone,$year) = @_;
    $year += 0;
 
-   if (! exists $$self{"data"}{"Zones"}{$zone}{"AllDates"}{$year}) {
+   if (! exists $$self{'data'}{'Zones'}{$zone}{'AllDates'}{$year}) {
 
       #
       # $ym1 is the year prior to $year which contains a rule (which will
@@ -898,13 +897,13 @@ sub _all_periods {
       #
 
       my($ym1,$ym0);
-      if ($year > $$self{"data"}{"LastYear"}  &&  $self->_use_lastrule($zone)) {
+      if ($year > $$self{'data'}{'LastYear'}  &&  $self->_use_lastrule($zone)) {
          $ym1 = $year-1;
          $ym0 = $year;
 
       } else {
          foreach my $y (sort { $a <=> $b }
-                        keys %{ $$self{"data"}{"Zones"}{$zone}{"Dates"} }) {
+                        keys %{ $$self{'data'}{'Zones'}{$zone}{'Dates'} }) {
             if ($y < $year) {
                $ym1 = $y;
                next;
@@ -936,10 +935,17 @@ sub _all_periods {
          push(@periods,$self->_periods($zone,$year));
       }
 
-      $$self{"data"}{"Zones"}{$zone}{"AllDates"}{$year} = [ @periods ];
+      $$self{'data'}{'Zones'}{$zone}{'AllDates'}{$year} = [ @periods ];
    }
 
-   return @{ dclone($$self{"data"}{"Zones"}{$zone}{"AllDates"}{$year}) };
+   # A faster 'dclone' so we don't return the actual data
+   my @ret;
+   foreach my $ele (@{ $$self{'data'}{'Zones'}{$zone}{'AllDates'}{$year} }) {
+      push(@ret,
+           [ [ @{$$ele[0]} ],[ @{$$ele[1]} ],$$ele[2],[ @{$$ele[3]} ],$$ele[4],$$ele[5],
+             [ @{$$ele[6]} ],[ @{$$ele[7]} ],$$ele[8],$$ele[9],$$ele[10],$$ele[11] ]);
+   }
+   return @ret;
 }
 
 sub periods {
@@ -960,18 +966,25 @@ sub _periods {
    my($self,$zone,$year) = @_;
    $year += 0;
 
-   if (! exists $$self{"data"}{"Zones"}{$zone}{"Dates"}{$year}) {
+   if (! exists $$self{'data'}{'Zones'}{$zone}{'Dates'}{$year}) {
 
       my @periods = ();
-      if ($year > $$self{"data"}{"LastYear"}) {
+      if ($year > $$self{'data'}{'LastYear'}) {
          # Calculate periods using the LastRule method
          @periods = $self->_lastrule($zone,$year);
       }
 
-      $$self{"data"}{"Zones"}{$zone}{"Dates"}{$year} = [ @periods ];
+      $$self{'data'}{'Zones'}{$zone}{'Dates'}{$year} = [ @periods ];
    }
 
-   return @{ dclone($$self{"data"}{"Zones"}{$zone}{"Dates"}{$year}) };
+   # A faster 'dclone' so we don't return the actual data
+   my @ret;
+   foreach my $ele (@{ $$self{'data'}{'Zones'}{$zone}{'Dates'}{$year} }) {
+      push(@ret,
+           [ [ @{$$ele[0]} ],[ @{$$ele[1]} ],$$ele[2],[ @{$$ele[3]} ],$$ele[4],$$ele[5],
+             [ @{$$ele[6]} ],[ @{$$ele[7]} ],$$ele[8],$$ele[9],$$ele[10],$$ele[11] ]);
+   }
+   return @ret;
 }
 
 sub date_period {
@@ -987,26 +1000,28 @@ sub date_period {
    $zone = $z;
    $self->_module($zone);
 
-   my $dmb  = $$self{"objs"}{"base"};
+   my $dmb  = $$self{'objs'}{'base'};
    my @date = @$date;
    my $year = $date[0];
+   my $dates= $dmb->_join_date($date);
 
    if ($wallclock) {
       # A wallclock date
 
       my @period = $self->_all_periods($zone,$year);
-      my $beg    = $period[0]->[1];
-      my $end    = $period[-1]->[-1];
-      if      ($dmb->cmp($date,$beg) == -1) {
+      my $beg    = $period[0]->[9];
+      my $end    = $period[-1]->[11];
+      if      (($dates cmp $beg) == -1) {
          @period = $self->_all_periods($zone,$year-1);
-      } elsif ($dmb->cmp($date,$end) == 1) {
+      } elsif (($dates cmp $end) == 1) {
          @period = $self->_all_periods($zone,$year+1);
       }
 
       my(@per);
       foreach my $period (@period) {
-         my($begUT,$begLT,$offsetstr,$offset,$abbrev,$dst,$endUT,$endLT) = @$period;
-         if ($dmb->cmp($date,$begLT) != -1  &&  $dmb->cmp($date,$endLT) != 1) {
+         my($begUT,$begLT,$offsetstr,$offset,$abbrev,$dst,$endUT,$endLT,
+            $begUTs,$begLTs,$endUTs,$endLTs) = @$period;
+         if (($dates cmp $begLTs) != -1  &&  ($dates cmp $endLTs) != 1) {
             push(@per,$period);
          }
       }
@@ -1031,8 +1046,9 @@ sub date_period {
 
       my @period = $self->_all_periods($zone,$year);
       foreach my $period (@period) {
-         my($dateUT,$dateLT,$offsetstr,$offset,$abbrev,$isdst,$endUT,$endLT) = @$period;
-         if ($dmb->cmp($date,$dateUT) != -1  &&  $dmb->cmp($date,$endUT) != 1) {
+         my($begUT,$begLT,$offsetstr,$offset,$abbrev,$isdst,$endUT,$endLT,
+            $begUTs,$begLTs,$endUTs,$endLTs) = @$period;
+         if (($dates cmp $begUTs) != -1  &&  ($dates cmp $endUTs) != 1) {
             return $period;
          }
       }
@@ -1047,7 +1063,7 @@ sub _use_lastrule {
    my($self,$zone) = @_;
 
    my @mon = (sort keys
-              %{ $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"} });
+              %{ $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'} });
    return 0  if (! @mon);
    return 1;
 }
@@ -1059,7 +1075,8 @@ sub _use_lastrule {
 # following year).
 #
 # Returns:
-#   [begUT, begLT, offsetstr, offset, abb, ISDST, endUT, endLT]
+#   [begUT, begLT, offsetstr, offset, abb, ISDST, endUT, endLT,
+#    begUTstr, begLTstr, endUTstr, endLTstr]
 # for each.
 #
 sub _lastrule {
@@ -1072,7 +1089,7 @@ sub _lastrule {
    #
 
    my @mon = (sort keys
-              %{ $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"} });
+              %{ $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'} });
    return ()  if (! @mon);
 
    #
@@ -1080,29 +1097,30 @@ sub _lastrule {
    #
 
    my @dates = ();
-   my $dmb   = $$self{"objs"}{"base"};
+   my $dmb   = $$self{'objs'}{'base'};
 
-   my $stdoff = $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"zone"}{"stdoff"};
-   my $dstoff = $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"zone"}{"dstoff"};
+   my $stdoff = $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'zone'}{'stdoff'};
+   my $dstoff = $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'zone'}{'dstoff'};
 
-   my (@period,$endUT,$endLT,$begUT,$begLT);
+   my (@period);
 
    foreach my $mon (@mon) {
       my $flag =
-        $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"}{$mon}{"flag"};
+        $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'}{$mon}{'flag'};
       my $dow  =
-        $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"}{$mon}{"dow"};
+        $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'}{$mon}{'dow'};
       my $num  =
-        $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"}{$mon}{"num"};
+        $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'}{$mon}{'num'};
       my $isdst=
-        $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"}{$mon}{"isdst"};
+        $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'}{$mon}{'isdst'};
       my $time =
-        $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"}{$mon}{"time"};
+        $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'}{$mon}{'time'};
       my $type =
-        $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"}{$mon}{"type"};
+        $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'}{$mon}{'type'};
       my $abb  =
-        $$self{"data"}{"Zones"}{$zone}{"LastRule"}{"rules"}{$mon}{"abb"};
+        $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'}{$mon}{'abb'};
 
+      # The end of the current period and the beginning of the next
       my($endUT,$endLT,$begUT,$begLT) =
         $dmb->_critical_date($year,$mon,$flag,$num,$dow,
                              $isdst,$time,$type,$stdoff,$dstoff);
@@ -1113,13 +1131,24 @@ sub _lastrule {
          push(@dates,[@period]);
       }
       my $offsetstr = ($isdst ? $dstoff : $stdoff);
-      my $offset    = $dmb->split("offset",$offsetstr);
+      my $offset    = $dmb->split('offset',$offsetstr);
 
       @period = ($begUT,$begLT,$offsetstr,$offset,$abb,$isdst);
    }
 
    push(@period,$self->_lastrule($zone,$year+1,1));
    push(@dates,[@period]);
+
+   foreach my $period (@dates) {
+      my($begUT,$begLT,$offsetstr,$offset,$abbrev,$dst,$endUT,$endLT) = @$period;
+      my $begUTstr = $dmb->join("date",$begUT);
+      my $begLTstr = $dmb->join("date",$begLT);
+      my $endUTstr = $dmb->join("date",$endUT);
+      my $endLTstr = $dmb->join("date",$endLT);
+      $period = [$begUT,$begLT,$offsetstr,$offset,$abbrev,$dst,$endUT,$endLT,
+                 $begUTstr,$begLTstr,$endUTstr,$endLTstr];
+   }
+
    return @dates;
 }
 
@@ -1129,90 +1158,90 @@ sub _lastrule {
 
 sub convert {
    my($self,$date,$from,$to,$isdst) = @_;
-   $self->_convert("convert",$date,$from,$to,$isdst);
+   $self->_convert('convert',$date,$from,$to,$isdst);
 }
 
 sub convert_to_gmt {
    my($self,$date,@arg) = @_;
-   my($err,$from,$isdst) = _convert_args("convert_to_gmt",@arg);
+   my($err,$from,$isdst) = _convert_args('convert_to_gmt',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
    if (! $from) {
-      $from = $dmb->_now("tz");
+      $from = $dmb->_now('tz');
    }
-   $self->_convert("convert_to_gmt",$date,$from,"GMT",$isdst);
+   $self->_convert('convert_to_gmt',$date,$from,'GMT',$isdst);
 }
 
 sub convert_from_gmt {
    my($self,$date,@arg) = @_;
-   my($err,$to,$isdst) = _convert_args("convert_from_gmt",@arg);
+   my($err,$to,$isdst) = _convert_args('convert_from_gmt',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
    if (! $to) {
-      $to = $dmb->_now("tz");
+      $to = $dmb->_now('tz');
    }
-   $self->_convert("convert_from_gmt",$date,"GMT",$to,$isdst);
+   $self->_convert('convert_from_gmt',$date,'GMT',$to,$isdst);
 }
 
 sub convert_to_local {
    my($self,$date,@arg) = @_;
-   my($err,$from,$isdst) = _convert_args("convert_to_local",@arg);
+   my($err,$from,$isdst) = _convert_args('convert_to_local',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
    if (! $from) {
-      $from = "GMT";
+      $from = 'GMT';
    }
-   $self->_convert("convert_to_local",$date,$from,$dmb->_now("tz"),$isdst);
+   $self->_convert('convert_to_local',$date,$from,$dmb->_now('tz'),$isdst);
 }
 
 sub convert_from_local {
    my($self,$date,@arg) = @_;
-   my($err,$to,$isdst) = _convert_args("convert_from_local",@arg);
+   my($err,$to,$isdst) = _convert_args('convert_from_local',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
    if (! $to) {
-      $to = "GMT";
+      $to = 'GMT';
    }
-   $self->_convert("convert_from_local",$date,$dmb->_now("tz"),$to,$isdst);
+   $self->_convert('convert_from_local',$date,$dmb->_now('tz'),$to,$isdst);
 }
 
 sub _convert_args {
    my($caller,@args) = @_;
 
    if ($#args == -1) {
-      return (0,"",0);
+      return (0,'',0);
    } elsif ($#args == 0) {
-      if ($args[0] eq "0"  ||
-          $args[0] eq "1") {
-         return (0,"",$args[0]);
+      if ($args[0] eq '0'  ||
+          $args[0] eq '1') {
+         return (0,'',$args[0]);
       } else {
          return (0,$args[0],0);
       }
    } elsif ($#args == 1) {
       return (0,@args);
    } else {
-      return (1,"",0);
+      return (1,'',0);
    }
 }
 
 sub _convert {
    my($self,$caller,$date,$from,$to,$isdst) = @_;
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
    # Handle $date as a reference and a string
    my (@date);
    if (ref($date)) {
       @date = @$date;
    } else {
-      @date = @{ $dmb->split("date",$date) };
+      @date = @{ $dmb->split('date',$date) };
       $date = [@date];
    }
 
@@ -1247,7 +1276,7 @@ sub _convert {
 
    $isdst     = 0;
    my $offset = [0,0,0];
-   my $abb    = "GMT";
+   my $abb    = 'GMT';
 
    if ($to ne "Etc/GMT") {
       my $per    = $self->date_period([@date],$to,0);
@@ -1272,9 +1301,9 @@ sub _convert {
 #
 sub _zonerx {
    my($self) = @_;
-   return $$self{"data"}{"zonerx"}  if (defined $$self{"data"}{"zonerx"});
-   my @zone  = (keys %{ $$self{"data"}{"Alias"} },
-                keys %{ $$self{"data"}{"MyAlias"} });
+   return $$self{'data'}{'zonerx'}  if (defined $$self{'data'}{'zonerx'});
+   my @zone  = (keys %{ $$self{'data'}{'Alias'} },
+                keys %{ $$self{'data'}{'MyAlias'} });
    @zone     = sort _sortByLength(@zone);
    foreach my $zone (@zone) {
       $zone =~ s/\057/\\057/g;   # /
@@ -1285,8 +1314,8 @@ sub _zonerx {
       $zone =~ s/\053/\\053/g;   # +
    }
    my $re    = join('|',@zone);
-   $$self{"data"}{"zonerx"} = qr/(?<zone>$re)/i;
-   return $$self{"data"}{"zonerx"};
+   $$self{'data'}{'zonerx'} = qr/(?<zone>$re)/i;
+   return $$self{'data'}{'zonerx'};
 }
 
 # Returns a regular expression capable of matching all abbreviations.
@@ -1296,17 +1325,17 @@ sub _zonerx {
 #
 sub _abbrx {
    my($self) = @_;
-   return $$self{"data"}{"abbrx"}  if (defined $$self{"data"}{"abbrx"});
-   my @abb  = (keys %{ $$self{"data"}{"Abbrev"} },
-               keys %{ $$self{"data"}{"MyAbbrev"} });
+   return $$self{'data'}{'abbrx'}  if (defined $$self{'data'}{'abbrx'});
+   my @abb  = (keys %{ $$self{'data'}{'Abbrev'} },
+               keys %{ $$self{'data'}{'MyAbbrev'} });
    @abb     = sort _sortByLength(@abb);
    foreach my $abb (@abb) {
       $abb =~ s/\055/\\055/g;   # -
       $abb =~ s/\053/\\053/g;   # +
    }
    my $re    = join('|',@abb);
-   $$self{"data"}{"abbrx"} = qr/(?<abb>$re)/i;
-   return $$self{"data"}{"abbrx"};
+   $$self{'data'}{'abbrx'} = qr/(?<abb>$re)/i;
+   return $$self{'data'}{'abbrx'};
 }
 
 # Returns a regular expression capable of matching a valid timezone as
@@ -1323,7 +1352,7 @@ sub _abbrx {
 #
 sub _offrx {
    my($self) = @_;
-   return $$self{"data"}{"offrx"}  if (defined $$self{"data"}{"offrx"});
+   return $$self{'data'}{'offrx'}  if (defined $$self{'data'}{'offrx'});
 
    my($hr) = qr/(?:[0-1][0-9]|2[0-3])/;  # 00 - 23
    my($mn) = qr/(?:[0-5][0-9])/;         # 00 - 59
@@ -1337,8 +1366,8 @@ sub _offrx {
                  )
                  (?: \s* \( (?<abb>.*?) \))? /ix;
 
-   $$self{"data"}{"offrx"} = $re;
-   return $$self{"data"}{"offrx"};
+   $$self{'data'}{'offrx'} = $re;
+   return $$self{'data'}{'offrx'};
 }
 
 # Returns a regular expression capable of matching all timezone
@@ -1351,24 +1380,24 @@ sub _offrx {
 #
 sub _zrx {
    my($self) = @_;
-   return $$self{"data"}{"zrx"}  if (defined $$self{"data"}{"zrx"});
+   return $$self{'data'}{'zrx'}  if (defined $$self{'data'}{'zrx'});
 
    my $zonerx    = $self->_zonerx();          # (america/new_york|...)
    my $zoneabbrx = $self->_abbrx();           # (edt|est|...)
    my $zoneoffrx = $self->_offrx();           # (07:00) (GMT)
 
    my $zrx       = qr/(?<tzstring>$zonerx|$zoneabbrx|$zoneoffrx)/;
-   $$self{"data"}{"zrx"} = $zrx;
+   $$self{'data'}{'zrx'} = $zrx;
    return $zrx;
 }
 
 # This sorts from longest to shortest element
 #
-no strict "vars";
+no strict 'vars';
 sub _sortByLength {
   return (length $b <=> length $a);
 }
-use strict "vars";
+use strict 'vars';
 
 1;
 # Local Variables:

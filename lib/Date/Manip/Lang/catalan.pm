@@ -27,12 +27,12 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 use vars qw($Language);
 
 my @in    = <DATA>;
-$Language = Load(join("",@in));
+$Language = Load(join('',@in));
 
 1;
 __DATA__
@@ -402,7 +402,7 @@ offset_date:
 offset_time: 
   avui: 0:0:0:0:0:0:0
   ara: 0:0:0:0:0:0:0
-"on": 
+'on': 
   - el
 times: 
   migdia: 12:00:00

@@ -5,7 +5,7 @@ package Date::Manip::TZ::anvost00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 20 14:19:36 EST 2009
+#    Generated on: Tue Nov 24 11:04:25 EST 2009
 #    Data version: tzdata2009s
 #    Code version: tzcode2009r
 
@@ -34,18 +34,20 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 %Dates         = (
    1    =>
      [
         [ [1,1,2,0,0,0],[1,1,2,0,0,0],'+00:00:00',[0,0,0],
-          'zzz',0,[1957,12,15,23,59,59],[1957,12,15,23,59,59] ],
+          'zzz',0,[1957,12,15,23,59,59],[1957,12,15,23,59,59],
+          '0001010200:00:00','0001010200:00:00','1957121523:59:59','1957121523:59:59' ],
      ],
    1957 =>
      [
         [ [1957,12,16,0,0,0],[1957,12,16,6,0,0],'+06:00:00',[6,0,0],
-          'VOST',0,[9999,12,31,0,0,0],[9999,12,31,6,0,0] ],
+          'VOST',0,[9999,12,31,0,0,0],[9999,12,31,6,0,0],
+          '1957121600:00:00','1957121606:00:00','9999123100:00:00','9999123106:00:00' ],
      ],
 );
 

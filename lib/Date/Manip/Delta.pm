@@ -12,17 +12,17 @@ package Date::Manip::Delta;
 ########################################################################
 
 use Date::Manip::Obj;
-@ISA = ("Date::Manip::Obj");
+@ISA = ('Date::Manip::Obj');
 
 require 5.010000;
 use warnings;
 use strict;
 use IO::File;
-use feature "switch";
+use feature 'switch';
 #use re 'debug';
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 ########################################################################
 # BASE METHODS
@@ -37,8 +37,8 @@ sub config {
    $self->SUPER::config(@args);
 
    # A new config can change the value of the format fields, so clear them.
-   $$self{"data"}{"f"}    = {};
-   $$self{"data"}{"flen"} = {};
+   $$self{'data'}{'f'}    = {};
+   $$self{'data'}{'flen'} = {};
 }
 
 # Call this every time a new delta is put in to make sure everything is
@@ -48,21 +48,21 @@ sub _init {
    my($self) = @_;
 
    my $def = [0,0,0,0,0,0,0];
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
-   $$self{"err"}              = "";
-   $$self{"data"}{"delta"}    = $def;   # the delta
-   $$self{"data"}{"business"} = 0;      # 1 for a business delta
-   $$self{"data"}{"gotmode"}  = 0;      # if exact/business set explicitly
-   $$self{"data"}{"in"}       = "";     # the string that was parsed (if any)
-   $$self{"data"}{"f"}        = {};     # format fields
-   $$self{"data"}{"flen"}     = {};     # field lengths
+   $$self{'err'}              = '';
+   $$self{'data'}{'delta'}    = $def;   # the delta
+   $$self{'data'}{'business'} = 0;      # 1 for a business delta
+   $$self{'data'}{'gotmode'}  = 0;      # if exact/business set explicitly
+   $$self{'data'}{'in'}       = '';     # the string that was parsed (if any)
+   $$self{'data'}{'f'}        = {};     # format fields
+   $$self{'data'}{'flen'}     = {};     # field lengths
 }
 
 sub _init_args {
    my($self) = @_;
 
-   my @args = @{ $$self{"args"} };
+   my @args = @{ $$self{'args'} };
    if (@args) {
       if ($#args == 0) {
          $self->parse($args[0]);
@@ -74,15 +74,15 @@ sub _init_args {
 
 sub value {
    my($self) = @_;
-   my $dmb   = $$self{"objs"}{"base"};
+   my $dmb   = $$self{'objs'}{'base'};
 
-   return undef  if ($$self{"err"});
+   return undef  if ($$self{'err'});
    if (wantarray) {
-      return @{ $$self{"data"}{"delta"} };
-   } elsif ($$self{"data"}{"business"}) {
-      return $dmb->join("business",$$self{"data"}{"delta"});
+      return @{ $$self{'data'}{'delta'} };
+   } elsif ($$self{'data'}{'business'}) {
+      return $dmb->join('business',$$self{'data'}{'delta'});
    } else {
-      return $dmb->join("delta",$$self{"data"}{"delta"});
+      return $dmb->join('delta',$$self{'data'}{'delta'});
    }
 }
 
@@ -95,38 +95,38 @@ sub set {
 
    $field       = lc($field);
    my $business = 0;
-   my $dmb      = $$self{"objs"}{"base"};
-   my $dmt      = $$self{"objs"}{"tz"};
-   my $zone     = $$self{"data"}{"tz"};
-   my $gotmode  = $$self{"data"}{"gotmode"};
+   my $dmb      = $$self{'objs'}{'base'};
+   my $dmt      = $$self{'objs'}{'tz'};
+   my $zone     = $$self{'data'}{'tz'};
+   my $gotmode  = $$self{'data'}{'gotmode'};
    my (@delta,$err);
 
    given ($field) {
 
-      when (["delta","business","normal"]) {
-         if ($field eq "business") {
+      when (['delta','business','normal']) {
+         if ($field eq 'business') {
             $business = 1;
             $gotmode  = 1;
-         } elsif ($field eq "normal") {
+         } elsif ($field eq 'normal') {
             $business = 0;
             $gotmode  = 1;
          }
-         my $type = ($business ? "business" : "delta");
+         my $type = ($business ? 'business' : 'delta');
          if ($business) {
-            ($err,@delta) = $dmb->_normalize_business("norm",@$val);
+            ($err,@delta) = $dmb->_normalize_business('norm',@$val);
          } else {
-            ($err,@delta) = $dmb->_normalize_delta("norm",@$val);
+            ($err,@delta) = $dmb->_normalize_delta('norm',@$val);
          }
       }
 
-      when (["y","M","w","d","h","m","s"]) {
-         if ($$self{"err"}) {
-            $$self{"err"} = "[set] Invalid delta";
+      when (['y','M','w','d','h','m','s']) {
+         if ($$self{'err'}) {
+            $$self{'err'} = "[set] Invalid delta";
             return 1;
          }
 
-         @delta             = @{ $$self{"data"}{"delta"} };
-         $business          = $$self{"data"}{"business"};
+         @delta             = @{ $$self{'data'}{'delta'} };
+         $business          = $$self{'data'}{'business'};
          my %f              = qw(y 0 M 1 w 2 d 3 h 4 m 5 s 6);
          $delta[$f{$field}] = $val;
 
@@ -138,31 +138,31 @@ sub set {
       }
 
       default {
-         $$self{"err"} = "[set] Invalid field: $field";
+         $$self{'err'} = "[set] Invalid field: $field";
          return 1;
       }
    }
 
    if ($err) {
-      $$self{"err"} = "[set] Invalid field value: $field";
+      $$self{'err'} = "[set] Invalid field value: $field";
       return 1;
    }
 
    $self->_init();
-   $$self{"data"}{"delta"}    = [ @delta ];
-   $$self{"data"}{"business"} = $business;
-   $$self{"data"}{"gotmode"}  = $gotmode;
+   $$self{'data'}{'delta'}    = [ @delta ];
+   $$self{'data'}{'business'} = $business;
+   $$self{'data'}{'gotmode'}  = $gotmode;
    return 0;
 }
 
 sub _rx {
    my($self,$rx) = @_;
-   my $dmb       = $$self{"objs"}{"base"};
+   my $dmb       = $$self{'objs'}{'base'};
 
-   return $$dmb{"data"}{"rx"}{"delta"}{$rx}
-     if (exists $$dmb{"data"}{"rx"}{"delta"}{$rx});
+   return $$dmb{'data'}{'rx'}{'delta'}{$rx}
+     if (exists $$dmb{'data'}{'rx'}{'delta'}{$rx});
 
-   if ($rx eq "expanded") {
+   if ($rx eq 'expanded') {
       my $sign    = '[-+]?\s*';
       my $sep     = '(?:,\s*|\s+|$)';
 
@@ -175,27 +175,27 @@ sub _rx {
       my $s       = "(?:(?<s>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[7])?)";
 
       my $exprx   = qr/^\s*$y?$m?$w?$d?$h?$mn?$s?\s*$/i;
-      $$dmb{"data"}{"rx"}{"delta"}{$rx} = $exprx;
+      $$dmb{'data'}{'rx'}{'delta'}{$rx} = $exprx;
 
-   } elsif ($rx eq "mode") {
+   } elsif ($rx eq 'mode') {
 
-      my $mode = qr/\b($$dmb{"data"}{"rx"}{"mode"}[0])\b/;
-      $$dmb{"data"}{"rx"}{"delta"}{$rx} = $mode;
+      my $mode = qr/\b($$dmb{'data'}{'rx'}{'mode'}[0])\b/;
+      $$dmb{'data'}{'rx'}{'delta'}{$rx} = $mode;
 
-   } elsif ($rx eq "when") {
+   } elsif ($rx eq 'when') {
 
-      my $when = qr/\b($$dmb{"data"}{"rx"}{"when"}[0])\b/;
-      $$dmb{"data"}{"rx"}{"delta"}{$rx} = $when;
+      my $when = qr/\b($$dmb{'data'}{'rx'}{'when'}[0])\b/;
+      $$dmb{'data'}{'rx'}{'delta'}{$rx} = $when;
 
    }
 
-   return $$dmb{"data"}{"rx"}{"delta"}{$rx};
+   return $$dmb{'data'}{'rx'}{'delta'}{$rx};
 }
 
 sub parse {
    my($self,$string,$business) = @_;
    my $instring                = $string;
-   my($dmb)                    = $$self{"objs"}{"base"};
+   my($dmb)                    = $$self{'objs'}{'base'};
    my $gotmode                 = 0;
    $self->_init();
 
@@ -203,10 +203,10 @@ sub parse {
 
    $gotmode  = 1  if (defined($business));
    $business = 0  if (! $business);
-   my $mode  = $self->_rx("mode");
+   my $mode  = $self->_rx('mode');
    if ($string =~ s/$mode//) {
       my $m = ($1);
-      if ($$dmb{"data"}{"wordmatch"}{"mode"}{lc($m)} == 1) {
+      if ($$dmb{'data'}{'wordmatch'}{'mode'}{lc($m)} == 1) {
          $business = 0;
       } else {
          $business = 1;
@@ -214,8 +214,8 @@ sub parse {
       $gotmode = 1;
    }
 
-   my $type      = "delta";
-   $type         = "business"  if ($business);
+   my $type      = 'delta';
+   $type         = 'business'  if ($business);
 
    # Parse the delta
 
@@ -237,33 +237,33 @@ sub parse {
 
       # Expanded format
 
-      my $when      = $self->_rx("when");
+      my $when      = $self->_rx('when');
       my $past      = 0;
       if ($string  &&
           $string =~ s/$when//) {
          my $when = ($1);
-         if ($$dmb{"data"}{"wordmatch"}{"when"}{lc($when)} == 1) {
+         if ($$dmb{'data'}{'wordmatch'}{'when'}{lc($when)} == 1) {
             $past   = 1;
          }
       }
 
-      my $rx        = $self->_rx("expanded");
+      my $rx        = $self->_rx('expanded');
       if ($string  &&
           $string   =~ $rx) {
-         @delta     = ($+{"y"},$+{"m"},$+{"w"},$+{"d"},$+{"h"},$+{"mn"},$+{"s"});
+         @delta     = ($+{'y'},$+{'m'},$+{'w'},$+{'d'},$+{'h'},$+{'mn'},$+{'s'});
          foreach my $f (@delta) {
             $f = 0  if (! defined $f);
             $f =~ s/\s//g;
          }
          my $err;
-         if ($type eq "business") {
-            ($err,@delta)  = $dmb->_normalize_business("split",@delta);
+         if ($type eq 'business') {
+            ($err,@delta)  = $dmb->_normalize_business('split',@delta);
          } else {
-            ($err,@delta)  = $dmb->_normalize_delta("split",@delta);
+            ($err,@delta)  = $dmb->_normalize_delta('split',@delta);
          }
 
          if ($err) {
-            $$self{"err"} = "[parse] Invalid delta string";
+            $$self{'err'} = "[parse] Invalid delta string";
             return 1;
          }
 
@@ -279,24 +279,24 @@ sub parse {
          last;
       }
 
-      $$self{"err"} = "[parse] Invalid delta string";
+      $$self{'err'} = "[parse] Invalid delta string";
       return 1;
    }
 
-   $$self{"data"}{"in"}       = $string;
-   $$self{"data"}{"delta"}    = [@delta];
-   $$self{"data"}{"business"} = $business;
-   $$self{"data"}{"gotmode"}  = $gotmode;
+   $$self{'data'}{'in'}       = $string;
+   $$self{'data'}{'delta'}    = [@delta];
+   $$self{'data'}{'business'} = $business;
+   $$self{'data'}{'gotmode'}  = $gotmode;
    return 0;
 }
 
 sub printf {
    my($self,$in) = @_;
-   return ""  if ($$self{"err"});
+   return ''  if ($$self{'err'});
 
-   my $out = "";
+   my $out = '';
 
-   my($y,$M,$w,$d,$h,$m,$s) = @{ $$self{"data"}{"delta"} };
+   my($y,$M,$w,$d,$h,$m,$s) = @{ $$self{'data'}{'delta'} };
 
    while ($in) {
       if ($in =~ s/^([^%]+)//) {
@@ -351,7 +351,7 @@ sub printf {
                         Dt
                        //ox) {
          my($sign,$pad,$width) = ($1,$2,$3);
-         $out .= $self->_printf_delta($sign,$pad,$width,"y","s");
+         $out .= $self->_printf_delta($sign,$pad,$width,'y','s');
 
       } elsif ($in =~ s/^(%
                         (\+)?                   # sign
@@ -390,8 +390,8 @@ sub printf {
 
 sub _printf_delta {
    my($self,$sign,$pad,$width,$field0,$field1) = @_;
-   my($dmb)  = $$self{"objs"}{"base"};
-   my @delta = @{ $$self{"data"}{"delta"} };
+   my($dmb)  = $$self{'objs'}{'base'};
+   my @delta = @{ $$self{'data'}{'delta'} };
    my $delta;
    my %tmp   = qw(y 0 M 1 w 2 d 3 h 4 m 5 s 6);
 
@@ -417,7 +417,7 @@ sub _printf_delta {
    #   where [SETx] is a listref of fields from one set of fields
 
    my @set;
-   my $business = $$self{"data"}{"business"};
+   my $business = $$self{'data'}{'business'};
 
    my $f0 = $tmp{$field0};
    my $f1 = $tmp{$field1};
@@ -483,12 +483,12 @@ sub _printf_delta {
 
    # Width/pad
 
-   my $ret = join(":",@ret);
+   my $ret = join(':',@ret);
    if ($width  &&  length($ret) < $width) {
       if (defined $pad  &&  $pad eq ">") {
-         $ret .= " "x($width-length($ret));
+         $ret .= ' 'x($width-length($ret));
       } else {
-         $ret = " "x($width-length($ret)) . $ret;
+         $ret = ' 'x($width-length($ret)) . $ret;
       }
    }
 
@@ -503,7 +503,7 @@ sub _printf_field {
 
    # Strip off the sign.
 
-   my $s = "";
+   my $s = '';
 
    if ($val < 0) {
       $s   = "-";
@@ -518,7 +518,7 @@ sub _printf_field {
       $val = sprintf("%.${precision}f",$val);
 
    } elsif (defined($width)) {
-      my $i = $s . int($val) . ".";
+      my $i = $s . int($val) . '.';
       if (length($i) < $width) {
          $precision = $width-length($i);
          $val = sprintf("%.${precision}f",$val);
@@ -530,14 +530,14 @@ sub _printf_field {
    if ($width) {
       if      ($pad eq ">") {
          $val = "$s$val";
-         $val .= " "x($width-length($val));
+         $val .= ' 'x($width-length($val));
 
       } elsif ($pad eq "<") {
          $val = "$s$val";
-         $val = " "x($width-length($val)) . $val;
+         $val = ' 'x($width-length($val)) . $val;
 
       } else {
-         $val = $s . "0"x($width-length($val)-length($s)) . $val;
+         $val = $s . '0'x($width-length($val)-length($s)) . $val;
       }
    } else {
       $val = "$s$val";
@@ -546,36 +546,36 @@ sub _printf_field {
    return $val;
 }
 
-# $$self{"data"}{"f"}{X}{Y} is the value of field X expressed in terms of Y.
+# $$self{'data'}{'f'}{X}{Y} is the value of field X expressed in terms of Y.
 #
 sub _printf_field_val {
    my($self,$field,@field) = @_;
 
-   if (! exists $$self{"data"}{"f"}{"y"}  &&
-       ! exists $$self{"data"}{"f"}{"y"}{"y"}) {
+   if (! exists $$self{'data'}{'f'}{'y'}  &&
+       ! exists $$self{'data'}{'f'}{'y'}{'y'}) {
 
-      my($yv,$Mv,$wv,$dv,$hv,$mv,$sv) = map { $_*1 } @{ $$self{"data"}{"delta"} };
-      $$self{"data"}{"f"}{"y"}{"y"} = $yv;
-      $$self{"data"}{"f"}{"M"}{"M"} = $Mv;
-      $$self{"data"}{"f"}{"w"}{"w"} = $wv;
-      $$self{"data"}{"f"}{"d"}{"d"} = $dv;
-      $$self{"data"}{"f"}{"h"}{"h"} = $hv;
-      $$self{"data"}{"f"}{"m"}{"m"} = $mv;
-      $$self{"data"}{"f"}{"s"}{"s"} = $sv;
+      my($yv,$Mv,$wv,$dv,$hv,$mv,$sv) = map { $_*1 } @{ $$self{'data'}{'delta'} };
+      $$self{'data'}{'f'}{'y'}{'y'} = $yv;
+      $$self{'data'}{'f'}{'M'}{'M'} = $Mv;
+      $$self{'data'}{'f'}{'w'}{'w'} = $wv;
+      $$self{'data'}{'f'}{'d'}{'d'} = $dv;
+      $$self{'data'}{'f'}{'h'}{'h'} = $hv;
+      $$self{'data'}{'f'}{'m'}{'m'} = $mv;
+      $$self{'data'}{'f'}{'s'}{'s'} = $sv;
    }
 
    # A single field
 
    if (! @field) {
-      return $$self{"data"}{"f"}{$field}{$field};
+      return $$self{'data'}{'f'}{$field}{$field};
    }
 
    # Find the length of 1 unit of each field in terms of seconds.
 
-   if (! exists $$self{"data"}{"flen"}{"s"}) {
-      $$self{"data"}{"flen"}{"s"} = 1;
-      $$self{"data"}{"flen"}{"m"} = 60;
-      $$self{"data"}{"flen"}{"h"} = 3600;
+   if (! exists $$self{'data'}{'flen'}{'s'}) {
+      $$self{'data'}{'flen'}{'s'} = 1;
+      $$self{'data'}{'flen'}{'m'} = 60;
+      $$self{'data'}{'flen'}{'h'} = 3600;
 
       # Find the length of day/week/year
       #
@@ -583,12 +583,12 @@ sub _printf_field_val {
       # $weeklen is the number of days in a week
       # $yrlen is the number of days in a year
 
-      my $business = $$self{"data"}{"business"};
+      my $business = $$self{'data'}{'business'};
       my ($weeklen,$daylen,$yrlen);
       if ($business) {
-         my $dmb  = $$self{"objs"}{"base"};
-         $daylen  = $$dmb{"data"}{"calc"}{"bdlength"};
-         $weeklen = $$dmb{"data"}{"calc"}{"workweek"};
+         my $dmb  = $$self{'objs'}{'base'};
+         $daylen  = $$dmb{'data'}{'calc'}{'bdlength'};
+         $weeklen = $$dmb{'data'}{'calc'}{'workweek'};
          # The approximate length of the business year in business days
          $yrlen   = 365.2425*$weeklen/7;
       } else {
@@ -597,10 +597,10 @@ sub _printf_field_val {
          $yrlen   = 365.2425;
       }
 
-      $$self{"data"}{"flen"}{"d"} = $daylen;
-      $$self{"data"}{"flen"}{"w"} = $weeklen*$daylen;
-      $$self{"data"}{"flen"}{"M"} = $yrlen*$daylen/12;
-      $$self{"data"}{"flen"}{"y"} = $yrlen*$daylen;
+      $$self{'data'}{'flen'}{'d'} = $daylen;
+      $$self{'data'}{'flen'}{'w'} = $weeklen*$daylen;
+      $$self{'data'}{'flen'}{'M'} = $yrlen*$daylen/12;
+      $$self{'data'}{'flen'}{'y'} = $yrlen*$daylen;
    }
 
    # Calculate the value for each field.
@@ -610,22 +610,22 @@ sub _printf_field_val {
 
       # We want the value of $f expressed in terms of $field
 
-      if (! exists $$self{"data"}{"f"}{$f}{$field}) {
+      if (! exists $$self{'data'}{'f'}{$f}{$field}) {
 
          # Get the value of $f expressed in seconds
 
-         if (! exists $$self{"data"}{"f"}{$f}{"s"}) {
-            $$self{"data"}{"f"}{$f}{"s"} =
-              $$self{"data"}{"f"}{$f}{$f} * $$self{"data"}{"flen"}{$f};
+         if (! exists $$self{'data'}{'f'}{$f}{'s'}) {
+            $$self{'data'}{'f'}{$f}{'s'} =
+              $$self{'data'}{'f'}{$f}{$f} * $$self{'data'}{'flen'}{$f};
          }
 
          # Get the value of $f expressed in terms of $field
 
-         $$self{"data"}{"f"}{$f}{$field} =
-           $$self{"data"}{"f"}{$f}{"s"} / $$self{"data"}{"flen"}{$field};
+         $$self{'data'}{'f'}{$f}{$field} =
+           $$self{'data'}{'f'}{$f}{'s'} / $$self{'data'}{'flen'}{$field};
       }
 
-      $val += $$self{"data"}{"f"}{$f}{$field};
+      $val += $$self{'data'}{'f'}{$f}{$field};
    }
 
    return $val;
@@ -636,16 +636,16 @@ sub type {
 
    given ($op) {
 
-      when ("business") {
-         return $$self{"data"}{"business"};
+      when ('business') {
+         return $$self{'data'}{'business'};
       }
 
-      when ("exact") {
+      when ('exact') {
          my $exact = 1;
-         $exact    = 0  if ($$self{"data"}{"delta"}[0] != 0  ||
-                            $$self{"data"}{"delta"}[1] != 0  ||
-                            ($$self{"data"}{"delta"}[2] != 0  &&
-                             $$self{"data"}{"business"}));
+         $exact    = 0  if ($$self{'data'}{'delta'}[0] != 0  ||
+                            $$self{'data'}{'delta'}[1] != 0  ||
+                            ($$self{'data'}{'delta'}[2] != 0  &&
+                             $$self{'data'}{'business'}));
          return $exact;
       }
    }
@@ -655,64 +655,64 @@ sub type {
 
 sub calc {
    my($self,$obj,$subtract) = @_;
-   if ($$self{"err"}) {
-      $$self{"err"} = "[calc] First object invalid (delta)";
+   if ($$self{'err'}) {
+      $$self{'err'} = "[calc] First object invalid (delta)";
       return undef;
    }
 
-   if      (ref($obj) eq "Date::Manip::Date") {
-      if ($$obj{"err"}) {
-         $$self{"err"} = "[calc] Second object invalid (date)";
+   if      (ref($obj) eq 'Date::Manip::Date') {
+      if ($$obj{'err'}) {
+         $$self{'err'} = "[calc] Second object invalid (date)";
          return undef;
       }
       return $obj->calc($self,$subtract);
 
-   } elsif (ref($obj) eq "Date::Manip::Delta") {
-      if ($$obj{"err"}) {
-         $$self{"err"} = "[calc] Second object invalid (delta)";
+   } elsif (ref($obj) eq 'Date::Manip::Delta') {
+      if ($$obj{'err'}) {
+         $$self{'err'} = "[calc] Second object invalid (delta)";
          return undef;
       }
       return $self->_calc_delta_delta($obj,$subtract);
 
    } else {
-      $$self{"err"} = "[calc] Second object must be a Date/Delta object";
+      $$self{'err'} = "[calc] Second object must be a Date/Delta object";
       return undef;
    }
 }
 
 sub _calc_delta_delta {
    my($self,$delta,$subtract) = @_;
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
    my $ret = $self->new_delta;
 
    if ($self->err()) {
-      $$ret{"err"} = "[calc] Invalid delta/delta calculation object: delta1";
+      $$ret{'err'} = "[calc] Invalid delta/delta calculation object: delta1";
       return $ret;
    } elsif ($delta->err()) {
-      $$ret{"err"} = "[calc] Invalid delta/delta calculation object: delta2";
+      $$ret{'err'} = "[calc] Invalid delta/delta calculation object: delta2";
       return $ret;
    }
 
    my $business = 0;
-   if ($$self{"data"}{"business"} != $$delta{"data"}{"business"}) {
-      $$ret{"err"} = "[calc] Delta/delta calculation objects must be of " .
-        "the same type";
+   if ($$self{'data'}{'business'} != $$delta{'data'}{'business'}) {
+      $$ret{'err'} = "[calc] Delta/delta calculation objects must be of " .
+        'the same type';
       return $ret;
    } else {
-      $business = $$self{"data"}{"business"};
+      $business = $$self{'data'}{'business'};
    }
 
    my @delta;
    for (my $i=0; $i<7; $i++) {
       if ($subtract) {
-         $delta[$i] = $$self{"data"}{"delta"}[$i] - $$delta{"data"}{"delta"}[$i];
+         $delta[$i] = $$self{'data'}{'delta'}[$i] - $$delta{'data'}{'delta'}[$i];
       } else {
-         $delta[$i] = $$self{"data"}{"delta"}[$i] + $$delta{"data"}{"delta"}[$i];
+         $delta[$i] = $$self{'data'}{'delta'}[$i] + $$delta{'data'}{'delta'}[$i];
       }
       $delta[$i] = "+" . $delta[$i]  if ($delta[$i] > 0);
    }
 
-   my $type  = ($business ? "business" : "delta");
+   my $type  = ($business ? 'business' : 'delta');
    $ret->set($type,\@delta);
 
    return $ret;

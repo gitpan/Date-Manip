@@ -16,7 +16,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 ########################################################################
 # METHODS
@@ -58,7 +58,7 @@ sub new {
    # final argument).
 
    my @config;
-   if (@args  &&  ref($args[$#args]) eq "ARRAY") {
+   if (@args  &&  ref($args[$#args]) eq 'ARRAY') {
       @config = @{ pop(@args) };
    }
 
@@ -69,17 +69,17 @@ sub new {
    my($dmt,$dmb);
 
    if ($obj) {
-      $dmb = $$obj{"objs"}{"base"}  if (exists $$obj{"objs"}{"base"});
-      $dmt = $$obj{"objs"}{"tz"}    if (exists $$obj{"objs"}{"tz"});
+      $dmb = $$obj{'objs'}{'base'}  if (exists $$obj{'objs'}{'base'});
+      $dmt = $$obj{'objs'}{'tz'}    if (exists $$obj{'objs'}{'tz'});
    }
 
    # Create a new empty object.
 
    my $new = {
-              "objs" => {},
-              "data" => {},
-              "args" => [ @args ],
-              "err"  => "",
+              'objs' => {},
+              'data' => {},
+              'args' => [ @args ],
+              'err'  => '',
              };
 
    # Create new Base/TZ objects if necessary
@@ -92,10 +92,10 @@ sub new {
       #    $dmt = new Date::Manip::TZ [,\@config];
       #    $obj = new Date::Manip::* [,\@config];
 
-      if      ($class eq "Date::Manip::Base") {
+      if      ($class eq 'Date::Manip::Base') {
          $dmb = $new;
 
-      } elsif ($class eq "Date::Manip::TZ") {
+      } elsif ($class eq 'Date::Manip::TZ') {
          $dmb = new Date::Manip::Base;
          $dmt = $new;
 
@@ -104,18 +104,18 @@ sub new {
          $dmt = new Date::Manip::TZ $dmb;
       }
 
-   } elsif ($class eq "Date::Manip::Base") {
+   } elsif ($class eq 'Date::Manip::Base') {
 
       # $dmb = new Date::Manip::Base $obj [,\@config];
       #    This should create a new instance of a Base object
       #    with the same configuration.
 
       $new           = dclone($dmb);
-      $$new{"cache"} = $$dmb{"cache"};
+      $$new{'cache'} = $$dmb{'cache'};
       $dmb           = $new;
       $init          = 0;
 
-   } elsif (@config  &&  $class eq "Date::Manip::TZ") {
+   } elsif (@config  &&  $class eq 'Date::Manip::TZ') {
 
       # $dmt = new Date::Manip::TZ $obj,\@config;
 
@@ -129,7 +129,7 @@ sub new {
       $dmb = new Date::Manip::Base $obj,\@config;
       $dmt = new Date::Manip::TZ $dmb;
 
-   } elsif ($class eq "Date::Manip::TZ") {
+   } elsif ($class eq 'Date::Manip::TZ') {
 
       # $dmt = new Date::Manip::TZ $obj;
       #    Reuse $dmb object
@@ -145,9 +145,9 @@ sub new {
 
    bless $new,$class;
 
-   $$new{"objs"}{"base"} = $dmb;
-   $$new{"objs"}{"tz"}   = $dmt  if ($dmt);
-   $$dmb{"objs"}{"tz"}   = $dmt  if ($dmt);
+   $$new{'objs'}{'base'} = $dmb;
+   $$new{'objs'}{'tz'}   = $dmt  if ($dmt);
+   $$dmb{'objs'}{'tz'}   = $dmt  if ($dmt);
 
    $new->_init()  unless (! $init);
 
@@ -166,7 +166,7 @@ sub new {
 sub _init_args {
    my($self) = @_;
 
-   my @args = @{ $$self{"args"} };
+   my @args = @{ $$self{'args'} };
    if (@args) {
       warn "WARNING: [new] invalid arguments: @args\n";
    }
@@ -183,8 +183,8 @@ sub new_config {
    # Make sure that @opts is passed in as the final argument.
 
    if (! @args  ||
-       ! (ref($args[$#args]) eq "ARRAY")) {
-      push(@args,["ignore","ignore"]);
+       ! (ref($args[$#args]) eq 'ARRAY')) {
+      push(@args,['ignore','ignore']);
    }
 
    return new(@args);
@@ -192,18 +192,18 @@ sub new_config {
 
 sub base {
    my($self) = @_;
-   return $$self{"objs"}{"base"};
+   return $$self{'objs'}{'base'};
 }
 
 sub tz {
    my($self) = @_;
-   return $$self{"objs"}{"tz"}  if (exists $$self{"objs"}{"tz"});
+   return $$self{'objs'}{'tz'}  if (exists $$self{'objs'}{'tz'});
    return undef;
 }
 
 sub config {
    my($self,@config) = @_;
-   my $dmb = $$self{"objs"}{"base"};
+   my $dmb = $$self{'objs'}{'base'};
 
    while (@config) {
       my $var = shift(@config);
@@ -215,10 +215,10 @@ sub config {
 sub err {
    my($self,$arg) = @_;
    if ($arg) {
-      $$self{"err"} = "";
+      $$self{'err'} = '';
       return;
    } else {
-      return $$self{"err"};
+      return $$self{'err'};
    }
 }
 

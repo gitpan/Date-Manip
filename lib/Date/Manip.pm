@@ -52,11 +52,11 @@ use strict;
 use integer;
 use Carp;
 use IO::File;
-use feature "switch";
+use feature 'switch';
 use warnings;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 ###########################################################################
 
@@ -97,8 +97,8 @@ sub Date_Init {
 sub ParseDateString {
    my($string) = @_;
    my $err = $date->parse($string);
-   return ""  if ($err);
-   my $ret = $date->value("local");
+   return ''  if ($err);
+   my $ret = $date->value('local');
    return $ret;
 }
 
@@ -107,7 +107,7 @@ sub ParseDate {
 
    if ($#a!=0) {
       print "ERROR:  Invalid number of arguments to ParseDate.\n";
-      return "";
+      return '';
    }
    my @args;
    my $args = $a[0];
@@ -116,28 +116,28 @@ sub ParseDate {
 
    if (! $ref) {
       @args = ($args);
-   } elsif ($ref eq "ARRAY") {
+   } elsif ($ref eq 'ARRAY') {
       @args = @$args;
       $list = 1;
-   } elsif ($ref eq "SCALAR") {
+   } elsif ($ref eq 'SCALAR') {
       @args = ($$args);
    } else {
       print "ERROR:  Invalid arguments to ParseDate.\n";
-      return "";
+      return '';
    }
 
    while (@args) {
-      my $string = join(" ",@args);
+      my $string = join(' ',@args);
       my $err = $date->parse($string);
       if (! $err) {
          splice(@$args,0,$#args+1)  if ($list);
-         my $ret = $date->value("local");
+         my $ret = $date->value('local');
          return $ret;
       }
       pop(@args);
    }
 
-   return "";
+   return '';
 }
 
 sub ParseDateDelta {
@@ -145,7 +145,7 @@ sub ParseDateDelta {
 
    if ($#a!=0) {
       print "ERROR:  Invalid number of arguments to ParseDateDelta.\n";
-      return "";
+      return '';
    }
    my @args;
    my $args = $a[0];
@@ -154,28 +154,28 @@ sub ParseDateDelta {
 
    if (! $ref) {
       @args = ($args);
-   } elsif ($ref eq "ARRAY") {
+   } elsif ($ref eq 'ARRAY') {
       @args = @$args;
       $list = 1;
-   } elsif ($ref eq "SCALAR") {
+   } elsif ($ref eq 'SCALAR') {
       @args = ($$args);
    } else {
       print "ERROR:  Invalid arguments to ParseDateDelta.\n";
-      return "";
+      return '';
    }
 
    while (@args) {
-      my $string = join(" ",@args);
+      my $string = join(' ',@args);
       my $err = $delta->parse($string);
       if (! $err) {
          splice(@$args,0,$#args+1)  if ($list);
-         my $ret = $delta->value("local");
+         my $ret = $delta->value('local');
          return $ret;
       }
       pop(@args);
    }
 
-   return "";
+   return '';
 }
 
 sub UnixDate {
@@ -188,6 +188,10 @@ sub UnixDate {
    foreach my $in (@in) {
       push(@ret,$date->printf($in));
    }
+
+   if (! wantarray) {
+      return join(" ",@ret);
+   }
    return @ret;
 }
 
@@ -198,21 +202,21 @@ sub Delta_Format {
    return ()  if ($err);
 
    my($mode,$dec,@in);
-   if (lc($args[0]) eq "exact"  ||
-       lc($args[0]) eq "approx") {
+   if (lc($args[0]) eq 'exact'  ||
+       lc($args[0]) eq 'approx') {
       ($mode,$dec,@in) = (@args);
       $mode = lc($mode);
 
    } elsif (! defined($args[0])) {
-      $mode = "";
+      $mode = '';
       @in = @args;
       shift(@in);
 
    } elsif ($args[0] =~ /^\d+$/) {
-      ($mode,$dec,@in) = ("exact",@args);
+      ($mode,$dec,@in) = ('exact',@args);
 
    } else {
-      $mode = "";
+      $mode = '';
       @in = @args;
    }
 
@@ -224,16 +228,21 @@ sub Delta_Format {
    foreach my $in (@in) {
       push(@ret,$delta->printf($in));
    }
+
+   if (! wantarray) {
+      return join(" ",@ret);
+   }
+
    return @ret;
 }
 
 sub _Delta_Format_old {
    my($mode,$dec,@in) = @_;
    my(@ret);
-   my $business = $delta->type("business");
+   my $business = $delta->type('business');
 
    foreach my $in (@in) {
-      my $out = "";
+      my $out = '';
 
       while ($in) {
          if ($in =~ s/^([^%]+)//) {
@@ -244,30 +253,30 @@ sub _Delta_Format_old {
             $out .= '%';
 
             given ($scope) {
-               when ("v") {
+               when ('v') {
                   $out .= "${field}v";
                }
 
-               when ("d") {
-                  if      ($mode eq "approx") {
+               when ('d') {
+                  if      ($mode eq 'approx') {
                      $out .= ".${dec}${field}${field}s";
-                  } elsif ($field eq "y"  ||  $field eq "M") {
+                  } elsif ($field eq 'y'  ||  $field eq 'M') {
                      $out .= ".${dec}${field}${field}M";
-                  } elsif ($field eq "w"  &&  $business) {
+                  } elsif ($field eq 'w'  &&  $business) {
                      $out .= ".${dec}wws";
                   } else {
                      $out .= ".${dec}${field}${field}s";
                   }
                }
 
-               when ("h") {
-                  if      ($mode eq "approx") {
+               when ('h') {
+                  if      ($mode eq 'approx') {
                      $out .= ".${dec}${field}y${field}";
-                  } elsif ($field eq "y"  ||  $field eq "M") {
+                  } elsif ($field eq 'y'  ||  $field eq 'M') {
                      $out .= ".${dec}${field}y${field}";
                   } elsif ($business) {
-                     if ($field eq "w") {
-                        $out .= "wv";
+                     if ($field eq 'w') {
+                        $out .= 'wv';
                      } else {
                         $out .= ".${dec}${field}d${field}";
                      }
@@ -276,14 +285,14 @@ sub _Delta_Format_old {
                   }
                }
 
-               when ("t") {
-                  if      ($mode eq "approx") {
+               when ('t') {
+                  if      ($mode eq 'approx') {
                      $out .= ".${dec}${field}ys";
-                  } elsif ($field eq "y"  ||  $field eq "M") {
+                  } elsif ($field eq 'y'  ||  $field eq 'M') {
                      $out .= ".${dec}${field}yM";
                   } elsif ($business) {
-                     if ($field eq "w") {
-                        $out .= "wv";
+                     if ($field eq 'w') {
+                        $out .= 'wv';
                      } else {
                         $out .= ".${dec}${field}ds";
                      }
@@ -325,25 +334,25 @@ sub DateCalc {
    $usemode = 1;
 
    $obj1 = $date->new_date();
-   $err  = $obj1->parse($d1,"nodelta");
+   $err  = $obj1->parse($d1,'nodelta');
    if ($err) {
       $obj1 = $date->new_delta();
       $err  = $obj1->parse($d1);
       if ($err) {
          $$errref = 1  if ($ref);
-         return "";
+         return '';
       }
       $usemode = 0;
    }
 
    $obj2 = $date->new_date();
-   $err  = $obj2->parse($d2,"nodelta");
+   $err  = $obj2->parse($d2,'nodelta');
    if ($err) {
       $obj2 = $date->new_delta();
       $err  = $obj2->parse($d2);
       if ($err) {
          $$errref = 2  if ($ref);
-         return "";
+         return '';
       }
       $usemode = 0;
    }
@@ -356,52 +365,52 @@ sub DateCalc {
    }
    if (@args) {
       $$errref = 3  if ($ref);
-      return "";
+      return '';
    }
 
    # Apply the $mode to any deltas
 
    if (defined($mode)) {
-      if (ref($obj1) eq "Date::Manip::Delta") {
-         if ($$obj1{"data"}{"gotmode"}) {
+      if (ref($obj1) eq 'Date::Manip::Delta') {
+         if ($$obj1{'data'}{'gotmode'}) {
             if ($mode == 2  ||  $mode == 3) {
-               if (! $obj1->type("business")) {
+               if (! $obj1->type('business')) {
                   $$errref = 3  if ($ref);
-                  return "";
+                  return '';
                }
             } else {
-               if ($obj1->type("business")) {
+               if ($obj1->type('business')) {
                   $$errref = 3  if ($ref);
-                  return "";
+                  return '';
                }
             }
          } else {
             if ($mode == 2  ||  $mode == 3) {
-               $obj1->set("mode","business");
+               $obj1->set('mode','business');
             } else {
-               $obj1->set("mode","normal");
+               $obj1->set('mode','normal');
             }
          }
       }
 
-      if (ref($obj2) eq "Date::Manip::Delta") {
-         if ($$obj2{"data"}{"gotmode"}) {
+      if (ref($obj2) eq 'Date::Manip::Delta') {
+         if ($$obj2{'data'}{'gotmode'}) {
             if ($mode == 2  ||  $mode == 3) {
-               if (! $obj2->type("business")) {
+               if (! $obj2->type('business')) {
                   $$errref = 3  if ($ref);
-                  return "";
+                  return '';
                }
             } else {
-               if ($obj2->type("business")) {
+               if ($obj2->type('business')) {
                   $$errref = 3  if ($ref);
-                  return "";
+                  return '';
                }
             }
          } else {
             if ($mode ==2  ||  $mode == 3) {
-               $obj2->set("mode","business");
+               $obj2->set('mode','business');
             } else {
-               $obj2->set("mode","normal");
+               $obj2->set('mode','normal');
             }
          }
       }
@@ -413,13 +422,13 @@ sub DateCalc {
    if ($usemode) {
       $mode = 0  if (! $mode);
       if     ($mode == 3) {
-          $mode = "business";
+          $mode = 'business';
       } elsif ($mode == 2) {
-         $mode = "bapprox";
+         $mode = 'bapprox';
       } elsif ($mode) {
-         $mode = "approx";
+         $mode = 'approx';
       } else {
-         $mode = "exact";
+         $mode = 'exact';
       }
       $obj3 = $obj1->calc($obj2,$mode);
    } else {
@@ -433,21 +442,21 @@ sub DateCalc {
 sub Date_GetPrev {
    my($string,$dow,$curr,@time) = @_;
    my $err = $date->parse($string);
-   return ""  if ($err);
+   return ''  if ($err);
 
    if (defined($dow)) {
       $dow = lc($dow);
-      if      (exists $$dmb{"data"}{"wordmatch"}{"day_char"}{$dow}) {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_char"}{$dow};
-      } elsif (exists $$dmb{"data"}{"wordmatch"}{"day_abb"}{$dow}) {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_abb"}{$dow};
-      } elsif (exists $$dmb{"data"}{"wordmatch"}{"day_name"}{$dow}) {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_name"}{$dow};
+      if      (exists $$dmb{'data'}{'wordmatch'}{'day_char'}{$dow}) {
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_char'}{$dow};
+      } elsif (exists $$dmb{'data'}{'wordmatch'}{'day_abb'}{$dow}) {
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_abb'}{$dow};
+      } elsif (exists $$dmb{'data'}{'wordmatch'}{'day_name'}{$dow}) {
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_name'}{$dow};
       }
    }
 
    if ($#time == 0) {
-      @time = @{ $dmb->split("hms",$time[0]) };
+      @time = @{ $dmb->split('hms',$time[0]) };
    }
 
    if (@time) {
@@ -465,21 +474,21 @@ sub Date_GetPrev {
 sub Date_GetNext {
    my($string,$dow,$curr,@time) = @_;
    my $err = $date->parse($string);
-   return ""  if ($err);
+   return ''  if ($err);
 
    if (defined($dow)) {
       $dow = lc($dow);
-      if      (exists $$dmb{"data"}{"wordmatch"}{"day_char"}{$dow}) {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_char"}{$dow};
-      } elsif (exists $$dmb{"data"}{"wordmatch"}{"day_abb"}{$dow}) {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_abb"}{$dow};
-      } elsif (exists $$dmb{"data"}{"wordmatch"}{"day_name"}{$dow}) {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_name"}{$dow};
+      if      (exists $$dmb{'data'}{'wordmatch'}{'day_char'}{$dow}) {
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_char'}{$dow};
+      } elsif (exists $$dmb{'data'}{'wordmatch'}{'day_abb'}{$dow}) {
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_abb'}{$dow};
+      } elsif (exists $$dmb{'data'}{'wordmatch'}{'day_name'}{$dow}) {
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_name'}{$dow};
       }
    }
 
    if ($#time == 0) {
-      @time = @{ $dmb->split("hms",$time[0]) };
+      @time = @{ $dmb->split('hms',$time[0]) };
    }
 
    if (@time) {
@@ -498,17 +507,17 @@ sub Date_SetTime {
    my($string,@time) = @_;
 
    my $err = $date->parse($string);
-   return ""  if ($err);
+   return ''  if ($err);
 
    if ($#time == 0) {
-      @time = @{ $dmb->split("hms",$time[0]) };
+      @time = @{ $dmb->split('hms',$time[0]) };
    }
 
    while ($#time < 2) {
       push(@time,0);
    }
 
-   $date->set("time",\@time);
+   $date->set('time',\@time);
    my $val = $date->value();
    return $val;
 }
@@ -517,7 +526,7 @@ sub Date_SetDateField {
    my($string,$field,$val) = @_;
 
    my $err = $date->parse($string);
-   return ""  if ($err);
+   return ''  if ($err);
 
    $date->set($field,$val);
    my $ret = $date->value();
@@ -527,7 +536,7 @@ sub Date_SetDateField {
 sub Date_NextWorkDay {
    my($string,$n,$checktime) = @_;
    my $err = $date->parse($string);
-   return ""  if ($err);
+   return ''  if ($err);
    $date->next_business_day($n,$checktime);
    my $val = $date->value();
    return $val;
@@ -536,7 +545,7 @@ sub Date_NextWorkDay {
 sub Date_PrevWorkDay {
    my($string,$n,$checktime) = @_;
    my $err = $date->parse($string);
-   return ""  if ($err);
+   return ''  if ($err);
    $date->prev_business_day($n,$checktime);
    my $val = $date->value();
    return $val;
@@ -545,7 +554,7 @@ sub Date_PrevWorkDay {
 sub Date_NearestWorkDay {
    my($string,$tomorrowfirst) = @_;
    my $err = $date->parse($string);
-   return ""  if ($err);
+   return ''  if ($err);
    $date->nearest_business_day($tomorrowfirst);
    my $val = $date->value();
    return $val;
@@ -562,7 +571,7 @@ sub ParseRecur {
    }
 
    my $err = $recur->parse($string,@args);
-   return ""  if ($err);
+   return ''  if ($err);
 
    if (wantarray) {
       my @dates = $recur->dates();
@@ -574,34 +583,34 @@ sub ParseRecur {
       return @ret;
    }
 
-   my @int   = @{ $$recur{"data"}{"interval"} };
-   my @rtime = @{ $$recur{"data"}{"rtime"} };
-   my @flags = @{ $$recur{"data"}{"flags"} };
-   my $start = $$recur{"data"}{"start"};
-   my $end   = $$recur{"data"}{"end"};
-   my $base  = $$recur{"data"}{"base"};
+   my @int   = @{ $$recur{'data'}{'interval'} };
+   my @rtime = @{ $$recur{'data'}{'rtime'} };
+   my @flags = @{ $$recur{'data'}{'flags'} };
+   my $start = $$recur{'data'}{'start'};
+   my $end   = $$recur{'data'}{'end'};
+   my $base  = $$recur{'data'}{'base'};
 
    my $r;
    if (@int) {
-      $r = join(":",@int);
+      $r = join(':',@int);
    }
    if (@rtime) {
       my @rt;
       foreach my $rt (@rtime) {
          push(@rt,join(",",@$rt));
       }
-      $r .= '*' . join(":",@rt);
+      $r .= '*' . join(':',@rt);
    }
 
    $r .= '*' . join(",",@flags);
 
-   my $val = (defined($base) ? $base->value() : "");
+   my $val = (defined($base) ? $base->value() : '');
    $r .= "*$val";
 
-   $val = (defined($start) ? $start->value() : "");
+   $val = (defined($start) ? $start->value() : '');
    $r .= "*$val";
 
-   $val = (defined($end) ? $end->value() : "");
+   $val = (defined($end) ? $end->value() : '');
    $r .= "*$val";
 
    return $r;
@@ -623,7 +632,7 @@ sub Events_List {
 
    if (! @args) {
       # absent
-      @list    = $date->list_events("dates");
+      @list    = $date->list_events('dates');
 
    } else {
       # a date or 0
@@ -636,8 +645,8 @@ sub Events_List {
 
       if (! $arg) {
          my($y,$m,$d) = $date->value();
-         $date2->set("date",[$y,$m,$d,23,59,59]);
-         @list = $date->list_events(0, "dates");
+         $date2->set('date',[$y,$m,$d,23,59,59]);
+         @list = $date->list_events(0, 'dates');
 
       } else {
          $err = $date2->parse($arg);
@@ -645,7 +654,7 @@ sub Events_List {
             warn "ERROR: invalid argument: $arg\n";
             return [];
          }
-         @list = $date->list_events($date2, "dates");
+         @list = $date->list_events($date2, 'dates');
       }
    }
 
@@ -671,7 +680,7 @@ sub Events_List {
          my $delta  = $d0->calc($d1);
 
          foreach $flag (@n) {
-            $flag = ""  if (! defined($flag));
+            $flag = ''  if (! defined($flag));
             if (exists $ret{$flag}) {
                $ret{$flag} = $ret{$flag}->calc($delta);
             } else {
@@ -722,7 +731,7 @@ sub Date_SecsSince1970 {
 
 sub Date_SecsSince1970GMT {
    my($m,$d,$y,$h,$mn,$s) = @_;
-   $date->set("date",[$y,$m,$d,$h,$mn,$s]);
+   $date->set('date',[$y,$m,$d,$h,$mn,$s]);
    return $date->secs_since_1970_GMT();
 }
 
@@ -768,30 +777,30 @@ sub Date_LeapYear {
 
 sub Date_DaySuffix {
    my($d) = @_;
-   return $$dmb{"data"}{"wordlistL"}{"nth_dom"}[$d-1];
+   return $$dmb{'data'}{'wordlistL'}{'nth_dom'}[$d-1];
 }
 
 sub Date_TimeZone {
-   return $dmb->_now("tz");
+   return $dmb->_now('tz');
 }
 
 sub Date_ConvTZ {
    my($str,$from,$to) = @_;
    $from = $dmt->zone($from);
-   return ""  if (! $from);
+   return ''  if (! $from);
    $to = $dmt->zone($to);
-   return ""  if (! $to);
-   my @d = @{ $dmb->split("date",$str) };
-   return ""  if (! @d);
+   return ''  if (! $to);
+   my @d = @{ $dmb->split('date',$str) };
+   return ''  if (! @d);
    my($err,$d) = $dmt->convert(\@d,$from,$to);
-   return ""  if ($err);
-   return $dmb->join("date",$d);
+   return ''  if ($err);
+   return $dmb->join('date',$d);
 }
 
 sub Date_IsWorkDay {
    my($str,$checktime) = @_;
    my $err = $date->parse($str);
-   return ""  if ($err);
+   return ''  if ($err);
    return $date->is_business_day($checktime);
 }
 

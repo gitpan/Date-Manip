@@ -12,18 +12,18 @@ package Date::Manip::Recur;
 ########################################################################
 
 use Date::Manip::Obj;
-@ISA = ("Date::Manip::Obj");
+@ISA = ('Date::Manip::Obj');
 
 require 5.010000;
 use warnings;
 use strict;
 use IO::File;
-use feature "switch";
+use feature 'switch';
 use integer;
 #use re 'debug';
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 ########################################################################
 # BASE METHODS
@@ -38,44 +38,44 @@ sub is_recur {
 #
 sub _init {
    my($self) = @_;
-   my $dmb   = $$self{"objs"}{"base"};
+   my $dmb   = $$self{'objs'}{'base'};
 
-   $$self{"err"}              = "";
-   $$self{"data"}{"interval"} = [];    # (Y, M, ...)
-   $$self{"data"}{"rtime"}    = [];    # ( [ VAL_OR_RANGE, VAL_OR_RANGE, ... ],
+   $$self{'err'}              = '';
+   $$self{'data'}{'interval'} = [];    # (Y, M, ...)
+   $$self{'data'}{'rtime'}    = [];    # ( [ VAL_OR_RANGE, VAL_OR_RANGE, ... ],
                                        #   [ VAL_OR_RANGE, VAL_OR_RANGE, ... ],
                                        #   ... )
-   $$self{"data"}{"base"}     = undef;
+   $$self{'data'}{'base'}     = undef;
 
    # Get the default start/end dates
 
-   given ($dmb->_config("recurrange")) {
+   given ($dmb->_config('recurrange')) {
 
-      when ("none") {
-         $$self{"data"}{"start"}    = undef;
-         $$self{"data"}{"end"}      = undef;
+      when ('none') {
+         $$self{'data'}{'start'}    = undef;
+         $$self{'data'}{'end'}      = undef;
       }
 
-      when ("year") {
-         my $y      = $dmb->_now("y");
+      when ('year') {
+         my $y      = $dmb->_now('y');
          my $start  = $self->new_date();
          my $end    = $self->new_date();
-         $start->set("date",[$y, 1, 1,00,00,00]);
-         $end->set  ("date",[$y,12,31,23,59,59]);
+         $start->set('date',[$y, 1, 1,00,00,00]);
+         $end->set  ('date',[$y,12,31,23,59,59]);
       }
 
-      when ("month") {
-         my $y      = $dmb->_now("y");
-         my $m      = $dmb->_now("m",1);
+      when ('month') {
+         my $y      = $dmb->_now('y');
+         my $m      = $dmb->_now('m',1);
          my $dim    = $dmb->days_in_month($y,$m);
          my $start  = $self->new_date();
          my $end    = $self->new_date();
-         $start->set("date",[$y,$m,   1,00,00,00]);
-         $end->set  ("date",[$y,$m,$dim,23,59,59]);
+         $start->set('date',[$y,$m,   1,00,00,00]);
+         $end->set  ('date',[$y,$m,$dim,23,59,59]);
       }
 
-      when ("week") {
-         my($y,$m,$d) = $dmb->_now("now");
+      when ('week') {
+         my($y,$m,$d) = $dmb->_now('now');
          my $w;
          ($y,$w)    = $dmb->week_of_year([$y,$m,$d]);
          ($y,$m,$d) = @{ $dmb->week_of_year($y,$w) };
@@ -84,23 +84,23 @@ sub _init {
 
          my $start  = $self->new_date();
          my $end    = $self->new_date();
-         $start->set("date",[$y, $m, $d, 00,00,00]);
-         $end->set  ("date",[$yy,$mm,$dd,23,59,59]);
+         $start->set('date',[$y, $m, $d, 00,00,00]);
+         $end->set  ('date',[$yy,$mm,$dd,23,59,59]);
       }
 
-      when ("day") {
-         my($y,$m,$d) = $dmb->_now("now");
+      when ('day') {
+         my($y,$m,$d) = $dmb->_now('now');
          my $start  = $self->new_date();
          my $end    = $self->new_date();
-         $start->set("date",[$y,$m,$d,00,00,00]);
-         $end->set  ("date",[$y,$m,$d,23,59,59]);
+         $start->set('date',[$y,$m,$d,00,00,00]);
+         $end->set  ('date',[$y,$m,$d,23,59,59]);
       }
 
-      when ("all") {
+      when ('all') {
          my $start  = $self->new_date();
          my $end    = $self->new_date();
-         $start->set("date",[0001,02,01,00,00,00]);
-         $end->set  ("date",[9999,11,30,23,59,59]);
+         $start->set('date',[0001,02,01,00,00,00]);
+         $end->set  ('date',[9999,11,30,23,59,59]);
       }
    }
 
@@ -112,15 +112,15 @@ sub _init {
    # The rtime values can automatically change things by up to one
    # day.
 
-   $$self{"data"}{"flags"}    = [];
-   $$self{"data"}{"startm"}   = [0,0,0,-1,0,0,0];
-   $$self{"data"}{"endm"}     = [0,0,0, 1,0,0,0];
+   $$self{'data'}{'flags'}    = [];
+   $$self{'data'}{'startm'}   = [0,0,0,-1,0,0,0];
+   $$self{'data'}{'endm'}     = [0,0,0, 1,0,0,0];
 }
 
 sub _init_args {
    my($self) = @_;
 
-   my @args = @{ $$self{"args"} };
+   my @args = @{ $$self{'args'} };
    if (@args) {
       $self->parse(@args);
    }
@@ -137,7 +137,7 @@ sub parse {
 
    my $err = $self->frequency($string);
    if (! $err) {
-      $string = "";
+      $string = '';
    }
 
    # Test if $string = "FREQ*..." and FREQ contains an '*'.
@@ -175,7 +175,7 @@ sub parse {
    }
 
    if ($err) {
-      $$self{"err"} = "[frequency] Invalid frequency string";
+      $$self{'err'} = "[frequency] Invalid frequency string";
       return 1;
    }
 
@@ -256,11 +256,11 @@ sub parse {
    }
 
    if (@tmp) {
-      $$self{"err"} = "[frequency] String contains invalid elements";
+      $$self{'err'} = "[frequency] String contains invalid elements";
       return 1;
    }
    if (@args) {
-      $$self{"err"} = "[frequency] Unknown arguments";
+      $$self{'err'} = "[frequency] Unknown arguments";
       return 1;
    }
 
@@ -277,7 +277,7 @@ sub frequency {
 
       # Standard frequency notation
 
-      my $stdrx = $self->_rx("std");
+      my $stdrx = $self->_rx('std');
       if ($string =~ $stdrx) {
          my($l,$r) = ($+{'l'},$+{'r'});
 
@@ -304,10 +304,10 @@ sub frequency {
 
       # Strip out some words to ignore
 
-      my $ignrx = $self->_rx("ignore");
+      my $ignrx = $self->_rx('ignore');
       $string =~ s/$ignrx/ /g;
 
-      my $eachrx = $self->_rx("each");
+      my $eachrx = $self->_rx('each');
       my $each   = 0;
       if ($string =~ s/$eachrx/ /g) {
          $each = 1;
@@ -316,14 +316,14 @@ sub frequency {
       $string =~ s/\s*$//;
 
       if (! $string) {
-         $$self{"err"} = "[frequency] Invalid frequency string";
+         $$self{'err'} = "[frequency] Invalid frequency string";
          return 1;
       }
 
       my($l,$r);
       my $err = $self->_parse_lang($string);
       if ($err) {
-         $$self{"err"} = "[frequency] Invalid frequency string";
+         $$self{'err'} = "[frequency] Invalid frequency string";
          return 1;
       }
       return 0;
@@ -359,8 +359,8 @@ sub frequency {
    #   NUM is an integer
    #   RANGE is [NUM1,NUM2]
 
-   my $rfieldrx = $self->_rx("rfield");
-   my $rrangerx = $self->_rx("rrange");
+   my $rfieldrx = $self->_rx('rfield');
+   my $rrangerx = $self->_rx('rrange');
    my @type     = qw(y m w d h mn s);
    while ($#type > $#rtime) {
       shift(@type);
@@ -370,7 +370,7 @@ sub frequency {
       my $type = shift(@type);
 
       if ($rfield !~ $rfieldrx) {
-         $$self{"err"} = "[parse] Invalid rtime string";
+         $$self{'err'} = "[parse] Invalid rtime string";
          return 1;
       }
 
@@ -382,15 +382,15 @@ sub frequency {
             my ($num1,$num2) = ($1,$2);
 
             if ( ($num1 < 0  ||  $num2 < 0)  &&
-                 ($type ne "w"  &&  $type ne "d") ) {
-               $$self{"err"} = "[parse] Negative values allowed for day/week";
+                 ($type ne 'w'  &&  $type ne 'd') ) {
+               $$self{'err'} = "[parse] Negative values allowed for day/week";
                return 1;
             }
 
             if ( ($num1 > 0  &&  $num2 > 0)  ||
                  ($num1 < 0  &&  $num2 < 0) ) {
                if ($num1 > $num2) {
-                  $$self{"err"} = "[parse] Invalid rtime range string";
+                  $$self{'err'} = "[parse] Invalid rtime range string";
                   return 1;
                }
                push(@val,$num1..$num2);
@@ -400,8 +400,8 @@ sub frequency {
 
          } else {
             if ($vals < 0  &&
-                 ($type ne "w"  &&  $type ne "d") ) {
-               $$self{"err"} = "[parse] Negative values allowed for day/week";
+                 ($type ne 'w'  &&  $type ne 'd') ) {
+               $$self{'err'} = "[parse] Negative values allowed for day/week";
                return 1;
             }
             push(@val,$vals);
@@ -413,8 +413,8 @@ sub frequency {
 
    # Store it (also, get the default range modifiers).
 
-   $$self{"data"}{"interval"} = [ @int ];
-   $$self{"data"}{"rtime"}    = [ @rtime ];
+   $$self{'data'}{'interval'} = [ @int ];
+   $$self{'data'}{'rtime'}    = [ @rtime ];
    $self->modifiers();
 
    return 0;
@@ -422,39 +422,39 @@ sub frequency {
 
 sub _parse_lang {
    my($self,$string) = @_;
-   my $dmb           = $$self{"objs"}{"base"};
+   my $dmb           = $$self{'objs'}{'base'};
 
    # Test the regular expression
 
-   my $rx = $self->_rx("every");
+   my $rx = $self->_rx('every');
 
    return 1  if ($string !~ $rx);
    my($month,$week,$day,$last,$nth,$day_name,$day_abb,$mon_name,$mon_abb,$n,$y) =
-     ($+{"month"},$+{"week"},$+{"day"},$+{"last"},$+{"nth"},
-      $+{"day_name"},$+{"day_abb"},$+{"mon_name"},$+{"mon_abb"},$+{"n"},$+{"y"});
+     ($+{'month'},$+{'week'},$+{'day'},$+{'last'},$+{'nth'},
+      $+{'day_name'},$+{'day_abb'},$+{'mon_name'},$+{'mon_abb'},$+{'n'},$+{'y'});
 
    # Convert wordlist values to calendar values
 
    my $dow;
    if (defined($day_name) || defined($day_abb)) {
       if (defined($day_name)) {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_name"}{lc($day_name)};
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_name'}{lc($day_name)};
       } else {
-         $dow = $$dmb{"data"}{"wordmatch"}{"day_abb"}{lc($day_abb)};
+         $dow = $$dmb{'data'}{'wordmatch'}{'day_abb'}{lc($day_abb)};
       }
    }
 
    my $mmm;
    if (defined($mon_name) || defined($mon_abb)) {
       if (defined($mon_name)) {
-         $mmm = $$dmb{"data"}{"wordmatch"}{"month_name"}{lc($mon_name)};
+         $mmm = $$dmb{'data'}{'wordmatch'}{'month_name'}{lc($mon_name)};
       } else {
-         $mmm = $$dmb{"data"}{"wordmatch"}{"month_abb"}{lc($mon_abb)};
+         $mmm = $$dmb{'data'}{'wordmatch'}{'month_abb'}{lc($mon_abb)};
       }
    }
 
    if (defined($nth)) {
-      $nth = $$dmb{"data"}{"wordmatch"}{"nth"}{lc($nth)};
+      $nth = $$dmb{'data'}{'wordmatch'}{'nth'}{lc($nth)};
    }
 
    # Get the frequencies
@@ -539,21 +539,21 @@ sub _date {
 
    # Make sure the argument is a date
 
-   if (ref($date_or_string) eq "Date::Manip::Date") {
-      $$self{"data"}{$op} = $date_or_string;
+   if (ref($date_or_string) eq 'Date::Manip::Date') {
+      $$self{'data'}{$op} = $date_or_string;
 
    } elsif (ref($date_or_string)) {
-      $$self{"err"} = "Invalid $op date object";
+      $$self{'err'} = "Invalid $op date object";
       return 1;
 
    } else {
       my $date = $self->new_date();
       my $err  = $date->parse($date_or_string);
       if ($err) {
-         $$self{"err"} = "Invalid $op date string";
+         $$self{'err'} = "Invalid $op date string";
          return 1;
       }
-      $$self{"data"}{$op} = $date;
+      $$self{'data'}{$op} = $date;
    }
 
    return 0;
@@ -561,22 +561,22 @@ sub _date {
 
 sub start {
    my($self,$start) = @_;
-   $self->_date("start",$start);
+   $self->_date('start',$start);
 }
 
 sub end {
    my($self,$end) = @_;
-   $self->_date("end",$end);
+   $self->_date('end',$end);
 }
 
 sub base {
    my($self,$base) = @_;
-   $self->_date("base",$base);
+   $self->_date('base',$base);
 }
 
 sub modifiers {
    my($self,@flags) = @_;
-   my $dmb          = $$self{"objs"}{"base"};
+   my $dmb          = $$self{'objs'}{'base'};
    if ($#flags == 0) {
       @flags        = split(/,/,lc($flags[0]));
    }
@@ -585,7 +585,7 @@ sub modifiers {
 
    if (@flags  &&  $flags[0] eq "+") {
       shift(@flags);
-      my @tmp = @{ $$self{"data"}{"flags"} };
+      my @tmp = @{ $$self{'data'}{'flags'} };
       @flags  = (@tmp,@flags)  if (@tmp);
    }
 
@@ -599,7 +599,7 @@ sub modifiers {
    #   @int = (y...mn)    : +/- 1 hour
    #   @int = (y...s)     : +/- 1 minute
 
-   my @int = @{ $$self{"data"}{"interval"} };
+   my @int = @{ $$self{'data'}{'interval'} };
    my(@startm,@endm);
    my $n = $#int + 1;
 
@@ -678,16 +678,16 @@ sub modifiers {
          when (/^(fw|bw)(\d+)$/) {
             my ($t,$n)  = ($1,$2);
 
-            my $wwbeg   = $dmb->_config("workweekbeg");
-            my $wwend   = $dmb->_config("workweekend");
+            my $wwbeg   = $dmb->_config('workweekbeg');
+            my $wwend   = $dmb->_config('workweekend');
             my $wwlen   = $wwend - $wwbeg + 1;
             my $wkend   = 7 - $wwlen;
-            my $fudge   = $dmb->_config("recurnumfudgedays");
+            my $fudge   = $dmb->_config('recurnumfudgedays');
             # How many weekends likely in the interval?  Take best guess for maximum
             # number of weeks and add 1 for a fudge factor.
             my $num     = int($n/$wwlen) + 2;
 
-            if ($t eq "fw") {
+            if ($t eq 'fw') {
                $startm[3] += $n;
                $endm[3]   += $n + $num*$wkend + $fudge;
             } else {
@@ -699,17 +699,17 @@ sub modifiers {
          when ([qw( cwd cwn cwp nwd pwd dwd )]) {
             # For closest work day, we'll move backwards/forwards 1
             # weekend (+ 1 day) plus the fudge factor.
-            my $wwbeg   = $dmb->_config("workweekbeg");
-            my $wwend   = $dmb->_config("workweekend");
+            my $wwbeg   = $dmb->_config('workweekbeg');
+            my $wwend   = $dmb->_config('workweekend');
             my $wwlen   = $wwend - $wwbeg + 1;
             my $wkend   = 7 - $wwlen;
-            my $fudge   = $dmb->_config("recurnumfudgedays");
+            my $fudge   = $dmb->_config('recurnumfudgedays');
 
-            if ($flag eq "pwd") {
+            if ($flag eq 'pwd') {
                $startm[3] -= $wkend+1 + $fudge;
                $endm[3]   -= 1;
 
-            } elsif ($flag eq "nwd") {
+            } elsif ($flag eq 'nwd') {
                $startm[3] += 1;
                $endm[3]   += $wkend+1 + $fudge;
 
@@ -719,21 +719,21 @@ sub modifiers {
             }
          }
 
-         when ("easter") {
+         when ('easter') {
             $startm[0]--;
             $endm[0]++;
          }
 
          default {
-            $$self{"err"} = "[modifiers]: invalid modifier: $flag";
+            $$self{'err'} = "[modifiers]: invalid modifier: $flag";
             return 1;
          }
       }
    }
 
-   $$self{"data"}{"startm"} = [ @startm ];
-   $$self{"data"}{"endm"}   = [ @endm ];
-   $$self{"data"}{"flags"}  = [ @flags ];
+   $$self{'data'}{'startm'} = [ @startm ];
+   $$self{'data'}{'endm'}   = [ @endm ];
+   $$self{'data'}{'flags'}  = [ @flags ];
    return 0;
 }
 
@@ -741,10 +741,10 @@ sub dates {
    my($self,$start2,$end2) = @_;
    $self->err(1);
 
-   my $dmb   = $$self{"objs"}{"base"};
+   my $dmb   = $$self{'objs'}{'base'};
    $dmb->_now();   # Update NOW
-   my @int   = @{ $$self{"data"}{"interval"} };
-   my @rtime = @{ $$self{"data"}{"rtime"} };
+   my @int   = @{ $$self{'data'}{'interval'} };
+   my @rtime = @{ $$self{'data'}{'rtime'} };
    my ($yf,$mf,$wf,$df,$hf,$mnf,$sf) = (@int,@rtime);
 
    #
@@ -753,20 +753,20 @@ sub dates {
    #
 
    if (defined($start2)  &&
-       (! ref($start2)  ||  ref($start2) ne "Date::Manip::Date"  ||
+       (! ref($start2)  ||  ref($start2) ne 'Date::Manip::Date'  ||
         $start2->err())) {
-      $$self{"err"} = "Start argument must be a date object.";
+      $$self{'err'} = 'Start argument must be a date object.';
       return ();
    }
    if (defined($end2)  &&
-       (! ref($end2)  ||  ref($end2) ne "Date::Manip::Date"  ||
+       (! ref($end2)  ||  ref($end2) ne 'Date::Manip::Date'  ||
         $end2->err())) {
-      $$self{"err"} = "End argument must be a date object.";
+      $$self{'err'} = 'End argument must be a date object.';
       return ();
    }
 
-   my $start = $$self{"data"}{"start"};
-   my $end   = $$self{"data"}{"end"};
+   my $start = $$self{'data'}{'start'};
+   my $end   = $$self{'data'}{'end'};
 
    if (defined($start)  &&  defined($start2)) {
       # Choose the later of the two
@@ -796,20 +796,20 @@ sub dates {
 
    if ($#int != -1) {
       if (! defined $start) {
-         $$self{"err"} = "Start date required";
+         $$self{'err'} = 'Start date required';
          return ();
       }
-      if ($$start{"err"}) {
-         $$self{"err"} = "Start date invalid";
+      if ($$start{'err'}) {
+         $$self{'err'} = 'Start date invalid';
          return ();
       }
 
       if (! defined $end) {
-         $$self{"err"} = "End date required";
+         $$self{'err'} = 'End date required';
          return ();
       }
-      if ($$end{"err"}) {
-         $$self{"err"} = "End date invalid";
+      if ($$end{'err'}) {
+         $$self{'err'} = 'End date invalid';
          return ();
       }
 
@@ -819,20 +819,20 @@ sub dates {
    }
 
    my $every = 0;
-   my $tmp   = join("",@int);
+   my $tmp   = join('',@int);
 
-   if ($tmp eq ""  ||  $tmp =~ /^0*1$/) {
-      $$self{"data"}{"base"} = $start;
-      $every = 1  if ($tmp ne "");
+   if ($tmp eq ''  ||  $tmp =~ /^0*1$/) {
+      $$self{'data'}{'base'} = $start;
+      $every = 1  if ($tmp ne '');
 
    } else {
-      if (! defined $$self{"data"}{"base"}) {
-         $$self{"err"} = "Base date required";
+      if (! defined $$self{'data'}{'base'}) {
+         $$self{'err'} = 'Base date required';
          return ();
       }
-      my $date = $$self{"data"}{"base"};
-      if ($$date{"err"}) {
-         $$self{"err"} = "Base date invalid";
+      my $date = $$self{'data'}{'base'};
+      if ($$date{'err'}) {
+         $$self{'err'} = 'Base date invalid';
          return ();
       }
    }
@@ -858,7 +858,7 @@ sub dates {
          #
 
          if ($#int == -1) {
-            ($err,@y)  = $self->_rtime_values("y",$yf);
+            ($err,@y)  = $self->_rtime_values('y',$yf);
             return ()     if ($err);
          } else {
             my @tmp    = $self->_int_values($every,$yf,$start,$end);
@@ -881,12 +881,12 @@ sub dates {
             $mf = [1]  if ($m_empty);
             $df = [1]  if ($d_empty);
 
-            ($err,@m)  = $self->_rtime_values("m",$mf);
+            ($err,@m)  = $self->_rtime_values('m',$mf);
             return ()  if ($err);
 
             foreach my $y (@y) {
                foreach my $m (@m) {
-                  ($err,@d)  = $self->_rtime_values("day_of_month",$df,$y,$m);
+                  ($err,@d)  = $self->_rtime_values('day_of_month',$df,$y,$m);
                   return ()  if ($err);
                   foreach my $d (@d) {
                      push(@date,[$y,$m,$d,0,0,0]);
@@ -903,7 +903,7 @@ sub dates {
                #   1*0:0:4       every year on the 4th day of the year
 
                foreach my $y (@y) {
-                  ($err,@doy)  = $self->_rtime_values("day_of_year",$df,$y);
+                  ($err,@doy)  = $self->_rtime_values('day_of_year',$df,$y);
                   return ()  if ($err);
                   foreach my $doy (@doy) {
                      my($yy,$mm,$dd) = @{ $dmb->day_of_year($y,$doy) };
@@ -918,7 +918,7 @@ sub dates {
                #   1*0:3:0       every year on the first day of 3rd week of year
 
                foreach my $y (@y) {
-                  ($err,@woy)  = $self->_rtime_values("week_of_year",$wf,$y);
+                  ($err,@woy)  = $self->_rtime_values('week_of_year',$wf,$y);
                   return ()  if ($err);
                   foreach my $woy (@woy) {
                      my ($yy,$mm,$dd) = @{ $dmb->week_of_year($y,$woy) };
@@ -932,11 +932,11 @@ sub dates {
                #  *0:0:3:4       on the 3rd Thur of the current year
                #   1*0:3:4       every year on the 3rd Thur of the year
 
-               ($err,@dow)  = $self->_rtime_values("day_of_week",$df);
+               ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
                return ()  if ($err);
                foreach my $y (@y) {
                   foreach my $dow (@dow) {
-                     ($err,@n) = $self->_rtime_values("dow_of_year",$wf,$y,$dow);
+                     ($err,@n) = $self->_rtime_values('dow_of_year',$wf,$y,$dow);
                      return ()  if ($err);
                      foreach my $n (@n) {
                         my $ymd =  $dmb->nth_day_of_week($y,$n,$dow);
@@ -956,19 +956,19 @@ sub dates {
             #   1*2:3:4       every year in Feb on the 3rd Thur
             #   1*2:3:0       every year on the 3rd occurence of FirstDay in Feb
 
-            ($err,@m)  = $self->_rtime_values("m",$mf);
+            ($err,@m)  = $self->_rtime_values('m',$mf);
             return ()  if ($err);
             if ($d_empty) {
-               @dow = ($dmb->_config("firstday"));
+               @dow = ($dmb->_config('firstday'));
             } else {
-               ($err,@dow) = $self->_rtime_values("day_of_week",$df);
+               ($err,@dow) = $self->_rtime_values('day_of_week',$df);
                return ()  if ($err);
             }
 
             foreach my $y (@y) {
                foreach my $m (@m) {
                   foreach my $dow (@dow) {
-                     ($err,@n)  = $self->_rtime_values("dow_of_month",
+                     ($err,@n)  = $self->_rtime_values('dow_of_month',
                                                        $wf,$y,$m,$dow);
                      return ()  if ($err);
                      foreach my $n (@n) {
@@ -1000,7 +1000,7 @@ sub dates {
 
             foreach my $date (@tmp) {
                my($y,$m) = @$date;
-               ($err,@d)  = $self->_rtime_values("day_of_month",$df,$y,$m);
+               ($err,@d)  = $self->_rtime_values('day_of_month',$df,$y,$m);
                return ()  if ($err);
                foreach my $d (@d) {
                   push(@date,[$y,$m,$d,0,0,0]);
@@ -1015,16 +1015,16 @@ sub dates {
             #   1:2*3:4       every 1 year, 2 months on the 3rd Thur of the month
 
             if ($d_empty) {
-               @dow = ($dmb->_config("firstday"));
+               @dow = ($dmb->_config('firstday'));
             } else {
-               ($err,@dow)  = $self->_rtime_values("day_of_week",$df);
+               ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
                return ()  if ($err);
             }
 
             foreach my $date (@tmp) {
                my($y,$m) = @$date;
                foreach my $dow (@dow) {
-                  ($err,@n)  = $self->_rtime_values("dow_of_month",
+                  ($err,@n)  = $self->_rtime_values('dow_of_month',
                                                     $wf,$y,$m,$dow);
                   return ()  if ($err);
                   foreach my $n (@n) {
@@ -1053,11 +1053,11 @@ sub dates {
 
          my @tmp = $self->_int_values($every,$yf,$mf,$wf,$start,$end);
 
-         my $fdow = $dmb->_config("firstday");
+         my $fdow = $dmb->_config('firstday');
          if ($d_empty) {
             @dow = ($fdow);
          } else {
-            ($err,@dow)  = $self->_rtime_values("day_of_week",$df);
+            ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
             return ()  if ($err);
          }
 
@@ -1116,7 +1116,7 @@ sub dates {
    if (@rtime) {
       pop(@rtime);
 
-      ($err,@s) = $self->_rtime_values("s",$sf);
+      ($err,@s) = $self->_rtime_values('s',$sf);
       return ()  if ($err);
       $self->_field_add_values(\@date,5,@s);
    }
@@ -1125,7 +1125,7 @@ sub dates {
    if (@rtime) {
       pop(@rtime);
 
-      ($err,@mn) = $self->_rtime_values("mn",$mnf);
+      ($err,@mn) = $self->_rtime_values('mn',$mnf);
       return ()  if ($err);
       $self->_field_add_values(\@date,4,@mn);
    }
@@ -1134,7 +1134,7 @@ sub dates {
    if (@rtime) {
       pop(@rtime);
 
-      ($err,@h) = $self->_rtime_values("h",$hf);
+      ($err,@h) = $self->_rtime_values('h',$hf);
       return ()  if ($err);
       $self->_field_add_values(\@date,3,@h);
    }
@@ -1143,7 +1143,7 @@ sub dates {
    # Apply modifiers
    #
 
-   my @flags = @{ $$self{"data"}{"flags"} };
+   my @flags = @{ $$self{'data'}{'flags'} };
    if (@flags) {
       my $obj = $self->new_date();
 
@@ -1155,22 +1155,22 @@ sub dates {
             my(@wd,$today);
             given($flag) {
 
-               when ("easter") {
+               when ('easter') {
                      ($m,$d) = $self->_easter($y);
                }
 
                when (/^([pn])([dt])([1-7])$/) {
                   my($forw,$today,$dow) = ($1,$2,$3);
-                  $forw  = ($forw  eq "p" ? 0 : 1);
-                  $today = ($today eq "d" ? 0 : 1);
+                  $forw  = ($forw  eq 'p' ? 0 : 1);
+                  $today = ($today eq 'd' ? 0 : 1);
                   ($y,$m,$d,$h,$mn,$s) =
                     @{ $obj->__next_prev([$y,$m,$d,$h,$mn,$s],$forw,$dow,$today) };
                }
 
                when (/^([fb])([dw])(\d+)$/) {
                   my($prev,$business,$n) = ($1,$2,$3);
-                  $prev     = ($prev     eq "b" ? 1 : 0);
-                  $business = ($business eq "w" ? 1 : 0);
+                  $prev     = ($prev     eq 'b' ? 1 : 0);
+                  $business = ($business eq 'w' ? 1 : 0);
 
                   if ($business) {
                      ($y,$m,$d,$h,$mn,$s) =
@@ -1180,28 +1180,28 @@ sub dates {
                   }
                }
 
-               when ("nwd") {
+               when ('nwd') {
                   if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
                      ($y,$m,$d,$h,$mn,$s) =
                        @{ $obj->__nextprev_business_day(0,0,0,[$y,$m,$d,$h,$mn,$s]) };
                   }
                }
 
-               when ("pwd") {
+               when ('pwd') {
                   if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
                      ($y,$m,$d,$h,$mn,$s) =
                        @{ $obj->__nextprev_business_day(1,1,0,[$y,$m,$d,$h,$mn,$s]) };
                   }
                }
 
-               when ("dwd") {
+               when ('dwd') {
                   if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
                      continue;
                   }
                }
 
-               when (["cwd","dwd"]) {
-                  if ($dmb->_config("tomorrowfirst")) {
+               when (['cwd','dwd']) {
+                  if ($dmb->_config('tomorrowfirst')) {
                      @wd = ([$y,$m,$d,$h,$mn,$s],+1,  [$y,$m,$d,$h,$mn,$s],-1);
                   } else {
                      @wd = ([$y,$m,$d,$h,$mn,$s],-1,  [$y,$m,$d,$h,$mn,$s],+1);
@@ -1209,13 +1209,13 @@ sub dates {
                   continue;
                }
 
-               when ("cwn") {
+               when ('cwn') {
                   @wd = ([$y,$m,$d,$h,$mn,$s],+1,  [$y,$m,$d,$h,$mn,$s],-1);
                   $today = 0;
                   continue;
                }
 
-               when ("cwp") {
+               when ('cwp') {
                   @wd = ([$y,$m,$d,$h,$mn,$s],-1,  [$y,$m,$d,$h,$mn,$s],+1);
                   $today = 0;
                   continue;
@@ -1266,10 +1266,10 @@ sub dates {
 
    my(@ret,@start,@end);
    if (defined $start) {
-      @start = @{ $$start{"data"}{"date"} };
+      @start = @{ $$start{'data'}{'date'} };
    }
    if (defined $end) {
-      @end   = @{ $$end{"data"}{"date"} };
+      @end   = @{ $$end{'data'}{'date'} };
    }
 
    foreach my $date (@date) {
@@ -1282,7 +1282,7 @@ sub dates {
       }
 
       my $obj = $self->new_date();
-      $obj->set("date",\@d);
+      $obj->set('date',\@d);
       push(@ret,$obj);
    }
 
@@ -1300,12 +1300,12 @@ sub dates {
 
 sub _rx {
    my($self,$rx) = @_;
-   my $dmb       = $$self{"objs"}{"base"};
+   my $dmb       = $$self{'objs'}{'base'};
 
-   return $$dmb{"data"}{"rx"}{"recur"}{$rx}
-     if (exists $$dmb{"data"}{"rx"}{"recur"}{$rx});
+   return $$dmb{'data'}{'rx'}{'recur'}{$rx}
+     if (exists $$dmb{'data'}{'rx'}{'recur'}{$rx});
 
-   if ($rx eq "std") {
+   if ($rx eq 'std') {
 
       my $l      = '[0-9]*';
       my $r      = '[-,0-9]*';
@@ -1317,51 +1317,51 @@ sub _rx {
                    "(?<l>$l:$l)\\*(?<r>$r:$r:$r:$r:$r)|" .
                    "(?<l>$l)\\*(?<r>$r:$r:$r:$r:$r:$r)|" .
                    "(?<l>)\\*(?<r>$r:$r:$r:$r:$r:$r:$r)";
-      $$dmb{"data"}{"rx"}{"recur"}{$rx} = qr/^\s*(?:$stdrx)\s*$/;
+      $$dmb{'data'}{'rx'}{'recur'}{$rx} = qr/^\s*(?:$stdrx)\s*$/;
 
-   } elsif ($rx eq "rfield" ||
-            $rx eq "rnum"   ||
-            $rx eq "rrange") {
+   } elsif ($rx eq 'rfield' ||
+            $rx eq 'rnum'   ||
+            $rx eq 'rrange') {
 
       my $num    = '\-?\d+';
       my $range  = "$num\-$num";
       my $val    = "(?:$range|$num)";
       my $vals   = "$val(?:,$val)*";
 
-      $$dmb{"data"}{"rx"}{"recur"}{"rfield"} = qr/^($vals)$/;
-      $$dmb{"data"}{"rx"}{"recur"}{"rnum"}   = qr/^($num)$/;
-      $$dmb{"data"}{"rx"}{"recur"}{"rrange"} = qr/^($num)\-($num)$/;
+      $$dmb{'data'}{'rx'}{'recur'}{'rfield'} = qr/^($vals)$/;
+      $$dmb{'data'}{'rx'}{'recur'}{'rnum'}   = qr/^($num)$/;
+      $$dmb{'data'}{'rx'}{'recur'}{'rrange'} = qr/^($num)\-($num)$/;
 
-   } elsif ($rx eq "each") {
+   } elsif ($rx eq 'each') {
 
-      my $each  = $$dmb{"data"}{"rx"}{"each"};
+      my $each  = $$dmb{'data'}{'rx'}{'each'};
 
       my $eachrx = qr/(?:^|\s+)(?:$each)(\s+|$)/i;
-      $$dmb{"data"}{"rx"}{"recur"}{$rx} = $eachrx;
+      $$dmb{'data'}{'rx'}{'recur'}{$rx} = $eachrx;
 
-   } elsif ($rx eq "ignore") {
+   } elsif ($rx eq 'ignore') {
 
-      my $of    = $$dmb{"data"}{"rx"}{"of"};
-      my $on    = $$dmb{"data"}{"rx"}{"on"};
+      my $of    = $$dmb{'data'}{'rx'}{'of'};
+      my $on    = $$dmb{'data'}{'rx'}{'on'};
 
       my $ignrx = qr/(?:^|\s+)(?:$on|$of)(\s+|$)/i;
-      $$dmb{"data"}{"rx"}{"recur"}{$rx} = $ignrx;
+      $$dmb{'data'}{'rx'}{'recur'}{$rx} = $ignrx;
 
-   } elsif ($rx eq "every") {
+   } elsif ($rx eq 'every') {
 
-      my $month    = $$dmb{"data"}{rx}{fields}[2];
-      my $week     = $$dmb{"data"}{rx}{fields}[3];
-      my $day      = $$dmb{"data"}{rx}{fields}[4];
+      my $month    = $$dmb{'data'}{'rx'}{'fields'}[2];
+      my $week     = $$dmb{'data'}{'rx'}{'fields'}[3];
+      my $day      = $$dmb{'data'}{'rx'}{'fields'}[4];
 
-      my $last     = $$dmb{"data"}{"rx"}{"last"};
-      my $nth      = $$dmb{"data"}{"rx"}{"nth"}[0];
-      my $nth_wom  = $$dmb{"data"}{"rx"}{"nth_wom"}[0];
-      my $nth_dom  = $$dmb{"data"}{"rx"}{"nth_dom"}[0];
+      my $last     = $$dmb{'data'}{'rx'}{'last'};
+      my $nth      = $$dmb{'data'}{'rx'}{'nth'}[0];
+      my $nth_wom  = $$dmb{'data'}{'rx'}{'nth_wom'}[0];
+      my $nth_dom  = $$dmb{'data'}{'rx'}{'nth_dom'}[0];
 
-      my $day_abb  = $$dmb{"data"}{"rx"}{"day_abb"}[0];
-      my $day_name = $$dmb{"data"}{"rx"}{"day_name"}[0];
-      my $mon_abb  = $$dmb{"data"}{"rx"}{"month_abb"}[0];
-      my $mon_name = $$dmb{"data"}{"rx"}{"month_name"}[0];
+      my $day_abb  = $$dmb{'data'}{'rx'}{'day_abb'}[0];
+      my $day_name = $$dmb{'data'}{'rx'}{'day_name'}[0];
+      my $mon_abb  = $$dmb{'data'}{'rx'}{'month_abb'}[0];
+      my $mon_name = $$dmb{'data'}{'rx'}{'month_name'}[0];
 
       my $beg      = '(?:^|\s+)';
       my $end      = '(?:\s*$)';
@@ -1410,10 +1410,10 @@ sub _rx {
                                    #    y*
 
       $freqrx = qr/^(?:$freqrx)\s*$/i;
-      $$dmb{"data"}{"rx"}{"recur"}{$rx} = $freqrx;
+      $$dmb{'data'}{'rx'}{'recur'}{$rx} = $freqrx;
    }
 
-   return $$dmb{"data"}{"rx"}{"recur"}{$rx};
+   return $$dmb{'data'}{'rx'}{'recur'}{$rx};
 }
 
 ########################################################################
@@ -1469,7 +1469,7 @@ sub _int_values {
    my($self,$every,@args) = @_;
    my $end                = pop(@args);
    my $start              = pop(@args);
-   my $dmb                = $$self{"objs"}{"base"};
+   my $dmb                = $$self{'objs'}{'base'};
    my @vals;
 
    # Get the start, end, and base dates.
@@ -1477,14 +1477,14 @@ sub _int_values {
    # Also, get the range of dates to search (which is the start and end
    # dates adjusted due to various modifiers.
 
-   my $base   = $$self{"data"}{"base"};
-   my @base   = @{ $$base{"data"}{"date"} };
+   my $base   = $$self{'data'}{'base'};
+   my @base   = @{ $$base{'data'}{'date'} };
 
-   my @start  = @{ $$start{"data"}{"date"} };
-   my @startm = @{ $$self{"data"}{"startm"} };
+   my @start  = @{ $$start{'data'}{'date'} };
+   my @startm = @{ $$self{'data'}{'startm'} };
 
-   my @end    = @{ $$end{"data"}{"date"} };
-   my @endm   = @{ $$self{"data"}{"endm"} };
+   my @end    = @{ $$end{'data'}{'date'} };
+   my @endm   = @{ $$self{'data'}{'endm'} };
 
    my @date0  = @{ $dmb->calc_date_delta(\@start,\@startm) };
    my @date1  = @{ $dmb->calc_date_delta(\@end,\@endm) };
@@ -1529,40 +1529,40 @@ sub _int_values {
 # $val is a listref, with each element being a value or a range.
 #
 # Usage:
-#   _rtime_values("y"            ,$y);
-#   _rtime_values("m"            ,$m);
-#   _rtime_values("week_of_year" ,$w    ,$y);
-#   _rtime_values("dow_of_year"  ,$w    ,$y,$dow);
-#   _rtime_values("dow_of_month" ,$w    ,$y,$m,$dow);
-#   _rtime_values("day_of_year"  ,$d    ,$y);
-#   _rtime_values("day_of_month" ,$d    ,$y,$m);
-#   _rtime_values("day_of_week"  ,$d);
-#   _rtime_values("h"            ,$h);
-#   _rtime_values("mn"           ,$mn);
-#   _rtime_values("s"            ,$s);
+#   _rtime_values('y'            ,$y);
+#   _rtime_values('m'            ,$m);
+#   _rtime_values('week_of_year' ,$w    ,$y);
+#   _rtime_values('dow_of_year'  ,$w    ,$y,$dow);
+#   _rtime_values('dow_of_month' ,$w    ,$y,$m,$dow);
+#   _rtime_values('day_of_year'  ,$d    ,$y);
+#   _rtime_values('day_of_month' ,$d    ,$y,$m);
+#   _rtime_values('day_of_week'  ,$d);
+#   _rtime_values('h'            ,$h);
+#   _rtime_values('mn'           ,$mn);
+#   _rtime_values('s'            ,$s);
 #
 # Returns ($err,@vals)
 #
 sub _rtime_values {
    my($self,$type,$val,@args) = @_;
-   my $dmb                    = $$self{"objs"}{"base"};
+   my $dmb                    = $$self{'objs'}{'base'};
 
    given($type) {
 
-      when ("h") {
+      when ('h') {
          @args = (0,0,23,23);
       }
 
-      when ("mn") {
+      when ('mn') {
          @args = (0,0,59,59);
       }
 
-      when ("s") {
+      when ('s') {
          @args = (0,0,59,59);
       }
 
-      when ("y") {
-         my $curry  = $dmb->_now("y",1);
+      when ('y') {
+         my $curry  = $dmb->_now('y',1);
          foreach my $y (@$val) {
             $y = $curry  if (! ref($y)  &&  $y==0);
          }
@@ -1570,17 +1570,17 @@ sub _rtime_values {
          @args = (0,1,9999,9999);
       }
 
-      when ("m") {
+      when ('m') {
          @args = (0,1,12,12);
       }
 
-      when ("week_of_year") {
+      when ('week_of_year') {
          my($y)  = @args;
          my $wiy = $dmb->weeks_in_year($y);
          @args = (1,1,$wiy,53);
       }
 
-      when ("dow_of_year") {
+      when ('dow_of_year') {
          my($y,$dow) = @args;
 
          # Get the 1st occurence of $dow
@@ -1609,7 +1609,7 @@ sub _rtime_values {
          @args = (1,1,$n,53);
       }
 
-      when ("dow_of_month") {
+      when ('dow_of_month') {
          my($y,$m,$dow) = @args;
 
          # Get the 1st occurence of $dow in the month
@@ -1637,26 +1637,26 @@ sub _rtime_values {
          @args = (1,1,$n,5);
       }
 
-      when ("day_of_year") {
+      when ('day_of_year') {
          my($y)  = @args;
          my $diy = $dmb->days_in_year($y);
          @args = (1,1,$diy,366);
       }
 
-      when ("day_of_month") {
+      when ('day_of_month') {
          my($y,$m) = @args;
          my $dim = $dmb->days_in_month($y,$m);
          @args = (1,1,$dim,31);
       }
 
-      when ("day_of_week") {
+      when ('day_of_week') {
          @args = (0,1,7,7);
       }
    }
 
    my($err,@vals) = $self->__rtime_values($val,@args);
    if ($err) {
-      $$self{"err"} = "[dates] $err [$type]";
+      $$self{'err'} = "[dates] $err [$type]";
       return (1);
    }
    return(0,@vals);
@@ -1687,21 +1687,21 @@ sub __rtime_values {
          my($val1,$val2) = @$val;
 
          if ($allowneg) {
-            return ("Value outside range")
+            return ('Value outside range')
               if ( ($val1 >= 0  &&  ($val1 < $min  ||  $val1 > $absmax) ) ||
                    ($val2 >= 0  &&  ($val2 < $min  ||  $val2 > $absmax) ) );
-            return ("Negative value outside range")
+            return ('Negative value outside range')
               if ( ($val1 <= 0  &&  ($val1 < -$absmax  ||  $val1 > -$min) ) ||
                    ($val2 <= 0  &&  ($val2 < -$absmax  ||  $val2 > -$min) ) );
 
          } else {
-            return ("Value outside range")
+            return ('Value outside range')
               if ( ($val1 < $min  ||  $val1 > $absmax) ||
                    ($val2 < $min  ||  $val2 > $absmax) );
 
          }
 
-         return ("Range values reversed")
+         return ('Range values reversed')
            if ( ($val1 <= 0  &&  $val2 <= 0  &&  $val1 > $val2)  ||
                 ($val1 >= 0  &&  $val2 >= 0  &&  $val1 > $val2) );
 
@@ -1721,12 +1721,12 @@ sub __rtime_values {
       } else {
 
          if ($allowneg) {
-            return ("Value outside range")
+            return ('Value outside range')
               if ($val >= 0  &&  ($val < $min  ||  $val > $absmax));
-            return ("Negative value outside range")
+            return ('Negative value outside range')
               if ($val <= 0  &&  ($val < -$absmax  ||  $val > -$min));
          } else {
-            return ("Value outside range")
+            return ('Value outside range')
               if ($val < $min  ||  $val > $absmax);
          }
 
@@ -1745,7 +1745,7 @@ sub __rtime_values {
       }
    }
 
-   return ("",@ret);
+   return ('',@ret);
 }
 
 # This takes a list of dates (each a listref of [y,m,d,h,mn,s]) and replaces

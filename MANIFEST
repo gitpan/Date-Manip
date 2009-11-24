@@ -5,7 +5,6 @@ INSTALL
 internal/benchmarks/parse-1.dm.pl
 internal/benchmarks/parse-1.dm5.pl
 internal/benchmarks/parse-1.dt.pl
-internal/benchmarks/parse-1.in.gz
 internal/benchmarks/parse-1.in.pl
 internal/benchmarks/parse-1.sh
 internal/benchmarks/README

@@ -12,18 +12,18 @@ package Date::Manip::Base;
 ###############################################################################
 
 use Date::Manip::Obj;
-@ISA = ("Date::Manip::Obj");
+@ISA = ('Date::Manip::Obj');
 
 require 5.010000;
 use strict;
 use warnings;
 use integer;
 use IO::File;
-use feature "switch";
+use feature 'switch';
 require Date::Manip::Lang::index;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 ###############################################################################
 # BASE METHODS
@@ -44,62 +44,62 @@ sub _init {
 # always reused, and only needs to be initialized once.
 sub _init_cache {
    my($self) = @_;
-   return  if (exists $$self{"cache"}{"init"});
-   $$self{"cache"}{"init"}    = 1;
+   return  if (exists $$self{'cache'}{'init'});
+   $$self{'cache'}{'init'}    = 1;
 
    # ly          => {Y}    = 0/1  1 if it is a leap year
    # ds1_mon     => {Y}{M} = N    days since 1BC for Y/M/1
    # dow_mon     => {Y}{M} = DOW  day of week of Y/M/1
 
-   $$self{"cache"}{"ly"}      = {}  if (! exists $$self{"cache"}{"ly"});
-   $$self{"cache"}{"ds1_mon"} = {}  if (! exists $$self{"cache"}{"ds1_mon"});
-   $$self{"cache"}{"dow_mon"} = {}  if (! exists $$self{"cache"}{"dow_mon"});
+   $$self{'cache'}{'ly'}      = {}  if (! exists $$self{'cache'}{'ly'});
+   $$self{'cache'}{'ds1_mon'} = {}  if (! exists $$self{'cache'}{'ds1_mon'});
+   $$self{'cache'}{'dow_mon'} = {}  if (! exists $$self{'cache'}{'dow_mon'});
 }
 
 # Config dependent data. Needs to be reset every time the config is reset.
 sub _init_data {
    my($self,$force) = @_;
-   return  if (exists $$self{"data"}{"calc"}  &&  ! $force);
+   return  if (exists $$self{'data'}{'calc'}  &&  ! $force);
 
-   $$self{"data"}{"calc"}     = {};     # Calculated values
+   $$self{'data'}{'calc'}     = {};     # Calculated values
 }
 
 # Initializes config dependent data
 sub _init_config {
    my($self,$force) = @_;
-   return  if (exists $$self{"data"}{"sections"}{"conf"}  &&  ! $force);
+   return  if (exists $$self{'data'}{'sections'}{'conf'}  &&  ! $force);
    $self->_init_data();
 
-   $$self{"data"}{"sections"}{"conf"} =
+   $$self{'data'}{'sections'}{'conf'} =
      {
       # Reset config, holiday lists, or events lists
-      "defaults"         => "",
-      "eraseholidays"    => "",
-      "eraseevents"      => "",
+      'defaults'         => '',
+      'eraseholidays'    => '',
+      'eraseevents'      => '',
 
       # Which language to use when parsing dates.
-      "language"         => "",
+      'language'         => '',
 
       # 12/10 = Dec 10 (US) or Oct 12 (anything else)
-      "dateformat"       => "",
+      'dateformat'       => '',
 
       # Define the work week (1=monday, 7=sunday)
       #
       # These have to be predefined to avoid a bootstrap
       # issue, but the true defaults are defined below.
-      "workweekbeg"      => 1,
-      "workweekend"      => 5,
+      'workweekbeg'      => 1,
+      'workweekend'      => 5,
 
       # If non-nil, a work day is treated as 24 hours
       # long (WorkDayBeg/WorkDayEnd ignored)
-      "workday24hr"      => "",
+      'workday24hr'      => '',
 
       # Start and end time of the work day (any time
       # format allowed, seconds ignored). If the
       # defaults change, be sure to change the starting
       # value of bdlength above.
-      "workdaybeg"       => "",
-      "workdayend"       => "",
+      'workdaybeg'       => '',
+      'workdayend'       => '',
 
       # 2 digit years fall into the 100
       # year period given by [ CURR-N,
@@ -109,123 +109,123 @@ sub _init_config {
       # (forced to be this year or
       # later) and 99 (forced to be this
       # year or earlier).  It can also
-      # be set to "c" (current century)
-      # or "cNN" (i.e.  c18 forces the
+      # be set to 'c' (current century)
+      # or 'cNN' (i.e.  c18 forces the
       # year to bet 1800-1899).  Also
       # accepts the form cNNNN to give
       # the 100 year period NNNN to
       # NNNN+99.
-      "yytoyyyy"         => "",
+      'yytoyyyy'         => '',
 
       # First day of the week (1=monday,
       # 7=sunday).  ISO 8601 says
       # monday.
-      "firstday"         => "",
+      'firstday'         => '',
 
       # If this is 0, use the ISO 8601
       # standard that Jan 4 is in week
       # 1.  If 1, make week 1 contain
       # Jan 1.
-      "jan1week1"        => "",
+      'jan1week1'        => '',
 
       # Date::Manip printable format
       #   0 = YYYYMMDDHH:MN:SS
       #   1 = YYYYHHMMDDHHMNSS
       #   2 = YYYY-MM-DD-HH:MN:SS
-      "printable"        => "",
+      'printable'        => '',
 
-      # If "today" is a holiday, we look either to
-      # "tomorrow" or "yesterday" for the nearest
+      # If 'today' is a holiday, we look either to
+      # 'tomorrow' or 'yesterday' for the nearest
       # business day.  By default, we'll always look
-      # "tomorrow" first.
-      "tomorrowfirst"    => 1,
+      # 'tomorrow' first.
+      'tomorrowfirst'    => 1,
 
       # Use an international character set.
-      "intcharset"       => 0,
+      'intcharset'       => 0,
 
       # Used to set the current date/time/timezone.
-      "forcedate"        => 0,
-      "setdate"          => 0,
+      'forcedate'        => 0,
+      'setdate'          => 0,
 
       # Use this to set the default range of the
       # recurrence.
-      "recurrange"       => "",
+      'recurrange'       => '',
 
       # Use this to set the fudge factor for days
       # when applying business day modifiers.
-      "recurnumfudgedays" => 10,
+      'recurnumfudgedays' => 10,
 
       # Use this to set the default time.
-      "defaulttime"      => "midnight",
+      'defaulttime'      => 'midnight',
 
       # *** DEPRECATED ***
-      "tz"               => "",
-      "convtz"           => "",
-      "globalcnf"        => "",
-      "ignoreglobalcnf"  => "",
-      "personalcnf"      => "",
-      "personalcnfpath"  => "",
-      "pathsep"          => "",
-      "oldconfigfiles"   => "",
-      "internal"         => "",
-      "resetworkday"     => 0,
-      "deltasigns"       => 0,
-      "updatecurrtz"     => 0,
+      'tz'               => '',
+      'convtz'           => '',
+      'globalcnf'        => '',
+      'ignoreglobalcnf'  => '',
+      'personalcnf'      => '',
+      'personalcnfpath'  => '',
+      'pathsep'          => '',
+      'oldconfigfiles'   => '',
+      'internal'         => '',
+      'resetworkday'     => 0,
+      'deltasigns'       => 0,
+      'updatecurrtz'     => 0,
      };
 
    # Set config defaults
 
    # In order to avoid a bootstrap issue, set the default work day here.
-   $self->_config_var("workday24hr",  1);
-   $self->_config_var("workdaybeg",   "08:00:00");
-   $self->_config_var("workdayend",   "17:00:00");
-   $self->_config_var("workday24hr",  0);
+   $self->_config_var('workday24hr',  1);
+   $self->_config_var('workdaybeg',   '08:00:00');
+   $self->_config_var('workdayend',   '17:00:00');
+   $self->_config_var('workday24hr',  0);
 
-   $self->_config_var("dateformat",   "US");
-   $self->_config_var("yytoyyyy",     89);
-   $self->_config_var("jan1week1",    0);
-   $self->_config_var("printable",    0);
-   $self->_config_var("firstday",     1);
-   $self->_config_var("workweekbeg",  1);
-   $self->_config_var("workweekend",  5);
-   $self->_config_var("language",     "english");
-   $self->_config_var("recurrange",   "none");
-   $self->_config_var("recurnumfudgedays",5);
-   $self->_config_var("defaulttime",  "midnight");
+   $self->_config_var('dateformat',   'US');
+   $self->_config_var('yytoyyyy',     89);
+   $self->_config_var('jan1week1',    0);
+   $self->_config_var('printable',    0);
+   $self->_config_var('firstday',     1);
+   $self->_config_var('workweekbeg',  1);
+   $self->_config_var('workweekend',  5);
+   $self->_config_var('language',     'english');
+   $self->_config_var('recurrange',   'none');
+   $self->_config_var('recurnumfudgedays',5);
+   $self->_config_var('defaulttime',  'midnight');
 
    # Set OS specific defaults
 
    my $os = $self->_os();
 
    # *** DEPRECATED ***
-   if ($os eq "Windows") {
-      $self->_config_var("pathsep",";");
-      $self->_config_var("personalcnf","Manip.cnf");
-      $self->_config_var("personalcnfpath",".");
+   if ($os eq 'Windows') {
+      $self->_config_var('pathsep',';');
+      $self->_config_var('personalcnf','Manip.cnf');
+      $self->_config_var('personalcnfpath','.');
 
-   } elsif ($os eq "Other") {
-      $self->_config_var("pathsep",":");
-      $self->_config_var("personalcnf","Manip.cnf");
-      $self->_config_var("personalcnfpath",".");
+   } elsif ($os eq 'Other') {
+      $self->_config_var('pathsep',':');
+      $self->_config_var('personalcnf','Manip.cnf');
+      $self->_config_var('personalcnfpath','.');
 
-   } elsif ($os eq "VMS") {
-      # VMS doesn't like files starting with "."
-      $self->_config_var("pathsep",",");
-      $self->_config_var("personalcnf","Manip.cnf");
-      $self->_config_var("personalcnfpath","/sys\$login");
+   } elsif ($os eq 'VMS') {
+      # VMS doesn't like files starting with '.'
+      $self->_config_var('pathsep',',');
+      $self->_config_var('personalcnf','Manip.cnf');
+      $self->_config_var('personalcnfpath','/sys$login');
 
    } else {
       # Unix
-      $self->_config_var("pathsep",":");
-      $self->_config_var("personalcnf",".DateManip.cnf");
-      $self->_config_var("personalcnfpath",".:~");
+      $self->_config_var('pathsep',':');
+      $self->_config_var('personalcnf','.DateManip.cnf');
+      $self->_config_var('personalcnfpath','.:~');
    }
 }
 
 # Events and holidays are reset only when they are read in.
 sub _init_events {
    my($self,$force) = @_;
-   return  if (exists $$self{"data"}{"events"}  &&  ! $force);
+   return  if (exists $$self{'data'}{'events'}  &&  ! $force);
 
    # {data}{sections}{events} = [ STRING, EVENT_NAME, ... ]
    #
@@ -250,15 +250,15 @@ sub _init_events {
    # {data}{eventyears}{YEAR} = 0/1
    # {data}{eventobjs}        = 0/1
 
-   $$self{"data"}{"events"}             = {};
-   $$self{"data"}{"sections"}{"events"} = [];
-   $$self{"data"}{"eventyears"}         = {};
-   $$self{"data"}{"eventobjs"}          = 0;
+   $$self{'data'}{'events'}             = {};
+   $$self{'data'}{'sections'}{'events'} = [];
+   $$self{'data'}{'eventyears'}         = {};
+   $$self{'data'}{'eventobjs'}          = 0;
 }
 
 sub _init_holidays {
    my($self,$force) = @_;
-   return  if (exists $$self{"data"}{"holidays"}  &&  ! $force);
+   return  if (exists $$self{'data'}{'holidays'}  &&  ! $force);
 
    # {data}{sections}{holidays}    = [ STRING, HOLIDAY_NAME, ... ]
    #
@@ -276,14 +276,14 @@ sub _init_holidays {
    #                              end date is set.
    #                 {dates} = { Y => M => D => NAME }
 
-   $$self{"data"}{"holidays"}             = {};
-   $$self{"data"}{"sections"}{"holidays"} = [];
+   $$self{'data'}{'holidays'}             = {};
+   $$self{'data'}{'sections'}{'holidays'} = [];
 }
 
 sub _init_now {
    my($self) = @_;
 
-   #  {"data"}{"now"} = {
+   #  {'data'}{'now'} = {
    #                     date     => [Y,M,D,H,MN,S]  now
    #                     isdst    => ISDST
    #                     offset   => [H,MN,S]
@@ -301,20 +301,20 @@ sub _init_now {
    #                    }
    #
 
-   $$self{"data"}{"now"}          = {};
-   $$self{"data"}{"now"}{"force"} = 0;
-   $$self{"data"}{"now"}{"set"}   = 0;
+   $$self{'data'}{'now'}          = {};
+   $$self{'data'}{'now'}{'force'} = 0;
+   $$self{'data'}{'now'}{'set'}   = 0;
 }
 
 # Language information only needs to be initialized if the language changes.
 sub _init_language {
    my($self,$force) = @_;
-   return  if (exists $$self{"data"}{"lang"}  &&  ! $force);
+   return  if (exists $$self{'data'}{'lang'}  &&  ! $force);
 
-   $$self{"data"}{"lang"}      = {};     # Current language info
-   $$self{"data"}{"rx"}        = {};     # Regexps generated from language
-   $$self{"data"}{"words"}     = {};     # Types of words in the language
-   $$self{"data"}{"wordval"}   = {};     # Value of words in the language
+   $$self{'data'}{'lang'}      = {};     # Current language info
+   $$self{'data'}{'rx'}        = {};     # Regexps generated from language
+   $$self{'data'}{'words'}     = {};     # Types of words in the language
+   $$self{'data'}{'wordval'}   = {};     # Value of words in the language
 }
 
 sub config {
@@ -334,13 +334,13 @@ sub config {
 sub leapyear {
    my($self,$y) = @_;
    $y += 0;
-   return $$self{"cache"}{"ly"}{$y}
-     if (exists $$self{"cache"}{"ly"}{$y});
+   return $$self{'cache'}{'ly'}{$y}
+     if (exists $$self{'cache'}{'ly'}{$y});
 
-   $$self{"cache"}{"ly"}{$y} = 0, return 0 unless ($y %   4 == 0);
-   $$self{"cache"}{"ly"}{$y} = 1, return 1 unless ($y % 100 == 0);
-   $$self{"cache"}{"ly"}{$y} = 0, return 0 unless ($y % 400 == 0);
-   $$self{"cache"}{"ly"}{$y} = 1, return 1;
+   $$self{'cache'}{'ly'}{$y} = 0, return 0 unless ($y %   4 == 0);
+   $$self{'cache'}{'ly'}{$y} = 1, return 1 unless ($y % 100 == 0);
+   $$self{'cache'}{'ly'}{$y} = 0, return 0 unless ($y % 400 == 0);
+   $$self{'cache'}{'ly'}{$y} = 1, return 1;
 }
 
 sub days_in_year {
@@ -426,9 +426,9 @@ sub days_since_1BC {
       $y += 0;
       $m += 0;
 
-      if (! exists $$self{"cache"}{"ds1_mon"}{$y}{$m}) {
+      if (! exists $$self{'cache'}{'ds1_mon'}{$y}{$m}) {
 
-         if (! exists $$self{"cache"}{"ds1_mon"}{$y}{1}) {
+         if (! exists $$self{'cache'}{'ds1_mon'}{$y}{1}) {
 
             my($Ny,$N4,$N100,$N400,$cc,$yy);
 
@@ -450,7 +450,7 @@ sub days_since_1BC {
             # Number of full 400th years (0400, 0800, etc.)
             $N400     = int($N100/4);
 
-            $$self{"cache"}{"ds1_mon"}{$y}{1} =
+            $$self{'cache'}{'ds1_mon'}{$y}{1} =
               $Ny*365 + $N4 - $N100 + $N400 + 1;
          }
 
@@ -458,12 +458,12 @@ sub days_since_1BC {
          my @mon   = $self->days_in_month($y,0);
          for ($i=2; $i<=12; $i++) {
             $j     = shift(@mon);
-            $$self{"cache"}{"ds1_mon"}{$y}{$i} =
-              $$self{"cache"}{"ds1_mon"}{$y}{$i-1} + $j;
+            $$self{'cache'}{'ds1_mon'}{$y}{$i} =
+              $$self{'cache'}{'ds1_mon'}{$y}{$i-1} + $j;
          }
       }
 
-      return ($$self{"cache"}{"ds1_mon"}{$y}{$m} + $d - 1);
+      return ($$self{'cache'}{'ds1_mon'}{$y}{$m} + $d - 1);
 
    } else {
       my($days) = $arg;
@@ -489,12 +489,12 @@ sub day_of_week {
    $m += 0;
 
    my($dayofweek,$dec31) = ();
-   if (! exists $$self{"cache"}{"dow_mon"}{$y}{$m}) {
+   if (! exists $$self{'cache'}{'dow_mon'}{$y}{$m}) {
       $dec31 = 7;               # Dec 31, 1BC was Sunday
-      $$self{"cache"}{"dow_mon"}{$y}{$m} =
+      $$self{'cache'}{'dow_mon'}{$y}{$m} =
         ( $self->days_since_1BC([$y,$m,1])+$dec31 ) % 7;
    }
-   $dayofweek = ($$self{"cache"}{"dow_mon"}{$y}{$m}+$d-1) % 7;
+   $dayofweek = ($$self{'cache'}{'dow_mon'}{$y}{$m}+$d-1) % 7;
    $dayofweek = 7  if ($dayofweek==0);
    return $dayofweek;
 }
@@ -563,7 +563,7 @@ sub nth_day_of_week {
    # my $sec_70 =($self->days_since_1BC([1970,1,1])-1)*24*3600;
    my $sec_70 = 62135596800;
 
-   # Using "global" variables saves 4%
+   # Using 'global' variables saves 4%
    my($y,$m,$d,$h,$mn,$s,$sec,$sec_0,$tmp);
    sub secs_since_1970 {
       my($self,$arg) = @_;
@@ -620,15 +620,15 @@ sub check_time {
 
 sub week1_day1 {
    my($self,$year)  = @_;
-   my $firstday  = $self->_config("firstday");
+   my $firstday  = $self->_config('firstday');
    return $self->_week1_day1($firstday,$year);
 }
 
 sub _week1_day1 {
    my($self,$firstday,$year) = @_;
-   my $jan1week1 = $self->_config("jan1week1");
-   return $$self{"cache"}{"week1day1"}{$firstday}{$jan1week1}{$year}
-     if (exists $$self{"cache"}{"week1day1"}{$firstday}{$jan1week1}{$year});
+   my $jan1week1 = $self->_config('jan1week1');
+   return $$self{'cache'}{'week1day1'}{$firstday}{$jan1week1}{$year}
+     if (exists $$self{'cache'}{'week1day1'}{$firstday}{$jan1week1}{$year});
 
    # First week contains either Jan 4 (default) or Jan 1
 
@@ -648,21 +648,21 @@ sub _week1_day1 {
       }
    }
 
-   $$self{"cache"}{"week1day1"}{$firstday}{$jan1week1}{$year} = [ $y,$m,$d ];
+   $$self{'cache'}{'week1day1'}{$firstday}{$jan1week1}{$year} = [ $y,$m,$d ];
    return [$y,$m,$d];
 }
 
 sub weeks_in_year {
    my($self,$y)  = @_;
-   my $firstday  = $self->_config("firstday");
+   my $firstday  = $self->_config('firstday');
    return $self->_weeks_in_year($firstday,$y);
 }
 
 sub _weeks_in_year {
    my($self,$firstday,$y) = @_;
-   my $jan1week1 = $self->_config("jan1week1");
-   return $$self{"cache"}{"wiy"}{$firstday}{$jan1week1}{$y}
-     if (exists $$self{"cache"}{"wiy"}{$firstday}{$jan1week1}{$y});
+   my $jan1week1 = $self->_config('jan1week1');
+   return $$self{'cache'}{'wiy'}{$firstday}{$jan1week1}{$y}
+     if (exists $$self{'cache'}{'wiy'}{$firstday}{$jan1week1}{$y});
 
    # Get the week1 day1 dates for this year and the next one.
    my ($y1,$m1,$d1) = @{ $self->_week1_day1($firstday,$y) };
@@ -682,19 +682,19 @@ sub _weeks_in_year {
    }
 
    $diy = $diy/7;
-   $$self{"cache"}{"wiy"}{$firstday}{$jan1week1}{$y} = $diy;
+   $$self{'cache'}{'wiy'}{$firstday}{$jan1week1}{$y} = $diy;
    return $diy;
 }
 
 sub week_of_year {
    my($self,@args) = @_;
-   my $firstday    = $self->_config("firstday");
+   my $firstday    = $self->_config('firstday');
    $self->_week_of_year($firstday,@args);
 }
 
 sub _week_of_year {
    my($self,$firstday,@args) = @_;
-   my $jan1week1   = $self->_config("jan1week1");
+   my $jan1week1   = $self->_config('jan1week1');
 
    if ($#args == 1) {
       # (y,m,d) = week_of_year(y,w)
@@ -702,8 +702,8 @@ sub _week_of_year {
 
       return $self->_week1_day1($firstday,$year)  if ($w == 1);
 
-      return $$self{"cache"}{"woy1"}{$firstday}{$jan1week1}{$year}{$w}
-        if (exists $$self{"cache"}{"woy1"}{$firstday}{$jan1week1}{$year}{$w});
+      return $$self{'cache'}{'woy1'}{$firstday}{$jan1week1}{$year}{$w}
+        if (exists $$self{'cache'}{'woy1'}{$firstday}{$jan1week1}{$year}{$w});
 
       my($y,$m,$d,$w0,$ymd);
       ($y,$m,$d) = @{ $self->_week1_day1($firstday,$year) };
@@ -717,7 +717,7 @@ sub _week_of_year {
       }
       $ymd = $self->day_of_year($y,$d + $w0*7)  if ($w0>0);
 
-      $$self{"cache"}{"woy1"}{$firstday}{$jan1week1}{$year}{$w} = $ymd;
+      $$self{'cache'}{'woy1'}{$firstday}{$jan1week1}{$year}{$w} = $ymd;
       return $ymd;
    }
 
@@ -890,13 +890,13 @@ sub calc_date_time {
 
 sub _calc_date_time_strings {
    my($self,$date,$time,$subtract) = @_;
-   my @date = @{ $self->split("date",$date) };
-   return ""  if (! @date);
-   my @time = @{ $self->split("time",$time) };
+   my @date = @{ $self->split('date',$date) };
+   return ''  if (! @date);
+   my @time = @{ $self->split('time',$time) };
 
    my @date2 = @{ $self->calc_date_time(\@date,\@time,$subtract) };
 
-   return $self->join("date",\@date2);
+   return $self->join('date',\@date2);
 }
 
 sub _calc_date_ymwd {
@@ -982,26 +982,26 @@ sub cmp {
 sub _os {
    my($self) = @_;
 
-   my $os = "";
+   my $os = '';
 
    if ($^O =~ /MSWin32/i    ||
        $^O =~ /Windows_95/i ||
        $^O =~ /Windows_NT/i
       ) {
-      $os = "Windows";
+      $os = 'Windows';
 
    } elsif ($^O =~ /MacOS/i  ||
             $^O =~ /MPE/i    ||
             $^O =~ /OS2/i    ||
             $^O =~ /NetWare/i
            ) {
-      $os = "Other";
+      $os = 'Other';
 
    } elsif ($^O =~ /VMS/i) {
-      $os = "VMS";
+      $os = 'VMS';
 
    } else {
-      $os = "Unix";
+      $os = 'Unix';
    }
 
    return $os;
@@ -1027,24 +1027,24 @@ sub _os {
 #                         the time (it'll update if it has
 #                         never been set).
 #
-#    "now"                Updates now and returns
+#    'now'                Updates now and returns
 #                         (y,m,d,h,mn,s)
 #
-#    "time"               Updates now and Returns (h,mn,s)
+#    'time'               Updates now and Returns (h,mn,s)
 #
-#    "y"                  Returns the default value of one
-#    "m"                  of the fields (no update)
-#    "d"
-#    "h"
-#    "mn"
-#    "s"
+#    'y'                  Returns the default value of one
+#    'm'                  of the fields (no update)
+#    'd'
+#    'h'
+#    'mn'
+#    's'
 #
-#    "systz"              Returns the system timezone
+#    'systz'              Returns the system timezone
 #
-#    "isdst"              Returns the "now" values if set,
-#    "tz"                 or system time values otherwise.
-#    "offset"
-#    "abb"
+#    'isdst'              Returns the 'now' values if set,
+#    'tz'                 or system time values otherwise.
+#    'offset'
+#    'abb'
 #
 sub _now {
    my($self,@arg) = @_;
@@ -1053,19 +1053,19 @@ sub _now {
    if (@arg) {
       ($op,$noupdate) = @arg;
    } else {
-      ($op,$noupdate) = ("now",1);
+      ($op,$noupdate) = ('now',1);
    }
 
    # Don't do updates on timezone queries
    # Do updates if no date is set
 
    given ($op) {
-      when (["tz","isdst","offset","systz","abb"]) {
+      when (['tz','isdst','offset','systz','abb']) {
          $noupdate = 1;
       }
 
       default {
-         $noupdate = 0  if (! exists $$self{"data"}{"now"}{"date"});
+         $noupdate = 0  if (! exists $$self{'data'}{'now'}{'date'});
       }
    }
 
@@ -1075,55 +1075,55 @@ sub _now {
 
    given ($op) {
 
-      when ("now") {
-         return @{ $$self{"data"}{"now"}{"date"} };
+      when ('now') {
+         return @{ $$self{'data'}{'now'}{'date'} };
       }
 
-      when ("time") {
-         return (@{ $$self{"data"}{"now"}{"date"} }[3..5]);
+      when ('time') {
+         return (@{ $$self{'data'}{'now'}{'date'} }[3..5]);
       }
 
-      when ("y") {
-         return $$self{"data"}{"now"}{"date"}[0];
+      when ('y') {
+         return $$self{'data'}{'now'}{'date'}[0];
       }
-      when ("m") {
-         return $$self{"data"}{"now"}{"date"}[1];
+      when ('m') {
+         return $$self{'data'}{'now'}{'date'}[1];
       }
-      when ("d") {
-         return $$self{"data"}{"now"}{"date"}[2];
+      when ('d') {
+         return $$self{'data'}{'now'}{'date'}[2];
       }
-      when ("h") {
-         return $$self{"data"}{"now"}{"date"}[3];
+      when ('h') {
+         return $$self{'data'}{'now'}{'date'}[3];
       }
-      when ("mn") {
-         return $$self{"data"}{"now"}{"date"}[4];
+      when ('mn') {
+         return $$self{'data'}{'now'}{'date'}[4];
       }
-      when ("s") {
-         return $$self{"data"}{"now"}{"date"}[5];
-      }
-
-      when ("systz") {
-         return $$self{"data"}{"now"}{"systz"};
+      when ('s') {
+         return $$self{'data'}{'now'}{'date'}[5];
       }
 
-      when ("tz") {
-         if (exists $$self{"data"}{"now"}{"tz"}) {
-            return $$self{"data"}{"now"}{"tz"};
+      when ('systz') {
+         return $$self{'data'}{'now'}{'systz'};
+      }
+
+      when ('tz') {
+         if (exists $$self{'data'}{'now'}{'tz'}) {
+            return $$self{'data'}{'now'}{'tz'};
          } else {
-            return $$self{"data"}{"now"}{"systz"};
+            return $$self{'data'}{'now'}{'systz'};
          }
       }
 
-      when ("isdst") {
-         return $$self{"data"}{"now"}{"isdst"};
+      when ('isdst') {
+         return $$self{'data'}{'now'}{'isdst'};
       }
 
-      when ("offset") {
-         return @{ $$self{"data"}{"now"}{"offset"} };
+      when ('offset') {
+         return @{ $$self{'data'}{'now'}{'offset'} };
       }
 
-      when ("abb") {
-         return $$self{"data"}{"now"}{"abb"};
+      when ('abb') {
+         return $$self{'data'}{'now'}{'abb'};
       }
 
       default {
@@ -1137,25 +1137,25 @@ sub _update_now {
    my($self) = @_;
 
    # If we've called ForceDate, don't change it.
-   return  if ($$self{"data"}{"now"}{"force"});
+   return  if ($$self{'data'}{'now'}{'force'});
 
-   # If we've called SetDate, figure out what "now" is based
+   # If we've called SetDate, figure out what 'now' is based
    # on the number of seconds that have elapsed since it was
    # set.  This will ONLY happen if TZ has been loaded.
 
-   if ($$self{"data"}{"now"}{"set"}) {
-      my $date = $$self{"data"}{"now"}{"setdate"};
-      my $secs = time - $$self{"data"}{"now"}{"setsecs"};
+   if ($$self{'data'}{'now'}{'set'}) {
+      my $date = $$self{'data'}{'now'}{'setdate'};
+      my $secs = time - $$self{'data'}{'now'}{'setsecs'};
 
-      $date    = $self->calc_date_time($date,[0,0,$secs]);  # "now" in GMT
-      my $dmt  = $$self{"objs"}{"tz"};
-      my $zone = $self->_now("tz");
+      $date    = $self->calc_date_time($date,[0,0,$secs]);  # 'now' in GMT
+      my $dmt  = $$self{'objs'}{'tz'};
+      my $zone = $self->_now('tz');
       my ($err,$date2,$offset,$isdst,$abbrev) = $dmt->convert_from_gmt($date,$zone);
 
-      $$self{"data"}{"now"}{"date"}   = $date2;
-      $$self{"data"}{"now"}{"isdst"}  = $isdst;
-      $$self{"data"}{"now"}{"offset"} = $offset;
-      $$self{"data"}{"now"}{"abb"}    = $abbrev;
+      $$self{'data'}{'now'}{'date'}   = $date2;
+      $$self{'data'}{'now'}{'isdst'}  = $isdst;
+      $$self{'data'}{'now'}{'offset'} = $offset;
+      $$self{'data'}{'now'}{'abb'}    = $abbrev;
       return;
    }
 
@@ -1173,19 +1173,19 @@ sub _update_now {
 
    my $off = $self->calc_date_date([$y,$m,$d,$h,$mn,$s],[$y0,$m0,$d0,$h0,$mn0,$s0],1);
 
-   $$self{"data"}{"now"}{"date"}  = [$y,$m,$d,$h,$mn,$s];
-   $$self{"data"}{"now"}{"isdst"} = $isdst;
-   $$self{"data"}{"now"}{"offset"}= $off;
+   $$self{'data'}{'now'}{'date'}  = [$y,$m,$d,$h,$mn,$s];
+   $$self{'data'}{'now'}{'isdst'} = $isdst;
+   $$self{'data'}{'now'}{'offset'}= $off;
 
-   my $abb = "???";
-   if (exists $$self{"objs"}{"tz"}) {
-      my $dmt  = $$self{"objs"}{"tz"};
-      my $zone = $self->_now("tz");
+   my $abb = '???';
+   if (exists $$self{'objs'}{'tz'}) {
+      my $dmt  = $$self{'objs'}{'tz'};
+      my $zone = $self->_now('tz');
       my $per  = $dmt->date_period([$y,$m,$d,$h,$mn,$s],$zone,1,$isdst);
       $abb = $$per[4];
    }
 
-   $$self{"data"}{"now"}{"abb"}   = $abb;
+   $$self{'data'}{'now'}{'abb'}   = $abb;
 
    return;
 }
@@ -1217,7 +1217,7 @@ sub _config_file {
    my @in = <$in>;
    $in->close();
 
-   my $sect = "conf";
+   my $sect = 'conf';
    chomp(@in);
    foreach my $line (@in) {
       $line =~ s/^\s+//;
@@ -1239,7 +1239,7 @@ sub _config_file_section {
    $line    =~ s/^\*//;
    $line    =~ s/\s*$//;
    my $sect = lc($line);
-   if (! exists $$self{"data"}{"sections"}{$sect}) {
+   if (! exists $$self{'data'}{'sections'}{$sect}) {
       warn "WARNING: [config_file] unknown section created: $sect\n";
       $self->_section($sect);
    }
@@ -1256,7 +1256,7 @@ sub _config_file_var {
       die "ERROR: invalid Date::Manip config file line:\n  $line\n";
    }
 
-   if ($sect eq "conf") {
+   if ($sect eq 'conf') {
       $var = lc($var);
       $self->_config($var,$val);
    } else {
@@ -1270,7 +1270,7 @@ sub _config_file_var {
 # $self->config(SECT);
 #    Creates a new section.
 #
-# $self->config(SECT,"_vars");
+# $self->config(SECT,'_vars');
 #    Returns a list of (VAR VAL VAR VAL ...)
 #
 # $self->config(SECT,VAR,VAL);
@@ -1285,19 +1285,19 @@ sub _section {
    #
 
    if (! defined $var) {
-      if ($sect eq "conf") {
-         $$self{"data"}{"sections"}{$sect} = {};
+      if ($sect eq 'conf') {
+         $$self{'data'}{'sections'}{$sect} = {};
       } else {
-         $$self{"data"}{"sections"}{$sect} = [];
+         $$self{'data'}{'sections'}{$sect} = [];
       }
-      return "";
+      return '';
    }
 
-   if ($var eq "_vars") {
-      return @{ $$self{"data"}{"sections"}{$sect} };
+   if ($var eq '_vars') {
+      return @{ $$self{'data'}{'sections'}{$sect} };
    }
 
-   push @{ $$self{"data"}{"sections"}{$sect} },($var,$val);
+   push @{ $$self{'data'}{'sections'}{$sect} },($var,$val);
    return;
 }
 
@@ -1310,7 +1310,7 @@ sub _section {
 sub _config {
    my($self,$var,$val) = @_;
 
-   my $sect = "conf";
+   my $sect = 'conf';
 
    #
    # $self->_conf(VAR, VAL)  sets the value of a variable
@@ -1325,11 +1325,11 @@ sub _config {
    # $self->_conf(VAR)       returns the value of a variable
    #
 
-   if (exists $$self{"data"}{"sections"}{$sect}{$var}) {
-      return $$self{"data"}{"sections"}{$sect}{$var};
+   if (exists $$self{'data'}{'sections'}{$sect}{$var}) {
+      return $$self{'data'}{'sections'}{$sect}{$var};
    } else {
       warn "ERROR: [config] invalid config variable: $var\n";
-      return "";
+      return '';
    }
 }
 
@@ -1343,39 +1343,39 @@ sub _config_var {
 
    # A simple flag used to force a new configuration, but has
    # no other affect.
-   return  if ($var eq "ignore");
+   return  if ($var eq 'ignore');
 
    given ($var) {
 
-      when ("defaults") {
+      when ('defaults') {
          # Reset the configuration if desired.
          $self->_init_config(1);
          return;
       }
 
-      when ("eraseholidays") {
+      when ('eraseholidays') {
          $self->_init_holidays(1);
          return;
       }
 
-      when ("eraseevents") {
+      when ('eraseevents') {
          $self->_init_events(1);
          return;
       }
 
-      when ("configfile") {
+      when ('configfile') {
          $self->_config_file($val);
          return;
       }
 
-      when ("language") {
+      when ('language') {
          my $err = $self->_language($val);
          return  if ($err);
       }
 
-      when ("yytoyyyy") {
+      when ('yytoyyyy') {
          $val = lc($val);
-         if ($val ne "c"  &&
+         if ($val ne 'c'  &&
              $val !~ /^c\d\d$/  &&
              $val !~ /^c\d\d\d\d$/  &&
              $val !~ /^\d+$/) {
@@ -1384,86 +1384,86 @@ sub _config_var {
          }
       }
 
-      when ("workweekbeg") {
+      when ('workweekbeg') {
          my $err = $self->_config_var_workweekbeg($val);
          return  if ($err);
       }
 
-      when ("workweekend") {
+      when ('workweekend') {
          my $err = $self->_config_var_workweekend($val);
          return  if ($err);
       }
 
-      when ("workday24hr") {
+      when ('workday24hr') {
          my $err = $self->_config_var_workday24hr($val);
          return  if ($err);
       }
 
-      when ("workdaybeg") {
-         my $err = $self->_config_var_workdaybegend(\$val,"WorkDayBeg");
+      when ('workdaybeg') {
+         my $err = $self->_config_var_workdaybegend(\$val,'WorkDayBeg');
          return  if ($err);
       }
 
-      when ("workdayend") {
-         my $err = $self->_config_var_workdaybegend(\$val,"WorkDayEnd");
+      when ('workdayend') {
+         my $err = $self->_config_var_workdaybegend(\$val,'WorkDayEnd');
          return  if ($err);
       }
 
-      when ("firstday") {
+      when ('firstday') {
          my $err = $self->_config_var_firstday($val);
          return  if ($err);
       }
 
-      when (["tz","forcedate","setdate"]) {
+      when (['tz','forcedate','setdate']) {
          # These can only be used if the Date::Manip::TZ module has been loaded
-         if (! exists $$self{"objs"}{"tz"}) {
+         if (! exists $$self{'objs'}{'tz'}) {
             warn "ERROR: [config_var] $var config variable requires TZ module\n";
             return;
          }
          continue;
       }
 
-      when ("tz") {
+      when ('tz') {
          my $err = $self->_config_var_setdate("now,$val",0);
          return  if ($err);
-         $$self{"data"}{"sections"}{"conf"}{"forcedate"} = 0;
+         $$self{'data'}{'sections'}{'conf'}{'forcedate'} = 0;
          $val = 1;
       }
 
-      when ("setdate") {
+      when ('setdate') {
          my $err = $self->_config_var_setdate($val,0);
          return  if ($err);
-         $$self{"data"}{"sections"}{"conf"}{"forcedate"} = 0;
+         $$self{'data'}{'sections'}{'conf'}{'forcedate'} = 0;
          $val = 1;
       }
 
-      when ("forcedate") {
+      when ('forcedate') {
          my $err = $self->_config_var_setdate($val,1);
          return  if ($err);
-         $$self{"data"}{"sections"}{"conf"}{"setdate"} = 0;
+         $$self{'data'}{'sections'}{'conf'}{'setdate'} = 0;
          $val = 1;
       }
 
-      when ("recurrange") {
+      when ('recurrange') {
          my $err = $self->_config_var_recurrange($val);
          return  if ($err);
       }
 
-      when ("recurnumfudgedays") {
+      when ('recurnumfudgedays') {
          my $err = $self->_config_var_recurnumfudgedays($val);
          return  if ($err);
       }
 
-      when ("defaulttime") {
+      when ('defaulttime') {
          my $err = $self->_config_var_defaulttime($val);
          return  if ($err);
       }
 
-      when (["dateformat",
-             "jan1week1",
-             "printable",
-             "tomorrowfirst",
-             "intcharset"]) {
+      when (['dateformat',
+             'jan1week1',
+             'printable',
+             'tomorrowfirst',
+             'intcharset']) {
          # do nothing
       }
 
@@ -1471,32 +1471,32 @@ sub _config_var {
       # Deprecated ones
       #
 
-      when (["convtz",
-             "globalcnf",
-             "ignoreglobalcnf",
-             "personalcnf",
-             "personalcnfpath",
-             "pathsep",
-             "resetworkday",
-             "deltasigns",
-             "internal",
-             "udpatecurrtz"]) {
+      when (['convtz',
+             'globalcnf',
+             'ignoreglobalcnf',
+             'personalcnf',
+             'personalcnfpath',
+             'pathsep',
+             'resetworkday',
+             'deltasigns',
+             'internal',
+             'udpatecurrtz']) {
          # do nothing
       }
 
-      when ("oldconfigfiles") {
+      when ('oldconfigfiles') {
          # This actually reads in the old-style config files
-         if ($self->_config("globalcnf")  &&
-             ! $self->_config("ignoreglobalcnf")) {
-            my $file = $self->_config("globalcnf");
+         if ($self->_config('globalcnf')  &&
+             ! $self->_config('ignoreglobalcnf')) {
+            my $file = $self->_config('globalcnf');
             $file    = $self->_ExpandTilde($file);
             $self->_config_file($file);
          }
 
-         if ($self->_config("personalcnf")) {
-            my $file = $self->_config("personalcnf");
-            my $path = $self->_config("personalcnfpath");
-            my $sep  = $self->_config("pathsep");
+         if ($self->_config('personalcnf')) {
+            my $file = $self->_config('personalcnf');
+            my $path = $self->_config('personalcnfpath');
+            my $sep  = $self->_config('pathsep');
             $file    = $self->_SearchPath($file,$path,$sep);
             $self->_config_file($file)  if ($file);
          }
@@ -1505,7 +1505,7 @@ sub _config_var {
 
       default {
          warn "ERROR: [config_var] invalid config variable: $var\n";
-         return "";
+         return '';
       }
    }
 
@@ -1513,11 +1513,11 @@ sub _config_var {
    # Deprecated
    #
 
-   if ($var eq "internal") {
-      $var = "printable";
+   if ($var eq 'internal') {
+      $var = 'printable';
    }
 
-   $$self{"data"}{"sections"}{"conf"}{$var} = $val;
+   $$self{'data'}{'sections'}{'conf'}{$var} = $val;
    return;
 }
 
@@ -1553,13 +1553,13 @@ sub _config_var_workweekbeg {
       warn "ERROR: [config_var] invalid: WorkWeekBeg: $val\n";
       return 1;
    }
-   if ($val >= $self->_config("workweekend")) {
+   if ($val >= $self->_config('workweekend')) {
       warn "ERROR: [config_var] WorkWeekBeg must be before WorkWeekEnd\n";
       return 1;
    }
 
-   $$self{"data"}{"calc"}{"workweek"} =
-     $self->_config("workweekend") - $val + 1;
+   $$self{'data'}{'calc'}{'workweek'} =
+     $self->_config('workweekend') - $val + 1;
    return 0;
 }
 
@@ -1570,13 +1570,13 @@ sub _config_var_workweekend {
       warn "ERROR: [config_var] invalid: WorkWeekBeg: $val\n";
       return 1;
    }
-   if ($val <= $self->_config("workweekbeg")) {
+   if ($val <= $self->_config('workweekbeg')) {
       warn "ERROR: [config_var] WorkWeekEnd must be after WorkWeekBeg\n";
       return 1;
    }
 
-   $$self{"data"}{"calc"}{"workweek"} =
-     $val - $self->_config("workweekbeg") + 1;
+   $$self{'data'}{'calc'}{'workweek'} =
+     $val - $self->_config('workweekbeg') + 1;
    return 0;
 }
 
@@ -1584,11 +1584,11 @@ sub _config_var_workday24hr {
    my($self,$val) = @_;
 
    if ($val) {
-      $$self{"data"}{"sections"}{"conf"}{"workdaybeg"} = "00:00:00";
-      $$self{"data"}{"sections"}{"conf"}{"workdayend"} = "24:00:00";
-      $$self{"data"}{"calc"}{"workdaybeg"}             = [0,0,0];
-      $$self{"data"}{"calc"}{"workdayend"}             = [24,0,0];
-      $$self{"data"}{"calc"}{"bdlength"}               = 86400; # 24*60*60
+      $$self{'data'}{'sections'}{'conf'}{'workdaybeg'} = '00:00:00';
+      $$self{'data'}{'sections'}{'conf'}{'workdayend'} = '24:00:00';
+      $$self{'data'}{'calc'}{'workdaybeg'}             = [0,0,0];
+      $$self{'data'}{'calc'}{'workdayend'}             = [24,0,0];
+      $$self{'data'}{'calc'}{'bdlength'}               = 86400; # 24*60*60
    }
 
    return 0;
@@ -1599,18 +1599,18 @@ sub _config_var_workdaybegend {
 
    # Must be a valid time.  Entered as H, H:M, or H:M:S
 
-   my $tmp = $self->split("hms",$$val);
+   my $tmp = $self->split('hms',$$val);
    if (! defined $tmp) {
       warn "ERROR: [config_var] invalid: $conf: $$val\n";
       return 1;
    }
-   $$self{"data"}{"calc"}{lc($conf)} = $tmp;
-   $$val = $self->join("hms",$tmp);
+   $$self{'data'}{'calc'}{lc($conf)} = $tmp;
+   $$val = $self->join('hms',$tmp);
 
    # workdaybeg < workdayend
 
-   my @beg = @{ $$self{"data"}{"calc"}{"workdaybeg"} };
-   my @end = @{ $$self{"data"}{"calc"}{"workdayend"} };
+   my @beg = @{ $$self{'data'}{'calc'}{'workdaybeg'} };
+   my @end = @{ $$self{'data'}{'calc'}{'workdayend'} };
    my $beg = $beg[0]*3600 + $beg[1]*60 + $beg[2];
    my $end = $end[0]*3600 + $end[1]*60 + $end[2];
 
@@ -1621,8 +1621,8 @@ sub _config_var_workdaybegend {
 
    # Calculate bdlength (unless 24 hour work day set)
 
-   $$self{"data"}{"sections"}{"conf"}{"workday24hr"} = 0;
-   $$self{"data"}{"calc"}{"bdlength"} =
+   $$self{'data'}{'sections'}{'conf'}{'workday24hr'} = 0;
+   $$self{'data'}{'calc'}{'bdlength'} =
      ($end[0]-$beg[0])*3600 + ($end[1]-$beg[1])*60 + ($end[2]-$beg[2]);
 
    return 0;
@@ -1642,8 +1642,8 @@ sub _config_var_firstday {
 sub _config_var_defaulttime {
    my($self,$val) = @_;
 
-   if (lc($val) eq "midnight"  ||
-       lc($val) eq "curr") {
+   if (lc($val) eq 'midnight'  ||
+       lc($val) eq 'curr') {
       return 0;
    }
    warn "ERROR: [config_var] invalid: DefaultTime: $val\n";
@@ -1652,7 +1652,7 @@ sub _config_var_defaulttime {
 
 sub _config_var_setdate {
    my($self,$val,$force) = @_;
-   my $dmt = $$self{"objs"}{"tz"};
+   my $dmt = $$self{'objs'}{'tz'};
 
    my $dstrx = qr/(?:,(stdonly|dstonly|std|dst))?/i;
    my $zonrx = qr/,(.+)/;
@@ -1666,50 +1666,50 @@ sub _config_var_setdate {
    # Parse the argument
    #
 
-   if ($val =~ /^now${dstrx}${zonrx}$/i) {
+   if ($val =~ /^now${dstrx}${zonrx}$/oi) {
       # now,ZONE
       # now,DSTFLAG,ZONE
       #    Sets now to the system date/time but sets the timezone to be ZONE
 
-      $op = "nowzone";
+      $op = 'nowzone';
       ($dstflag,$zone) = ($1,$2);
 
-   } elsif ($val =~ /^zone${dstrx}${zonrx}$/i) {
+   } elsif ($val =~ /^zone${dstrx}${zonrx}$/oi) {
       # zone,ZONE
       # zone,DSTFLAG,ZONE
-      #    Converts "now" to the alternate zone
+      #    Converts 'now' to the alternate zone
 
-      $op = "zone";
+      $op = 'zone';
       ($dstflag,$zone) = ($1,$2);
 
-   } elsif ($val =~ /^${da1rx}${dstrx}${zonrx}$/  ||
-            $val =~ /^${da2rx}${dstrx}${zonrx}$/) {
+   } elsif ($val =~ /^${da1rx}${dstrx}${zonrx}$/o  ||
+            $val =~ /^${da2rx}${dstrx}${zonrx}$/o) {
       # DATE,ZONE
       # DATE,DSTFLAG,ZONE
       #    Sets the date and zone
 
-      $op = "datezone";
+      $op = 'datezone';
       my($y,$m,$d,$h,$mn,$s);
       ($y,$m,$d,$h,$mn,$s,$dstflag,$zone) = ($1,$2,$3,$4,$5,$6,$7,$8);
       $date = [$y,$m,$d,$h,$mn,$s];
 
-   } elsif ($val =~ /^${da1rx}$/  ||
-            $val =~ /^${da2rx}$/) {
+   } elsif ($val =~ /^${da1rx}$/o  ||
+            $val =~ /^${da2rx}$/o) {
       # DATE
       #    Sets the date in the system timezone
 
-      $op = "date";
+      $op = 'date';
       my($y,$m,$d,$h,$mn,$s) = ($1,$2,$3,$4,$5,$6);
       $date = [$y,$m,$d,$h,$mn,$s];
-      $zone = $self->_now("systz");
+      $zone = $self->_now('systz');
 
-   } elsif (lc($val) eq "now") {
+   } elsif (lc($val) eq 'now') {
       # now
       #    Resets everything
 
-      my $systz = $$self{"data"}{"now"}{"systz"};
+      my $systz = $$self{'data'}{'now'}{'systz'};
       $self->_init_now();
-      $$self{"data"}{"now"}{"systz"} = $systz;
+      $$self{'data'}{'now'}{'systz'} = $systz;
       return 0;
 
    } else {
@@ -1717,13 +1717,13 @@ sub _config_var_setdate {
       return 1;
    }
 
-   $dstflag = "std"  if (! $dstflag);
+   $dstflag = 'std'  if (! $dstflag);
 
    #
-   # Get the date we're setting "now" to
+   # Get the date we're setting 'now' to
    #
 
-   if ($op eq "nowzone") {
+   if ($op eq 'nowzone') {
       # Use the system localtime
 
       my($s,$mn,$h,$d,$m,$y) = localtime($time);
@@ -1731,7 +1731,7 @@ sub _config_var_setdate {
       $m++;
       $date = [$y,$m,$d,$h,$mn,$s];
 
-   } elsif ($op eq "zone") {
+   } elsif ($op eq 'zone') {
       # Use the system GMT time
 
       my($s,$mn,$h,$d,$m,$y) = gmtime($time);
@@ -1757,7 +1757,7 @@ sub _config_var_setdate {
       }
 
    } else {
-      $zone = $$self{"data"}{"now"}{"systz"};
+      $zone = $$self{'data'}{'now'}{'systz'};
    }
 
    #
@@ -1765,11 +1765,11 @@ sub _config_var_setdate {
    #
 
    my($isdst,@isdst);
-   if      ($dstflag eq "std") {
+   if      ($dstflag eq 'std') {
       @isdst = (0,1);
-   } elsif ($dstflag eq "stdonly") {
+   } elsif ($dstflag eq 'stdonly') {
       @isdst = (0);
-   } elsif ($dstflag eq "dst") {
+   } elsif ($dstflag eq 'dst') {
       @isdst = (1,0);
    } else {
       @isdst = (1);
@@ -1777,7 +1777,7 @@ sub _config_var_setdate {
 
    given ($op) {
 
-      when (["nowzone","datezone","date"]) {
+      when (['nowzone','datezone','date']) {
          # Check to make sure that the date can exist in this zone.
          my $per;
          foreach my $dst (@isdst) {
@@ -1794,7 +1794,7 @@ sub _config_var_setdate {
          $offset = $$per[3];
       }
 
-      when ("zone") {
+      when ('zone') {
          # Convert to that zone
          my($err);
          ($err,$date,$offset,$isdst,$abb) = $dmt->convert_from_gmt($date,$zone);
@@ -1809,25 +1809,25 @@ sub _config_var_setdate {
    # Set NOW
    #
 
-   $$self{"data"}{"now"}{"date"}   = $date;
-   $$self{"data"}{"now"}{"tz"}     = $dmt->_zone($zone);
-   $$self{"data"}{"now"}{"isdst"}  = $isdst;
-   $$self{"data"}{"now"}{"abb"}    = $abb;
-   $$self{"data"}{"now"}{"offset"} = $offset;
+   $$self{'data'}{'now'}{'date'}   = $date;
+   $$self{'data'}{'now'}{'tz'}     = $dmt->_zone($zone);
+   $$self{'data'}{'now'}{'isdst'}  = $isdst;
+   $$self{'data'}{'now'}{'abb'}    = $abb;
+   $$self{'data'}{'now'}{'offset'} = $offset;
 
    #
    # Treate SetDate/ForceDate
    #
 
    if ($force) {
-      $$self{"data"}{"now"}{"force"}   = 1;
-      $$self{"data"}{"now"}{"set"}     = 0;
+      $$self{'data'}{'now'}{'force'}   = 1;
+      $$self{'data'}{'now'}{'set'}     = 0;
    } else {
-      $$self{"data"}{"now"}{"force"}   = 0;
-      $$self{"data"}{"now"}{"set"}     = 1;
-      $$self{"data"}{"now"}{"setsecs"} = $time;
+      $$self{'data'}{'now'}{'force'}   = 0;
+      $$self{'data'}{'now'}{'set'}     = 1;
+      $$self{'data'}{'now'}{'setsecs'} = $time;
       my($err,$setdate)                = $dmt->convert_to_gmt($date,$zone);
-      $$self{"data"}{"now"}{"setdate"} = $setdate;
+      $$self{'data'}{'now'}{'setdate'} = $setdate;
    }
 
    return 0;
@@ -1849,57 +1849,57 @@ sub _language {
       return 1;
    }
 
-   return 0  if (exists $$self{"data"}{"sections"}{"conf"}  &&
-                 $$self{"data"}{"sections"}{"conf"} eq $lang);
+   return 0  if (exists $$self{'data'}{'sections'}{'conf'}  &&
+                 $$self{'data'}{'sections'}{'conf'} eq $lang);
    $self->_init_language(1);
 
    my $mod = $Date::Manip::Lang::index::Lang{$lang};
    eval "require Date::Manip::Lang::${mod}";
-   $$self{"data"}{"lang"} = ${ "Date::Manip::Lang::${mod}::Language" };
+   $$self{'data'}{'lang'} = ${ "Date::Manip::Lang::${mod}::Language" };
 
    # Common words
-   $self->_rx_wordlist("at");
-   $self->_rx_wordlist("each");
-   $self->_rx_wordlist("last");
-   $self->_rx_wordlist("of");
-   $self->_rx_wordlist("on");
-   $self->_rx_wordlists("when");
+   $self->_rx_wordlist('at');
+   $self->_rx_wordlist('each');
+   $self->_rx_wordlist('last');
+   $self->_rx_wordlist('of');
+   $self->_rx_wordlist('on');
+   $self->_rx_wordlists('when');
 
    # Next/prev
-   $self->_rx_wordlists("nextprev");
+   $self->_rx_wordlists('nextprev');
 
    # Field names (years, year, yr, ...)
-   $self->_rx_wordlists("fields");
+   $self->_rx_wordlists('fields');
 
    # Numbers (first, 1st)
-   $self->_rx_wordlists("nth");
-   $self->_rx_wordlists("nth","nth_dom",31);  # 1-31
-   $self->_rx_wordlists("nth","nth_wom",5);   # 1-5
+   $self->_rx_wordlists('nth');
+   $self->_rx_wordlists('nth','nth_dom',31);  # 1-31
+   $self->_rx_wordlists('nth','nth_wom',5);   # 1-5
 
    # Calendar names (Mon, Tue  and  Jan, Feb)
-   $self->_rx_wordlists("day_abb");
-   $self->_rx_wordlists("day_char");
-   $self->_rx_wordlists("day_name");
-   $self->_rx_wordlists("month_abb");
-   $self->_rx_wordlists("month_name");
+   $self->_rx_wordlists('day_abb');
+   $self->_rx_wordlists('day_char');
+   $self->_rx_wordlists('day_name');
+   $self->_rx_wordlists('month_abb');
+   $self->_rx_wordlists('month_name');
 
    # H:M:S separators
-   $self->_rx_simple("sephm");
-   $self->_rx_simple("sepms");
-   $self->_rx_simple("sepfr");
+   $self->_rx_simple('sephm');
+   $self->_rx_simple('sepms');
+   $self->_rx_simple('sepfr');
 
    # Time replacement strings
-   $self->_rx_replace("times");
+   $self->_rx_replace('times');
 
    # Some offset strings
-   $self->_rx_replace("offset_date");
-   $self->_rx_replace("offset_time");
+   $self->_rx_replace('offset_date');
+   $self->_rx_replace('offset_time');
 
    # AM/PM strings
-   $self->_rx_wordlists("ampm");
+   $self->_rx_wordlists('ampm');
 
    # Business/non-business mode
-   $self->_rx_wordlists("mode");
+   $self->_rx_wordlists('mode');
 
    return 0;
 }
@@ -1914,14 +1914,14 @@ use strict 'refs';
 sub _rx_simple {
    my($self,$ele) = @_;
 
-   if (exists $$self{"data"}{"lang"}{$ele}) {
-      if (ref($$self{"data"}{"lang"}{$ele})) {
-         @{ $$self{"data"}{"rx"}{$ele} } = @{ $$self{"data"}{"lang"}{$ele} };
+   if (exists $$self{'data'}{'lang'}{$ele}) {
+      if (ref($$self{'data'}{'lang'}{$ele})) {
+         @{ $$self{'data'}{'rx'}{$ele} } = @{ $$self{'data'}{'lang'}{$ele} };
       } else {
-         $$self{"data"}{"rx"}{$ele} = $$self{"data"}{"lang"}{$ele};
+         $$self{'data'}{'rx'}{$ele} = $$self{'data'}{'lang'}{$ele};
       }
    } else {
-      $$self{"data"}{"rx"}{$ele} = undef;
+      $$self{'data'}{'rx'}{$ele} = undef;
    }
 }
 
@@ -1937,14 +1937,14 @@ sub _rx_simple {
 sub _rx_wordlist {
    my($self,$ele) = @_;
 
-   if (exists $$self{"data"}{"lang"}{$ele}) {
-      my @tmp = @{ $$self{"data"}{"lang"}{$ele} };
+   if (exists $$self{'data'}{'lang'}{$ele}) {
+      my @tmp = @{ $$self{'data'}{'lang'}{$ele} };
 
-      $$self{"data"}{"wordlistA"}{$ele} = $tmp[0];
+      $$self{'data'}{'wordlistA'}{$ele} = $tmp[0];
       if (defined $tmp[1]  &&  $tmp[1]) {
-         $$self{"data"}{"wordlistL"}{$ele} = $tmp[1];
+         $$self{'data'}{'wordlistL'}{$ele} = $tmp[1];
       } else {
-         $$self{"data"}{"wordlistL"}{$ele} = $tmp[0];
+         $$self{'data'}{'wordlistL'}{$ele} = $tmp[0];
       }
 
       my @tmp2;
@@ -1953,10 +1953,10 @@ sub _rx_wordlist {
       }
       @tmp2  = sort _sortByLength(@tmp2);
 
-      $$self{"data"}{"rx"}{$ele} = join('|',@tmp2);
+      $$self{'data'}{'rx'}{$ele} = join('|',@tmp2);
 
    } else {
-      $$self{"data"}{"rx"}{$ele} = undef;
+      $$self{'data'}{'rx'}{$ele} = undef;
    }
 }
 
@@ -1968,24 +1968,24 @@ sub _rx_wordlist {
 sub _rx_replace {
    my($self,$ele) = @_;
 
-   if (! exists $$self{"data"}{"lang"}{$ele}) {
-      $$self{"data"}{"rx"}{$ele} = {};
+   if (! exists $$self{'data'}{'lang'}{$ele}) {
+      $$self{'data'}{'rx'}{$ele} = {};
       return;
    }
 
-   my(@key) = keys %{ $$self{"data"}{"lang"}{$ele} };
+   my(@key) = keys %{ $$self{'data'}{'lang'}{$ele} };
    my $i    = 1;
    foreach my $key (@key) {
-      my $val = $$self{"data"}{"lang"}{$ele}{$key};
-      $$self{"data"}{"rx"}{$ele}[$i++] = qr/\b\Q$key\E\b/i;
-      $$self{"data"}{"wordmatch"}{$ele}{lc($key)} = $val;
+      my $val = $$self{'data'}{'lang'}{$ele}{$key};
+      $$self{'data'}{'rx'}{$ele}[$i++] = qr/\b\Q$key\E\b/i;
+      $$self{'data'}{'wordmatch'}{$ele}{lc($key)} = $val;
    }
 
    @key   = sort _sortByLength(@key);
    @key   = map { "\Q$_\E" } @key;
    my $rx = join('|',@key);
 
-   $$self{"data"}{"rx"}{$ele}[0] = qr/\b(?:$rx)\b/i;
+   $$self{'data'}{'rx'}{$ele}[0] = qr/\b(?:$rx)\b/i;
 }
 
 # This takes a list of values, each of which can be expressed in multiple
@@ -1997,48 +1997,48 @@ sub _rx_wordlists {
    my($self,$ele,$subset,$max) = @_;
    $subset = $ele  if (! $subset);
 
-   if (exists $$self{"data"}{"lang"}{$ele}) {
-      my @vallist = @{ $$self{"data"}{"lang"}{$ele} };
+   if (exists $$self{'data'}{'lang'}{$ele}) {
+      my @vallist = @{ $$self{'data'}{'lang'}{$ele} };
       $max        = $#vallist+1  if (! $max  ||  $max > $#vallist+1);
       my (@all);
 
       for (my $i=1; $i<=$max; $i++) {
-         my @tmp = @{ $$self{"data"}{"lang"}{$ele}[$i-1] };
+         my @tmp = @{ $$self{'data'}{'lang'}{$ele}[$i-1] };
 
-         $$self{"data"}{"wordlistA"}{$subset}[$i-1] = $tmp[0];
+         $$self{'data'}{'wordlistA'}{$subset}[$i-1] = $tmp[0];
          if (defined $tmp[1]  &&  $tmp[1]) {
-            $$self{"data"}{"wordlistL"}{$subset}[$i-1] = $tmp[1];
+            $$self{'data'}{'wordlistL'}{$subset}[$i-1] = $tmp[1];
          } else {
-            $$self{"data"}{"wordlistL"}{$subset}[$i-1] = $tmp[0];
+            $$self{'data'}{'wordlistL'}{$subset}[$i-1] = $tmp[0];
          }
 
          my @str;
          foreach my $str (@tmp) {
             next  if (! $str);
-            $$self{"data"}{"wordmatch"}{$subset}{lc($str)} = $i;
+            $$self{'data'}{'wordmatch'}{$subset}{lc($str)} = $i;
             push(@str,"\Q$str\E");
          }
          push(@all,@str);
 
          @str  = sort _sortByLength(@str);
-         $$self{"data"}{"rx"}{$subset}[$i] = join('|',@str);
+         $$self{'data'}{'rx'}{$subset}[$i] = join('|',@str);
       }
 
       @all  = sort _sortByLength(@all);
-      $$self{"data"}{"rx"}{$subset}[0] = join('|',@all);
+      $$self{'data'}{'rx'}{$subset}[0] = join('|',@all);
 
    } else {
-      $$self{"data"}{"rx"}{$subset} = undef;
+      $$self{'data'}{'rx'}{$subset} = undef;
    }
 }
 
 # This sorts from longest to shortest element
 #
-no strict "vars";
+no strict 'vars';
 sub _sortByLength {
    return (length $b <=> length $a);
 }
-use strict "vars";
+use strict 'vars';
 
 ###############################################################################
 # Year functions
@@ -2050,25 +2050,25 @@ use strict "vars";
 
 sub _method {
    my($self,$method) = @_;
-   $self->_config("yytoyyyy",$method);
+   $self->_config('yytoyyyy',$method);
 }
 
 sub _fix_year {
    my($self,$y) = @_;
-   my $method = $self->_config("yytoyyyy");
+   my $method = $self->_config('yytoyyyy');
 
    return $y     if (length($y)==4);
    return undef  if (length($y)!=2);
 
    my $curr_y;
-   if (exists $$self{"objs"}{"tz"}) {
-      $curr_y = $self->_now("y",1);
+   if (exists $$self{'objs'}{'tz'}) {
+      $curr_y = $self->_now('y',1);
    } else {
       $curr_y  = ( localtime(time) )[5];
       $curr_y += 1900;
    }
 
-   if ($method eq "c") {
+   if ($method eq 'c') {
       return substr($curr_y,0,2) . $y;
 
    } elsif ($method =~ /^c(\d\d)$/) {
@@ -2154,12 +2154,12 @@ sub split {
 
    given ($op) {
 
-      when ("date") {
+      when ('date') {
          if ($string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d):(\d\d):(\d\d)$/  ||
              $string =~ /^(\d\d\d\d)\-(\d\d)\-(\d\d)\-(\d\d):(\d\d):(\d\d)$/  ||
              $string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/) {
             my($err,$y,$m,$d,$h,$mn,$s) =
-              $self->_normalize_date("split",$1,$2,$3,$4,$5,$6);
+              $self->_normalize_date('split',$1,$2,$3,$4,$5,$6);
             return undef  if ($err);
             return [$y,$m,$d,$h,$mn,$s];
          } else {
@@ -2167,13 +2167,13 @@ sub split {
          }
       }
 
-      when ("offset") {
+      when ('offset') {
          if ($string =~ /^([-+]?)(\d\d)(\d\d)(\d\d)$/     ||
              $string =~ /^([-+]?)(\d\d)(\d\d)()$/         ||
              $string =~ /^([-+]?)(\d\d?):(\d\d):(\d\d)$/  ||
              $string =~ /^([-+]?)(\d\d?):(\d\d)()$/       ||
              $string =~ /^([-+]?)(\d\d?)()()$/) {
-            my($err,$h,$mn,$s) = $self->_normalize_offset("split",$1,$2,$3,$4);
+            my($err,$h,$mn,$s) = $self->_normalize_offset('split',$1,$2,$3,$4);
             return undef  if ($err);
             return [$h,$mn,$s];
          } else {
@@ -2181,13 +2181,13 @@ sub split {
          }
       }
 
-      when ("hms") {
+      when ('hms') {
          if ($string =~ /^(\d\d)(\d\d)(\d\d)$/     ||
              $string =~ /^(\d\d)(\d\d)()$/         ||
              $string =~ /^(\d\d?):(\d\d):(\d\d)$/  ||
              $string =~ /^(\d\d?):(\d\d)()$/       ||
              $string =~ /^(\d\d?)()()$/) {
-            my($err,$h,$mn,$s) = $self->_normalize_hms("split",$1,$2,$3);
+            my($err,$h,$mn,$s) = $self->_normalize_hms('split',$1,$2,$3);
             return undef  if ($err);
             return [$h,$mn,$s];
          } else {
@@ -2195,9 +2195,9 @@ sub split {
          }
       }
 
-      when ("time") {
+      when ('time') {
          if ($string =~ /^[-+]?\d+(:[-+]?\d+){0,2}$/) {
-            my($err,$dh,$dmn,$ds) = $self->_normalize_time("split",split(/:/,$string));
+            my($err,$dh,$dmn,$ds) = $self->_normalize_time('split',split(/:/,$string));
             return undef  if ($err);
             return [$dh,$dmn,$ds];
          } else {
@@ -2205,12 +2205,12 @@ sub split {
          }
       }
 
-      when ("delta") {
+      when ('delta') {
          if ($string =~ /^[-+]?\d*(:[-+]?\d*){0,6}$/) {
             $string =~ s/::/:0:/g;
             $string =~ s/^:/0:/;
             $string =~ s/:$/:0/;
-            my($err,@delta) = $self->_normalize_delta("split",split(/:/,$string));
+            my($err,@delta) = $self->_normalize_delta('split',split(/:/,$string));
             return undef  if ($err);
             return [@delta];
          } else {
@@ -2218,12 +2218,12 @@ sub split {
          }
       }
 
-      when ("business") {
+      when ('business') {
          if ($string =~ /^[-+]?\d*(:[-+]?\d*){0,6}$/) {
             $string =~ s/::/:0:/g;
             $string =~ s/^:/0:/;
             $string =~ s/:$/:0/;
-            my($err,@delta) = $self->_normalize_business("split",split(/:/,$string));
+            my($err,@delta) = $self->_normalize_business('split',split(/:/,$string));
             return undef  if ($err);
             return [@delta];
          } else {
@@ -2233,16 +2233,30 @@ sub split {
    }
 }
 
+sub _join_date {
+   my($self,$data) = @_;
+   my($y,$m,$d,$h,$mn,$s) = @$data;
+   while (length($y) < 4) {
+      $y = "0$y";
+   }
+   $m  = "0$m"    if (length($m)==1);
+   $d  = "0$d"    if (length($d)==1);
+   $h  = "0$h"    if (length($h)==1);
+   $mn = "0$mn"   if (length($mn)==1);
+   $s  = "0$s"    if (length($s)==1);
+   return "$y$m$d$h:$mn:$s";
+}
+
 sub join{
    my($self,$op,$data) = @_;
    my @data = @$data;
 
    given ($op) {
 
-      when ("date") {
-         my($err,$y,$m,$d,$h,$mn,$s) = $self->_normalize_date("join",@data);
+      when ('date') {
+         my($err,$y,$m,$d,$h,$mn,$s) = $self->_normalize_date('join',@data);
          return undef  if ($err);
-         my $form = $self->_config("printable");
+         my $form = $self->_config('printable');
          if ($form == 1) {
             return "$y$m$d$h$mn$s";
          } elsif ($form == 2) {
@@ -2252,34 +2266,34 @@ sub join{
          }
       }
 
-      when ("offset") {
-         my($err,$h,$mn,$s) = $self->_normalize_offset("join","",@data);
+      when ('offset') {
+         my($err,$h,$mn,$s) = $self->_normalize_offset('join','',@data);
          return undef  if ($err);
          return "$h:$mn:$s";
       }
 
-      when ("hms") {
-         my($err,$h,$mn,$s) = $self->_normalize_hms("join",@data);
+      when ('hms') {
+         my($err,$h,$mn,$s) = $self->_normalize_hms('join',@data);
          return undef  if ($err);
          return "$h:$mn:$s";
       }
 
-      when ("time") {
-         my($err,$dh,$dmn,$ds) = $self->_normalize_time("join",@data);
+      when ('time') {
+         my($err,$dh,$dmn,$ds) = $self->_normalize_time('join',@data);
          return undef  if ($err);
          return "$dh:$dmn:$ds";
       }
 
-      when ("delta") {
-         my($err,@delta) = $self->_normalize_delta("join",@data);
+      when ('delta') {
+         my($err,@delta) = $self->_normalize_delta('join',@data);
          return undef  if ($err);
-         return join(":",@delta);
+         return join(':',@delta);
       }
 
-      when ("business") {
-         my($err,@delta) = $self->_normalize_business("join",@data);
+      when ('business') {
+         my($err,@delta) = $self->_normalize_business('join',@data);
          return undef  if ($err);
-         return join(":",@delta);
+         return join(':',@delta);
       }
    }
 }
@@ -2298,7 +2312,7 @@ sub _normalize_date {
 
    return (1)  if (! $self->check([$y,$m,$d,$h,$mn,$s]));
 
-   if ($op eq "join") {
+   if ($op eq 'join') {
       while (length($y) < 4) {
          $y = "0$y";
       }
@@ -2330,11 +2344,11 @@ sub _normalize_offset {
                    ! $self->_is_int($mn,-59,59) ||
                    ! $self->_is_int($s,-59,59));
 
-   if ($op eq "join") {
+   if ($op eq 'join') {
       if ($h >= 0  &&  $mn >= 0  &&  $s >= 0) {
-         $sign  = "+";
+         $sign  = '+';
       } elsif ($h <= 0  &&  $mn <= 0  &&  $s <= 0) {
-         $sign  = "-";
+         $sign  = '-';
          $h    *= -1;
          $mn   *= -1;
          $s    *= -1;
@@ -2347,7 +2361,7 @@ sub _normalize_offset {
       $s  = "0$s"   if ($s  < 10);
       $h  = "$sign$h";
 
-   } elsif ($sign eq "-") {
+   } elsif ($sign eq '-') {
       $h    *= -1;
       $mn   *= -1;
       $s    *= -1;
@@ -2374,7 +2388,7 @@ sub _normalize_hms {
                    ! $self->_is_int($mn,0,59) ||
                    ! $self->_is_int($s,0,59));
 
-   if ($op eq "join") {
+   if ($op eq 'join') {
       $h  = "0$h"   if ($h  < 10);
       $mn = "0$mn"  if ($mn < 10);
       $s  = "0$s"   if ($s  < 10);
@@ -2394,8 +2408,8 @@ sub _normalize_time {
 
    # If we're splitting, the sign needs to be carried.
 
-   if ($op eq "split") {
-      my ($sign) = "+";
+   if ($op eq 'split') {
+      my ($sign) = '+';
       foreach my $f (@fields) {
          if ($f =~ /^([-+])/) {
             $sign = $1;
@@ -2409,11 +2423,11 @@ sub _normalize_time {
 
    # Normalize
 
-   my $sign = "+";
+   my $sign = '+';
 
    $s += $h*3600 + $mn*60;       # convert h/m to s
-   if ($op eq "join"  &&  $s < 0) {
-      $sign = "-";
+   if ($op eq 'join'  &&  $s < 0) {
+      $sign = '-';
       $s    = abs($s);
    }
 
@@ -2423,7 +2437,7 @@ sub _normalize_time {
    $h   = int($mn/60);           # convert m to h
    $mn -= $h*60;
 
-   $h  = "$sign$h"  if ($op eq "join"  &&  $sign eq "-");
+   $h  = "$sign$h"  if ($op eq 'join'  &&  $sign eq '-');
 
    return (0,$h,$mn,$s);
 }
@@ -2440,8 +2454,8 @@ sub _normalize_delta {
 
    # If we're splitting, the sign needs to be carried.
 
-   if ($op eq "split") {
-      my ($sign) = "+";
+   if ($op eq 'split') {
+      my ($sign) = '+';
       foreach my $f (@fields) {
          if ($f =~ /^([-+])/) {
             $sign = $1;
@@ -2451,7 +2465,7 @@ sub _normalize_delta {
          $f *= 1;
       }
 
-   } elsif ($op eq "norm") {
+   } elsif ($op eq 'norm') {
       foreach my $f (@fields) {
          $f *= 1;
       }
@@ -2477,8 +2491,8 @@ sub _normalize_business {
 
    # If we're splitting, the sign needs to be carried.
 
-   if ($op eq "split") {
-      my ($sign) = "+";
+   if ($op eq 'split') {
+      my ($sign) = '+';
       foreach my $f (@fields) {
          if ($f =~ /^([-+])/) {
             $sign = $1;
@@ -2488,7 +2502,7 @@ sub _normalize_business {
          $f *= 1;
       }
 
-   } elsif ($op eq "norm") {
+   } elsif ($op eq 'norm') {
       foreach my $f (@fields) {
          $f *= 1;
       }
@@ -2506,18 +2520,18 @@ sub _normalize_business {
 sub _normalize_ym {
    my($self,$op,$y,$m) = @_;
 
-   my $sign = "+";
+   my $sign = '+';
 
    $m += $y*12;
-   if ($op eq "join"  &&  $m < 0) {
-      $sign = "-";
+   if ($op eq 'join'  &&  $m < 0) {
+      $sign = '-';
       $m    = abs($m);
    }
 
    $y  = int($m/12);
    $m -= $y*12;
 
-   $y  = "$sign$y"  if ($op eq "join");
+   $y  = "$sign$y"  if ($op eq 'join');
    return ($y,$m);
 }
 
@@ -2525,7 +2539,7 @@ sub _normalize_wdhms {
    my($self,$op,$w,$d,$h,$mn,$s) = @_;
 
    my($len) = 86400;            # 24*3600
-   my $sign = "+";
+   my $sign = '+';
 
    {
       # Unfortunately, $s overflows for dates more than ~70 years
@@ -2533,8 +2547,8 @@ sub _normalize_wdhms {
       no integer;
 
       $s += ($d+7*$w)*$len + $h*3600 + $mn*60; # convert w/d/h/m to s
-      if ($op eq "join"  &&  $s < 0) {
-         $sign = "-";
+      if ($op eq 'join'  &&  $s < 0) {
+         $sign = '-';
          $s    = abs($s);
       }
 
@@ -2553,7 +2567,7 @@ sub _normalize_wdhms {
 
    # Attach the sign
 
-   $w   = "$sign$w"  if ($op eq "join");
+   $w   = "$sign$w"  if ($op eq 'join');
 
    return ($w,$d,$h,$mn,$s);
 }
@@ -2561,7 +2575,7 @@ sub _normalize_wdhms {
 sub _normalize_w {
    my($self,$op,$w) = @_;
 
-   $w = "+$w"  if ($op eq "join"  &&  $w >= 0);
+   $w = "+$w"  if ($op eq 'join'  &&  $w >= 0);
 
    return $w;
 }
@@ -2569,8 +2583,8 @@ sub _normalize_w {
 sub _normalize_dhms {
    my($self,$op,$d,$h,$mn,$s) = @_;
 
-   my($sign) = "+";
-   my($len)  = $$self{"data"}{"calc"}{"bdlength"};
+   my($sign) = '+';
+   my($len)  = $$self{'data'}{'calc'}{'bdlength'};
 
    {
       # Unfortunately, $s overflows for dates more than ~70 years
@@ -2578,8 +2592,8 @@ sub _normalize_dhms {
       no integer;
 
       $s += $d*$len + $h*3600 + $mn*60; # convert d/h/m to s
-      if ($op eq "join"  &&  $s < 0) {
-         $sign = "-";
+      if ($op eq 'join'  &&  $s < 0) {
+         $sign = '-';
          $s    = abs($s);
       }
 
@@ -2595,13 +2609,13 @@ sub _normalize_dhms {
 
    # Attach the sign
 
-   $d   = "$sign$d"  if ($op eq "join");
+   $d   = "$sign$d"  if ($op eq 'join');
 
    return ($d,$h,$mn,$s);
 }
 
 # $self->_delta_convert(FORMAT,DELTA)
-#    This converts delta into the given format. Returns "" if invalid.
+#    This converts delta into the given format. Returns '' if invalid.
 #
 sub _delta_convert {
    my($self,$format,$delta)=@_;
@@ -2632,9 +2646,9 @@ sub _delta_convert {
 #       Time period.
 #    $time,$timetype
 #       The time of day when the change occurs. The timetype can be
-#       "w" (wallclock time in the current period), "s" (standard
+#       'w' (wallclock time in the current period), 's' (standard
 #       time which will match wallclock time in a non-DST period, or
-#       be off an hour in a DST period), and "u" (universal time).
+#       be off an hour in a DST period), and 'u' (universal time).
 #
 # Output is:
 #    $endUT, $endLT, $begUT, $begLT
@@ -2655,21 +2669,21 @@ sub _critical_date {
 
    my($y,$m,$d) = ($year+0,$mon+0,1);
 
-   if ($flag eq "dom") {
+   if ($flag eq 'dom') {
       $d = $num;
 
-   } elsif ($flag eq "last") {
+   } elsif ($flag eq 'last') {
       my $ymd = $self->nth_day_of_week($year,-1,$dow,$mon);
       $d = $$ymd[2];
 
-   } elsif ($flag eq "ge") {
+   } elsif ($flag eq 'ge') {
       my $ymd = $self->nth_day_of_week($year,1,$dow,$mon);
       $d = $$ymd[2];
       while ($d < $num) {
          $d += 7;
       }
 
-   } elsif ($flag eq "le") {
+   } elsif ($flag eq 'le') {
       my $ymd = $self->nth_day_of_week($year,-1,$dow,$mon);
       $d = $$ymd[2];
       while ($d > $num) {
@@ -2682,7 +2696,7 @@ sub _critical_date {
    # account time type).
    #
 
-   my($h,$mn,$s) = @{ $self->split("hms",$time) };
+   my($h,$mn,$s) = @{ $self->split('hms',$time) };
    my $date      = [ $y,$m,$d,$h,$mn,$s ];
 
    #
@@ -2690,12 +2704,12 @@ sub _critical_date {
    #
 
    my($endUT,$endLT,$begUT,$begLT,$offset);
-   $stdoff = $self->split("offset",$stdoff);
-   $dstoff = $self->split("offset",$dstoff);
+   $stdoff = $self->split('offset',$stdoff);
+   $dstoff = $self->split('offset',$dstoff);
 
-   if ($timetype eq "w") {
+   if ($timetype eq 'w') {
       $begUT = $self->calc_date_time($date,($isdst ? $stdoff : $dstoff), 1);
-   } elsif ($timetype eq "u") {
+   } elsif ($timetype eq 'u') {
       $begUT = $date;
    } else {
       $begUT = $self->calc_date_time($date,$stdoff, 1);
@@ -2712,7 +2726,7 @@ sub _critical_date {
 #### **** DEPRECATED FUNCTIONS ****
 
 # $File=_ExpandTilde($file);
-#   This checks to see if a "~" appears as the first character in a path.
+#   This checks to see if a '~' appears as the first character in a path.
 #   If it does, the "~" expansion is interpreted (if possible) and the full
 #   path is returned.  If a "~" expansion is used but cannot be
 #   interpreted, an empty string is returned.
@@ -2730,17 +2744,17 @@ sub _ExpandTilde {
       # and getpwuid routines defined.  Try to catch various different ways
       # of knowing we are on one of these systems:
       my $os = $self->_os();
-      return ""  if ($os eq "Windows"  or
-                     $os eq "Other");
-      $user=""  if (! defined $user);
+      return ''  if ($os eq 'Windows'  or
+                     $os eq 'Other');
+      $user=''  if (! defined $user);
 
       if ($user) {
          $home= (getpwnam($user))[7];
       } else {
          $home= (getpwuid($<))[7];
       }
-      $home = VMS::Filespec::unixpath($home)  if ($os eq "VMS");
-      return ""  if (! $home);
+      $home = VMS::Filespec::unixpath($home)  if ($os eq 'VMS');
+      return ''  if (! $home);
       $file="$home/$file";
    }
    $file;
@@ -2761,7 +2775,7 @@ sub _SearchPath {
       $f    = $self->_ExpandTilde($f);
       return $f if (-r $f);
    }
-   return "";
+   return '';
 }
 
 1;

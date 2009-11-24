@@ -790,3 +790,6 @@ Version 6.02  2009-11-24
    Disabled curr_zone_methods when taint checking on. I believe that Date::Manip
       is completely taint friendly at this point.
 
+Version 6.02  2009-11-24
+   Corrects a backward incompatibility with UnixDate. Rene Schickbauer
+

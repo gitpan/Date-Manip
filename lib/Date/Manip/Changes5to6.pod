@@ -17,8 +17,11 @@ has changed in backwards incompatible ways. Other parts have been
 deprecated and will be removed at some point in the future.
 
 This document describes the differences between the 5.xx series and
-version 6.00. Anyone wanting to upgrade from version 5 to version 6
-should read this.
+version 6.00. This page is primarily for someone wanting to know
+exactly what changed.
+
+If you want to make sure that a script which ran with 5.xx will run
+with 6.xx, refer to the Date::Manip::Migration5to6 document.
 
 =head1 OVERVIEW
 
@@ -70,10 +73,10 @@ The most important changes are marked with asterisks.
 
 =item (*) Requires perl 5.10.0
 
-In the past, I've avoided using some of the new features of perl in
-order to allow Date::Manip to run on older versions of perl.  In general,
-none of the new features too date would have had a major impact on
-how Date::Manip was written.
+In the past, I've avoided using new features of perl in order to allow
+Date::Manip to run on older versions of perl.  Prior to 5.10, none of
+the new features would have had a major impact on how Date::Manip was
+written.
 
 However, as I was rewriting all the date parsing, the ability to do
 named capture buffers allowed me to handle the complicated regular
@@ -95,8 +98,7 @@ large number of smaller more manageable modules. The main Date::Manip
 module is still present, and contains all of the functions from
 Date::Manip 5.xx (except that they now call functions from all the
 other modules to do the actual work). In general, the Date::Manip
-module from 6.00 is backwards compatible, but there are a number of
-exceptions as described below.
+module from 6.00 is backwards compatible.
 
 A number of new modules have been created as well. These can be used
 directly, bypassing the main Date::Manip module. These include the

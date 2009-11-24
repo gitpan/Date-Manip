@@ -13,7 +13,7 @@ use integer;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 ###############################################################################
 # GLOBAL VARIABLES
@@ -68,18 +68,18 @@ $TZ_OFFSET    = 3;
 sub new {
   my($class,$dir) = @_;
 
-  $dir = "."  if (! $dir);
+  $dir = '.'  if (! $dir);
 
   if (! -d "$dir/tzdata") {
      die "ERROR: no tzdata directory found\n";
   }
 
   my $self = {
-              "dir"       => $dir,
-              "zone"      => {},
-              "ruleinfo"  => {},
-              "zoneinfo"  => {},
-              "zonelines" => {},
+              'dir'       => $dir,
+              'zone'      => {},
+              'ruleinfo'  => {},
+              'zoneinfo'  => {},
+              'zonelines' => {},
              };
   bless $self, $class;
 
@@ -111,24 +111,24 @@ my($Error);
 #                   rule during a year. It returns:
 #                     (date dst_offset timetype lett ...)
 #                   where dst_offset is the daylight savings time offset
-#                   that starts at that date and timetype is "u", "w", or
-#                   "s", and lett is the letter to use in the abbrev.
+#                   that starts at that date and timetype is 'u', 'w', or
+#                   's', and lett is the letter to use in the abbrev.
 #
 sub _ruleInfo {
    my($self,$rule,$info,@args) = @_;
    my $year                    = shift(@args);
 
-   if (exists $$self{"ruleinfo"}{$info}  &&
-       exists $$self{"ruleinfo"}{$info}{$rule}  &&
-       exists $$self{"ruleinfo"}{$info}{$rule}{$year}) {
-      if (ref $$self{"ruleinfo"}{$info}{$rule}{$year}) {
-         return @{ $$self{"ruleinfo"}{$info}{$rule}{$year} };
+   if (exists $$self{'ruleinfo'}{$info}  &&
+       exists $$self{'ruleinfo'}{$info}{$rule}  &&
+       exists $$self{'ruleinfo'}{$info}{$rule}{$year}) {
+      if (ref $$self{'ruleinfo'}{$info}{$rule}{$year}) {
+         return @{ $$self{'ruleinfo'}{$info}{$rule}{$year} };
       } else {
-         return $$self{"ruleinfo"}{$info}{$rule}{$year};
+         return $$self{'ruleinfo'}{$info}{$rule}{$year};
       }
    }
 
-   if ($info eq "rules") {
+   if ($info eq 'rules') {
       my @ret;
       foreach my $r ($self->_tzd_Rule($rule)) {
          my($y0,$y1,$ytype,$mon,$flag,$dow,$num,$timetype,$time,$offset,
@@ -136,8 +136,8 @@ sub _ruleInfo {
          next  if ($y0>$year  ||  $y1<$year);
          push(@ret,$r)  if ($ytype eq "-"  ||
                             $year == 9999    ||
-                            ($ytype eq "even"  &&  $year =~ /[02468]$/)  ||
-                            ($ytype eq "odd"   &&  $year =~ /[13579]$/));
+                            ($ytype eq 'even'  &&  $year =~ /[02468]$/)  ||
+                            ($ytype eq 'odd'   &&  $year =~ /[13579]$/));
       }
 
       # We'll sort them... if there are ever two time changes in a
@@ -145,44 +145,44 @@ sub _ruleInfo {
       # never will be.
 
       @ret = sort { $$a[3] <=> $$b[3] } @ret;
-      $$self{"ruleinfo"}{$info}{$rule}{$year} = [ @ret ];
+      $$self{'ruleinfo'}{$info}{$rule}{$year} = [ @ret ];
       return @ret;
 
-   } elsif ($info eq "stdlett"  ||
-            $info eq "savlett") {
-      my @rules = $self->_ruleInfo($rule,"rules",$year);
+   } elsif ($info eq 'stdlett'  ||
+            $info eq 'savlett') {
+      my @rules = $self->_ruleInfo($rule,'rules',$year);
       my %lett  = ();
       foreach my $r (@rules) {
          my($y0,$y1,$ytype,$mon,$flag,$dow,$num,$timetype,$time,$offset,
             $lett) = @$r;
          $lett{$lett} = 1
-           if ( ($info eq "stdlett"  &&  $offset eq "00:00:00") ||
-                ($info eq "savlett"  &&  $offset ne "00:00:00") );
+           if ( ($info eq 'stdlett'  &&  $offset eq '00:00:00') ||
+                ($info eq 'savlett'  &&  $offset ne '00:00:00') );
       }
 
       my $ret;
       if (! %lett) {
-         $ret = "";
+         $ret = '';
       } else {
          $ret = join(",",sort keys %lett);
       }
-      $$self{"ruleinfo"}{$info}{$rule}{$year} = $ret;
+      $$self{'ruleinfo'}{$info}{$rule}{$year} = $ret;
       return $ret;
 
-   } elsif ($info eq "lastoff") {
+   } elsif ($info eq 'lastoff') {
       my $ret;
-      my @rules = $self->_ruleInfo($rule,"rules",$year);
-      return "00:00:00"  if (! @rules);
+      my @rules = $self->_ruleInfo($rule,'rules',$year);
+      return '00:00:00'  if (! @rules);
       my $r     = pop(@rules);
       my($y0,$y1,$ytype,$mon,$flag,$dow,$num,$timetype,$time,$offset,
          $lett) = @$r;
 
-      $$self{"ruleinfo"}{$info}{$rule}{$year} = $offset;
+      $$self{'ruleinfo'}{$info}{$rule}{$year} = $offset;
       return $offset;
 
-   } elsif ($info eq "rdates") {
+   } elsif ($info eq 'rdates') {
       my @ret;
-      my @rules = $self->_ruleInfo($rule,"rules",$year);
+      my @rules = $self->_ruleInfo($rule,'rules',$year);
       foreach my $r (@rules) {
          my($y0,$y1,$ytype,$mon,$flag,$dow,$num,$timetype,$time,$offset,
             $lett) = @$r;
@@ -190,7 +190,7 @@ sub _ruleInfo {
          push(@ret,$date,$offset,$timetype,$lett);
       }
 
-      $$self{"ruleinfo"}{$info}{$rule}{$year} = [ @ret ];
+      $$self{'ruleinfo'}{$info}{$rule}{$year} = [ @ret ];
       return @ret;
    }
 }
@@ -237,7 +237,7 @@ sub _ruleInfo {
 sub _zoneInfo {
    my($self,$zone,$info,@args) = @_;
 
-   if (! exists $$self{"zonelines"}{$zone}) {
+   if (! exists $$self{'zonelines'}{$zone}) {
       $self->_tzd_ZoneLines($zone);
    }
 
@@ -246,29 +246,29 @@ sub _zoneInfo {
 
    my $ret;
 
-#    if      ($info eq "numzonelines") {
-#       return $$self{"zonelines"}{$zone}{"numlines"};
+#    if      ($info eq 'numzonelines') {
+#       return $$self{'zonelines'}{$zone}{'numlines'};
 
-#    } elsif ($info eq "zoneline") {
+#    } elsif ($info eq 'zoneline') {
 #       my ($i) = @args;
-#       my @ret = map { $$self{"zonelines"}{$zone}{$i}{$_} }
+#       my @ret = map { $$self{'zonelines'}{$zone}{$i}{$_} }
 #         qw(start end stdoff dstbeg dstend letbeg letend abbrev rule);
 
 #       return @ret;
 #    }
 
    my $y = shift(@args);
-   if (exists $$self{"zoneinfo"}{$info}  &&
-       exists $$self{"zoneinfo"}{$info}{$zone}  &&
-       exists $$self{"zoneinfo"}{$info}{$zone}{$y}) {
-      if (ref($$self{"zoneinfo"}{$info}{$zone}{$y})) {
-         return @{ $$self{"zoneinfo"}{$info}{$zone}{$y} };
+   if (exists $$self{'zoneinfo'}{$info}  &&
+       exists $$self{'zoneinfo'}{$info}{$zone}  &&
+       exists $$self{'zoneinfo'}{$info}{$zone}{$y}) {
+      if (ref($$self{'zoneinfo'}{$info}{$zone}{$y})) {
+         return @{ $$self{'zoneinfo'}{$info}{$zone}{$y} };
       } else {
-         return $$self{"zoneinfo"}{$info}{$zone}{$y};
+         return $$self{'zoneinfo'}{$info}{$zone}{$y};
       }
    }
 
-   if      ($info eq "zonelines") {
+   if      ($info eq 'zonelines') {
       my (@ret);
       while (@z) {
          # y = 1920
@@ -281,24 +281,24 @@ sub _zoneInfo {
             $timetype,$start,$end) = @$z;
          next  if ($yr < $y);
          next  if ($yr == $y  &&  $flag == $TZ_DOM  &&
-                   $mon == 1  &&  $num == 1  &&  $time eq "00:00:00");
+                   $mon == 1  &&  $num == 1  &&  $time eq '00:00:00');
          push(@ret,$z);
          last  if ($yr > $y);
       }
 
-      $$self{"zoneinfo"}{$info}{$zone}{$y} = [ @ret ];
+      $$self{'zoneinfo'}{$info}{$zone}{$y} = [ @ret ];
       return @ret;
 
-   } elsif ($info eq "rules") {
+   } elsif ($info eq 'rules') {
       my (@ret);
-      @z = $self->_zoneInfo($zone,"zonelines",$y);
+      @z = $self->_zoneInfo($zone,'zonelines',$y);
       foreach my $z (@z) {
          my($offset,$ruletype,$rule,$abbrev,$yr,$mon,$dow,$num,$flag,$time,
             $timetype,$start,$end) = @$z;
          push(@ret,$rule,$ruletype);
       }
 
-      $$self{"zoneinfo"}{$info}{$zone}{$y} = [ @ret ];
+      $$self{'zoneinfo'}{$info}{$zone}{$y} = [ @ret ];
       return @ret;
    }
 }
@@ -334,7 +334,7 @@ sub _tzd_ParseFiles {
 sub _tzd_ParseFile {
    my($self,$file) = @_;
    my $in    = new IO::File;
-   my $dir   = $$self{"dir"};
+   my $dir   = $$self{'dir'};
    print "... $file\n"  if ($Verbose);
    if (! $in->open("$dir/tzdata/$file")) {
       warn "WARNING: [parse_file] unable to open file: $file: $!\n";
@@ -353,7 +353,7 @@ sub _tzd_ParseFile {
 
    # parse all lines
    my $n    = 0;                # line number
-   my $zone = "";     # current zone (if in a multi-line zone section)
+   my $zone = '';     # current zone (if in a multi-line zone section)
 
    while (@in) {
       if (! $in[0]) {
@@ -385,7 +385,7 @@ sub _tzd_ParseLink {
    my $line = shift(@$lines);
 
    my(@tmp) = split(/\s+/,$line);
-   if ($#tmp != 2  ||  lc($tmp[0]) ne "link") {
+   if ($#tmp != 2  ||  lc($tmp[0]) ne 'link') {
       warn "ERROR: [parse_file] invalid Link line: $file: $$n\n" .
            "       $line\n";
       return;
@@ -407,7 +407,7 @@ sub _tzd_ParseRule {
    my $line = shift(@$lines);
 
    my(@tmp) = split(/\s+/,$line);
-   if ($#tmp != 9  ||  lc($tmp[0]) ne "rule") {
+   if ($#tmp != 9  ||  lc($tmp[0]) ne 'rule') {
       warn "ERROR: [parse_file] invalid Rule line: $file: $$n:\n" .
            "       $line\n";
       return;
@@ -427,7 +427,7 @@ sub _tzd_ParseZone {
    my $line = shift(@$lines);
    my @tmp  = split(/\s+/,$line);
 
-   if ($#tmp < 4  ||  lc($tmp[0]) ne "zone") {
+   if ($#tmp < 4  ||  lc($tmp[0]) ne 'zone') {
       warn "ERROR: [parse_file] invalid Zone line: $file :$$n\n" .
            "       $line\n";
       return;
@@ -436,7 +436,7 @@ sub _tzd_ParseZone {
    shift(@tmp);
    my $zone = shift(@tmp);
 
-   $line    = join(" ",@tmp);
+   $line    = join(' ',@tmp);
    unshift(@$lines,$line);
 
    # Store the zone name information
@@ -488,25 +488,25 @@ sub _tzd_Alias {
    my($self,$alias,$zone) = @_;
 
    if (defined $zone) {
-      $$self{"alias"}{$alias} = $zone;
+      $$self{'alias'}{$alias} = $zone;
       return;
 
-   } elsif (exists $$self{"alias"}{$alias}) {
-      return $$self{"alias"}{$alias};
+   } elsif (exists $$self{'alias'}{$alias}) {
+      return $$self{'alias'}{$alias};
 
    } else {
-      return "";
+      return '';
    }
 }
 
 sub _tzd_DeleteAlias {
    my($self,$alias) = @_;
-   delete $$self{"alias"}{$alias};
+   delete $$self{'alias'}{$alias};
 }
 
 sub _tzd_AliasKeys {
    my($self) = @_;
-   return keys %{ $$self{"alias"} };
+   return keys %{ $$self{'alias'} };
 }
 
 # TZdata file:
@@ -567,13 +567,13 @@ sub _tzd_Rule {
    my($self,$rule,$listref) = @_;
 
    if (defined $listref) {
-      if (! exists $$self{"rule"}{$rule}) {
-         $$self{"rule"}{$rule} = [];
+      if (! exists $$self{'rule'}{$rule}) {
+         $$self{'rule'}{$rule} = [];
       }
-      push @{ $$self{"rule"}{$rule} }, [ @$listref ];
+      push @{ $$self{'rule'}{$rule} }, [ @$listref ];
 
-   } elsif (exists $$self{"rule"}{$rule}) {
-      return @{ $$self{"rule"}{$rule} };
+   } elsif (exists $$self{'rule'}{$rule}) {
+      return @{ $$self{'rule'}{$rule} };
 
    } else {
       return ();
@@ -582,12 +582,12 @@ sub _tzd_Rule {
 
 sub _tzd_DeleteRule {
    my($self,$rule) = @_;
-   delete $$self{"rule"}{$rule};
+   delete $$self{'rule'}{$rule};
 }
 
 sub _tzd_RuleNames {
    my($self) = @_;
-   return keys %{ $$self{"rule"} };
+   return keys %{ $$self{'rule'} };
 }
 
 sub _tzd_CheckRules {
@@ -631,7 +631,7 @@ sub _tzd_CheckRules {
 # Stored locally as:
 #
 #  %Rule = (
-#    "NYC" =>
+#    'NYC' =>
 #         [
 #           [ 1920 1920 -  3 2 7  0 w 02:00:00 01:00:00 D ],
 #           [ 1920 1920 - 10 2 7  0 w 02:00:00 00:00:00 S ],
@@ -639,7 +639,7 @@ sub _tzd_CheckRules {
 #           [ 1921 1954 -  9 2 7  0 w 02:00:00 00:00:00 S ],
 #           [ 1955 1966 - 10 2 7  0 w 02:00:00 00:00:00 S ],
 #         ],
-#    "US" =>
+#    'US' =>
 #         [
 #           [ 1918 1919 -  3 2 7  0 w 02:00:00 01:00:00 W ],
 #           [ 1918 1919 - 10 2 7  0 w 02:00:00 00:00:00 S ],
@@ -728,13 +728,13 @@ sub _rule_Month {
 
 # Returns a time. The time (HH:MM:SS) which may optionally be signed (if $sign
 # is 1), and may optionally (if $type is 1) be followed by a type
-# ("w", "u", or "s").
+# ('w', 'u', or 's').
 sub _rule_Time {
    my($self,$time,$sign,$type) = @_;
    my($s,$t);
 
    if ($type) {
-      $t = "w";
+      $t = 'w';
       if ($type  &&  $time =~ s/(w|u|s)$//i) {
          $t = lc($1);
       }
@@ -744,18 +744,18 @@ sub _rule_Time {
       if ($time =~ s/^-//) {
          $s = "-";
       } else {
-         $s = "";
+         $s = '';
          $time =~ s/^\+//;
       }
    } else {
-      $s = "";
+      $s = '';
    }
 
-   return ""  if ($time !~ /^(\d\d?)(?::(\d\d))?(?::(\d\d))?$/);
+   return ''  if ($time !~ /^(\d\d?)(?::(\d\d))?(?::(\d\d))?$/);
    my($hr,$mn,$se)=($1,$2,$3);
-   $hr   = "00"    if (! $hr);
-   $mn   = "00"    if (! $mn);
-   $se   = "00"    if (! $se);
+   $hr   = '00'    if (! $hr);
+   $mn   = '00'    if (! $mn);
+   $se   = '00'    if (! $se);
    $hr   = "0$hr"  if (length($hr)<2);
    $mn   = "0$mn"  if (length($mn)<2);
    $se   = "0$se"  if (length($se)<2);
@@ -767,45 +767,45 @@ sub _rule_Time {
    }
 }
 
-# a year or "minimum"
+# a year or 'minimum'
 sub _rule_From {
    my($self,$rule,$from) = @_;
    $from = lc($from);
    if ($from =~ /^\d\d\d\d$/) {
       return $from;
-   } elsif ($from eq "minimum"  ||  $from eq "min") {
-      return "0001";
+   } elsif ($from eq 'minimum'  ||  $from eq 'min') {
+      return '0001';
    }
    warn "ERROR: [rule_from] invalid: $rule: $from\n";
    $Error = 1;
-   return "";
+   return '';
 }
 
-# a year, "maximum", or "only"
+# a year, 'maximum', or 'only'
 sub _rule_To {
    my($self,$rule,$to,$from) = @_;
    $to = lc($to);
    if ($to =~ /^\d\d\d\d$/) {
       return $to;
-   } elsif ($to eq "maximum"  ||  $to eq "max") {
-      return "9999";
-   } elsif (lc($to) eq "only") {
+   } elsif ($to eq 'maximum'  ||  $to eq 'max') {
+      return '9999';
+   } elsif (lc($to) eq 'only') {
       return $from;
    }
    warn "ERROR: [rule_to] invalid: $rule: $to\n";
    $Error = 1;
-   return "";
+   return '';
 }
 
-# "-", "even", or "odd"
+# "-", 'even', or 'odd'
 sub _rule_Type {
    my($self,$rule,$type) = @_;
    return lc($type)  if (lc($type) eq "-"     ||
-                         lc($type) eq "even"  ||
-                         lc($type) eq "odd");
+                         lc($type) eq 'even'  ||
+                         lc($type) eq 'odd');
    warn "ERROR: [rule_type] invalid: $rule: $type\n";
    $Error = 1;
-   return "";
+   return '';
 }
 
 # a month
@@ -835,7 +835,7 @@ sub _rule_On {
    return ($flag,$dow,$num);
 }
 
-# a time followed by "w" (default), "u", or "s";
+# a time followed by 'w' (default), 'u', or 's';
 sub _rule_At {
    my($self,$rule,$at) = @_;
    my($ret,$attype) = $self->_rule_Time($at,0,1);
@@ -849,7 +849,7 @@ sub _rule_At {
 # a signed time (or "-" which is equivalent to 0)
 sub _rule_Save {
    my($self,$rule,$save) = @_;
-   $save = "00:00:00"  if ($save eq "-");
+   $save = '00:00:00'  if ($save eq "-");
    my($ret) = $self->_rule_Time($save,1);
    if (! $ret) {
       warn "ERROR: [rule_save] invalid: $rule: $save\n";
@@ -861,7 +861,7 @@ sub _rule_Save {
 # letters (or "-")
 sub _rule_Letters {
    my($self,$rule,$letters)=@_;
-   return ""  if ($letters eq "-");
+   return ''  if ($letters eq "-");
    return $letters;
 }
 
@@ -869,20 +869,20 @@ sub _rule_Letters {
 # PARSING ZONES
 ########################################################################
 
-my($TZ_START)    = $dmb->join("date",["0001",1,2,0,0,0]);
-my($TZ_END)      = $dmb->join("date",["9999",12,30,23,59,59]);
+my($TZ_START)    = $dmb->join('date',['0001',1,2,0,0,0]);
+my($TZ_END)      = $dmb->join('date',['9999',12,30,23,59,59]);
 
 sub _tzd_Zone {
    my($self,$zone,$listref) = @_;
 
    if (defined $listref) {
-      if (! exists $$self{"zone"}{$zone}) {
-         $$self{"zone"}{$zone} = [$zone];
+      if (! exists $$self{'zone'}{$zone}) {
+         $$self{'zone'}{$zone} = [$zone];
       }
-      push @{ $$self{"zone"}{$zone} }, [ @$listref ];
+      push @{ $$self{'zone'}{$zone} }, [ @$listref ];
 
-   } elsif (exists $$self{"zone"}{$zone}) {
-      return @{ $$self{"zone"}{$zone} };
+   } elsif (exists $$self{'zone'}{$zone}) {
+      return @{ $$self{'zone'}{$zone} };
 
    } else {
       return ();
@@ -891,12 +891,12 @@ sub _tzd_Zone {
 
 sub _tzd_DeleteZone {
    my($self,$zone) = @_;
-   delete $$self{"zone"}{$zone};
+   delete $$self{'zone'}{$zone};
 }
 
 sub _tzd_ZoneKeys {
    my($self) = @_;
-   return keys %{ $$self{"zone"} };
+   return keys %{ $$self{'zone'} };
 }
 
 sub _tzd_CheckZones {
@@ -1040,14 +1040,14 @@ sub _zone_Until {
    my($tmp,$type,$dow,$num,$flag,$err);
 
    if (! $y) {
-      # Until "" == Until "9999 Dec 31 00:00:00"
+      # Until '' == Until '9999 Dec 31 00:00:00'
       $y = 9999;
       $m = 12;
       $d = 31;
-      $t = "00:00:00";
+      $t = '00:00:00';
 
    } else {
-      # Until "1975 ..."
+      # Until '1975 ...'
       if ($y !~ /^\d\d\d\d$/) {
          warn "ERROR: [zone_until] invalid year: $zone: $y\n";
          $Error = 1;
@@ -1055,14 +1055,14 @@ sub _zone_Until {
       }
 
       if (! $m) {
-         # Until "1920" == Until "1920 Jan 1 00:00:00"
+         # Until '1920' == Until '1920 Jan 1 00:00:00'
          $m = 1;
          $d = 1;
-         $t = "00:00:00";
+         $t = '00:00:00';
 
       } else {
 
-         # Until "1920 Mar ..."
+         # Until '1920 Mar ...'
          $tmp = $self->_rule_Month($m);
          if (! $tmp) {
             warn "ERROR: [zone_until] invalid month: $zone: $m\n";
@@ -1072,12 +1072,12 @@ sub _zone_Until {
          $m = $tmp;
 
          if (! $d) {
-            # Until "1920 Feb" == Until "1920 Feb 1 00:00:00"
+            # Until '1920 Feb' == Until '1920 Feb 1 00:00:00'
             $d = 1;
-            $t = "00:00:00";
+            $t = '00:00:00';
 
          } elsif ($d =~ /^last(.*)/) {
-            # Until "1920 Feb lastSun ..."
+            # Until '1920 Feb lastSun ...'
             my(@tmp) = $self->_rule_DOM($d);
             my($dow) = $tmp[0];
             my $ymd  = $dmb->nth_day_of_week($y,-1,$dow,$m);
@@ -1110,12 +1110,12 @@ sub _zone_Until {
             }
 
          } else {
-            # Until "1920 Feb 20 ..."
+            # Until '1920 Feb 20 ...'
          }
 
          if (! $t) {
-            # Until "1920 Feb 20" == Until "1920 Feb 20 00:00:00"
-            $t = "00:00:00";
+            # Until '1920 Feb 20' == Until '1920 Feb 20 00:00:00'
+            $t = '00:00:00';
          }
       }
    }
@@ -1132,7 +1132,7 @@ sub _zone_Until {
 
    # Get the time type
    if ($y == 9999) {
-      $type = "w";
+      $type = 'w';
    } else {
       ($tmp,$type) = $self->_rule_Time($t,0,1);
       if (! $tmp) {
@@ -1146,13 +1146,13 @@ sub _zone_Until {
    # Get the wallclock end of this zone line (and the start of the
    # next one 1 second later) if possible. Since we cannot assume that
    # the rules are present yet, we can only do this for wallclock time
-   # types. "u" and "s" time types will be done later.
-   my ($start,$end) = ("","");
-   if ($type eq "w") {
+   # types. 'u' and 's' time types will be done later.
+   my ($start,$end) = ('','');
+   if ($type eq 'w') {
       # Start of next time is Y-M-D-TIME
-      $start = $dmb->join("date",[$y,$m,$d,@{ $dmb->split("hms",$t) }]);
+      $start = $dmb->join('date',[$y,$m,$d,@{ $dmb->split('hms',$t) }]);
       # End of this time is Y-M-D-TIME minus 1 second
-      $end   = $dmb->_calc_date_time_strings($start,"0:0:1",1);
+      $end   = $dmb->_calc_date_time_strings($start,'0:0:1',1);
    }
    return ($y,$m,$dow,$num,$flag,$t,$type,$end,$start);
 }
@@ -1170,7 +1170,7 @@ sub _tzd_ZoneLines {
    # (which are now all present).
 
    my $i = 0;
-   my($lastend,$lastdstend) = ("","00:00:00");
+   my($lastend,$lastdstend) = ('','00:00:00');
    foreach my $z (@z) {
       my($offset,$ruletype,$rule,$abbrev,$yr,$mon,$dow,$num,$flag,$time,
          $timetype,$start,$end) = @$z;
@@ -1181,7 +1181,7 @@ sub _tzd_ZoneLines {
       # we will determine it below.
 
       if (! $start) {
-         $start = $dmb->_calc_date_time_strings($lastend,"0:0:1",0);
+         $start = $dmb->_calc_date_time_strings($lastend,'0:0:1',0);
       }
 
       # If we haven't got a wallclock end, we can't get it yet... but
@@ -1207,9 +1207,9 @@ sub _tzd_ZoneLines {
          # That's the end DST offset.
 
          my %lett   = ();
-         my $tmp    = $dmb->split("date",$end);
+         my $tmp    = $dmb->split('date',$end);
          my $y      = $$tmp[0];
-         my(@rdate) = $self->_ruleInfo($rule,"rdates",$y);
+         my(@rdate) = $self->_ruleInfo($rule,'rdates',$y);
          my $d      = $start;
          while (@rdate) {
             my($date,$off,$type,$lett,@tmp) = @rdate;
@@ -1231,11 +1231,11 @@ sub _tzd_ZoneLines {
          # before.
 
          if (! $dstend) {
-            my($yrbeg) = $dmb->join("date",[$y,1,1,0,0,0]);
+            my($yrbeg) = $dmb->join('date',[$y,1,1,0,0,0]);
             if ($start ge $yrbeg) {
                $dstend = $dstbeg;
             } else {
-               $dstend = $self->_ruleInfo($rule,"lastoff",$y);
+               $dstend = $self->_ruleInfo($rule,'lastoff',$y);
             }
          }
 
@@ -1243,22 +1243,22 @@ sub _tzd_ZoneLines {
          $letend = $lett{$dstend};
 
       } elsif ($ruletype == $TZ_STANDARD) {
-         $dstbeg = "00:00:00";
+         $dstbeg = '00:00:00';
          $dstend = $dstbeg;
-         $letbeg = "";
-         $letend = "";
+         $letbeg = '';
+         $letend = '';
       } else {
          $dstbeg = $rule;
          $dstend = $dstbeg;
-         $letbeg = "";
-         $letend = "";
+         $letbeg = '';
+         $letend = '';
       }
 
       # Now we calculate the wallclock end time (if we don't already
       # have it).
 
       if ($fixend) {
-         if ($timetype eq "u") {
+         if ($timetype eq 'u') {
             # UT time -> STD time
             $end = $dmb->_calc_date_time_strings($end,$offset,0);
          }
@@ -1269,20 +1269,20 @@ sub _tzd_ZoneLines {
       # Store the information
 
       $i++;
-      $$self{"zonelines"}{$zone}{$i}{"start"}  = $start;
-      $$self{"zonelines"}{$zone}{$i}{"end"}    = $end;
-      $$self{"zonelines"}{$zone}{$i}{"stdoff"} = $offset;
-      $$self{"zonelines"}{$zone}{$i}{"dstbeg"} = $dstbeg;
-      $$self{"zonelines"}{$zone}{$i}{"dstend"} = $dstend;
-      $$self{"zonelines"}{$zone}{$i}{"letbeg"} = $letbeg;
-      $$self{"zonelines"}{$zone}{$i}{"letend"} = $letend;
-      $$self{"zonelines"}{$zone}{$i}{"abbrev"} = $abbrev;
-      $$self{"zonelines"}{$zone}{$i}{"rule"}   = ($ruletype == $TZ_RULE ?
-                                         $rule : "");
+      $$self{'zonelines'}{$zone}{$i}{'start'}  = $start;
+      $$self{'zonelines'}{$zone}{$i}{'end'}    = $end;
+      $$self{'zonelines'}{$zone}{$i}{'stdoff'} = $offset;
+      $$self{'zonelines'}{$zone}{$i}{'dstbeg'} = $dstbeg;
+      $$self{'zonelines'}{$zone}{$i}{'dstend'} = $dstend;
+      $$self{'zonelines'}{$zone}{$i}{'letbeg'} = $letbeg;
+      $$self{'zonelines'}{$zone}{$i}{'letend'} = $letend;
+      $$self{'zonelines'}{$zone}{$i}{'abbrev'} = $abbrev;
+      $$self{'zonelines'}{$zone}{$i}{'rule'}   = ($ruletype == $TZ_RULE ?
+                                         $rule : '');
       $lastend    = $end;
       $lastdstend = $dstend;
    }
-   $$self{"zonelines"}{$zone}{"numlines"} = $i;
+   $$self{'zonelines'}{$zone}{'numlines'} = $i;
 }
 
 # Parses date information from  a single rule and returns a date.
@@ -1312,7 +1312,7 @@ sub _tzd_ParseRuleDate {
    # Split the time and then form the date
    my($h,$mn,$s) = split(/:/,$time);
 
-   return $dmb->join("date",[$year,$mon,$dom,$h,$mn,$s]);
+   return $dmb->join('date',[$year,$mon,$dom,$h,$mn,$s]);
 }
 
 1;

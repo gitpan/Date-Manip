@@ -14,8 +14,11 @@ When upgrading from Date::Manip 5.xx to 6.00, a few changes may be
 necessary to your scripts.
 
 The Date::Manip::Changes5to6 document lists in more detail the ways in
-which Date::Manip changed, but very few of these do not actually entail
+which Date::Manip changed, but very few of these actually entail
 changes to your script.
+
+It should be noted that once the changes are made to your script,
+it will no longer run correctly in 5.xx.
 
 =head1 NECESSARY AND SUGGESTED CHANGES
 

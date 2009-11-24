@@ -9,7 +9,7 @@
 # and Date::Manip::TZ::_ZONE_ modules from the original time zone data.
 
 use lib "./lib";
-use lib "./scripts";
+use lib "./internal";
 
 require 5.010000;
 use YAML;
@@ -21,7 +21,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 use vars qw($dmb);
 $dmb = new Date::Manip::Base;
@@ -1042,7 +1042,7 @@ require 5.010000;
 use vars qw(\%Dates \%LastRule);
 
 use vars qw(\$VERSION);
-\$VERSION=\"$VERSION\";
+\$VERSION='$VERSION';
 
 \%Dates         = (
 ";
@@ -1064,6 +1064,10 @@ use vars qw(\$VERSION);
          print $out "     [\n";
          $lastyear = $year;
       }
+      my $begUTs = $dmb->join("date",$begUT);
+      my $begLTs = $dmb->join("date",$begLT);
+      my $endUTs = $dmb->join("date",$endUT);
+      my $endLTs = $dmb->join("date",$endLT);
       $begUT     = join(",",map { $_+0 } @$begUT);
       $begLT     = join(",",map { $_+0 } @$begLT);
       $endUT     = join(",",map { $_+0 } @$endUT);
@@ -1071,7 +1075,8 @@ use vars qw(\$VERSION);
       $offsetref = join(",",map { $_+0 } @$offsetref);
 
       print $out "        [ [$begUT],[$begLT],'$offset',[$offsetref],\n";
-      print $out "          '$abb',$isdst,[$endUT],[$endLT] ],\n";
+      print $out "          '$abb',$isdst,[$endUT],[$endLT],\n";
+      print $out "          '$begUTs','$begLTs','$endUTs','$endLTs' ],\n";
    }
 
    print $out "     ],\n";
@@ -1285,7 +1290,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION=\"$VERSION\";
+\$VERSION='$VERSION';
 
 use vars qw(\$Offset \%Offset);
 
@@ -1400,7 +1405,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION=\"$VERSION\";
+\$VERSION='$VERSION';
 
 use vars qw(\$TzdataVersion \$TzcodeVersion
             \$FirstDate \$LastDate \$LastYear

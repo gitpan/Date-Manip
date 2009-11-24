@@ -27,12 +27,12 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION="6.02";
+$VERSION='6.03';
 
 use vars qw($Language);
 
 my @in    = <DATA>;
-$Language = Load(join("",@in));
+$Language = Load(join('',@in));
 
 1;
 __DATA__
@@ -342,13 +342,13 @@ offset_date:
   imorgen: +0:0:0:1:0:0:0
 offset_time: 
   nu: 0:0:0:0:0:0:0
-"on": 
+'on': 
   - pa
   - "p\xE5"
 sephm: 
   - .
 sepms: 
-  - ":"
+  - ':'
 times: 
   midnat: 00:00:00
   midt pa dagen: 12:00:00
