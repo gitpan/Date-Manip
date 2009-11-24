@@ -4,7 +4,7 @@ use 5.010000;
 
 WriteMakefile(
         NAME             => 'Date::Manip',
-        VERSION          => '6.00',
+        VERSION          => '6.02',
         ($] >= 5.010000
         ? (ABSTRACT=>'Date manipulation routines',
            AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')

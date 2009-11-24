@@ -1,5 +1,5 @@
 package Date::Manip::TZ::atmade00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION="6.00";
+$VERSION="6.02";
 
 %Dates         = (
    1    =>

@@ -1,5 +1,5 @@
 package Date::Manip::Offset::off145;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION="6.00";
+$VERSION="6.02";
 
 use vars qw($Offset %Offset);
 

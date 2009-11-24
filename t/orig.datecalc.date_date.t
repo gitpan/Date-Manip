@@ -20,6 +20,7 @@ sub test {
 }
 
 use Date::Manip;
+Date_Init("ForceDate=1997-03-08-12:30:00,America/New_York");
 Date_Init("ConfigFile=$tdir/Manip.cnf");
 
 $tests="

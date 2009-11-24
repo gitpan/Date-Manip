@@ -785,3 +785,8 @@ Version 6.01  2009-11-23
    A quick bug fix to correct a couple of problems that showed up with the
       testers.
 
+Version 6.02  2009-11-24
+   A quick fix to make sure that the tests run correctly in other timezones.
+   Disabled curr_zone_methods when taint checking on. I believe that Date::Manip
+      is completely taint friendly at this point.
+

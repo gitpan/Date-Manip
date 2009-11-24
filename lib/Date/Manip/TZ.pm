@@ -1,5 +1,5 @@
 package Date::Manip::TZ;
-# Copyright (c) 2008-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2009 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -25,7 +25,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 use vars qw($VERSION);
-$VERSION="6.01";
+$VERSION="6.02";
 
 ########################################################################
 # BASE METHODS
@@ -350,6 +350,12 @@ sub curr_zone {
 
 sub curr_zone_methods {
    my($self,@methods) = @_;
+
+   if (${^TAINT}) {
+      warn "ERROR: [curr_zone_methods] not allowed when taint checking on\n";
+      return;
+   }
+
    $$self{"data"}{"methods"}  = [ @methods ];
 }
 

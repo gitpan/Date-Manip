@@ -68,6 +68,7 @@ perl -I../lib date.secs_since_1970_GMT.1.t 1
 perl -I../lib date.set.0.t 1
 perl -I../lib date.set.1.t 1
 perl -I../lib date.set.2.t 1
+perl -I../lib date.set.3.t 1
 perl -I../lib date.week_of_year.0.t 1
 perl -I../lib date.week_of_year.1.t 1
 perl -I../lib delta.calc.delta_delta_approx.t 1

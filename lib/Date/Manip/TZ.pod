@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2009 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -316,8 +316,9 @@ variable. The arguments must be included in the @methods list
 immediately after the method name (so @methods is actually a
 mixture of method names and arguments).
 
-This method should not be used in any environment where taint
-checking is enabled. It may cause the script to fail.
+This method may not be used in any environment where taint
+checking is enabled. If it is, it will issue a warning, but
+will NOT change the method list.
 
 =item date_period
 

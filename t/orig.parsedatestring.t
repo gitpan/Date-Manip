@@ -20,7 +20,7 @@ sub test {
 }
 
 use Date::Manip;
-Date_Init("ForceDate=1997-03-08-12:30:00");
+Date_Init("ForceDate=1997-03-08-12:30:00,America/New_York");
 
 ($currS,$currMN,$currH,$currD,$currM,$currY)=("00","30","12","08","03","1997");
 
