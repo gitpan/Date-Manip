@@ -4,7 +4,7 @@ use 5.010000;
 
 my $build = Module::Build->new(
         license            => 'perl',
-        dist_version       => '6.03',
+        dist_version       => '6.04',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',

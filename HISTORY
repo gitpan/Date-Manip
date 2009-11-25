@@ -782,14 +782,19 @@ Version 6.00  2009-11-23
    Added $subtract to calculation routines. First suggested by Steve Berlage.
 
 Version 6.01  2009-11-23
-   A quick bug fix to correct a couple of problems that showed up with the
-      testers.
+   *** Fixed a bug where dates were sometimes getting the wrong timezone when
+      SetDate/ForceDate in effect.
 
 Version 6.02  2009-11-24
    A quick fix to make sure that the tests run correctly in other timezones.
    Disabled curr_zone_methods when taint checking on. I believe that Date::Manip
       is completely taint friendly at this point.
 
-Version 6.02  2009-11-24
+Version 6.03  2009-11-24
    Corrects a backward incompatibility with UnixDate. Rene Schickbauer
+   A couple more corrections to the tests.
+
+Version 6.04  2009-11-25
+   Fixed a bug where events were not interpreted in the correct timezone if
+      SetDate/ForceDate used.
 

@@ -21,7 +21,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.03';
+$VERSION='6.04';
 
 use vars qw($dmb);
 $dmb = new Date::Manip::Base;
@@ -1042,7 +1042,7 @@ require 5.010000;
 use vars qw(\%Dates \%LastRule);
 
 use vars qw(\$VERSION);
-\$VERSION='$VERSION';
+\$VERSION='6.04';
 
 \%Dates         = (
 ";
@@ -1290,7 +1290,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION='$VERSION';
+\$VERSION='6.04';
 
 use vars qw(\$Offset \%Offset);
 
@@ -1405,7 +1405,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION='$VERSION';
+\$VERSION='6.04';
 
 use vars qw(\$TzdataVersion \$TzcodeVersion
             \$FirstDate \$LastDate \$LastYear

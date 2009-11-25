@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION='6.03';
+$VERSION='6.04';
 
 ########################################################################
 # BASE METHODS
@@ -3966,11 +3966,12 @@ sub list_events {
 sub _events_year {
    my($self,$y) = @_;
    my $dmb      = $$self{'objs'}{'base'};
+   my $tz       = $dmb->_now("tz");
    return  if (exists $$dmb{'data'}{'eventyears'}{$y});
    $self->_event_objs()  if (! $$dmb{'data'}{'eventobjs'});
 
    my $d = $self->new_date();
-   $d->config('forcedate',"${y}-01-01-00:00:00");
+   $d->config('forcedate',"${y}-01-01-00:00:00,$tz");
 
    my $hrM1  = $d->new_delta();
    $hrM1->set('delta',[0,0,0,0,0,59,59]);

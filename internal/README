@@ -52,6 +52,8 @@ are installed on your system. If you discover a bug in tzdata, I am interested
 in knowing about it however.
 
 #########################################################################
+Clean up stuff that shouldn't be in the manifest
+
 Remove tzdata directory
 
 In internal/benchmarks directory
@@ -80,5 +82,9 @@ Update the copyright
    done
 
 #########################################################################
+Switch the system timezone to America/Central and run the tests.
+
+#########################################################################
+Regenerate the MANIFEST, Build.PL, Makefile.PL
 Run the kwalitee tests
 

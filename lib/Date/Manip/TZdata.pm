@@ -13,7 +13,7 @@ use integer;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.03';
+$VERSION='6.04';
 
 ###############################################################################
 # GLOBAL VARIABLES

@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 use vars qw($VERSION);
-$VERSION='6.03';
+$VERSION='6.04';
 
 ########################################################################
 # BASE METHODS

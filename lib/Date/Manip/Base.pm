@@ -23,7 +23,7 @@ use feature 'switch';
 require Date::Manip::Lang::index;
 
 use vars qw($VERSION);
-$VERSION='6.03';
+$VERSION='6.04';
 
 ###############################################################################
 # BASE METHODS
