@@ -6,7 +6,7 @@
 
 =head1 NAME
 
-Date::Manip::Date - methods for working with dates
+Date::Manip::Date - Methods for working with dates
 
 =head1 SYNOPSIS
 
@@ -19,8 +19,9 @@ This module works specifically with date objects.
 
 Although the word date is used extensively here, it is actually
 somewhat misleading.  Date::Manip works with the full calendar date
-(year, month, day), time of day (hour, minute, second, and weeks when
-appropriate), and time zone.  It doesn't work with fractional seconds.
+(year, month, day, and week when appropriate), time of day (hour,
+minute, second), and time zone.  It doesn't work with fractional
+seconds.
 
 =head1 METHODS
 
@@ -101,8 +102,7 @@ date is converted to the local time zone.
 
 This returns the name of the holiday if $date is a holiday. If $date
 is not a holiday, undef is returned. If $date is an unnamed holiday,
-an empty string is returned. Otherwise, the name of the holiday is
-returned.
+an empty string is returned.
 
 =item is_business_day
 
@@ -110,8 +110,8 @@ returned.
 
 This returns 1 if $date is a business day.
 
-For holidays, $checktime may be passed in. If it is non-zero, the time
-is checked to see if it falls within work hours.
+$checktime may be passed in. If it is non-zero, the time is checked to
+see if the date is a business day and falls within work hours.
 
 =item list_holidays
 
@@ -276,6 +276,9 @@ improve the speed of parsing. These include:
    noiso8601  Do not try to parse the
               date as an ISO 8601 date
               or time.
+   nodow      Do not try to parse a
+              day-of-week (Monday) in
+              the string.
    nocommon   Do not try to parse the
               date using the formats
               in the "Common date
@@ -299,13 +302,15 @@ improve the speed of parsing. These include:
 
 =item parse_date
 
-   $err = $date->parse_date($string);
+   $err = $date->parse_date($string [,@opts]);
 
 This parses a string which contains a valid date and sets the date
 part of the object.
 
 If the object contained a valid date, the time is kept unchanged. If the
 object did NOT contain a valid date, a time of 00:00:00 is used.
+
+@opts can be any of the strings described in the parse method above.
 
 =item parse_time
 
@@ -347,7 +352,7 @@ All of the printf directives are available, but with a few simplifications:
    %v,%a,%A  will all match a day abbreviation
              or name
 
-   %z,%Z     will match any time zone string
+   %z,%Z,%N  will match any time zone string
 
    %n        currently not allowed (multi-line
              matching not currently supported)
@@ -649,7 +654,12 @@ When specifying a time zone, it can be done in three different ways.
 One way is to specify the actual time zone. The second is to supply
 a valid time zone abbreviation. The third is to specify an offset (with
 an optional abbreviation). The following dates illustrate the these
-methods:
+formats.
+
+The timezone information always follows the time immediately, and may
+only be included if a time is included. The following examples use
+an ISO 8601 format for the date/time, but any of the other date and
+time formats may be used.
 
 The first way to specify the time zone is to specify it by complete name
 (or using one of the standard aliases):
@@ -1516,7 +1526,8 @@ from the date.
        %M     minute                   - 00 to 59
        %S     second                   - 00 to 59
        %Z     time zone abbreviation   - EDT
-       %z     time zone as GMT offset  - +01:00:00
+       %z     time zone as GMT offset  - +0100 (see Note 4)
+       %N     time zone as GMT offset  - +01:00:00
 
    Epoch (see NOTE 3 below)
        %s     seconds from
@@ -1625,6 +1636,15 @@ The %s and %o formats return negative values if the date is before
 the start of the epoch.  Other Unix utilities would return an error, or
 a zero, so if you are going to use Date::Manip in conjunction with these,
 be sure to check for a negative value.
+
+NOTE 4:
+
+The %z format returns the offset in the RFC 822 specified format
++0500 .  Most offsets are full hour amounts, so this is not a problem,
+but some offsets are irregular (+05:17:30). In this case, the string
+returned is +051730 which isn't RFC 822 compliant, but since RFC 822
+ignores this situation, I had to decide between returning an incorrect
+value, or breaking strict compliance, and I chose the second option.
 
 =head1 KNOWN BUGS
 

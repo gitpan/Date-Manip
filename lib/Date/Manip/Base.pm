@@ -23,7 +23,7 @@ use feature 'switch';
 require Date::Manip::Lang::index;
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 ###############################################################################
 # BASE METHODS
@@ -594,15 +594,14 @@ sub nth_day_of_week {
 sub check {
    my($self,$date) = @_;
    my($y,$m,$d,$h,$mn,$s) = @$date;
-   my $hms = [$h, $mn, $s];
 
-   return 0  if (! $self->check_time($hms)  ||
-                 ! $self->_is_int($y,1,9999)  ||
-                 ! $self->_is_int($m,1,12));
+   return 0  if (! $self->check_time([$h,$mn,$s])  ||
+                 ($y<1  ||  $y>9999)  ||
+                 ($m<1  ||  $m>12));
 
    my $days = $self->days_in_month($y,$m);
 
-   return 0  if (! $self->_is_int($d,1,$days));
+   return 0  if ($d<1  ||  $d>$days);
    return 1;
 }
 
@@ -613,8 +612,8 @@ sub check_time {
    return 0  if (! $self->_is_int($h,0,24));
    return 1  if ($h==24  &&  ! $mn  &&  ! $s);
    return 0  if ($h==24  ||
-                 ! $self->_is_int($mn,0,59)  ||
-                 ! $self->_is_int($s,0,59));
+                 ($mn<0  ||  $mn>59)  ||
+                 ($s<0   ||  $s>59));
    return 1;
 }
 
@@ -1047,90 +1046,77 @@ sub _os {
 #    'abb'
 #
 sub _now {
-   my($self,@arg) = @_;
-   my($op,$noupdate);
+   my($self,@op) = @_;
+   my($noupdate,@ret);
 
-   if (@arg) {
-      ($op,$noupdate) = @arg;
+   # Update "NOW" if we're checking 'now', 'time', or the date
+   # is not set already.
+
+   if (@op   &&  ($op[$#op] eq "0"  ||  $op[$#op] eq "1")) {
+      $noupdate = pop(@op);
    } else {
-      ($op,$noupdate) = ('now',1);
+      $noupdate = 1;
+      my $op = join(" ",@op);
+      $noupdate = 0  if ($op =~ /\b(?:now|time)\b/);
    }
 
-   # Don't do updates on timezone queries
-   # Do updates if no date is set
-
-   given ($op) {
-      when (['tz','isdst','offset','systz','abb']) {
-         $noupdate = 1;
-      }
-
-      default {
-         $noupdate = 0  if (! exists $$self{'data'}{'now'}{'date'});
-      }
-   }
-
+   $noupdate = 0  if (! exists $$self{'data'}{'now'}{'date'});
    $self->_update_now()  unless ($noupdate);
 
-   # Do the operation
+   # Get the appropriate values.
 
-   given ($op) {
+   foreach my $op (@op) {
 
-      when ('now') {
-         return @{ $$self{'data'}{'now'}{'date'} };
-      }
+      if ($op eq 'now') {
+         push (@ret,@{ $$self{'data'}{'now'}{'date'} });
 
-      when ('time') {
-         return (@{ $$self{'data'}{'now'}{'date'} }[3..5]);
-      }
-
-      when ('y') {
-         return $$self{'data'}{'now'}{'date'}[0];
-      }
-      when ('m') {
-         return $$self{'data'}{'now'}{'date'}[1];
-      }
-      when ('d') {
-         return $$self{'data'}{'now'}{'date'}[2];
-      }
-      when ('h') {
-         return $$self{'data'}{'now'}{'date'}[3];
-      }
-      when ('mn') {
-         return $$self{'data'}{'now'}{'date'}[4];
-      }
-      when ('s') {
-         return $$self{'data'}{'now'}{'date'}[5];
-      }
-
-      when ('systz') {
-         return $$self{'data'}{'now'}{'systz'};
-      }
-
-      when ('tz') {
+      } elsif ($op eq 'tz') {
          if (exists $$self{'data'}{'now'}{'tz'}) {
-            return $$self{'data'}{'now'}{'tz'};
+            push (@ret,$$self{'data'}{'now'}{'tz'});
          } else {
-            return $$self{'data'}{'now'}{'systz'};
+            push (@ret,$$self{'data'}{'now'}{'systz'});
          }
-      }
 
-      when ('isdst') {
-         return $$self{'data'}{'now'}{'isdst'};
-      }
+      } elsif ($op eq 'y') {
+         push (@ret,$$self{'data'}{'now'}{'date'}[0]);
 
-      when ('offset') {
-         return @{ $$self{'data'}{'now'}{'offset'} };
-      }
+      } elsif ($op eq 'systz') {
+         push (@ret,$$self{'data'}{'now'}{'systz'});
 
-      when ('abb') {
-         return $$self{'data'}{'now'}{'abb'};
-      }
+      } elsif ($op eq 'time') {
+         push (@ret,@{ $$self{'data'}{'now'}{'date'} }[3..5]);
 
-      default {
-         warn "ERROR: [now] invalid argument list: @arg\n";
+      } elsif ($op eq 'm') {
+         push (@ret,$$self{'data'}{'now'}{'date'}[1]);
+
+      } elsif ($op eq 'd') {
+         push (@ret,$$self{'data'}{'now'}{'date'}[2]);
+
+      } elsif ($op eq 'h') {
+         push (@ret,$$self{'data'}{'now'}{'date'}[3]);
+
+      } elsif ($op eq 'mn') {
+         push (@ret,$$self{'data'}{'now'}{'date'}[4]);
+
+      } elsif ($op eq 's') {
+         push (@ret,$$self{'data'}{'now'}{'date'}[5]);
+
+      } elsif ($op eq 'isdst') {
+         push (@ret,$$self{'data'}{'now'}{'isdst'});
+
+      } elsif ($op eq 'offset') {
+         push (@ret,@{ $$self{'data'}{'now'}{'offset'} });
+
+      } elsif ($op eq 'abb') {
+         push (@ret,$$self{'data'}{'now'}{'abb'});
+
+      } else {
+         warn "ERROR: [now] invalid argument list: @op\n";
          return ();
       }
    }
+
+   return @ret;
 }
 
 sub _update_now {
@@ -1147,9 +1133,9 @@ sub _update_now {
       my $date = $$self{'data'}{'now'}{'setdate'};
       my $secs = time - $$self{'data'}{'now'}{'setsecs'};
 
-      $date    = $self->calc_date_time($date,[0,0,$secs]);  # 'now' in GMT
-      my $dmt  = $$self{'objs'}{'tz'};
-      my $zone = $self->_now('tz');
+      $date      = $self->calc_date_time($date,[0,0,$secs]);  # 'now' in GMT
+      my $dmt    = $$self{'objs'}{'tz'};
+      my ($zone) = $self->_now('tz',1);
       my ($err,$date2,$offset,$isdst,$abbrev) = $dmt->convert_from_gmt($date,$zone);
 
       $$self{'data'}{'now'}{'date'}   = $date2;
@@ -1179,9 +1165,9 @@ sub _update_now {
 
    my $abb = '???';
    if (exists $$self{'objs'}{'tz'}) {
-      my $dmt  = $$self{'objs'}{'tz'};
-      my $zone = $self->_now('tz');
-      my $per  = $dmt->date_period([$y,$m,$d,$h,$mn,$s],$zone,1,$isdst);
+      my $dmt    = $$self{'objs'}{'tz'};
+      my ($zone) = $self->_now('tz',1);
+      my $per    = $dmt->date_period([$y,$m,$d,$h,$mn,$s],$zone,1,$isdst);
       $abb = $$per[4];
    }
 
@@ -1700,8 +1686,8 @@ sub _config_var_setdate {
 
       $op = 'date';
       my($y,$m,$d,$h,$mn,$s) = ($1,$2,$3,$4,$5,$6);
-      $date = [$y,$m,$d,$h,$mn,$s];
-      $zone = $self->_now('systz');
+      $date   = [$y,$m,$d,$h,$mn,$s];
+      ($zone) = $self->_now('systz',1);
 
    } elsif (lc($val) eq 'now') {
       # now
@@ -1977,7 +1963,7 @@ sub _rx_replace {
    my $i    = 1;
    foreach my $key (@key) {
       my $val = $$self{'data'}{'lang'}{$ele}{$key};
-      $$self{'data'}{'rx'}{$ele}[$i++] = qr/\b\Q$key\E\b/i;
+      $$self{'data'}{'rx'}{$ele}[$i++] = qr/\b(\Q$key\E)\b/i;
       $$self{'data'}{'wordmatch'}{$ele}{lc($key)} = $val;
    }
 
@@ -2062,7 +2048,7 @@ sub _fix_year {
 
    my $curr_y;
    if (exists $$self{'objs'}{'tz'}) {
-      $curr_y = $self->_now('y',1);
+      ($curr_y) = $self->_now('y',1);
    } else {
       $curr_y  = ( localtime(time) )[5];
       $curr_y += 1900;
@@ -2158,9 +2144,7 @@ sub split {
          if ($string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d):(\d\d):(\d\d)$/  ||
              $string =~ /^(\d\d\d\d)\-(\d\d)\-(\d\d)\-(\d\d):(\d\d):(\d\d)$/  ||
              $string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/) {
-            my($err,$y,$m,$d,$h,$mn,$s) =
-              $self->_normalize_date('split',$1,$2,$3,$4,$5,$6);
-            return undef  if ($err);
+            my($y,$m,$d,$h,$mn,$s) = ($1+0,$2+0,$3+0,$4+0,$5+0,$6+0);
             return [$y,$m,$d,$h,$mn,$s];
          } else {
             return undef;
@@ -2254,7 +2238,7 @@ sub join{
    given ($op) {
 
       when ('date') {
-         my($err,$y,$m,$d,$h,$mn,$s) = $self->_normalize_date('join',@data);
+         my($err,$y,$m,$d,$h,$mn,$s) = $self->_normalize_date(@data);
          return undef  if ($err);
          my $form = $self->_config('printable');
          if ($form == 1) {
@@ -2299,29 +2283,19 @@ sub join{
 }
 
 sub _normalize_date {
-   my($self,$op,@fields) = @_;
+   my($self,@fields) = @_;
    return (1)  if ($#fields != 5);
 
    my($y,$m,$d,$h,$mn,$s) = @fields;
-   $y  *= 1;
-   $m  *= 1;
-   $d  *= 1;
-   $h  *= 1;
-   $mn *= 1;
-   $s  *= 1;
 
-   return (1)  if (! $self->check([$y,$m,$d,$h,$mn,$s]));
-
-   if ($op eq 'join') {
-      while (length($y) < 4) {
-         $y = "0$y";
-      }
-      $m  = "0$m"    if (length($m)==1);
-      $d  = "0$d"    if (length($d)==1);
-      $h  = "0$h"    if (length($h)==1);
-      $mn = "0$mn"   if (length($mn)==1);
-      $s  = "0$s"    if (length($s)==1);
+   while (length($y) < 4) {
+      $y = "0$y";
    }
+   $m  = "0$m"    if (length($m)==1);
+   $d  = "0$d"    if (length($d)==1);
+   $h  = "0$h"    if (length($h)==1);
+   $mn = "0$mn"   if (length($mn)==1);
+   $s  = "0$s"    if (length($s)==1);
 
    return (0,$y,$m,$d,$h,$mn,$s);
 }

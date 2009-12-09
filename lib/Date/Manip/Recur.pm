@@ -23,7 +23,7 @@ use integer;
 #use re 'debug';
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 ########################################################################
 # BASE METHODS
@@ -57,7 +57,7 @@ sub _init {
       }
 
       when ('year') {
-         my $y      = $dmb->_now('y');
+         my ($y)    = $dmb->_now('y',1);
          my $start  = $self->new_date();
          my $end    = $self->new_date();
          $start->set('date',[$y, 1, 1,00,00,00]);
@@ -65,8 +65,7 @@ sub _init {
       }
 
       when ('month') {
-         my $y      = $dmb->_now('y');
-         my $m      = $dmb->_now('m',1);
+         my ($y,$m) = $dmb->_now('now',1);
          my $dim    = $dmb->days_in_month($y,$m);
          my $start  = $self->new_date();
          my $end    = $self->new_date();
@@ -75,7 +74,7 @@ sub _init {
       }
 
       when ('week') {
-         my($y,$m,$d) = $dmb->_now('now');
+         my($y,$m,$d) = $dmb->_now('now',1);
          my $w;
          ($y,$w)    = $dmb->week_of_year([$y,$m,$d]);
          ($y,$m,$d) = @{ $dmb->week_of_year($y,$w) };
@@ -89,7 +88,7 @@ sub _init {
       }
 
       when ('day') {
-         my($y,$m,$d) = $dmb->_now('now');
+         my($y,$m,$d) = $dmb->_now('now',1);
          my $start  = $self->new_date();
          my $end    = $self->new_date();
          $start->set('date',[$y,$m,$d,00,00,00]);
@@ -279,7 +278,7 @@ sub frequency {
 
       my $stdrx = $self->_rx('std');
       if ($string =~ $stdrx) {
-         my($l,$r) = ($+{'l'},$+{'r'});
+         my($l,$r) = @+{qw(l r)};
 
          if (defined($l)) {
             $l =~ s/^\s*:/0:/;
@@ -430,8 +429,7 @@ sub _parse_lang {
 
    return 1  if ($string !~ $rx);
    my($month,$week,$day,$last,$nth,$day_name,$day_abb,$mon_name,$mon_abb,$n,$y) =
-     ($+{'month'},$+{'week'},$+{'day'},$+{'last'},$+{'nth'},
-      $+{'day_name'},$+{'day_abb'},$+{'mon_name'},$+{'mon_abb'},$+{'n'},$+{'y'});
+     @+{qw(month week day last nth day_name day_abb mon_name mon_abb n y)};
 
    # Convert wordlist values to calendar values
 
@@ -742,7 +740,7 @@ sub dates {
    $self->err(1);
 
    my $dmb   = $$self{'objs'}{'base'};
-   $dmb->_now();   # Update NOW
+   $dmb->_update_now();   # Update NOW
    my @int   = @{ $$self{'data'}{'interval'} };
    my @rtime = @{ $$self{'data'}{'rtime'} };
    my ($yf,$mf,$wf,$df,$hf,$mnf,$sf) = (@int,@rtime);
@@ -1562,7 +1560,7 @@ sub _rtime_values {
       }
 
       when ('y') {
-         my $curry  = $dmb->_now('y',1);
+         my ($curry) = $dmb->_now('y',1);
          foreach my $y (@$val) {
             $y = $curry  if (! ref($y)  &&  $y==0);
          }

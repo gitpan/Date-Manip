@@ -22,7 +22,7 @@ use feature 'switch';
 #use re 'debug';
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 ########################################################################
 # BASE METHODS
@@ -134,6 +134,19 @@ sub set {
             ($err,@delta) = $dmb->_normalize_business(0,@$val);
          } else {
             ($err,@delta) = $dmb->_normalize_delta(0,@$val);
+         }
+      }
+
+      when ('mode') {
+         @delta             = @{ $$self{'data'}{'delta'} };
+         $val = lc($val);
+         if ($val eq "business"  ||  $val eq "normal") {
+            $gotmode = 1;
+            $business = ($val eq "business" ? 1 : 0);
+
+         } else {
+            $$self{'err'} = "[set] Invalid mode: $val";
+            return 1;
          }
       }
 
@@ -250,7 +263,7 @@ sub parse {
       my $rx        = $self->_rx('expanded');
       if ($string  &&
           $string   =~ $rx) {
-         @delta     = ($+{'y'},$+{'m'},$+{'w'},$+{'d'},$+{'h'},$+{'mn'},$+{'s'});
+         @delta     = @+{qw(y m w d h mn s)};
          foreach my $f (@delta) {
             $f = 0  if (! defined $f);
             $f =~ s/\s//g;

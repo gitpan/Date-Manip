@@ -798,3 +798,19 @@ Version 6.04  2009-11-25
    Fixed a bug where events were not interpreted in the correct timezone if
       SetDate/ForceDate used.
 
+Version 6.05
+   Significant speedups. Thanks to Moritz Lenz and BrowserUK on perlmonks for
+      suggestions (and a number of other people on perlmonks for suggestions
+      that I did not end up using, but which provided a great discussion).
+   Reduced the precision of 1 test to avoid a rounding difference when using
+      a perl compiled with uselongdouble.  Andreas Koenig
+   Fixed a bug in parse_date where the current time was getting used instead
+      of the documented 00:00:00
+   Bug fix where DateCalc didn't work with $mode in some cases.
+   Fixed Makefile.PL/Build.PL to hanle Win32::TieRegistry requirement.
+   Changed %z printf behavior back to 5.xx and added %N format. Gilles Lamiral
+   Fixed bug where non-English Windows versions didn't get the timezone. Thanks
+      to Rene Schickbauer for testing.
+
+
+

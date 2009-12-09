@@ -27,7 +27,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 use vars qw($Language);
 

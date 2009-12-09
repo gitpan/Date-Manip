@@ -6,7 +6,7 @@
 
 =head1 NAME
 
-Date::Manip::Base - base methods for date manipulation
+Date::Manip::Base - Base methods for date manipulation
 
 =head1 SYNOPSIS
 
@@ -26,9 +26,9 @@ routines use to do much of the real work) are included in this module
 and are available directly to users.
 
 These low level routines are powerful enough that they can be used
-independent of the high level routines and give perform useful (though
-much simpler) operations. They are also significantly faster than the
-high level routines.
+independent of the high level routines and perform useful (though much
+simpler) operations. They are also significantly faster than the high
+level routines.
 
 These routines do NO error checking on input. Invalid data will result
 in meaningless results.  If you need error checking, you must call the
@@ -302,7 +302,8 @@ type of time data and split it into a list of fields. The join function takes
 the list and forms it into a string.
 
 Rudimentary error checking is performed with both of these functions
-and undef is returned in the case of any error.
+and undef is returned in the case of any error. No error checking is done
+on the specific values.
 
 The following are allowed:
 
@@ -367,7 +368,7 @@ The string formed by the join function will always be of the form
 This works with an amount of time in hours, minutes, and seconds. The
 string is of the format:
 
-   +H:+MN:+S
+   +H:MN:S
 
 where all signs are optional. The returned value (whether a list reference
 from the split function, or a string from the join function) will have
@@ -386,7 +387,7 @@ for a detailed description).
 
 The string that can be split is of the form:
 
-  +Y:+M:+W:+D:+H:+MN:+S
+  +Y:M:+W:+D:H:MN:S
 
 All signs are optional in the string being split. The string
 produced is of the form +Y:M:+W:D:H:MN:S (for a non-business

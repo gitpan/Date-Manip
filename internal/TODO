@@ -2,10 +2,6 @@
 # Prior to release of 6.10
 ########################################################################
 
-In Date::parse, separate all of the regular expressions for "in 5 days"
-type (i.e. relative to today), and these are the only ones you update
-NOW.
-
 Cache Date::Manip::TZ::zone for ($abbrev,isdst), ($abbrev,$isdst,$offset),
 other???
 
@@ -17,7 +13,6 @@ Date::Manip::Base : get rid of
 
 Scripts:
   dm_tzdump   replacement for tzdump
-  dm_date     replacement for date
 
 Dump all timezones and compare agains the tzcode version of dump
 
@@ -34,7 +29,7 @@ Benchmarks
       10,000 dates (parse + 2 adds + 1 unix date)   time + size
       10,000 scripts (parse 1 date + 2 adds + 1 unix date each) time
 
-Rewrite Problems.pod (Date Manip is slow)
+Rewrite Problems.pod/Misc.pod (Date Manip is slow)
 
 Fix docs for Sorting Problems.  It should use Date_Cmp instead of cmp.
 

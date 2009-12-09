@@ -20,6 +20,26 @@ every release, but occasionally, a change is made which is backward
 incompatible. These are documented here.  Major changes are marked
 with asterisks.
 
+=head1 6.05
+
+=over 4
+
+=item %z format
+
+In Date::Manip 5.xx, the %z format in UnixDate printed the offset in the
+form -0500. In 6.00, I changed that to -05:00:00, but this broke RFC 822
+compliance.
+
+I've changed %z back to -0500, and introduced a new format (%N) which
+returns -05:00:00.
+
+Incidentally, this is the LAST unused letter, so I am now going to have
+to either stop adding formats, or add some extended format syntax. Not
+sure yet which, but this may involve a backwards incompatible change in
+the future.
+
+=back
+
 =head1 BUGS AND QUESTIONS
 
 Please refer to the Date::Manip::Problems documentation for

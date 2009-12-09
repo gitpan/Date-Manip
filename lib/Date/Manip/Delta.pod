@@ -6,7 +6,7 @@
 
 =head1 NAME
 
-Date::Manip::Delta - methods for working with deltas
+Date::Manip::Delta - Methods for working with deltas
 
 =head1 SYNOPSIS
 

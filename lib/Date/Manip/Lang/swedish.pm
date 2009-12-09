@@ -27,7 +27,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 use vars qw($Language);
 
@@ -356,8 +356,10 @@ offset_time:
 'on': 
   - pa
   - "p\xE5"
-sephm: "[.]"
-sepms: "[:]"
+sephm:
+  - "[.]"
+sepms:
+  - "[:]"
 times: 
   midnatt: 00:00:00
   mitt pa dagen: 12:00:00

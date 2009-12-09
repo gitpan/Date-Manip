@@ -104,6 +104,8 @@ there to show the word in the correct context.
   typically separated by colons. Are there any other separators?
   If so, what combinations of the separators are used in real life?
   For example: 05h30:00.
+    NOTE: there must be the same number of sephm and sepms values
+          and the first sephm corresponds to the first sepms, etc.
 
 =head1 AUTHOR
 

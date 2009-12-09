@@ -16,7 +16,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 ########################################################################
 # METHODS
@@ -249,7 +249,14 @@ sub is_recur {
 }
 
 sub version {
-   $VERSION;
+   my($self,$flag) = @_;
+   if ($flag  &&  ref($self) ne "Date::Manip::Base") {
+      my $dmb  = $$self{'objs'}{'base'};
+      my ($tz) = $dmb->_now("systz");
+      return "$VERSION [$tz]";
+   } else {
+      return $VERSION;
+   }
 }
 
 1;

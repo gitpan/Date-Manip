@@ -29,8 +29,8 @@ Wed Jan 3, 1996  at 8:11:12
    96 1996 01  1 Jan Jan January 01 01 003 03  3 W Wed Wednesday 3 3rd
 
 Wed Jan 3, 1996  at 8:11:12
-%H %k %i %I %p %M %S %s %o %z %Z
-   08  8  8 08 AM 11 12 820674672 820656672 -05:00:00 EST
+%H %k %i %I %p %M %S %s %o %N %z %Z
+   08  8  8 08 AM 11 12 820674672 820656672 -05:00:00 -0500 EST
 
 ";
 

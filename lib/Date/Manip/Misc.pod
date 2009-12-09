@@ -10,6 +10,11 @@ Date::Manip::Misc - Miscellaneous information about Date::Manip
 
 =head1 SHOULD I USE DATE::MANIP
 
+NOTE: the following section applies primarily to 5.xx. I'm doing a lot
+of work to optimize Date::Manip to the point where I hope to
+universally recommend it. Check back soon for an updated
+recommendation!
+
 If you look in CPAN, you'll find that there are a number of Date and
 Time packages.  Is Date::Manip the one you should be using?  In my
 opinion, the answer usually no.  This may sound odd coming from
@@ -88,24 +93,58 @@ new daylight saving time rules... so does Date::Manip.
 
 =head1 WHAT DATES ARE DATE::MANIP USEFUL FOR?
 
-Date::Manip applies to the Gregorian calendar, and stores the year as
-4 digits.
+Date::Manip applies to the Gregorian calendar. It does not support
+alternative calendars (Hebrew, Mayan, etc.) so if you want to use
+an alternative calendar, you'll need to look elsewhere.
 
-The 4-digit limit is NOT a limitation due to the Gregorian calendar.
-I needed a way to store dates internally, and the 4-digit
-representation was chosen. I realize that the 4-digit limitation does
-create a time when it will break (quite similar to those who chose a
-2-digit representation set themselves up for the Y2K problem). Frankly,
-I'm not too concerned about this since that date is 8000 years in the
-future! Date::Manip won't exist then.  Perl won't exist then. And it's
-quite possible that the Gregorian calendar won't exist then. That's
-a much different situation than the Y2K choice in which programmers
-chose a representation that would break within the lifetime of the
-programs they were writing.
+The Gregorian calendar is a relatively recent innovation. Prior to it,
+the Julian calendar was in use.  The Julian calendar defined leap years as
+every 4th year.  This led to significant calendar drift over time (since
+a year is NOT 365.24 days long). It was replaced by the Gregorian
+calendar which improved the definition of leap years.
+
+Date::Manip extrapolates the Gregorian calendar back to the year 0001 AD
+and forward to the year 9999 AD, but that does not necessarily mean
+that the results are useful. As the world adopted the Gregorian
+calendar, the dates using the Julian calendar had to be changed to fit
+to account for the drift that had occurred. As such, the dates produced
+by Date::Manip in an era where the Julian calendar was in use do not
+accurately reflect the dates actually in use. In historical context,
+the Julian calendar was in use until 1582 when the Gregorian calendar
+was adopted by the Catholic church.  Protestant countries did not
+accept it until later; Germany and Netherlands in 1698, British Empire
+in 1752, Russia in 1918, etc. Date::Manip is therefore not equipped to
+truly deal with historical dates prior to about 1900.
+
+A second problem is that the Gregorian calendar is itself imperfect
+and at some point may need to be corrected (though it's not clear that
+this will happen... drift may now be accounted for using leap seconds
+which means that the Gregorian calendar may be useful indefinitely).
+No attempt is made to correct for the problems in the Gregorian
+calendar for a couple reasons. First is that my great great great
+grandchildren will be long dead before this begins to be a problem, so
+it's not an immediate concern.  Secondly, and even more importantly, I
+don't know what the correction will be (if any) or when it will be
+implemented, so I can safely ignore it.
+
+There is some limitation on how dates can be expressed such that
+Date::Manip can handle them correctly. Date::Manip stores the year
+internally as a 4-digit number. This is obviously not a limit due to
+the Gregorian calendar, but I needed a way to store the dates
+internally, and the 4-digit year was chosen. I realize that the
+4-digit limitation does create a time when it will break (quite
+similar to those who chose a 2-digit representation set themselves up
+for the Y2K problem). Frankly, I'm not too concerned about this since
+that date is 8000 years in the future! Date::Manip won't exist then.
+Perl won't exist then. And it's quite possible that the Gregorian
+calendar won't exist then. That's a much different situation than the
+Y2K choice in which programmers chose a representation that would
+break within the lifetime of the programs they were writing.
 
 Given the 4-digit limitation, Date::Manip definitely can't handle BC
-dates, or dates past Dec 31, 9999.  So Date::Manip works during the
-period Jan 1, 0001 to Dec 31, 9999. There are a few caveats:
+dates, or dates past Dec 31, 9999.  So Date::Manip works (in theory)
+during the period Jan 1, 0001 to Dec 31, 9999. There are a few
+caveats:
 
 =over 4
 
@@ -113,13 +152,12 @@ period Jan 1, 0001 to Dec 31, 9999. There are a few caveats:
 
 In practical terms, Date::Manip deals with the Gregorian calendar, and
 is most useful in the period that that calendar has been, or will be,
-in effect.  The Gregorian calendar was first adopted by the Catholic
-church in 1582, but some countries were still using the Julian
-calendar as late as the early part of the 20th century.  Also, at some
-point, the Gregorian system may need to be modified slightly (though
-since leap seconds exist, this may not need to happen for a very long
-time).  So...  in practical terms, Date::Manip is probably useful from
-around 1900 on, and will remain useful for the foreseeable future.
+in effect. As explained above, the Gregorian calendar came into universal
+acceptance in the early 1900's, and it should remain in use for the
+foreseeable future.
+
+So...  in practical terms, Date::Manip is probably useful from
+around 1900 through several thousand years from now.
 
 =item First/last week
 
@@ -173,12 +211,12 @@ For example, after 5.40 was released, I started making changes, and
 called the development version 5.41.  When released to CPAN, it was
 called 5.42.
 
-As of 6.00, I'm abandoning the even/odd behavior started in 5.41. Every
-release meant changing the version number twice. I had to change it from
-the odd (development version) to the even (release version). Then I had
-to package it up. Then I had to change it to the next odd (development
-version). It's more error prone, and more of a nuisance, and I've seen
-no benefit from it.
+As of 5.55/6.00, I'm abandoning the even/odd behavior started in
+5.41. Every release meant changing the version number twice. I had to
+change it from the odd (development version) to the even (release
+version). Then I had to package it up. Then I had to change it to the
+next odd (development version). It's more error prone, and more of a
+nuisance, and I've seen no benefit from it.
 
 =head1 FUTURE IDEAS
 
@@ -191,7 +229,7 @@ and are open to discussion.
 =item Rewrite parsing for better language support
 
 Currently, all of Date::Manip's parsing is based on English language
-forms of dates. Even if the words have been replaced by the equivalent
+forms of dates, even if the words have been replaced by the equivalent
 in some other language.
 
 I am considering rewriting the parsing routines in order to allow
@@ -235,14 +273,19 @@ each bug.  These are included in the HISTORY file in the Date::Manip
 distribution in the order the changes are made.  The list is simply too
 long to appear here, but I appreciate their help.
 
-A number of people have made suggestions or reported bugs which are not
-mentioned in the HISTORY file.  These include suggestions which have not
-been implemented and people who have made a suggestion or bug report which
-has already been suggested/reported by someone else.  For those who's
-suggestions have not yet been implemented, they will be added to the
-HISTORY file when (if) their suggestions are implemented.  For everyone
-else, thank you too.  I'd much rather have a suggestion made twice than not
-at all.
+A number of people have made suggestions or reported bugs which are
+not mentioned in the HISTORY file.  These include suggestions which
+have not been implemented and people who have made a suggestion or bug
+report which has already been suggested/reported by someone else.  For
+those who's suggestions have not yet been implemented, they will be
+added to the HISTORY file when (if) their suggestions are implemented.
+I keep every single suggestion I've ever received and periodically
+review the unimplemented ones to see if it's something I'm interested
+in, so even suggestions made years in the past may still appear in
+future versions of Date::Manip, and the original requester will be
+attributed at that point. For those who have sent in requests/reports
+that had been previously made by someone else, thank you too.  I'd
+much rather have a suggestion made twice than not at all.
 
 Thanks to Alan Cezar and Greg Schiedler for paying me to implement the
 Events_List routine.  They gave me the idea, and were then willing to pay
@@ -261,10 +304,9 @@ I'd also like to thank the people who are maintaining the zoneinfo
 database (and who replied quickly to several inquiries).
 
 I have borrowed from other modules. I originally borrowed the code for
-determining if a year was a leap year from code written by David Muir Sharnoff.
-I borrowed many of the original date printf formats from code written by
-Terry McGonigal as well as the Solaris date command.
-
+determining if a year was a leap year from code written by David Muir
+Sharnoff.  I borrowed many of the original date printf formats from
+code written by Terry McGonigal as well as the Solaris date command.
 More recently, I borrowed the code to do time zone registry lookups on
 Windows from the DateTime-TimeZone module, though I rewrote it to work
 better with Date::Manip.

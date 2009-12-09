@@ -17,7 +17,7 @@
 
 =head1 NAME
 
-Date::Manip::Zones - time zone information
+Date::Manip::Zones - Time zone information
 
 =head1 DESCRIPTION
 

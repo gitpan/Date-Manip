@@ -1,0 +1,5 @@
+# This is a file to help in automatically generating the Build.PL and
+# Makefile.PL files. Ignore it.
+
+windows  Tie::Registry  0
+

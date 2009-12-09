@@ -351,9 +351,6 @@ in some future version:
    UpdateCurrTZ    Ignored. With real time zone handling in
                    place, this is no longer necessary
 
-At some point in the future, deprecated config variables will be
-removed.
-
 =item Holidays
 
 Previously, holidays could be defined as a "Date + Delta" or "Date -
@@ -362,7 +359,7 @@ into the handling of holidays. Since recurrences are a much better
 way to define holidays, the "Date + Delta" and "Date - Delta" strings
 are no longer supported.
 
-=item TZ replace (and enhanced)
+=item TZ replaced (and enhanced)
 
 The SetDate and ForceDate variables (which include the functionality
 of the deprecated TZ variable) are much improved as described in the
@@ -700,7 +697,9 @@ an error, an empty string is returned.
 =item DateCalc
 
 In Date::Manip 5.xx, it was recommended that you pass arguments to
-ParseDate or ParseDateDelta
+ParseDate or ParseDateDelta. This is not recommended with 6.00 since it
+is much more intelligent about handling the arguments, and you'll just
+end up parsing the date/delta twice.
 
 =back
 

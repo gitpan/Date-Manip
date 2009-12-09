@@ -6,7 +6,7 @@
 
 =head1 NAME
 
-Date::Manip::TZdata -- internal module for working with the tzdata files
+Date::Manip::TZdata -- Internal module for working with the tzdata files
 
 =head1 SYNOPSIS
 

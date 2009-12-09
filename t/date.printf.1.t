@@ -36,7 +36,7 @@ Jan 3, 1996 8:11:12
 
 ';
 
-print "printf...\n";
+print "printf (nonUS)...\n";
 test_Func(\&test,$tests,$runtests);
 
 1;

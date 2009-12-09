@@ -56,7 +56,7 @@ use feature 'switch';
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 ###########################################################################
 
@@ -77,7 +77,8 @@ $dmt   = $date->tz();
 ########################################################################
 
 sub DateManipVersion {
-  return $date->version();
+   my($flag) = @_;
+   return $date->version($flag);
 }
 
 sub Date_Init {

@@ -6,7 +6,7 @@
 
 =head1 NAME
 
-Date::Manip::Obj - base class for Date::Manip objects
+Date::Manip::Obj - Base class for Date::Manip objects
 
 =head1 SYNOPSIS
 
@@ -203,9 +203,12 @@ given object.
 
 =item version
 
-   $vers = $obj->version();
+   $vers = $obj->version($flag);
 
 This returns the version of Date::Manip.
+
+If $flag is passed in, and $obj is not a Date::Manip::Base object, the
+version and timezone information will be passed back.
 
 =back
 

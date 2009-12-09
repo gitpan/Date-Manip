@@ -20,17 +20,39 @@ problems.
 Please refer to the Date::Manip::TZ documentation for a discussion
 of this problem.
 
+=item Calculations appear to be off by an hour
+
+Within days of releasing 6.00, I got the following report:
+
+   print DateCalc(ParseDate("2009/10/31"), "+1 day"), "\n";
+   print DateCalc(ParseDate("2009/11/01"), "+1 day"), "\n";
+   print DateCalc(ParseDate("2009/11/02"), "+1 day"), "\n";
+
+produced:
+
+   2009110100:00:00
+   2009110123:00:00
+   2009110300:00:00
+
+In other words, the second calculation appears to be off by one hour.
+In actuality, the result is correct. In the user's timezone, daylight
+saving time ended on Nov 1, and the results are correct. In America/New_York
+time (which has the same result), the calculation means that:
+
+   2009-11-01 00:00:00 EDT + 24 hours = 
+   2009-11-01 23:00:00 EST
+
+which is correct.
+
 =item Missing date formats
 
 Due to the large number of date formats that Date::Manip CAN process,
 people often assume that other formats that they want to use should
 work as well, and when they don't, it comes as a surprise.
 
-If this happens, I'm willing to entertain the suggestion that they be
-added. I'm a little more hesitant about adding date formats at this
-point than in the past due to the ever increasing complexity of the
-parsing routines, but I always consider each request, and if the
-format isn't too abstract, I often add them.
+With the much improved parsing of 6.00, many formats can be added
+easily, though unless they are of general use, I'll probably suggest
+that you use parse_format instead.
 
 There is a class of formats that I will not add however.
 
@@ -69,11 +91,9 @@ inconvenience, I do not intend to change my position on this.
 
 =item Date::Manip is slow
 
-NOTE: This section will be rewritten with version 6.01. Version 6.00
-is a complete rewrite with emphasis on getting a version out. 6.01
-will take that and do some speed optimization, and at that point, I
-will run some benchmarks using Date::Manip and some other Date/Time
-modules to be able to address this better.
+NOTE: The following section applies primarily to 5.xx. I'm doing a lot
+of work to optimize Date::Manip and I will rewrite this section to
+take this into account, and to provide performance suggestions.
 
 Date::Manip is probably one of the slower Date/Time modules due to the
 fact that it is huge and written entirely in perl.
@@ -113,7 +133,7 @@ documented in the manual. These are designed to be used by other
 programmers, and I will not make any backwards incompatible changes in
 them unless there is a very compelling reason to do so, and in that
 case, the change will be clearly documented in the
-Date::Manip::Changes documentation for this module.
+Date::Manip::Changes6 documentation for this module.
 
 Date::Manip also consists of a large number of functions which are NOT
 documented. These are for internal use only.  Please do not use them!
@@ -126,14 +146,15 @@ them directly, it is quite possible that new versions of Date::Manip
 will cause your programs to break due to a change in how those
 functions work.
 
-Some of these internal functions even have test scripts, but that
-is not a guarantee that they will not change, nor is any support
-implied.
+Some of these internal functions even have test scripts, but that is
+not a guarantee that they will not change, nor is any support
+implied. I simply like to run regression tests on as much of
+Date::Manip as possible.
 
-Any changes to these internal functions will not be documented, and
-will not be regarded by me as a backwards incompatibility. Nor will I
-(as was requested in one instance) revert to a previous version of
-the internal function.
+Any changes to internal functions will not be documented, and will not
+be regarded by me as a backwards incompatibility. Nor will I (as was
+requested in one instance) revert to a previous version of the
+internal function.
 
 If you feel that an internal function is of more general use, feel free
 to contact me with an argument of why it should be "promoted".  I
@@ -164,13 +185,13 @@ The version of Date::Manip you are using.  You can get this by using
 the script:
 
    use Date::Manip;
-   print DateManipVersion(),"\n";
+   print DateManipVersion(1),"\n";
 
 or
 
    use Date::Manip::Date;
    $obj = new Date::Manip::Date;
-   print $obj->version(),"\n";
+   print $obj->version(1),"\n";
 
 =item *
 
@@ -188,6 +209,10 @@ I would ask that you be reasonably familiar with the documentation
 BEFORE you choose to do this. Date::Manip is a hobby, and I simply do
 not have time to respond to hundreds of questions which are already
 answered in this manual.
+
+If you find any problems with the documentation (errors, typos, or items
+that are not clear), please send them to me. I welcome any suggestions
+that will allow me to improve the documentation.
 
 =head1 KNOWN BUGS
 

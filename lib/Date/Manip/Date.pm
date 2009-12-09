@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 ########################################################################
 # BASE METHODS
@@ -90,6 +90,7 @@ sub _init_args {
 sub parse {
    my($self,$string,@opts) = @_;
    $self->_init();
+   my $noupdate = 0;
 
    if (! $string) {
       $$self{'err'} = '[parse] Empty date string';
@@ -100,7 +101,6 @@ sub parse {
    my $instring = $string;
 
    my $dmb = $$self{'objs'}{'base'};
-   $dmb->_now('now');
 
    my($done,$y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off,$dow);
    my $got_time     = 0;
@@ -122,7 +122,7 @@ sub parse {
       # Parse ISO 8601 dates now (which may have a timezone).
 
       unless (exists $opts{'noiso8601'}) {
-         ($done,@tmp) = $self->_parse_datetime_iso8601($string);
+         ($done,@tmp) = $self->_parse_datetime_iso8601($string,\$noupdate);
          if ($done) {
             ($y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
             $got_time = 1;
@@ -138,7 +138,7 @@ sub parse {
       # Some special full date/time formats
 
       unless (exists $opts{'nospecial'}) {
-         ($done,@tmp) = $self->_parse_datetime_other($string);
+         ($done,@tmp) = $self->_parse_datetime_other($string,\$noupdate);
          if ($done) {
             ($y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
             $got_time = 1;
@@ -148,32 +148,34 @@ sub parse {
 
       # Parse (and remove) the time
 
-      ($got_time,@tmp) = $self->_parse_time('parse',$string,%opts);
+      ($got_time,@tmp) = $self->_parse_time('parse',$string,\$noupdate,%opts);
       if ($got_time) {
          ($string,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
       }
 
       if (! $string) {
-         ($y,$m,$d) = $self->_def_date($y,$m,$d);
+         ($y,$m,$d) = $self->_def_date($y,$m,$d,\$noupdate);
          last;
       }
 
       # Parse (and remove) the day of week. Also, handle the simple DoW
       # formats.
 
-      ($done,@tmp) = $self->_parse_dow($string);
-      if (@tmp) {
-         if ($done) {
-            ($y,$m,$d)    = @tmp;
-            $default_time = 1;
-            last PARSE;
-         } else {
-            ($string,$dow) = @tmp;
+      unless (exists $opts{'nodow'}) {
+         ($done,@tmp) = $self->_parse_dow($string,\$noupdate);
+         if (@tmp) {
+            if ($done) {
+               ($y,$m,$d)    = @tmp;
+               $default_time = 1;
+               last PARSE;
+            } else {
+               ($string,$dow) = @tmp;
+            }
          }
       }
       $dow = 0  if (! $dow);
 
-      (@tmp) = $self->_parse_date($string,$dow,%opts);
+      (@tmp) = $self->_parse_date($string,$dow,\$noupdate,%opts);
       if (@tmp) {
          ($y,$m,$d,$dow) = @tmp;
          $default_time = 1;
@@ -189,7 +191,7 @@ sub parse {
       # but those have already been taken care of.
 
       unless (exists $opts{'nodelta'}) {
-         ($done,@tmp) = $self->_parse_delta($string,$dow,$got_time,$h,$mn,$s);
+         ($done,@tmp) = $self->_parse_delta($string,$dow,$got_time,$h,$mn,$s,\$noupdate);
          if (@tmp) {
             ($y,$m,$d,$h,$mn,$s) = @tmp;
             $got_time = 1;
@@ -211,11 +213,12 @@ sub parse {
          if ($dmb->_config('defaulttime') eq 'midnight') {
             ($h,$mn,$s) = (0,0,0);
          } else {
-            ($h,$mn,$s) = $dmb->_now('time',1);
+            ($h,$mn,$s) = $dmb->_now('time',$noupdate);
+            $noupdate = 1;
          }
          $got_time = 1;
       } else {
-         ($h,$mn,$s) = $self->_def_time();
+         ($h,$mn,$s) = $self->_def_time(undef,undef,undef,\$noupdate);
       }
    }
 
@@ -226,6 +229,7 @@ sub parse {
 
 sub parse_time {
    my($self,$string) = @_;
+   my $noupdate = 0;
 
    if (! $string) {
       $$self{'err'} = '[parse_time] Empty time string';
@@ -241,12 +245,13 @@ sub parse_time {
       ($y,$m,$d,$h,$mn,$s) = @{ $$self{'data'}{'date'} };
    } else {
       my $dmb = $$self{'objs'}{'base'};
-      ($y,$m,$d,$h,$mn,$s) = $dmb->_now('now');
+      ($y,$m,$d,$h,$mn,$s) = $dmb->_now('now',$noupdate);
+      $noupdate = 1;
    }
    my($tzstring,$zone,$abb,$off);
 
    ($h,$mn,$s,$tzstring,$zone,$abb,$off) =
-     $self->_parse_time('parse_time',$string);
+     $self->_parse_time('parse_time',$string,\$noupdate);
 
    return 1  if ($$self{'err'});
 
@@ -256,7 +261,9 @@ sub parse_time {
 }
 
 sub parse_date {
-   my($self,$string) = @_;
+   my($self,$string,@opts) = @_;
+   my %opts     = map { $_,1 } @opts;
+   my $noupdate = 0;
 
    if (! $string) {
       $$self{'err'} = '[parse_date] Empty date string';
@@ -264,8 +271,6 @@ sub parse_date {
    }
 
    my $dmb = $$self{'objs'}{'base'};
-   $dmb->_now('now');
-
    my($y,$m,$d,$h,$mn,$s);
 
    if ($$self{'err'}) {
@@ -274,8 +279,7 @@ sub parse_date {
    if ($$self{'data'}{'set'}) {
       ($y,$m,$d,$h,$mn,$s) = @{ $$self{'data'}{'date'} };
    } else {
-      my $dmb = $$self{'objs'}{'base'};
-      ($y,$m,$d,$h,$mn,$s) = $dmb->_now('now',1);
+      ($h,$mn,$s) = (0,0,0);
    }
 
    # Put parse in a simple loop for an easy exit.
@@ -284,13 +288,15 @@ sub parse_date {
 
       # Parse ISO 8601 dates now
 
-      ($done,@tmp) = $self->_parse_date_iso8601($string);
-      if ($done) {
-         ($y,$m,$d) = @tmp;
-         last PARSE;
+      unless (exists $opts{'noiso8601'}) {
+         ($done,@tmp) = $self->_parse_date_iso8601($string,\$noupdate);
+         if ($done) {
+            ($y,$m,$d) = @tmp;
+            last PARSE;
+         }
       }
 
-      (@tmp) = $self->_parse_date($string);
+      (@tmp) = $self->_parse_date($string,undef,\$noupdate,%opts);
       if (@tmp) {
          ($y,$m,$d,$dow) = @tmp;
          last PARSE;
@@ -309,7 +315,7 @@ sub parse_date {
 }
 
 sub _parse_date {
-   my($self,$string,$dow,%opts) = @_;
+   my($self,$string,$dow,$noupdate,%opts) = @_;
 
    # There's lots of ways that commas may be included. Remove
    # them.
@@ -318,7 +324,10 @@ sub _parse_date {
 
    $string =~ s/,/ /g;
 
-   my $ign = $self->_other_rx('ignore');
+   my $dmb = $$self{'objs'}{'base'};
+   my $ign = (exists $$dmb{'data'}{'rx'}{'other'}{'ignore'} ?
+              $$dmb{'data'}{'rx'}{'other'}{'ignore'} :
+              $self->_other_rx('ignore'));
    $string =~ s/$ign/ /g;
 
    $string =~ s/\s*$//;
@@ -332,23 +341,25 @@ sub _parse_date {
       # Parse (and remove) the day of week. Also, handle the simple DoW
       # formats.
 
-      if (! defined($dow)) {
-         ($done,@tmp) = $self->_parse_dow($string);
-         if (@tmp) {
-            if ($done) {
-               ($y,$m,$d) = @tmp;
-               last PARSE;
-            } else {
-               ($string,$dow) = @tmp;
+      unless (exists $opts{'nodow'}) {
+         if (! defined($dow)) {
+            ($done,@tmp) = $self->_parse_dow($string,$noupdate);
+            if (@tmp) {
+               if ($done) {
+                  ($y,$m,$d) = @tmp;
+                  last PARSE;
+               } else {
+                  ($string,$dow) = @tmp;
+               }
             }
+            $dow = 0  if (! $dow);
          }
-         $dow = 0  if (! $dow);
       }
 
       # Parse common dates
 
       unless (exists $opts{'nocommon'}) {
-         (@tmp) = $self->_parse_date_common($string);
+         (@tmp) = $self->_parse_date_common($string,$noupdate);
          if (@tmp) {
             ($y,$m,$d) = @tmp;
             last PARSE;
@@ -358,7 +369,7 @@ sub _parse_date {
       # Parse less common dates
 
       unless (exists $opts{'noother'}) {
-         (@tmp) = $self->_parse_date_other($string,$dow);
+         (@tmp) = $self->_parse_date_other($string,$dow,$noupdate);
          if (@tmp) {
             ($y,$m,$d,$dow) = @tmp;
             last PARSE;
@@ -374,6 +385,7 @@ sub _parse_date {
 sub parse_format {
    my($self,$format,$string) = @_;
    $self->_init();
+   my $noupdate = 0;
 
    if (! $string) {
       $$self{'err'} = '[parse_format] Empty date string';
@@ -392,14 +404,10 @@ sub parse_format {
       $doy,$nth,$ampm,$epochs,$epocho,
       $tzstring,$off,$abb,$zone,
       $g,$w,$l,$u) =
-        ($+{'y'},$+{'m'},$+{'d'},$+{'h'},$+{'mn'},$+{'s'},
-         $+{'mon_name'},$+{'mon_abb'},
-         $+{'dow_name'},$+{'dow_abb'},$+{'dow_char'},$+{'dow_num'},
-         $+{'doy'},$+{'nth'},$+{'ampm'},$+{'epochs'},$+{'epocho'},
-         $+{'tzstring'},$+{'off'},$+{'abb'},$+{'zone'},
-         $+{'g'},$+{'w'},$+{'l'},$+{'u'});
+        @+{qw(y m d h mn s
+              mon_name mon_abb dow_name dow_abb dow_char dow_num doy
+              nth ampm epochs epocho tzstring off abb zone g w l u)};
 
-   $dmb->_now('now');
    while (1) {
       # Get y/m/d/h/mn/s from:
       #     $epochs,$epocho
@@ -414,7 +422,8 @@ sub parse_format {
             $z = $dmt->zone($off,$abb);
             return 'Invalid zone'  if (! $z);
          } else {
-            $z = $dmb->_now('tz');
+            ($z) = $dmb->_now('tz',$noupdate);
+            $noupdate = 1;
          }
          ($y,$m,$d,$h,$mn,$s) =
            @{ $dmb->convert_from_gmt([$y,$m,$d,$h,$mn,$s],$z) };
@@ -443,26 +452,29 @@ sub parse_format {
       }
 
       if ($doy) {
-         $y = $dmb->_now('y',1)  if (! $y);
+         ($y) = $dmb->_now('y',$noupdate)  if (! $y);
+         $noupdate = 1;
          ($y,$m,$d) = @{ $dmb->day_of_year($y,$doy) };
 
       } elsif ($g) {
-         $y = $dmb->_now('y',1)  if (! $y);
+         ($y) = $dmb->_now('y',$noupdate)  if (! $y);
+         $noupdate = 1;
          ($y,$m,$d) = @{ $dmb->_week_of_year($g,$w,1) };
 
       } elsif ($l) {
-         $y = $dmb->_now('y',1)  if (! $y);
+         ($y) = $dmb->_now('y',$noupdate)  if (! $y);
+         $noupdate = 1;
          ($y,$m,$d) = @{ $dmb->_week_of_year($l,$u,7) };
 
       } elsif ($m) {
-         ($y,$m,$d) = $self->_def_date($y,$m,$d);
+         ($y,$m,$d) = $self->_def_date($y,$m,$d,\$noupdate);
       }
 
       # Get h/mn/s from:
       #     $h,$mn,$s,$ampm
 
       if ($h) {
-         ($h,$mn,$s) = $self->_def_time($h,$mn,$s);
+         ($h,$mn,$s) = $self->_def_time($h,$mn,$s,\$noupdate);
       }
 
       if ($ampm) {
@@ -490,7 +502,8 @@ sub parse_format {
    }
 
    if (! $m) {
-      ($y,$m,$d) = $dmb->_now(undef,1);
+      ($y,$m,$d) = $dmb->_now('now',$noupdate);
+      $noupdate = 1;
    }
    if (! $h) {
       ($h,$mn,$s) = (0,0,0);
@@ -601,7 +614,7 @@ sub _format_regexp {
             continue ;
          }
 
-         when (['Z','z']) {
+         when (['Z','z','N']) {
             if ($zone) {
                $err = 'Zone specified multiple times';
                last;
@@ -714,7 +727,7 @@ sub _format_regexp {
             $re .= '(?<s>\d\d)';
          }
 
-         when (['Z','z']) {
+         when (['Z','z','N']) {
             $re .= $dmt->_zrx();
          }
 
@@ -883,7 +896,7 @@ sub _parse_check {
       }
 
    } else {
-      $zonename = $dmb->_now('tz');
+      ($zonename) = $dmb->_now('tz',1);
    }
 
    # Store the date
@@ -1060,7 +1073,7 @@ sub _iso8601_rx {
 }
 
 sub _parse_datetime_iso8601 {
-   my($self,$string) = @_;
+   my($self,$string,$noupdate) = @_;
    my $dmb           = $$self{'objs'}{'base'};
    my $daterx        = $self->_iso8601_rx();
 
@@ -1070,22 +1083,18 @@ sub _parse_datetime_iso8601 {
    if ($string =~ $daterx) {
       ($y,$m,$d,$h,$mn,$s,$doy,$dow,$yod,$c,$w,$fh,$fm,$h24,
        $tzstring,$zone,$abb,$off) =
-         ($+{'y'},$+{'m'},$+{'d'},$+{'h'},$+{'mn'},$+{'s'},
-          $+{'doy'},$+{'dow'},$+{'yod'},$+{'c'},$+{'w'},
-          $+{'fh'},$+{'fm'},$+{'h24'},
-          $+{'tzstring'},$+{'zone'},$+{'abb'},$+{'off'}
-         );
+         @+{qw(y m d h mn s doy dow yod c w fh fm h24 tzstring zone abb off)};
 
       if (defined $w  ||  defined $dow) {
-         ($y,$m,$d)   = $self->_def_date_dow($y,$w,$dow);
+         ($y,$m,$d)   = $self->_def_date_dow($y,$w,$dow,$noupdate);
       } elsif (defined $doy) {
-         ($y,$m,$d) = $self->_def_date_doy($y,$doy);
+         ($y,$m,$d) = $self->_def_date_doy($y,$doy,$noupdate);
       } else {
          $y = $c . '00'  if (defined $c);
-         ($y,$m,$d) = $self->_def_date($y,$m,$d);
+         ($y,$m,$d) = $self->_def_date($y,$m,$d,$noupdate);
       }
 
-      ($h,$mn,$s) = $self->_time($h,$mn,$s,$fh,$fm,$h24);
+      ($h,$mn,$s) = $self->_time($h,$mn,$s,$fh,$fm,$h24,undef,$noupdate);
    } else {
       return (0);
    }
@@ -1094,7 +1103,7 @@ sub _parse_datetime_iso8601 {
 }
 
 sub _parse_date_iso8601 {
-   my($self,$string) = @_;
+   my($self,$string,$noupdate) = @_;
    my $dmb           = $$self{'objs'}{'base'};
    my $daterx        = $self->_iso8601_rx('date');
 
@@ -1103,17 +1112,15 @@ sub _parse_date_iso8601 {
 
    if ($string =~ /^$daterx$/) {
       ($y,$m,$d,$doy,$dow,$yod,$c,$w) =
-        ($+{'y'},$+{'m'},$+{'d'},
-         $+{'doy'},$+{'dow'},$+{'yod'},$+{'c'},$+{'w'},
-        );
+        @+{qw(y m d doy dow yod c w)};
 
       if (defined $w  ||  defined $dow) {
-         ($y,$m,$d)   = $self->_def_date_dow($y,$w,$dow);
+         ($y,$m,$d)   = $self->_def_date_dow($y,$w,$dow,$noupdate);
       } elsif (defined $doy) {
-         ($y,$m,$d) = $self->_def_date_doy($y,$doy);
+         ($y,$m,$d) = $self->_def_date_doy($y,$doy,$noupdate);
       } else {
          $y = $c . '00'  if (defined $c);
-         ($y,$m,$d) = $self->_def_date($y,$m,$d);
+         ($y,$m,$d) = $self->_def_date($y,$m,$d,$noupdate);
       }
    } else {
       return (0);
@@ -1126,7 +1133,7 @@ sub _parse_date_iso8601 {
 #
 no integer;
 sub _time {
-   my($self,$h,$mn,$s,$fh,$fm,$h24,$ampm) = @_;
+   my($self,$h,$mn,$s,$fh,$fm,$h24,$ampm,$noupdate) = @_;
 
    if (defined($ampm)  &&  $ampm) {
       my $dmb = $$self{'objs'}{'base'};
@@ -1141,16 +1148,16 @@ sub _time {
 
    if (defined $h24) {
       return(24,0,0);
-   } elsif (defined $fh) {
+   } elsif (defined $fh  &&  $fh ne "") {
       $fh = "0.$fh";
       $s  = int($fh * 3600);
       $mn = int($s/60);
       $s -= $mn*60;
-   } elsif (defined $fm) {
+   } elsif (defined $fm  &&  $fm ne "") {
       $fm = "0.$fm";
       $s  = int($fm*60);
    }
-   ($h,$mn,$s) = $self->_def_time($h,$mn,$s);
+   ($h,$mn,$s) = $self->_def_time($h,$mn,$s,$noupdate);
    return($h,$mn,$s);
 }
 use integer;
@@ -1163,15 +1170,12 @@ sub _other_rx {
    my $dmb       = $$self{'objs'}{'base'};
    $rx           = '_'  if (! defined $rx);
 
-   return $$dmb{'data'}{'rx'}{'other'}{$rx}
-     if (exists $$dmb{'data'}{'rx'}{'other'}{$rx});
-
    if ($rx eq 'time') {
 
-      my $h24    = '(?<h>2[0-3]|1[0-9]|0?[0-9])'; # 0-23      00-23
-      my $h12    = '(?<h>1[0-2]|0?[1-9])';        # 1-12      01-12
-      my $mn     = '(?<mn>[0-5][0-9])';           # 00-59
-      my $ss     = '(?<s>[0-5][0-9])';            # 00-59
+      my $h24    = '(2[0-3]|1[0-9]|0?[0-9])'; # 0-23      00-23
+      my $h12    = '(1[0-2]|0?[1-9])';        # 1-12      01-12
+      my $mn     = '([0-5][0-9])';            # 00-59
+      my $ss     = '([0-5][0-9])';            # 00-59
 
       # how to express fractions
 
@@ -1190,15 +1194,15 @@ sub _other_rx {
          $f1 = "[.,]";
          $f2 = "[.,:]";
       }
-      my $fh     = "(?:$f1(?<fh>\\d*))";  # fractional hours (keep)
-      my $fm     = "(?:$f1(?<fm>\\d*))";  # fractional seconds (keep)
-      my $fs     = "(?:$f2\\d*)";         # fractional seconds
+      my $fh     = "(?:$f1(\\d*))";  # fractional hours (keep)
+      my $fm     = "(?:$f1(\\d*))";  # fractional minutes (keep)
+      my $fs     = "(?:$f2\\d*)";    # fractional seconds
 
       # AM/PM
 
       my($ampm);
       if (exists $$dmb{'data'}{'rx'}{'ampm'}) {
-         $ampm   = "(?:\\s*(?<ampm>$$dmb{data}{rx}{ampm}[0]))";
+         $ampm   = "(?:\\s*($$dmb{data}{rx}{ampm}[0]))";
       }
 
       # H:MN and MN:S separators
@@ -1214,38 +1218,39 @@ sub _other_rx {
       }
 
       # How to express the time
+      #  matches = (H, FH, MN, FMN, S, AM, TZSTRING, ZONE, ABB, OFF, ABB)
 
       my @time   = ();
       for (my $i=0; $i<=$#hm; $i++) {
          push(@time,
-              "${h12}$hm[$i]${mn}$ms[$i]${ss}${fs}?${ampm}?" # H:MN:SS[,S+] [AM]
+              "${h12}()$hm[$i]${mn}()$ms[$i]${ss}${fs}?${ampm}?" # H:MN:SS[,S+] [AM]
              )  if ($ampm);
          push(@time,
-              "${h24}$hm[$i]${mn}$ms[$i]${ss}${fs}?", # H:MN:SS[,S+]
-              "(?<h24>24)$hm[$i]00$ms[$i]00"          # 24:00:00
+              "${h24}()$hm[$i]${mn}()$ms[$i]${ss}${fs}?()",      # H:MN:SS[,S+]
+              "(24)()$hm[$i](00)()$ms[$i](00)()"                 # 24:00:00
              );
       }
       for (my $i=0; $i<=$#hm; $i++) {
          push(@time,
-              "${h12}$hm[$i]${mn}${fm}${ampm}?" # H:MN,M+ [AM]
+              "${h12}()$hm[$i]${mn}${fm}()${ampm}?"              # H:MN,M+ [AM]
              ) if ($ampm);
          push(@time,
-              "${h24}$hm[$i]${mn}${fm}" # H:MN,M+
+              "${h24}()$hm[$i]${mn}${fm}()()"                    # H:MN,M+
              );
       }
       push(@time,
-           "${h12}${fh}${ampm}?" # H,H+ [AM]
+           "${h12}${fh}()()()${ampm}?"                           # H,H+ [AM]
           )  if ($ampm);
       push(@time,
-           "${h24}${fh}"        # H,H+
+           "${h24}${fh}()()()()"                                 # H,H+
           );
       for (my $i=0; $i<=$#hm; $i++) {
          push(@time,
-              "${h12}$hm[$i]${mn}${ampm}?" # H:MN [AM]
+              "${h12}()$hm[$i]${mn}()()${ampm}?"                 # H:MN [AM]
              ) if ($ampm);
          push(@time,
-              "${h24}$hm[$i]${mn}",  # H:MN
-              "(?<h24>24)$hm[$i]00"  # 24:00
+              "${h24}()$hm[$i]${mn}()()()",                      # H:MN
+              "(24)()$hm[$i](00)()()()"                          # 24:00
              );
       }
 
@@ -1254,7 +1259,7 @@ sub _other_rx {
       my $timerx = join('|',@time);
       my $at     = $$dmb{'data'}{'rx'}{'at'};
       my $atrx   = qr/(?:^|\s+)(?:$at)\s+/;
-      $timerx    = qr/(?:$atrx|^|\s+)(?:$timerx)(?:\s*$zrx)?(?:\s+|$)/i;
+      $timerx    = qr/(?:$atrx|^|\s+)(?|$timerx)(?:\s*$zrx)?(?:\s+|$)/i;
 
       $$dmb{'data'}{'rx'}{'other'}{$rx} = $timerx;
 
@@ -1422,7 +1427,7 @@ sub _other_rx {
 }
 
 sub _parse_time {
-   my($self,$caller,$string,%opts) = @_;
+   my($self,$caller,$string,$noupdate,%opts) = @_;
    my $dmb                   = $$self{'objs'}{'base'};
 
    # Make time substitutions (i.e. noon => 12:00:00)
@@ -1431,7 +1436,7 @@ sub _parse_time {
       my @rx = @{ $$dmb{'data'}{'rx'}{'times'} };
       shift(@rx);
       foreach my $rx (@rx) {
-         if ($string =~ /($rx)/) {
+         if ($string =~ $rx) {
             my $repl = $$dmb{'data'}{'wordmatch'}{'times'}{lc($1)};
             $string =~ s/$rx/$repl/g;
          }
@@ -1440,18 +1445,20 @@ sub _parse_time {
 
    # Check to see if there is a time in the string
 
-   my $timerx   = $self->_other_rx('time');
+   my $timerx = (exists $$dmb{'data'}{'rx'}{'other'}{'time'} ?
+                 $$dmb{'data'}{'rx'}{'other'}{'time'} :
+                 $self->_other_rx('time'));
    my $got_time = 0;
 
-   my($h,$mn,$s,$fh,$fm,$h24,$ampm,$tzstring,$zone,$abb,$off);
+   my($h,$mn,$s,$fh,$fm,$h24,$ampm,$tzstring,$zone,$abb,$off,$tmp);
 
    if ($string =~ s/$timerx/ /i) {
-      ($h,$mn,$s,$fh,$fm,$h24,$ampm,$tzstring,$zone,$abb,$off) =
-        ($+{'h'},$+{'mn'},$+{'s'},
-         $+{'fh'},$+{'fm'},$+{'h24'},$+{'ampm'},
-         $+{'tzstring'},$+{'zone'},$+{'abb'},$+{'off'}
-        );
 
+      ($h,$fh,$mn,$fm,$s,$ampm,$tzstring,$zone,$abb,$off,$tmp) =
+        ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12);
+
+      $off      = $tmp  if (! defined($off));
+      $h24      = 1  if ($h == 24  &&  $mn == 0  &&  $s == 0);
       $string   =~ s/\s*$//;
       $got_time = 1;
    }
@@ -1461,7 +1468,7 @@ sub _parse_time {
 
    if ($caller eq 'parse') {
       if ($got_time) {
-         ($h,$mn,$s) = $self->_time($h,$mn,$s,$fh,$fm,$h24,$ampm);
+         ($h,$mn,$s) = $self->_time($h,$mn,$s,$fh,$fm,$h24,$ampm,$noupdate);
          return ($got_time,$string,$h,$mn,$s,$tzstring,$zone,$abb,$off);
       } else {
          return (0);
@@ -1475,13 +1482,13 @@ sub _parse_time {
       return ();
    }
 
-   ($h,$mn,$s) = $self->_time($h,$mn,$s,$fh,$fm,$h24,$ampm);
+   ($h,$mn,$s) = $self->_time($h,$mn,$s,$fh,$fm,$h24,$ampm,$noupdate);
    return ($h,$mn,$s,$tzstring,$zone,$abb,$off);
 }
 
 # Parse common dates
 sub _parse_date_common {
-   my($self,$string) = @_;
+   my($self,$string,$noupdate) = @_;
    my $dmb           = $$self{'objs'}{'base'};
 
    # Since we want whitespace to be used as a separator, turn all
@@ -1490,25 +1497,27 @@ sub _parse_date_common {
    # not mixed.
    $string =~ s/\s+/ /g;
 
-   my $daterx        = $self->_other_rx('common_1');
+   my $daterx = (exists $$dmb{'data'}{'rx'}{'other'}{'common_1'} ?
+                 $$dmb{'data'}{'rx'}{'other'}{'common_1'} :
+                 $self->_other_rx('common_1'));
 
    if ($string =~ $daterx) {
-      my($y,$m,$d) =
-        ($+{'y'},$+{'m'},$+{'d'});
+      my($y,$m,$d) = @+{qw(y m d)};
 
       if ($dmb->_config('dateformat') ne 'US') {
          ($m,$d) = ($d,$m);
       }
 
-      ($y,$m,$d) = $self->_def_date($y,$m,$d);
+      ($y,$m,$d) = $self->_def_date($y,$m,$d,$noupdate);
       return($y,$m,$d);
    }
 
-   $daterx           = $self->_other_rx('common_2');
+   $daterx = (exists $$dmb{'data'}{'rx'}{'other'}{'common_2'} ?
+              $$dmb{'data'}{'rx'}{'other'}{'common_2'} :
+              $self->_other_rx('common_2'));
 
    if ($string =~ $daterx) {
-      my($y,$m,$d,$mmm,$month) =
-        ($+{'y'},$+{'m'},$+{'d'},$+{'mmm'},$+{'month'});
+      my($y,$m,$d,$mmm,$month) = @+{qw(y m d mmm month)};
 
       if ($mmm) {
          $m = $$dmb{'data'}{'wordmatch'}{'month_abb'}{lc($mmm)};
@@ -1516,7 +1525,7 @@ sub _parse_date_common {
          $m = $$dmb{'data'}{'wordmatch'}{'month_name'}{lc($month)};
       }
 
-      ($y,$m,$d) = $self->_def_date($y,$m,$d);
+      ($y,$m,$d) = $self->_def_date($y,$m,$d,$noupdate);
       return($y,$m,$d);
    }
 
@@ -1524,13 +1533,15 @@ sub _parse_date_common {
 }
 
 sub _parse_dow {
-   my($self,$string) = @_;
+   my($self,$string,$noupdate) = @_;
    my $dmb = $$self{'objs'}{'base'};
    my($y,$m,$d,$dow);
 
    # Remove the day of week
 
-   my $rx = $self->_other_rx('dow');
+   my $rx = (exists $$dmb{'data'}{'rx'}{'other'}{'dow'} ?
+             $$dmb{'data'}{'rx'}{'other'}{'dow'} :
+             $self->_other_rx('dow'));
    if ($string =~ s/$rx/ /) {
       $dow = $+{'dow'};
       $dow = lc($dow);
@@ -1549,7 +1560,7 @@ sub _parse_dow {
 
    # Handle the simple DoW format
 
-   ($y,$m,$d)  = $self->_def_date($y,$m,$d);
+   ($y,$m,$d)  = $self->_def_date($y,$m,$d,$noupdate);
 
    my($w,$dow1);
 
@@ -1563,7 +1574,7 @@ sub _parse_dow {
 }
 
 sub _parse_delta {
-   my($self,$string,$dow,$got_time,$h,$mn,$s) = @_;
+   my($self,$string,$dow,$got_time,$h,$mn,$s,$noupdate) = @_;
    my $dmb = $$self{'objs'}{'base'};
    my($y,$m,$d);
 
@@ -1580,9 +1591,10 @@ sub _parse_delta {
       }
 
       if ($got_time) {
-         ($y,$m,$d) = $self->_def_date($y,$m,$d);
+         ($y,$m,$d) = $self->_def_date($y,$m,$d,$noupdate);
       } else {
-         ($y,$m,$d,$h,$mn,$s) = $dmb->_now('now',1);
+         ($y,$m,$d,$h,$mn,$s) = $dmb->_now('now',$$noupdate);
+         $$noupdate = 1;
       }
 
       my $business = $$delta{'data'}{'business'};
@@ -1612,19 +1624,22 @@ sub _parse_delta {
 }
 
 sub _parse_datetime_other {
-   my($self,$string) = @_;
+   my($self,$string,$noupdate) = @_;
    my $dmb           = $$self{'objs'}{'base'};
    my $dmt           = $$self{'objs'}{'tz'};
 
-   my $rx = $self->_other_rx('miscdatetime');
+   my $rx = (exists $$dmb{'data'}{'rx'}{'other'}{'miscdatetime'} ?
+                 $$dmb{'data'}{'rx'}{'other'}{'miscdatetime'} :
+                 $self->_other_rx('miscdatetime'));
 
    if ($string =~ $rx) {
-      my ($special,$epoch) = ($+{'special'},$+{'epoch'});
+      my ($special,$epoch) = @+{qw(special epoch)};
 
       if (defined($special)) {
          my $delta  = $$dmb{'data'}{'wordmatch'}{'offset_time'}{lc($special)};
          my @delta  = @{ $dmb->split('delta',$delta) };
-         my @date   = $dmb->_now('now',1);
+         my @date   = $dmb->_now('now',$$noupdate);
+         $$noupdate = 1;
          @date      = @{ $self->__calc_date_delta(0,[@date],[@delta]) };
          return (1,@date);
 
@@ -1642,29 +1657,28 @@ sub _parse_datetime_other {
 }
 
 sub _parse_date_other {
-   my($self,$string,$dow) = @_;
+   my($self,$string,$dow,$noupdate) = @_;
    my $dmb = $$self{'objs'}{'base'};
    my($y,$m,$d,$h,$mn,$s);
 
-   my $rx = $self->_other_rx('misc');
+   my $rx = (exists $$dmb{'data'}{'rx'}{'other'}{'misc'} ?
+                 $$dmb{'data'}{'rx'}{'other'}{'misc'} :
+                 $self->_other_rx('misc'));
 
    my($mmm,$month,$nextprev,$last,$field_y,$field_m,$field_w,$field_d,$nth);
    my($special,$got_m,$n,$got_y);
    if ($string =~ $rx) {
       ($y,$mmm,$month,$nextprev,$last,$field_y,$field_m,$field_w,$field_d,$nth,
        $special,$n) =
-         ($+{'y'},$+{'mmm'},$+{'month'},
-          $+{'next'},$+{'last'},
-          $+{'field_y'},$+{'field_m'},$+{'field_w'},$+{'field_d'},
-          $+{'nth'},$+{'special'},$+{'n'}
-         );
+         @+{qw(y mmm month next last field_y field_m field_w field_d nth special n)};
 
       if (defined($y)) {
          $y     = $dmb->_fix_year($y);
          $got_y = 1;
          return ()  if (! $y);
       } else {
-         $y     = $dmb->_now('y',1);
+         ($y)  = $dmb->_now('y',$$noupdate);
+         $$noupdate = 1;
          $got_y = 0;
          $$self{'data'}{'def'}[0] = '';
       }
@@ -1710,13 +1724,15 @@ sub _parse_date_other {
                @delta = (0,0,$sign*1,0,0,0,0);
             }
 
-            my @now = $dmb->_now('now',1);
+            my @now = $dmb->_now('now',$$noupdate);
+            $$noupdate = 1;
             ($y,$m,$d,$h,$mn,$s) = @{ $self->__calc_date_delta(0,[@now],[@delta],0) };
 
          } else {
             # next/prev friday
 
-            my @now = $dmb->_now('now',1);
+            my @now = $dmb->_now('now',$$noupdate);
+            $$noupdate = 1;
             ($y,$m,$d,$h,$mn,$s) = @{ $self->__next_prev(\@now,$next,$dow,0) };
             $dow = 0;
          }
@@ -1772,21 +1788,24 @@ sub _parse_date_other {
          } else {
             # DoW week
 
-            ($y,$m,$d) = $dmb->_now('now',1);
+            ($y,$m,$d) = $dmb->_now('now',$$noupdate);
+            $$noupdate = 1;
             my $tmp    = $dmb->_config('firstday');
             ($y,$m,$d) = @{ $self->__next_prev([$y,$m,$d,0,0,0],1,$tmp,0) };
             ($y,$m,$d) = @{ $self->__next_prev([$y,$m,$d,0,0,0],1,$dow,1) };
          }
 
       } elsif ($nth  &&  ! $got_y) {
-         ($y,$m,$d)    = $dmb->_now('now',1);
+         ($y,$m,$d)    = $dmb->_now('now',$$noupdate);
+         $$noupdate    = 1;
          $d            = $nth;
 
       } elsif ($special) {
 
          my $delta  = $$dmb{'data'}{'wordmatch'}{'offset_date'}{lc($special)};
          my @delta  = @{ $dmb->split('delta',$delta) };
-         ($y,$m,$d) = $dmb->_now('now',1);
+         ($y,$m,$d) = $dmb->_now('now',$$noupdate);
+         $$noupdate = 1;
          ($y,$m,$d) = @{ $self->__calc_date_delta(0,[$y,$m,$d,0,0,0],[@delta]) };
 
          if ($field_w) {
@@ -1803,7 +1822,7 @@ sub _parse_date_other {
 
 # Supply defaults for missing values (Y/M/D)
 sub _def_date {
-   my($self,$y,$m,$d) = @_;
+   my($self,$y,$m,$d,$noupdate) = @_;
    $y                 = ''  if (! defined $y);
    $m                 = ''  if (! defined $m);
    $d                 = ''  if (! defined $d);
@@ -1815,7 +1834,8 @@ sub _def_date {
    # We'll also fix the year (turn 2-digit into 4-digit).
 
    if ($y eq '') {
-      $y       = $dmb->_now('y',1);
+      ($y)       = $dmb->_now('y',$$noupdate);
+      $$noupdate = 1;
       $$self{'data'}{'def'}[0] = '';
    } else {
       $y       = $dmb->_fix_year($y);
@@ -1833,7 +1853,8 @@ sub _def_date {
       $m = 1;
       $$self{'data'}{'def'}[1] = 1;
    } else {
-      $m = $dmb->_now('m',1);
+      ($m) = $dmb->_now('m',$$noupdate);
+      $$noupdate = 1;
       $$self{'data'}{'def'}[1] = '';
    }
 
@@ -1848,7 +1869,8 @@ sub _def_date {
       $d = 1;
       $$self{'data'}{'def'}[2] = 1;
    } else {
-      $d = $dmb->_now('d',1);
+      ($d) = $dmb->_now('d',$$noupdate);
+      $$noupdate = 1;
       $$self{'data'}{'def'}[2] = '';
    }
 
@@ -1857,7 +1879,7 @@ sub _def_date {
 
 # Supply defaults for missing values (Y/DoY)
 sub _def_date_doy {
-   my($self,$y,$doy) = @_;
+   my($self,$y,$doy,$noupdate) = @_;
    $y                = ''  if (! defined $y);
    my $dmb           = $$self{'objs'}{'base'};
 
@@ -1866,7 +1888,8 @@ sub _def_date_doy {
    # We'll also fix the year (turn 2-digit into 4-digit).
 
    if ($y eq '') {
-      $y = $dmb->_now('y',1);
+      ($y) = $dmb->_now('y',$$noupdate);
+      $$noupdate = 1;
       $$self{'data'}{'def'}[0] = '';
    } else {
       $y = $dmb->_fix_year($y);
@@ -1882,7 +1905,7 @@ sub _def_date_doy {
 
 # Supply defaults for missing values (YY/Www/D) and (Y/Www/D)
 sub _def_date_dow {
-   my($self,$y,$w,$dow) = @_;
+   my($self,$y,$w,$dow,$noupdate) = @_;
    $y                   = ''  if (! defined $y);
    $w                   = ''  if (! defined $w);
    $dow                 = ''  if (! defined $dow);
@@ -1897,9 +1920,10 @@ sub _def_date_dow {
 
    if ($y ne '') {
       if (length($y) == 1) {
-         my $tmp  = $dmb->_now('y',1);
-         $tmp     =~ s/.$/$y/;
-         $y       = $tmp;
+         my ($tmp) = $dmb->_now('y',$$noupdate);
+         $tmp      =~ s/.$/$y/;
+         $y        = $tmp;
+         $$noupdate = 1;
 
       } else {
          $y       = $dmb->_fix_year($y);
@@ -1907,7 +1931,8 @@ sub _def_date_dow {
       }
 
    } else {
-      $y = $dmb->_now('y',1);
+      ($y) = $dmb->_now('y',$$noupdate);
+      $$noupdate = 1;
       $$self{'data'}{'def'}[0] = '';
    }
 
@@ -1918,9 +1943,8 @@ sub _def_date_dow {
    if ($w ne '') {
       ($y,$m,$d) = @{ $dmb->week_of_year($y,$w) };
    } else {
-      my $nowy = $dmb->_now('y',1);
-      my $nowm = $dmb->_now('m',1);
-      my $nowd = $dmb->_now('d',1);
+      my($nowy,$nowm,$nowd) = $dmb->_now('now',$$noupdate);
+      $$noupdate = 1;
       my $noww;
       ($nowy,$noww) = $dmb->week_of_year([$nowy,$nowm,$nowd]);
       ($y,$m,$d)    = @{ $dmb->week_of_year($nowy,$noww) };
@@ -1947,7 +1971,7 @@ sub _def_date_dow {
 
 # Supply defaults for missing values (HH:MN:SS)
 sub _def_time {
-   my($self,$h,$m,$s) = @_;
+   my($self,$h,$m,$s,$noupdate) = @_;
    $h                 = ''  if (! defined $h);
    $m                 = ''  if (! defined $m);
    $s                 = ''  if (! defined $s);
@@ -1970,7 +1994,8 @@ sub _def_time {
    if ($h ne '') {
       $defined = 1;
    } else {
-      $h = $dmb->_now('h',1);
+      ($h) = $dmb->_now('h',$$noupdate);
+      $$noupdate = 1;
       $$self{'data'}{'def'}[3] = '';
    }
 
@@ -1985,7 +2010,8 @@ sub _def_time {
       $m = 0;
       $$self{'data'}{'def'}[4] = 1;
    } else {
-      $m = $dmb->_now('mn',1);
+      ($m) = $dmb->_now('mn',$$noupdate);
+      $$noupdate = 1;
       $$self{'data'}{'def'}[4] = '';
    }
 
@@ -2051,7 +2077,7 @@ sub value {
             if (! @{ $$self{'data'}{'loc'} }) {
                my $zone  = $$self{'data'}{'tz'};
                $date     = $$self{'data'}{'date'};
-               my $local = $dmb->_now('tz');
+               my ($local) = $dmb->_now('tz',1);
 
                if ($zone eq $local) {
                   $$self{'data'}{'loc'}      = $date;
@@ -2145,7 +2171,7 @@ sub set {
       if ($$self{'data'}{'set'}  &&  ! $$self{'err'}) {
          $tz      = $$self{'data'}{'tz'};
       } else {
-         $tz      = $dmb->_now('tz');
+         ($tz)    = $dmb->_now('tz',1);
       }
       $self->_init();
       @def = @{ $$self{'data'}{'def'} };
@@ -2180,7 +2206,7 @@ sub set {
          } else {
             $err = 1;
          }
-         $tz = $dmb->_now('tz')  if (! $new_tz);
+         ($tz) = $dmb->_now('tz',1)  if (! $new_tz);
       }
 
       when ('zdate') {
@@ -2202,7 +2228,7 @@ sub set {
          for (my $i=0; $i<=5; $i++) {
             $def[$i] = 0  if ($def[$i]);
          }
-         $tz = $dmb->_now('tz')  if (! $new_tz);
+         ($tz) = $dmb->_now('tz',1)  if (! $new_tz);
       }
 
       when ('date') {
@@ -3196,7 +3222,7 @@ sub list_holidays {
    my($self,$y) = @_;
    my $dmb      = $$self{'objs'}{'base'};
 
-   $y = $dmb->_now('y')  if (! $y);
+   ($y) = $dmb->_now('y',1)  if (! $y);
    $self->_holidays($y,2);
 
    my @ret;
@@ -3631,9 +3657,16 @@ sub printf {
             $val  = $$self{'data'}{'abb'};
          }
 
+         when ('N') {
+            my $off = $$self{'data'}{'offset'};
+            $val = $dmb->join('offset',$off);
+         }
+
          when ('z') {
             my $off = $$self{'data'}{'offset'};
             $val = $dmb->join('offset',$off);
+            $val =~ s/://g;
+            $val =~ s/00$//;
          }
 
          when ('E') {
@@ -3966,7 +3999,7 @@ sub list_events {
 sub _events_year {
    my($self,$y) = @_;
    my $dmb      = $$self{'objs'}{'base'};
-   my $tz       = $dmb->_now("tz");
+   my ($tz)     = $dmb->_now('tz',1);
    return  if (exists $$dmb{'data'}{'eventyears'}{$y});
    $self->_event_objs()  if (! $$dmb{'data'}{'eventobjs'});
 

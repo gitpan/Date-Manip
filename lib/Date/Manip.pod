@@ -58,7 +58,7 @@ For new scripts, it is suggested that the OO interface be used.
 
    use Date::Manip;
 
-   $version = DateManipVersion();
+   $version = DateManipVersion($flag);
 
    Date_Init("VAR=VAL","VAR=VAL",...);
 
@@ -83,7 +83,7 @@ For new scripts, it is suggested that the OO interface be used.
 
    $flag = Date_Cmp($date1,$date2);
 
-   $d = DateCalc($d1,$d2 [,$errref] [,$del]);
+   $d = DateCalc($d1,$d2 [,$errref] [,$mode]);
 
    $date = Date_SetTime($date,$hr,$min,$sec);
    $date = Date_SetTime($date,$time);
@@ -145,26 +145,9 @@ here, so be sure to read the section SHOULD I USE DATE::MANIP in the
 Date::Manip::Misc document before deciding which of the Date and Time
 modules from CPAN is for you.
 
-Date::Manip deals with time as it is presented the Gregorian calendar (the
-one currently in use).  The Julian calendar defined leap years as every 4th
-year.  The Gregorian calendar improved this by making every 100th year NOT
-a leap year, unless it was also the 400th year.  The Gregorian calendar has
-been extrapolated back to the year 0001 AD and forward to the year 9999 AD.
-Note that in historical context, the Julian calendar was in use until 1582
-when the Gregorian calendar was adopted by the Catholic church.  Protestant
-countries did not accept it until later; Germany and Netherlands in 1698,
-British Empire in 1752, Russia in 1918.  Note that the Gregorian calendar
-is itself imperfect and at some point may need to be corrected.  No attempt
-is made to correct for that, and my great great great grandchildren will be
-long dead before this even occurs, so it's not an immediate concern.  Yes,
-this is similar to the attitude that caused the great Y2K problem... but
-I have an excuse: I don't know what the correction will be, so I can't
-possibly implement it.  Nobody doubted that the year after 1999 would be
-known as 2000 :-).
-
-Date::Manip is therefore not equipped to truly deal with historical dates,
-but should be able to perform (virtually) any operation dealing with a
-modern time and date.
+Date::Manip deals with time as it is used in the Gregorian calendar
+(the one currently in use) with full support for time changes due to
+daylight saving time.
 
 Date::Manip has functionality to work with several fundamental types
 of data.
@@ -203,7 +186,7 @@ which is earlier.
 
 =item *
 
-Extract any information you want from ANY date using a format string
+Extract any information you want from a date using a format string
 similar to the Unix date command.
 
 =item *
@@ -230,9 +213,10 @@ Each of these tasks is trivial (one or two lines at most) with this package.
 
 =item DateManipVersion
 
-   $version = DateManipVersion;
+   $version = DateManipVersion($flag);
 
-Returns the version of Date::Manip.
+Returns the version of Date::Manip.  If $flag is non-zero, timezone information
+is also returned.
 
 =item Date_Init
 
@@ -296,6 +280,7 @@ documentation for valid date formats. The date returned is in the local time zon
 
 =item UnixDate
 
+   $out = UnixDate($date,$in);
    @out = UnixDate($date,@in);
 
 This takes a date and a list of strings containing formats roughly
@@ -320,6 +305,7 @@ returned.
 
 =item Delta_Format
 
+   $out = Delta_Format($delta [,$mode], $dec,$in);
    @out = Delta_Format($delta [,$mode], $dec,@in);
 
 This is similar to the UnixDate routine except that it extracts information

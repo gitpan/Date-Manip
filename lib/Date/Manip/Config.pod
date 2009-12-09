@@ -311,6 +311,9 @@ variable. The two possible values are:
 
 "midnight" is the default value.
 
+NOTE: this only applies to dates parsed with the parse method. Dates parsed
+using the parse_date method always default to 00:00:00.
+
 =back
 
 =head1 BUSINESS CONFIGURATION VARIABLES

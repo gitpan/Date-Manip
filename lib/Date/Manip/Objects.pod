@@ -57,7 +57,9 @@ tells how to create various objects in order to get the most efficient
 reuse of this cached data.
 
 Because all other objects depend on a Date::Manip::Base object, a
-Date::Manip::Base object is embedded in all other objects.
+Date::Manip::Base object is embedded in all other objects, and the
+same Base object can be embedded as often as desired to achieve
+maximum performance.
 
 =item Date::Manip::TZ
 
@@ -114,8 +116,9 @@ Optionally, config options can be passed in:
 
 In order to create additional Date::Manip objects, a previously
 created object should be passed in as the first argument. This will
-maximize data reuse of the cached intermediate results, and will
-result in much better performance. For example:
+allow the same Base object to be embedded in both in order to maximize
+data reuse of the cached intermediate results, and will result in much
+better performance. For example:
 
    $date1 = new Date::Manip::Date;
    $date2 = new Date::Manip::Date $date1;

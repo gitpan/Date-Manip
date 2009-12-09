@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 use vars qw($VERSION);
-$VERSION='6.04';
+$VERSION='6.05';
 
 ########################################################################
 # BASE METHODS
@@ -344,7 +344,8 @@ sub curr_zone {
       $self->_set_curr_zone();
    }
 
-   return $dmb->_now('systz');
+   my($ret) = $dmb->_now('systz',1);
+   return $ret;
 }
 
 sub curr_zone_methods {
@@ -555,7 +556,26 @@ sub _windows_registry_val {
    #
 
    my $stdnam = $tzinfo->GetValue('StandardName');
-   return $self->_zone($stdnam);
+   my $z = $self->_zone($stdnam);
+   return $z  if ($z);
+
+   #
+   # For non-English versions, we have to determine which timezone it
+   # actually is.
+   #
+
+   my $atz = $lmachine->Open('SOFTWARE/Microsoft/Windows NT/CurrentVersion/Time Zones/');
+   if (! defined($atz)  ||  ! $atz) {
+      $atz = $lmachine->Open('SOFTWARE/Microsoft/Windows/CurrentVersion/Time Zones/');
+   }
+
+   return ""  if (! defined($atz)  ||  ! $atz);
+
+   foreach my $z ($atz->SubKeyNames()) {
+      my $tmp  = $atz->Open("$z/");
+      my $znam = $tmp->GetValue('Std');
+      return $z  if ($znam eq $stdnam);
+   }
 }
 
 # We will be testing commands that don't exist on all architectures,
@@ -581,7 +601,7 @@ sub zone {
    my($self,@args) = @_;
    my $dmb         = $$self{'objs'}{'base'};
    if (! @args) {
-      my $tz = $dmb->_now('tz');
+      my($tz) = $dmb->_now('tz',1);
       return $$self{'data'}{'ZoneNames'}{$tz}
    }
 
@@ -657,7 +677,8 @@ sub zone {
       if (! $zone  &&
           ! $abbrev  &&
           ! $offset) {
-         @zone = (lc($dmb->_now('tz')));
+         my($z) = $dmb->_now('tz',1);
+         @zone = (lc($z));
       }
 
       # $dstflag
@@ -1169,7 +1190,7 @@ sub convert_to_gmt {
    my $dmb = $$self{'objs'}{'base'};
 
    if (! $from) {
-      $from = $dmb->_now('tz');
+      ($from) = $dmb->_now('tz',1);
    }
    $self->_convert('convert_to_gmt',$date,$from,'GMT',$isdst);
 }
@@ -1182,7 +1203,7 @@ sub convert_from_gmt {
    my $dmb = $$self{'objs'}{'base'};
 
    if (! $to) {
-      $to = $dmb->_now('tz');
+      ($to) = $dmb->_now('tz',1);
    }
    $self->_convert('convert_from_gmt',$date,'GMT',$to,$isdst);
 }
@@ -1197,7 +1218,7 @@ sub convert_to_local {
    if (! $from) {
       $from = 'GMT';
    }
-   $self->_convert('convert_to_local',$date,$from,$dmb->_now('tz'),$isdst);
+   $self->_convert('convert_to_local',$date,$from,$dmb->_now('tz',1),$isdst);
 }
 
 sub convert_from_local {
@@ -1210,7 +1231,7 @@ sub convert_from_local {
    if (! $to) {
       $to = 'GMT';
    }
-   $self->_convert('convert_from_local',$date,$dmb->_now('tz'),$to,$isdst);
+   $self->_convert('convert_from_local',$date,$dmb->_now('tz',1),$to,$isdst);
 }
 
 sub _convert_args {
@@ -1306,12 +1327,12 @@ sub _zonerx {
                 keys %{ $$self{'data'}{'MyAlias'} });
    @zone     = sort _sortByLength(@zone);
    foreach my $zone (@zone) {
-      $zone =~ s/\057/\\057/g;   # /
-      $zone =~ s/\055/\\055/g;   # -
-      $zone =~ s/\056/\\056/g;   # .
-      $zone =~ s/\050/\\050/g;   # (
-      $zone =~ s/\051/\\051/g;   # )
-      $zone =~ s/\053/\\053/g;   # +
+      $zone  =~ s/\057/\\057/g;   # /
+      $zone  =~ s/\055/\\055/g;   # -
+      $zone  =~ s/\056/\\056/g;   # .
+      $zone  =~ s/\050/\\050/g;   # (
+      $zone  =~ s/\051/\\051/g;   # )
+      $zone  =~ s/\053/\\053/g;   # +
    }
    my $re    = join('|',@zone);
    $$self{'data'}{'zonerx'} = qr/(?<zone>$re)/i;
@@ -1357,6 +1378,7 @@ sub _offrx {
    my($hr) = qr/(?:[0-1][0-9]|2[0-3])/;  # 00 - 23
    my($mn) = qr/(?:[0-5][0-9])/;         # 00 - 59
    my($ss) = qr/(?:[0-5][0-9])/;         # 00 - 59
+   my($abb)= $self->_abbrx();
 
    my($re) = qr/ (?<off> [+-] (?: $hr:$mn:$ss |
                                   $hr$mn$ss   |
@@ -1364,7 +1386,7 @@ sub _offrx {
                                   $hr
                               )
                  )
-                 (?: \s* \( (?<abb>.*?) \))? /ix;
+                 (?: \s* \( $abb \))? /ix;
 
    $$self{'data'}{'offrx'} = $re;
    return $$self{'data'}{'offrx'};
@@ -1382,9 +1404,9 @@ sub _zrx {
    my($self) = @_;
    return $$self{'data'}{'zrx'}  if (defined $$self{'data'}{'zrx'});
 
-   my $zonerx    = $self->_zonerx();          # (america/new_york|...)
-   my $zoneabbrx = $self->_abbrx();           # (edt|est|...)
-   my $zoneoffrx = $self->_offrx();           # (07:00) (GMT)
+   my $zonerx    = $self->_zonerx();          # (?<zone>america/new_york|...)
+   my $zoneabbrx = $self->_abbrx();           # (?<abb>edt|est|...)
+   my $zoneoffrx = $self->_offrx();           # (?<off>07:00) (?<abb>GMT)
 
    my $zrx       = qr/(?<tzstring>$zonerx|$zoneabbrx|$zoneoffrx)/;
    $$self{'data'}{'zrx'} = $zrx;
