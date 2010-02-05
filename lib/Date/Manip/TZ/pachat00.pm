@@ -1,13 +1,13 @@
 package Date::Manip::TZ::pachat00;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:29 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:38 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -550,13 +550,21 @@ $VERSION='6.05';
           'CHADT',1,[2030,4,6,13,59,59],[2030,4,7,3,44,59],
           '2029092914:00:00','2029093003:45:00','2030040613:59:59','2030040703:44:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,4,6,14,0,0],[2030,4,7,2,45,0],'+12:45:00',[12,45,0],
+          'CHAST',0,[2030,9,28,13,59,59],[2030,9,29,2,44,59],
+          '2030040614:00:00','2030040702:45:00','2030092813:59:59','2030092902:44:59' ],
+        [ [2030,9,28,14,0,0],[2030,9,29,3,45,0],'+13:45:00',[13,45,0],
+          'CHADT',1,[2031,4,5,13,59,59],[2031,4,6,3,44,59],
+          '2030092814:00:00','2030092903:45:00','2031040513:59:59','2031040603:44:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '+13:45:00',
                 'stdoff' => '+12:45:00',
-
                },
    'rules'  => {
                 '04' => {
@@ -577,7 +585,6 @@ $VERSION='6.05';
                          'isdst'   => '1',
                          'abb'     => 'CHADT',
                         },
-
                },
 );
 

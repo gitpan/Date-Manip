@@ -1,5 +1,5 @@
 package Date::Manip;
-# Copyright (c) 1995-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -56,7 +56,7 @@ use feature 'switch';
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 ###########################################################################
 
@@ -787,6 +787,8 @@ sub Date_TimeZone {
 
 sub Date_ConvTZ {
    my($str,$from,$to) = @_;
+   $from = $dmb->_now("tz")  if (! $from);
+   $to   = $dmb->_now("tz")  if (! $to);
    $from = $dmt->zone($from);
    return ''  if (! $from);
    $to = $dmt->zone($to);

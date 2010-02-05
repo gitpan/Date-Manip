@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -792,8 +792,10 @@ $def_off{0} = {
                                "America/Monterrey",             # 1922-9999
                                "America/Merida",                # 1922-9999
                                "America/Cancun",                # 1922-9999
+                               "America/Matamoros",             # 1922-9999
                                "America/Mazatlan",              # 1927-9999
                                "America/Mexico_City",           # 1927-9999
+                               "America/Ojinaga",               # 1927-9999
                                "America/Chihuahua",             # 1927-9999
                                "Pacific/Easter",                # 1932-9999
                                "America/Cambridge_Bay",         # 1942-9999
@@ -831,7 +833,9 @@ $def_off{0} = {
                                "America/Boise",                 # 1918-9999
                                "America/Cambridge_Bay",         # 1920-9999
                                "America/Mazatlan",              # 1922-9999
+                               "America/Ojinaga",               # 1922-9999
                                "America/Tijuana",               # 1922-9999
+                               "America/Santa_Isabel",          # 1922-9999
                                "America/Chihuahua",             # 1922-9999
                                "America/Yellowknife",           # 1935-9999
                                "America/Inuvik",                # 1979-9999
@@ -854,6 +858,7 @@ $def_off{0} = {
                                "America/Whitehorse",            # 1918-9999
                                "America/Dawson",                # 1918-9999
                                "America/Tijuana",               # 1924-9999
+                               "America/Santa_Isabel",          # 1924-9999
                                "Pacific/Pitcairn",              # 1998-9999
                                "Etc/GMT-8",                     # 0001-9999
                                "America/Inuvik",                # 1953-1979
@@ -1293,19 +1298,21 @@ $def_off{1} = {
                                "America/Kentucky/Monticello",   # 1918-9999
                                "America/Mexico_City",           # 1939-9999
                                "America/Iqaluit",               # 1945-9999
+                               "America/Resolute",              # 1980-9999
                                "America/Rankin_Inlet",          # 1980-9999
                                "America/Merida",                # 1981-9999
                                "America/Cancun",                # 1981-9999
                                "Pacific/Easter",                # 1982-9999
                                "America/Monterrey",             # 1988-9999
+                               "America/Matamoros",             # 1988-9999
                                "America/North_Dakota/Center",   # 1993-9999
                                "America/Pangnirtung",           # 1995-9999
                                "America/North_Dakota/New_Salem",# 2004-9999
                                "America/Guatemala",             # 1973-2006
                                "America/Managua",               # 1973-2006
-                               "America/Resolute",              # 1980-2006
                                "America/Tegucigalpa",           # 1987-2006
                                "America/Cambridge_Bay",         # 1965-2001
+                               "America/Ojinaga",               # 1996-1998
                                "America/Chihuahua",             # 1996-1998
                                "America/Costa_Rica",            # 1979-1992
                                "America/El_Salvador",           # 1987-1988
@@ -1319,11 +1326,12 @@ $def_off{1} = {
                                "America/North_Dakota/New_Salem",# 1918-9999
                                "America/North_Dakota/Center",   # 1918-9999
                                "America/Mazatlan",              # 1927-9999
+                               "America/Ojinaga",               # 1927-9999
                                "America/Chihuahua",             # 1927-9999
                                "Pacific/Easter",                # 1932-9999
                                "America/Boise",                 # 1942-9999
-                               "America/Cambridge_Bay",         # 1942-9999
                                "America/Yellowknife",           # 1942-9999
+                               "America/Cambridge_Bay",         # 1942-9999
                                "America/Inuvik",                # 1965-9999
                                "America/Hermosillo",            # 1927-1998
                                "America/Swift_Current",         # 1918-1972
@@ -1335,6 +1343,7 @@ $def_off{1} = {
                                "America/Boise",                 # 1918-9999
                                "America/Vancouver",             # 1918-9999
                                "America/Tijuana",               # 1922-9999
+                               "America/Santa_Isabel",          # 1922-9999
                                "America/Whitehorse",            # 1965-9999
                                "America/Dawson",                # 1965-9999
                                "America/Juneau",                # 1942-1984

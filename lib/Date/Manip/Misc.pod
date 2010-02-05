@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -10,67 +10,53 @@ Date::Manip::Misc - Miscellaneous information about Date::Manip
 
 =head1 SHOULD I USE DATE::MANIP
 
-NOTE: the following section applies primarily to 5.xx. I'm doing a lot
-of work to optimize Date::Manip to the point where I hope to
-universally recommend it. Check back soon for an updated
-recommendation!
-
 If you look in CPAN, you'll find that there are a number of Date and
-Time packages.  Is Date::Manip the one you should be using?  In my
-opinion, the answer usually no.  This may sound odd coming from
-the author of the software, but read on.
+Time packages.  Is Date::Manip the one you should be using? That isn't
+a trivial question to answer. It depends to a large extent on what you
+are trying to do.
 
-Date::Manip is written entirely in Perl.  It's the most powerful of the
-date modules.  It's also the biggest and probably the slowest.
+Date::Manip is certainly the most powerful of the Date modules.  I'm
+trying to build a library which can do _EVERY_ conceivable date/time
+manipulation that you'll run into in everyday life dealing with the
+Gregorian calendar.  To the best of my knowledge, it will do
+everything that any other date module will do which work with the
+Gregorian calendar (Date::Manip does NOT provide functionality for
+working with alternate calendars such as the Chinese or Hebrew
+calendars, so if you need that functionality, you definitely need to
+look elsewhere). There are a number of features that Date::Manip has
+that none of the other modules have.  Date::Manip is the "Swiss Army
+Knife" of Date modules.
 
-Since Date::Manip is written entirely in Perl, and has very few
-dependencies on other module not in a standard Perl distribution,
-Date::Manip is easy to install.  Other modules have dependencies on a
-C compiler or other Perl modules.  Since it is fairly easy to satisfy
-these dependencies for anyone who is reasonably familiar with Perl
-modules, this is not a huge advantage that Date::Manip has.
+There is a tradeoff in being able to do "everything"... and that
+tradeoff is primarily in terms of performance.  Date::Manip is written
+entirely in Perl and is the largest of the date modules. Other modules
+tend to be faster than Date::Manip, and modules written in C are
+significantly faster than their Perl counterparts (at least if they're
+done right).  Although I am working on making Date::Manip faster, it
+will never be as fast as other modules.  And before anyone asks,
+Date::Manip will never be translated to C (at least by me).  I write C
+because I have to.  I write Perl because I like to.  Date::Manip is
+something I do because it interests me, not something I'm paid for.
 
-On the other hand, simpler Perl modules tend to be faster than Date::Manip,
-and modules written in C are significantly faster than their Perl
-counterparts (at least if they're done right).  The TimeDate and
-Time-modules modules are written in Perl, but are much simpler (and hence,
-faster) than Date::Manip.  The Date::Calc module is written in C and is a
-good module for doing many date calculations much faster than Date::Manip.
-Between these three, most of your common date operations can be done.
+If you are going to be using the module in cases where performance is
+an important factor, and you're doing a fairly small set of simple
+date operations over and over again, you should carefully examine the
+other date modules to see if they will meet your needs.
 
-Date::Manip is certainly the most powerful of the Date modules.  To the
-best of my knowledge, it will do everything that any other date module will
-do (not just the ones I listed above), and there are a number of features
-that Date::Manip has that none of the other modules have.  Date::Manip is
-the "Swiss Army Knife" of Date modules.  I'm trying to build a library
-which can do _EVERY_ conceivable date/time manipulation that you'll run
-into in everyday life.
+On the other hand, if you want one solution for all your date needs,
+don't need peak speed, or are trying to do more exotic date
+operations, Date::Manip is for you.  Operations on things like
+business dates, foreign language dates, holidays and other recurring
+events, complete timezone handling, etc. are available more-or-less
+exclusively in Date::Manip. At the very least, if you want to be able
+to do these operations, it will require using several other modules,
+each with it's own interface.
 
-Although I am working on making Date::Manip faster, it will never be as
-fast as other modules.  And before anyone asks, Date::Manip will never be
-translated to C (at least by me).  I write C because I have to.  I write
-Perl because I like to.  Date::Manip is something I do because it interests
-me, not something I'm paid for.
-
-Date::Manip is also big.  It's true that Date::Manip will do almost
-every date operation you could imagine... but you rarely need all that
-power.
-
-If you are going to be using the module in cases where performance is an
-important factor (started up in a CGI program being run by your web server
-5,000 times a second), you should check out one of the other Date or Time
-modules in CPAN.  If you're only doing fairly simple date operations
-(parsing common date formats, finding the difference between two dates,
-etc.), the other modules will almost certainly suffice.  If you're doing
-one operation very repetitively (parsing 10,000 dates from a database), you
-are probably better off writing your own functions (perhaps bypassing all
-date modules entirely) designed specifically for your needs.
-
-On the other hand, if you want one solution for all your date needs, don't
-need peak speed, or are trying to do more exotic date operations,
-Date::Manip is for you.  Operations on things like business dates, foreign
-language dates, holidays and other recurring events, etc. are available
-more-or-less exclusively in Date::Manip.
+In addition, I am making significant performance improvements in
+Date::Manip.  Although it will never be as fast as some of the other
+perl modules, I believe that it is already competitive enough for most
+purposes, and I continue to look for places where I can improve
+performance, so performance should improve over time.
 
 =head1 YEAR 2000 AND YEAR 2007 DST CHANGE
 
@@ -101,20 +87,22 @@ The Gregorian calendar is a relatively recent innovation. Prior to it,
 the Julian calendar was in use.  The Julian calendar defined leap years as
 every 4th year.  This led to significant calendar drift over time (since
 a year is NOT 365.24 days long). It was replaced by the Gregorian
-calendar which improved the definition of leap years.
+calendar which improved the definition of leap years, and at that point,
+the calendar was adjusted appropriately.
 
-Date::Manip extrapolates the Gregorian calendar back to the year 0001 AD
-and forward to the year 9999 AD, but that does not necessarily mean
+Date::Manip extrapolates the Gregorian calendar back to the year 0001
+AD and forward to the year 9999 AD, but that does not necessarily mean
 that the results are useful. As the world adopted the Gregorian
 calendar, the dates using the Julian calendar had to be changed to fit
-to account for the drift that had occurred. As such, the dates produced
-by Date::Manip in an era where the Julian calendar was in use do not
-accurately reflect the dates actually in use. In historical context,
-the Julian calendar was in use until 1582 when the Gregorian calendar
-was adopted by the Catholic church.  Protestant countries did not
-accept it until later; Germany and Netherlands in 1698, British Empire
-in 1752, Russia in 1918, etc. Date::Manip is therefore not equipped to
-truly deal with historical dates prior to about 1900.
+to account for the drift that had occurred. As such, the dates
+produced by Date::Manip in an era where the Julian calendar was in use
+do not accurately reflect the dates actually in use. In historical
+context, the Julian calendar was in use until 1582 when the Gregorian
+calendar was adopted by the Catholic church.  Protestant countries did
+not accept it until later; Germany and Netherlands in 1698, British
+Empire in 1752, Russia in 1918, etc. Date::Manip is therefore not
+equipped to truly deal with historical dates prior to about 1600, and
+between 1600 and 1900, the calendar varied from country to country.
 
 A second problem is that the Gregorian calendar is itself imperfect
 and at some point may need to be corrected (though it's not clear that
@@ -234,7 +222,8 @@ in some other language.
 
 I am considering rewriting the parsing routines in order to allow
 date forms that might be used in other languages but do not have a
-common English equivalent.
+common English equivalent, and to account for the fact that some
+English formats may not have an equivalent in another language.
 
 =item Making the primary interface OO
 

@@ -1,5 +1,6 @@
 Build.PL
 examples/dm_date
+examples/dm_zdump
 examples/README.examples
 HISTORY
 INSTALL
@@ -15,8 +16,10 @@ internal/data.abbrev.pl
 internal/data.alias.pl
 internal/data.misc.pl
 internal/data.offset.pl
+internal/dumps
 internal/manip.isp
 internal/README
+internal/requirements
 internal/TODO
 internal/tzdata
 internal/VERSION
@@ -534,6 +537,9 @@ lib/Date/Manip/Offset/off473.pm
 lib/Date/Manip/Offset/off474.pm
 lib/Date/Manip/Offset/off475.pm
 lib/Date/Manip/Offset/off476.pm
+lib/Date/Manip/Offset/off477.pm
+lib/Date/Manip/Offset/off478.pm
+lib/Date/Manip/Offset/off479.pm
 lib/Date/Manip/Problems.pod
 lib/Date/Manip/Recur.pm
 lib/Date/Manip/Recur.pod
@@ -661,6 +667,7 @@ lib/Date/Manip/TZ/ammana00.pm
 lib/Date/Manip/TZ/ammana01.pm
 lib/Date/Manip/TZ/ammare00.pm
 lib/Date/Manip/TZ/ammart00.pm
+lib/Date/Manip/TZ/ammata00.pm
 lib/Date/Manip/TZ/ammaza00.pm
 lib/Date/Manip/TZ/ammend00.pm
 lib/Date/Manip/TZ/ammeno00.pm
@@ -679,6 +686,7 @@ lib/Date/Manip/TZ/amnew_01.pm
 lib/Date/Manip/TZ/amnipi00.pm
 lib/Date/Manip/TZ/amnome00.pm
 lib/Date/Manip/TZ/amnoro00.pm
+lib/Date/Manip/TZ/amojin00.pm
 lib/Date/Manip/TZ/ampana00.pm
 lib/Date/Manip/TZ/ampang00.pm
 lib/Date/Manip/TZ/ampara00.pm
@@ -701,6 +709,7 @@ lib/Date/Manip/TZ/amsan_01.pm
 lib/Date/Manip/TZ/amsant00.pm
 lib/Date/Manip/TZ/amsant01.pm
 lib/Date/Manip/TZ/amsant02.pm
+lib/Date/Manip/TZ/amsant03.pm
 lib/Date/Manip/TZ/amsao_00.pm
 lib/Date/Manip/TZ/amscor00.pm
 lib/Date/Manip/TZ/amst_j00.pm
@@ -989,7 +998,6 @@ Makefile.PL
 MANIFEST			This list of files
 README
 README.first
-requirements
 t/base._calc_date_ymwd.t
 t/base._config.t
 t/base._critical_date.t

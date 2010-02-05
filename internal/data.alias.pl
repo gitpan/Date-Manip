@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -258,35 +258,37 @@
    # These are set in RFC 822 and the default (first) value will NOT
    # be modified ever.
    "CST6CDT"       => [
-                       "America/Chicago",                        # 1918-2047
-                       "America/Atikokan",                       # 1918
-                       "America/Cancun",                         # 1999-2047
-                       "America/Chihuahua",                      # 1996-1997
-                       "America/Costa_Rica",                     # 1979-1992
-                       "America/El_Salvador",                    # 1987-1988
-                       "America/Guatemala",                      # 1983-2006
-                       "America/Indiana/Indianapolis",           # 1918-1954
-                       "America/Indiana/Knox",                   # 1918-2047
-                       "America/Indiana/Marengo",                # 1918-1960
+                       "America/Chicago",                        # 1918-2048
+                       "America/Winnipeg",                       # 1916-2048
+                       "America/Indiana/Knox",                   # 1918-2048
+                       "America/Indiana/Tell_City",              # 1918-2048
+                       "America/Menominee",                      # 1918-2048
+                       "America/Rainy_River",                    # 1918-2048
+                       "America/Mexico_City",                    # 1939-2048
+                       "America/Rankin_Inlet",                   # 1980-2048
+                       "America/Matamoros",                      # 1988-2048
+                       "America/Monterrey",                      # 1988-2048
+                       "America/North_Dakota/Center",            # 1993-2048
+                       "America/Merida",                         # 1996-2048
+                       "America/Cancun",                         # 1999-2048
+                       "America/North_Dakota/New_Salem",         # 2004-2048
                        "America/Indiana/Petersburg",             # 1918-2006
-                       "America/Indiana/Tell_City",              # 1918-2047
-                       "America/Indiana/Vevay",                  # 1918-1919
                        "America/Indiana/Vincennes",              # 1918-2006
                        "America/Indiana/Winamac",                # 1918-2006
-                       "America/Kentucky/Louisville",            # 1918-1960
-                       "America/Kentucky/Monticello",            # 1918-1999
                        "America/Managua",                        # 1979-2006
-                       "America/Menominee",                      # 1918-2047
-                       "America/Merida",                         # 1996-2047
-                       "America/Mexico_City",                    # 1939-2047
-                       "America/Monterrey",                      # 1988-2047
-                       "America/North_Dakota/Center",            # 1993-2047
-                       "America/North_Dakota/New_Salem",         # 2004-2047
-                       "America/Rainy_River",                    # 1918-2047
-                       "America/Rankin_Inlet",                   # 1980-2047
-                       "America/Resolute",                       # 1980-2005
+                       "America/Guatemala",                      # 1983-2006
                        "America/Tegucigalpa",                    # 1987-2006
-                       "America/Winnipeg",                       # 1916-2047
+                       "America/Resolute",                       # 1980-2005
+                       "America/Kentucky/Monticello",            # 1918-1999
+                       "America/Chihuahua",                      # 1996-1997
+                       "America/Ojinaga",                        # 1996-1997
+                       "America/Costa_Rica",                     # 1979-1992
+                       "America/El_Salvador",                    # 1987-1988
+                       "America/Indiana/Marengo",                # 1918-1960
+                       "America/Kentucky/Louisville",            # 1918-1960
+                       "America/Indiana/Indianapolis",           # 1918-1954
+                       "America/Indiana/Vevay",                  # 1918-1919
+                       "America/Atikokan",                       # 1918
                       ],
    "EST5EDT"       => [
                        "America/New_York",                       # 1918-2047
@@ -313,30 +315,32 @@
                        "America/Toronto",                        # 1918-2047
                       ],
    "MST7MDT"       => [
-                       "America/Denver",                         # 1918-2047
-                       "America/Boise",                          # 1967-2047
-                       "America/Cambridge_Bay",                  # 1980-2047
-                       "America/Chihuahua",                      # 1998-2047
-                       "America/Edmonton",                       # 1918-2047
-                       "America/Hermosillo",                     # 1996-1998
-                       "America/Inuvik",                         # 1980-2047
-                       "America/Mazatlan",                       # 1996-2047
-                       "America/North_Dakota/Center",            # 1918-1991
+                       "America/Denver",                         # 1918-2048
+                       "America/Edmonton",                       # 1918-2048
+                       "America/Boise",                          # 1967-2048
+                       "America/Cambridge_Bay",                  # 1980-2048
+                       "America/Inuvik",                         # 1980-2048
+                       "America/Yellowknife",                    # 1980-2048
+                       "America/Mazatlan",                       # 1996-2048
+                       "America/Chihuahua",                      # 1998-2048
+                       "America/Ojinaga",                        # 1998-2048
                        "America/North_Dakota/New_Salem",         # 1918-2002
+                       "America/Hermosillo",                     # 1996-1998
+                       "America/North_Dakota/Center",            # 1918-1991
                        "America/Phoenix",                        # 1918-1967
-                       "America/Regina",                         # 1918-1959
                        "America/Swift_Current",                  # 1918-1961
-                       "America/Yellowknife",                    # 1980-2047
+                       "America/Regina",                         # 1918-1959
                       ],
    "PST8PDT"       => [
-                       "America/Los_Angeles",                    # 1918-2047
-                       "America/Boise",                          # 1918-1919
-                       "America/Dawson",                         # 1980-2047
-                       "America/Dawson_Creek",                   # 1918-1971
+                       "America/Los_Angeles",                    # 1918-2048
+                       "America/Vancouver",                      # 1918-2048
+                       "America/Santa_Isabel",                   # 1931-2048
+                       "America/Tijuana",                        # 1931-2048
+                       "America/Dawson",                         # 1980-2048
+                       "America/Whitehorse",                     # 1980-2048
                        "America/Juneau",                         # 1969-1982
-                       "America/Tijuana",                        # 1931-2047
-                       "America/Vancouver",                      # 1918-2047
-                       "America/Whitehorse",                     # 1980-2047
+                       "America/Dawson_Creek",                   # 1918-1971
+                       "America/Boise",                          # 1918-1919
                       ],
 
    # Open to discussion
@@ -640,6 +644,7 @@
                        "America/Los_Angeles",                    # 1945
                        "America/Dawson_Creek",                   # 1945
                        "America/Juneau",                         # 1945
+                       "America/Santa_Isabel",                   # 1945
                        "America/Tijuana",                        # 1945
                        "America/Vancouver",                      # 1945
                       ],

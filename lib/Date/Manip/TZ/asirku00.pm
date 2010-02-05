@@ -1,13 +1,13 @@
 package Date::Manip::TZ::asirku00;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:17 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:27 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -505,13 +505,21 @@ $VERSION='6.05';
           'IRKT',0,[2030,3,30,17,59,59],[2030,3,31,1,59,59],
           '2029102718:00:00','2029102802:00:00','2030033017:59:59','2030033101:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,3,30,18,0,0],[2030,3,31,3,0,0],'+09:00:00',[9,0,0],
+          'IRKST',1,[2030,10,26,17,59,59],[2030,10,27,2,59,59],
+          '2030033018:00:00','2030033103:00:00','2030102617:59:59','2030102702:59:59' ],
+        [ [2030,10,26,18,0,0],[2030,10,27,2,0,0],'+08:00:00',[8,0,0],
+          'IRKT',0,[2031,3,29,17,59,59],[2031,3,30,1,59,59],
+          '2030102618:00:00','2030102702:00:00','2031032917:59:59','2031033001:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '+09:00:00',
                 'stdoff' => '+08:00:00',
-
                },
    'rules'  => {
                 '03' => {
@@ -532,7 +540,6 @@ $VERSION='6.05';
                          'isdst'   => '0',
                          'abb'     => 'IRKT',
                         },
-
                },
 );
 

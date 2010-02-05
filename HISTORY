@@ -616,6 +616,9 @@ Version 5.41  DEVELOPMENT
    Patch to allow deltas of the form "+ -1 day" to work.  Ed Avis
    Added Turkish. Giray
    Added Danish.  Jesper Dalberg
+      A patch for Danish was send by Jorgen Norgaard previously, and
+      I somehow overlooked it (I have a mail folder containing as-yet
+      unimplemented suggestions). I apologize for that.
    Added some checking to the timezone determination.  Ed Avis
    ***Replaced all non-ASCII characters with hex representations to avoid
       the malformed UTF-8 character warnings. Ed Avis
@@ -778,8 +781,16 @@ Version 6.00  2009-11-23
    because of the suggestions specifically, I wanted to acknowledge
    them since I appreciate the suggestions.
 
+   I believe the first person to suggest writing Date::Manip as an OO
+      module was Eduard Derksen.
    Delta_Format initialization done outside of the function.  Eric Boehm
    Added $subtract to calculation routines. First suggested by Steve Berlage.
+   Added ability to set individual parts of the date (Date::Manip::Date::set).
+      First suggested by Martin Thurn.
+   UnixDate (i.e. Date::Manip::Date::printf) only calculates formats when
+      they are needed.  Eduard Derksen
+   Parsing will skip some date/time formats if requested. This was first
+      suggested by Eduard Derksen.
 
 Version 6.01  2009-11-23
    *** Fixed a bug where dates were sometimes getting the wrong timezone when
@@ -798,9 +809,9 @@ Version 6.04  2009-11-25
    Fixed a bug where events were not interpreted in the correct timezone if
       SetDate/ForceDate used.
 
-Version 6.05
-   Significant speedups. Thanks to Moritz Lenz and BrowserUK on perlmonks for
-      suggestions (and a number of other people on perlmonks for suggestions
+Version 6.05  2009-12-09
+   *** Significant speedups. Thanks to Moritz Lenz and BrowserUK on perlmonks
+      for suggestions (and a number of other people on perlmonks for suggestions
       that I did not end up using, but which provided a great discussion).
    Reduced the precision of 1 test to avoid a rounding difference when using
       a perl compiled with uselongdouble.  Andreas Koenig
@@ -811,6 +822,17 @@ Version 6.05
    Changed %z printf behavior back to 5.xx and added %N format. Gilles Lamiral
    Fixed bug where non-English Windows versions didn't get the timezone. Thanks
       to Rene Schickbauer for testing.
+   Added dm_date example script.
 
-
-
+Version 6.06  
+   Added dm_zdump example script.
+   Minor bug where %Z printf format didn't always work.
+   Improved TZ::periods functionality
+   Fixed bug in Date_ConvTZ where empty values weren't defaulting to local timezone.
+      Robert Eden
+   Fixed a couple of problems in the generated timezones for some odd cases
+      (America/Resolute and Asia/Tehran).
+   Added support for 5pm back in (it was omitted accidentally).  Mark Kennedy
+   Fixed a minor warning.  Morten Bjoernsvik
+   Some additional speedups.
+   Newest zoneinfo data.

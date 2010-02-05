@@ -1,13 +1,13 @@
 package Date::Manip::Offset::off429;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:05:26 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:55:33 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off429;
 
 =head1 NAME
 
-Date::Manip::Offset::off429 - Support for the -07:05:40 offset
+Date::Manip::Offset::off429 - Support for the -07:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,15 +32,47 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 use vars qw($Offset %Offset);
 
-$Offset        = '-07:05:40';
+$Offset        = '-07:00:00';
 
 %Offset        = (
    0 => [
+      'america/denver',
+      'america/edmonton',
+      'america/boise',
+      'america/cambridge_bay',
       'america/mazatlan',
+      'america/ojinaga',
+      'america/tijuana',
+      'america/santa_isabel',
+      'america/chihuahua',
+      'america/yellowknife',
+      'america/inuvik',
+      'etc/gmt-7',
+      'america/north_dakota/new_salem',
+      'america/hermosillo',
+      'america/north_dakota/center',
+      'pacific/easter',
+      'america/swift_current',
+      'america/dawson_creek',
+      'america/phoenix',
+      'america/regina',
+      'america/mexico_city',
+      'g',
+      ],
+   1 => [
+      'america/los_angeles',
+      'america/boise',
+      'america/vancouver',
+      'america/tijuana',
+      'america/santa_isabel',
+      'america/whitehorse',
+      'america/dawson',
+      'america/juneau',
+      'america/dawson_creek',
       ],
 );
 

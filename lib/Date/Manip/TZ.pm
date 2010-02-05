@@ -1,5 +1,5 @@
 package Date::Manip::TZ;
-# Copyright (c) 2008-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 ########################################################################
 # BASE METHODS
@@ -345,7 +345,7 @@ sub curr_zone {
    }
 
    my($ret) = $dmb->_now('systz',1);
-   return $ret;
+   return $$self{'data'}{'ZoneNames'}{$ret}
 }
 
 sub curr_zone_methods {
@@ -918,7 +918,8 @@ sub _all_periods {
       #
 
       my($ym1,$ym0);
-      if ($year > $$self{'data'}{'LastYear'}  &&  $self->_use_lastrule($zone)) {
+      if ($year > $$self{'data'}{'LastYear'}  &&
+          exists $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'zone'}) {
          $ym1 = $year-1;
          $ym0 = $year;
 
@@ -970,7 +971,7 @@ sub _all_periods {
 }
 
 sub periods {
-   my($self,$zone,$year) = @_;
+   my($self,$zone,$year,$year1) = @_;
 
    my $z = $self->_zone($zone);
    if (! $z) {
@@ -980,7 +981,32 @@ sub periods {
    $zone = $z;
    $self->_module($zone);
 
-   return $self->_periods($zone,$year);
+   if (! defined($year1)) {
+      return $self->_periods($zone,$year);
+   }
+
+   $year = 1  if (! defined($year));
+
+   my @ret;
+   my $lastyear = $$self{'data'}{'LastYear'};
+
+   if ($year <= $lastyear) {
+      foreach my $y (sort { $a <=> $b }
+                     keys %{ $$self{'data'}{'Zones'}{$zone}{'Dates'} }) {
+         last  if ($y > $year1  ||  $y > $lastyear);
+         next  if ($y < $year);
+         push(@ret,$self->_periods($zone,$y));
+      }
+   }
+
+   if ($year1 > $lastyear) {
+      $year = $lastyear + 1  if ($year <= $lastyear);
+      foreach my $y ($year..$year1) {
+         push(@ret,$self->_periods($zone,$y));
+      }
+   }
+
+   return @ret;
 }
 
 sub _periods {
@@ -1076,17 +1102,6 @@ sub date_period {
       warn "ERROR: [date_period] Impossible error\n";
       return;
    }
-}
-
-# Determines whether or not to use the LAST RULE for a zone.
-#
-sub _use_lastrule {
-   my($self,$zone) = @_;
-
-   my @mon = (sort keys
-              %{ $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'rules'} });
-   return 0  if (! @mon);
-   return 1;
 }
 
 # Calculate critical dates from the last rule. If $endonly is passed
@@ -1266,23 +1281,28 @@ sub _convert {
       $date = [@date];
    }
 
-   return (0,$date)  if ($from eq $to);
+   if ($from ne $to) {
+      my $tmp = $self->_zone($from);
+      if (! $tmp) {
+         return (2);
+      }
+      $from = $tmp;
 
-   my $tmp = $self->_zone($from);
-   if (! $tmp) {
-      return (2);
+      $tmp = $self->_zone($to);
+      if (! $tmp) {
+         return (3);
+      }
+      $to = $tmp;
    }
-   $from = $tmp;
 
-   $tmp = $self->_zone($to);
-   if (! $tmp) {
-      return (3);
+   if ($from eq $to) {
+      my $per = $self->date_period($date,$from,1,$isdst);
+      my $offset = $$per[3];
+      my $abb    = $$per[4];
+      return (0,$date,$offset,$isdst,$abb);
    }
-   $to = $tmp;
-   return (0,$date)  if ($from eq $to);
 
    # Convert $date from $from to GMT
-
 
    if ($from ne "Etc/GMT") {
       my $per = $self->date_period($date,$from,1,$isdst);

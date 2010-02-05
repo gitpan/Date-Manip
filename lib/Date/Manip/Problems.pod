@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -138,7 +138,10 @@ Date::Manip::Changes6 documentation for this module.
 Date::Manip also consists of a large number of functions which are NOT
 documented. These are for internal use only.  Please do not use them!
 I can (and do) change their use, and even their name, without notice,
-and without apology!
+and without apology!  Some of these internal functions even have test
+scripts, but that is not a guarantee that they will not change, nor is
+any support implied. I simply like to run regression tests on as much
+of Date::Manip as possible.
 
 As of the most recent versions of Date::Manip, all internal functions
 have names that begin with an underscore (_). If you choose to use
@@ -146,20 +149,14 @@ them directly, it is quite possible that new versions of Date::Manip
 will cause your programs to break due to a change in how those
 functions work.
 
-Some of these internal functions even have test scripts, but that is
-not a guarantee that they will not change, nor is any support
-implied. I simply like to run regression tests on as much of
-Date::Manip as possible.
-
 Any changes to internal functions will not be documented, and will not
 be regarded by me as a backwards incompatibility. Nor will I (as was
 requested in one instance) revert to a previous version of the
 internal function.
 
-If you feel that an internal function is of more general use, feel free
-to contact me with an argument of why it should be "promoted".  I
-welcome suggestions, and a huge number of changes made to Date::Manip
-come directly from user suggestions.
+If you feel that an internal function is of more general use, feel
+free to contact me with an argument of why it should be "promoted".  I
+welcome suggestions and will definitely consider any such request.
 
 =back
 

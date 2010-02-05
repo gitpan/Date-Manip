@@ -28,6 +28,3 @@ Time::Format
 perl -d:NYTProf parse-1.dm.pl
 nytprofhtml
 
-
-Use single quotes instead of double quotes.
-

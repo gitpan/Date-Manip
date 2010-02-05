@@ -1,13 +1,13 @@
 package Date::Manip::TZ::paeast00;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:29 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:38 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -625,13 +625,21 @@ $VERSION='6.05';
           'EASST',1,[2030,3,10,2,59,59],[2030,3,9,21,59,59],
           '2029101404:00:00','2029101323:00:00','2030031002:59:59','2030030921:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,3,10,3,0,0],[2030,3,9,21,0,0],'-06:00:00',[-6,0,0],
+          'EAST',0,[2030,10,13,3,59,59],[2030,10,12,21,59,59],
+          '2030031003:00:00','2030030921:00:00','2030101303:59:59','2030101221:59:59' ],
+        [ [2030,10,13,4,0,0],[2030,10,12,23,0,0],'-05:00:00',[-5,0,0],
+          'EASST',1,[2031,3,9,2,59,59],[2031,3,8,21,59,59],
+          '2030101304:00:00','2030101223:00:00','2031030902:59:59','2031030821:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '-05:00:00',
                 'stdoff' => '-06:00:00',
-
                },
    'rules'  => {
                 '03' => {
@@ -652,7 +660,6 @@ $VERSION='6.05';
                          'isdst'   => '1',
                          'abb'     => 'EASST',
                         },
-
                },
 );
 

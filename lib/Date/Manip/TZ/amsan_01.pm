@@ -1,13 +1,13 @@
 package Date::Manip::TZ::amsan_01;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:36 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:45 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -511,13 +511,21 @@ $VERSION='6.05';
           'WARST',1,[2030,3,10,2,59,59],[2030,3,9,23,59,59],
           '2029101404:00:00','2029101401:00:00','2030031002:59:59','2030030923:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,3,10,3,0,0],[2030,3,9,23,0,0],'-04:00:00',[-4,0,0],
+          'WART',0,[2030,10,13,3,59,59],[2030,10,12,23,59,59],
+          '2030031003:00:00','2030030923:00:00','2030101303:59:59','2030101223:59:59' ],
+        [ [2030,10,13,4,0,0],[2030,10,13,1,0,0],'-03:00:00',[-3,0,0],
+          'WARST',1,[2031,3,9,2,59,59],[2031,3,8,23,59,59],
+          '2030101304:00:00','2030101301:00:00','2031030902:59:59','2031030823:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '-03:00:00',
                 'stdoff' => '-04:00:00',
-
                },
    'rules'  => {
                 '03' => {
@@ -538,7 +546,6 @@ $VERSION='6.05';
                          'isdst'   => '1',
                          'abb'     => 'WARST',
                         },
-
                },
 );
 

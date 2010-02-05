@@ -1,13 +1,13 @@
 package Date::Manip::TZ::atazor00;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:33 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:42 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -958,13 +958,21 @@ $VERSION='6.05';
           'AZOT',0,[2030,3,31,0,59,59],[2030,3,30,23,59,59],
           '2029102801:00:00','2029102800:00:00','2030033100:59:59','2030033023:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,3,31,1,0,0],[2030,3,31,1,0,0],'+00:00:00',[0,0,0],
+          'AZOST',1,[2030,10,27,0,59,59],[2030,10,27,0,59,59],
+          '2030033101:00:00','2030033101:00:00','2030102700:59:59','2030102700:59:59' ],
+        [ [2030,10,27,1,0,0],[2030,10,27,0,0,0],'-01:00:00',[-1,0,0],
+          'AZOT',0,[2031,3,30,0,59,59],[2031,3,29,23,59,59],
+          '2030102701:00:00','2030102700:00:00','2031033000:59:59','2031032923:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '+00:00:00',
                 'stdoff' => '-01:00:00',
-
                },
    'rules'  => {
                 '03' => {
@@ -985,7 +993,6 @@ $VERSION='6.05';
                          'isdst'   => '0',
                          'abb'     => 'AZOT',
                         },
-
                },
 );
 

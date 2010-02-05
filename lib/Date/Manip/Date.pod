@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -648,6 +648,54 @@ first week of the next year.
 
 =back
 
+=head1 ISSUES WITH PARSING DATES
+
+The following issues may occur when parsing dates that should be
+understood to make full use of this module.
+
+=over 4
+
+=item Complete vs. truncated dates and times
+
+Date formats are either complete or truncated. A complete date fully
+specifies the year, month, and day and a complete time fully specifies
+the hour, minute, and second.
+
+It should be understood that in many instances, the information may be
+implied rather than explicitly stated, but it is still treated as
+complete.
+
+For example, the date "January 3" is complete because it implies the
+current year.
+
+A truncated calendar date or time does not include information about
+some of the fields. Date::Manip will never work with a partial date or
+time, so defaults will be supplied.
+
+For example, the date "2009-01" is missing a day field, so a default
+will be used. In this case, the day will be the 1st, so this is
+equivalent to "Jan 1st 2009". If only the year is given, it will
+default to Jan 1.
+
+If the time, or any of it's components is missing, they default to
+00. So the time "12:30" and "12:30:00" are equivalent.
+
+The "complete" method can be used to check what type of date was
+parsed, and which values were specified (either explicitly or implied)
+and which were provided as a default. It should be noted that there
+is no way to differentiate between an explicit and implied value.
+
+A string with a date and/or time may consist of any of the following:
+
+   a complete date and a time (complete or truncated)
+   a truncated date with no time
+   a time (complete or truncated) with no date
+
+In other words, the date "Jan 2009 12:30" is not valid since it consists
+of a time with a truncated date.
+
+=back
+
 =head1 VALID TIME ZONE FORMATS
 
 When specifying a time zone, it can be done in three different ways.
@@ -728,54 +776,6 @@ which have the given offset (and abbreviation if it is included) until
 one is found which matches both pieces of information. For more
 information about how this testing is done, refer to the def_zone
 method of the Date::Manip::TZ documentation.
-
-=head1 ISSUES WITH PARSING DATES
-
-The following issues may occur when parsing dates that should be
-understood to make full use of this module.
-
-=over 4
-
-=item Complete vs. truncated dates and times
-
-Date formats are either complete or truncated. A complete date fully
-specifies the year, month, and day and a complete time fully specifies
-the hour, minute, and second.
-
-It should be understood that in many instances, the information may be
-implied rather than explicitly stated, but it is still treated as
-complete.
-
-For example, the date "January 3" is complete because it implies the
-current year.
-
-A truncated calendar date or time does not include information about
-some of the fields. Date::Manip will never work with a partial date or
-time, so defaults will be supplied.
-
-For example, the date "2009-01" is missing a day field, so a default
-will be used. In this case, the day will be the 1st, so this is
-equivalent to "Jan 1st 2009". If only the year is given, it will
-default to Jan 1.
-
-If the time, or any of it's components is missing, they default to
-00. So the time "12:30" and "12:30:00" are equivalent.
-
-The "complete" method can be used to check what type of date was
-parsed, and which values were specified (either explicitly or implied)
-and which were provided as a default. It should be noted that there
-is no way to differentiate between an explicit and implied value.
-
-A string with a date and/or time may consist of any of the following:
-
-   a complete date and a time (complete or truncated)
-   a truncated date with no time
-   a time (complete or truncated) with no date
-
-In other words, the date "Jan 2009 12:30" is not valid since it consists
-of a time with a truncated date.
-
-=back
 
 =head1 VALID DATE FORMATS
 
@@ -1309,6 +1309,8 @@ The following time formats are accepted:
    H24:MN              17:30
    H12:MN AM           5:30 PM
    H12:MN
+
+   H12 AM              5 PM
 
 The fractional part may be specified using a comma, a period, or
 a colon. A language specific fractional separator may also be

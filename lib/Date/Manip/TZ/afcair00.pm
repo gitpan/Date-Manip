@@ -1,13 +1,13 @@
 package Date::Manip::TZ::afcair00;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:30 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:39 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -760,13 +760,21 @@ $VERSION='6.05';
           'EET',0,[2030,4,25,21,59,59],[2030,4,25,23,59,59],
           '2029092721:00:00','2029092723:00:00','2030042521:59:59','2030042523:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,4,25,22,0,0],[2030,4,26,1,0,0],'+03:00:00',[3,0,0],
+          'EEST',1,[2030,9,26,20,59,59],[2030,9,26,23,59,59],
+          '2030042522:00:00','2030042601:00:00','2030092620:59:59','2030092623:59:59' ],
+        [ [2030,9,26,21,0,0],[2030,9,26,23,0,0],'+02:00:00',[2,0,0],
+          'EET',0,[2031,4,24,21,59,59],[2031,4,24,23,59,59],
+          '2030092621:00:00','2030092623:00:00','2031042421:59:59','2031042423:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '+03:00:00',
                 'stdoff' => '+02:00:00',
-
                },
    'rules'  => {
                 '04' => {
@@ -787,7 +795,6 @@ $VERSION='6.05';
                          'isdst'   => '0',
                          'abb'     => 'EET',
                         },
-
                },
 );
 

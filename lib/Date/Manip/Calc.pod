@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -10,9 +10,9 @@ Date::Manip::Calc - describes date calculations
 
 =head1 SYNOPSIS
 
-This takes two objects (both of which are either Date::Manip::Date
-or Date::Manip::Delta objects) and creates a third object based
-on those two.
+Two objects (both of which are either Date::Manip::Date or
+Date::Manip::Delta objects) may be used to creates a third object
+based on those two.
 
    $delta  = $date->calc($date2 [,$subtract] [,$mode]);
    $date2  = $date->calc($delta [,$subtract]);
@@ -37,7 +37,7 @@ There are 3 types of date calculations:
    $delta  = $date->calc($date2 [,$subtract] [,$mode]);
 
 Two dates can be worked with and a delta will be produced which is
-the time between the two dates.
+the amount of time between the two dates.
 
 $date1 and $date2 are Date::Manip::Date objects with valid dates.
 The Date::Manip::Delta object returned is the amount of time between
@@ -154,7 +154,7 @@ short explanation is that an exact delta tells exactly how much time
 passed between two dates. Since there is no definite relationship
 between months and days, an exact delta will only include values for
 the day/hour/minute/second fields (the week field is also allowed in
-non-business mode calculations) and other fields (year, month, and
+non-business mode calculations). The inexact fields (year, month, and
 week in the case of business mode) will be 0.
 
 An approximate delta is one which includes years and months (i.e.
@@ -163,10 +163,9 @@ which are used for human convenience.
 
 =back
 
-The mode of the calculation will be determined automatically if a
-delta is being operated on. In the case of date-date calculations
-(when no previously created delta is available to determine the
-mode), the mode is supplied as an argument.
+In date-delta and delta-delta calculations, the mode of the
+calculation will be determined automatically. In the case of date-date
+calculations, the mode is supplied as an argument.
 
 =over 4
 
@@ -337,21 +336,18 @@ So, for example, the approximate time between Jan 1 00:00:00 and Jun 1
 =head1 SUBTRACTION
 
 In exact calculations, and in delta-delta calculations, the the
-$subtract argument is easy to understand.
-
-When working with an approximate delta however, there is some extra
-meaning to the $subtract argument.
-
-When approximate calculations are done, there is a degree of ambiguity
-which leads to some unexpected results.
-
-An example illustrates this quite well.
+$subtract argument is easy to understand.  When working with an
+approximate delta however (either when adding an approximate delta to
+a date, or when taking two dates to get an approximate delta), there
+is a degree of uncertainty in how the calculation is done, and the
+$subtract argument is used to specify exactly how the approximate
+delta is to be use. An example illustrates this quite well.
 
 If you take the date Jan 4, 2000 and subtract a delta of "1 month 1
-week" from it, you end up with Nov 27, 1999 (Jan 4, 2000 minus 1 month is Dec 4,
-1999; minus 1 week is Nov 27, 1999). But Nov 27, 1999 plus a delta of
-"1 month 1 week" is Jan 3, 2000 (Nov 27, 1999 plus 1 month is Dec 27,
-1999; plus 1 week is Jan 3, 2000).
+week" from it, you end up with Nov 27, 1999 (Jan 4, 2000 minus 1 month
+is Dec 4, 1999; minus 1 week is Nov 27, 1999). But Nov 27, 1999 plus a
+delta of "1 month 1 week" is Jan 3, 2000 (Nov 27, 1999 plus 1 month is
+Dec 27, 1999; plus 1 week is Jan 3, 2000).
 
 In other words the approximate delta (but NOT the exact delta) is different
 depending on whether you move from earlier date to the later date, or vice

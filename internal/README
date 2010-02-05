@@ -36,7 +36,8 @@ following commands:
    ./internal/tzdata -z           : to create the main Zone module
    ./internal/tzdata -c           : to clean up everything after this is done
 
-All of the above steps can be run in the correct sequence by running:
+All of the above steps (except for cleaning) can be run in the correct
+sequence by running:
 
    ./internal/tzdata -a
 
@@ -52,12 +53,20 @@ are installed on your system. If you discover a bug in tzdata, I am interested
 in knowing about it however.
 
 #########################################################################
+Check all timezones
+
+Before cleaning up the tzdata directory, run the following to double
+check every timezone in zoneinfo against the Date::Manip version:
+
+   ./internal/dumps
+
+#########################################################################
 Clean up stuff that shouldn't be in the manifest
 
 Remove tzdata directory
 
 In internal/benchmarks directory
-    rm -f nytprof.out
+    rm -f nytprof.out parse-1.in
     rm -rf nytprof
 
 #########################################################################

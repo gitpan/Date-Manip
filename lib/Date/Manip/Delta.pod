@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -16,9 +16,9 @@ Date::Manip::Delta - Methods for working with deltas
 =head1 DESCRIPTION
 
 This module contains functions useful in parsing and manipulating
-deltas.  A delta is a duration or elapsed time.  As used in this
-module, a delta refers only to the amount of time elapsed.  It
-includes no information about a starting or ending time.
+deltas.  As used in this module, a delta refers only to the amount of
+time elapsed.  It includes no information about a starting or ending
+time.
 
 There are several concepts involved in understanding the properties
 of a delta.
@@ -316,7 +316,8 @@ $field can be any of the following:
 An error is returned if an invalid value is passed in.
 
 When setting the entire delta with "business" or "normal", it flags the
-delta as a business or non-business delta respectively.
+delta as a business or non-business delta respectively. When setting
+the entire delta with "delta", the flag is left unchanged.
 
 =item printf
 

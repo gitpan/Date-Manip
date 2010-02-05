@@ -2,6 +2,8 @@
 # Prior to release of 6.10
 ########################################################################
 
+Add ways to get timezone in cygwin
+
 Cache Date::Manip::TZ::zone for ($abbrev,isdst), ($abbrev,$isdst,$offset),
 other???
 
@@ -10,11 +12,6 @@ Profile it and look for optimizations.
 Date::Manip::Base : get rid of
    _calc_date_time_strings
    _delta_convert
-
-Scripts:
-  dm_tzdump   replacement for tzdump
-
-Dump all timezones and compare agains the tzcode version of dump
 
 Benchmarks
    Modules
@@ -29,13 +26,16 @@ Benchmarks
       10,000 dates (parse + 2 adds + 1 unix date)   time + size
       10,000 scripts (parse 1 date + 2 adds + 1 unix date each) time
 
-Rewrite Problems.pod/Misc.pod (Date Manip is slow)
+Rewrite Problems.pod (Date Manip is slow)
 
 Fix docs for Sorting Problems.  It should use Date_Cmp instead of cmp.
 
 ########################################################################
 # Prior to release of 6.20
 ########################################################################
+
+Make sure that all languages are UTF-8. Make sure that all regular
+expressions work with UTF-8.
 
 Everywhere a timezone can be entered, allow:
    zone
@@ -52,11 +52,15 @@ string.
 
 Write Lang.pod
 
-Add value to Recur
-
 Clear as much of the backlog of suggestions as possible.
 
-Jay Jacobs <jay@lach.net>
+Clear out all problems from CPAN (both for DateManip and Date-Manip)
+
+#### Recur
+
+Add value to Recur
+
+Jay Jacobs
    Recurrences are broken slightly.  The way to calculate the Nth date
    is currently:
       D(N) = D(N-1) + O
@@ -70,10 +74,27 @@ Jay Jacobs <jay@lach.net>
    To fix this, change the calculation to be:
       D(N) = D(0) + N*O
 
+If start_date/end_date are set, we will calculate
+start_counter/end_counter as needed.  start_counter=I is the Ith date
+from the base date and is the first date which occurs in the date
+range. end_counter=J is the Jth date from the base date and is the
+last date in the range.  We'll also have curr_counter which will
+always be undef (i.e. not yet used) or in the range I <= curr <= J.
+If the start_date is changed, start_counter is unset and so is
+curr_counter. If end_date is changed, end_counter is unset and so
+is curr_counter.  To get start_counter, we'll estimate the length
+of the frequency, and use the amount of time between a date and
+the base date to estimate begin_counter, then adjust it accordingly.
+Same for end_counter.  counters can be positive, negative, or 0 or
+undef (not set). A flag no_dates can be set if no dates fall within
+the range.
+
 Add ParseRecur flag:
    WDn (n=1-7): Day n of the current week.
 
-Clear out all problems from CPAN (both for DateManip and Date-Manip)
+Add an iterator to return the next date in the sequence (or the
+previous date in the sequence). Allow it to start from the start or
+end of the range.  Daniel LaLiberte
 
 ########################################################################
 # Prior to release of 5.55
@@ -84,11 +105,45 @@ Take all timezone/abbrev/offsets from 6.00 and add to 5.x
 accepting timezones.
 
 ########################################################################
-# MISC
+# TO DO
 ########################################################################
 
+Make sure there is a correspondance between:
+  time,localtime,gmtime
+  Date_SecsSince1970,Date_SecsSince1970GMT
+  UnixDate(...,"%s"),UnixDate(...,"%u")
+and document it all.
+
+Support timezones of the format +500.  David Coppit
+
+Make sure that &DateCalc($date1,"") returns an error.  Jim Anderson
+
+Add a function for printing "words" from the language.  For example:
+  printf_value("%b",2) => Feb
+  printf_value("%b")   => (Jan Feb ...)
+Chris Jackson
+
+Mark Dedlow
+  nth DAY of month
+
+Change the Jan1Week1 variable to accept the values "m1-m7" (1st week contains
+Jan X) or "d1-d7" (1st week contains the 1st dX day of week ... so d1
+means that the 1st week of the year contains the 1st Monday).
+
+########################################################################
+# TO CONSIDER
+########################################################################
+
+Add a method:
+   ($date0,$date1) = $date->week_range();
+where $date0 and $date1 are the start and end of the week containing
+$date.  Ha Quach
+
+Add support for partial dates (John Washburn)
+   April 1625 == April 1, 1625
+
 Add Date_LocaleInit which calls Date_Init and then sets DateFormat
-config varialbe.  Benjamin Low <ben@snrc.uow.edu.au>
+config varialbe.  Benjamin Low
    Essentially, I use POSIX::strftime to print a known date in the locale
    'native' format ('%x'), and parse the result to determine d/m/y, m/d/y,
    or y/m/d.
@@ -129,49 +184,29 @@ config varialbe.  Benjamin Low <ben@snrc.uow.edu.au>
 
 Make DateFormat variable handle y/m/d y/d/m m/d/y and d/m/y formats
 in addition to m/d vs. d/m .  Also, make "%D" and "%x" UnixDate formats
-use this variable.  Benjamin Low <ben@snrc.uow.edu.au>
+use this variable.  Benjamin Low
 
-Make sure there is a correspondance between:
-  time,localtime,gmtime
-  Date_SecsSince1970,Date_SecsSince1970GMT
-  UnixDate(...,"%s"),UnixDate(...,"%u")
-and document it all.
+"which dofw after HOLIDAY".  Hacksaw
+Use of holidays and other named days in ParseDate ("Christmas 1995")
+Abigal
 
-"which dofw after HOLIDAY".  <hacksaw@fools-errant.com>
-
-Make the following work for ParseDate Adrian Conte <adrian@mednav.net>:
+Make the following work for ParseDate Adrian Conte:
   1 epoch
   epoch 1
   -1 epoch
   epoch -1
 
-Support timezones of the format +500.  David Coppit <dwc3q@cs.virginia.edu>
-
-Use autoloader.  Ted Ashton <ashted@southern.edu>
+Use autoloader.  Ted Ashton
 
 Switch to Math::BigInt instead of using "no integer".  Vishal Bhatia
-   <vishalb@hotmail.com>
-
-Make sure that &DateCalc($date1,"") returns an error.  Jim Anderson
-  <jander@ml.com>
 
 Add another INIT variable to NOT initialize any language variable unless
 needed.
 
-Use of holidays and other named days in ParseDate ("Christmas 1995")
-Abigal <abigail@fnx.com>
-
-Change the Jan1Week1 variable to accept the values "m1-m7" (1st week contains
-Jan X) or "d1-d7" (1st week contains the 1st dX day of week ... so d1
-means that the 1st week of the year contains the 1st Monday).
-
-Make work weeks able to start and stop on arbitrary days (even across
-weekends).
-
 Change EXPORT to EXPORT_OK (message 9 by Peter Bray)
 
-Mark Dedlow <dedlow@voro.lbl.gov>
-  nth DAY of month
+Make work weeks able to start and stop on arbitrary days (even across
+weekends).  Mohammed Saggaf
 
 ########################################################################
 # GRANULARITY

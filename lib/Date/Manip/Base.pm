@@ -1,5 +1,5 @@
 package Date::Manip::Base;
-# Copyright (c) 1995-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -23,7 +23,7 @@ use feature 'switch';
 require Date::Manip::Lang::index;
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 ###############################################################################
 # BASE METHODS
@@ -1841,6 +1841,8 @@ sub _language {
 
    my $mod = $Date::Manip::Lang::index::Lang{$lang};
    eval "require Date::Manip::Lang::${mod}";
+
+   no warnings 'once';
    $$self{'data'}{'lang'} = ${ "Date::Manip::Lang::${mod}::Language" };
 
    # Common words

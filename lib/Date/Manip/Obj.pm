@@ -1,5 +1,5 @@
 package Date::Manip::Obj;
-# Copyright (c) 2008-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -16,7 +16,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 ########################################################################
 # METHODS

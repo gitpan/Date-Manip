@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -21,7 +21,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 use vars qw($dmb);
 $dmb = new Date::Manip::Base;
@@ -122,7 +122,7 @@ do_dump()   if ($do_all  ||  $do_dump);
 do_mods()   if ($do_all  ||  $do_mods);
 do_off()    if ($do_all  ||  $do_off);
 do_zones()  if ($do_all  ||  $do_zones);
-do_clean()  if ($do_all  ||  $do_clean);
+do_clean()  if (             $do_clean);
 
 ############################################################################
 # DO_FTP
@@ -813,8 +813,9 @@ sub _do_mods_lastrule {
    # Some additional information will be added once dump lines are
    # analyzed.
 
-   my %last = ( "zone"  => { "stdoff" => $dmb->_delta_convert("offset",$zone[0][0]),
-                             "dstoff" => "" },
+   my %last = ( "year"  => $keep_year + 1,
+                "zone"  => { "stdoff" => $dmb->_delta_convert("offset",$zone[0][0]),
+                             "dstoff" => '' },
                 "rules" => {},
               );
 
@@ -850,6 +851,10 @@ sub _do_mods_lastrule {
    # If this is not the case, we'll have to add support.
 
    if (exists $last_zone_offsets{$zone}) {
+      if (! $last{"zone"}{"dstoff"}) {
+         $last{"zone"}{"dstoff"} = $last{"zone"}{"stdoff"};
+      }
+
       my $expdst = $last_zone_offsets{$zone}{"dst"};
       my $expst  = $last_zone_offsets{$zone}{"st"};
       if ($totdst != $expdst  ||
@@ -1042,7 +1047,7 @@ require 5.010000;
 use vars qw(\%Dates \%LastRule);
 
 use vars qw(\$VERSION);
-\$VERSION='6.05';
+\$VERSION='6.06';
 
 \%Dates         = (
 ";
@@ -1084,44 +1089,46 @@ use vars qw(\$VERSION);
    print $out ");
 
 \%LastRule      = (
-   'zone'   => {
-";
-   foreach my $key (sort keys %{ $last{"zone"} }) {
-      my $val = $last{"zone"}{$key};
-      print $out " "x16,"'$key' => '$val',\n";
-   }
-
-   print $out "
-               },
-   'rules'  => {
 ";
 
-   foreach my $mon (sort keys %{ $last{"rules"} }) {
-      print $out " "x16,"'$mon' => {\n";
-      my $flag = $last{"rules"}{$mon}{"flag"};
-      if ($flag == $Date::Manip::TZdata::TZ_DOM) {
-         $flag = "dom";
-
-      } elsif ($flag == $Date::Manip::TZdata::TZ_LAST) {
-         $flag = "last";
-
-      } elsif ($flag == $Date::Manip::TZdata::TZ_GE) {
-         $flag = "ge";
-
-      } elsif ($flag == $Date::Manip::TZdata::TZ_LE) {
-         $flag = "le";
+   if (exists $last{"year"}) {
+      print $out "   'zone'   => {\n";
+      foreach my $key (sort keys %{ $last{"zone"} }) {
+         my $val = $last{"zone"}{$key};
+         print $out " "x16,"'$key' => '$val',\n";
       }
-      $last{"rules"}{$mon}{"flag"} = $flag;
 
-      foreach my $key (qw(flag dow num type time isdst abb)) {
-         print $out " "x25,"'$key'", " "x(7-length($key))," => '",
-           $last{"rules"}{$mon}{$key},"',\n";
+      print $out "               },
+   'rules'  => {\n";
+
+      foreach my $mon (sort keys %{ $last{"rules"} }) {
+         print $out " "x16,"'$mon' => {\n";
+         my $flag = $last{"rules"}{$mon}{"flag"};
+         if ($flag == $Date::Manip::TZdata::TZ_DOM) {
+            $flag = "dom";
+
+         } elsif ($flag == $Date::Manip::TZdata::TZ_LAST) {
+            $flag = "last";
+
+         } elsif ($flag == $Date::Manip::TZdata::TZ_GE) {
+            $flag = "ge";
+
+         } elsif ($flag == $Date::Manip::TZdata::TZ_LE) {
+            $flag = "le";
+         }
+         $last{"rules"}{$mon}{"flag"} = $flag;
+
+         foreach my $key (qw(flag dow num type time isdst abb)) {
+            print $out " "x25,"'$key'", " "x(7-length($key))," => '",
+              $last{"rules"}{$mon}{$key},"',\n";
+         }
+         print $out " "x24,"},\n";
       }
-      print $out " "x24,"},\n";
+
+      print $out "               },\n";
    }
-   print $out "
-               },
-);
+
+   print $out ");
 
 1;
 ";
@@ -1290,7 +1297,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION='6.05';
+\$VERSION='6.06';
 
 use vars qw(\$Offset \%Offset);
 
@@ -1405,7 +1412,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION='6.05';
+\$VERSION='6.06';
 
 use vars qw(\$TzdataVersion \$TzcodeVersion
             \$FirstDate \$LastDate \$LastYear
@@ -2036,8 +2043,7 @@ sub _do_zones_offsets {
 
 sub do_clean {
    print "Cleaning...\n";
-   system("rm -rf tzdata/tmp tzdata/dump tzdata/_d* tzdata/_a* tzdata/_z* tzdata/_o*");
-   system("cd tzdata; make clean");
+   system("rm -rf tzdata");
 }
 
 ############################################################################

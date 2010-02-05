@@ -1,13 +1,13 @@
 
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:05:29 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 09:02:33 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -182,6 +182,7 @@ database:
      America/Managua                      ammana00
      America/Manaus                       ammana01
      America/Martinique                   ammart00
+     America/Matamoros                    ammata00
      America/Mazatlan                     ammaza00
      America/Menominee                    ammeno00
      America/Merida                       ammeri00
@@ -199,6 +200,7 @@ database:
      America/Noronha                      amnoro00
      America/North_Dakota/Center          amcent00
      America/North_Dakota/New_Salem       amnew_01
+     America/Ojinaga                      amojin00
      America/Panama                       ampana00
      America/Pangnirtung                  ampang00
      America/Paramaribo                   ampara00
@@ -213,9 +215,10 @@ database:
      America/Regina                       amregi00
      America/Resolute                     amreso00
      America/Rio_Branco                   amrio_01
-     America/Santarem                     amsant00
-     America/Santiago                     amsant01
-     America/Santo_Domingo                amsant02
+     America/Santa_Isabel                 amsant00
+     America/Santarem                     amsant01
+     America/Santiago                     amsant02
+     America/Santo_Domingo                amsant03
      America/Sao_Paulo                    amsao_00
      America/Scoresbysund                 amscor00
      America/St_Johns                     amst_j00
@@ -664,6 +667,7 @@ above.
      AZOT2AZOST                           Atlantic/Azores
      AZT-4AZST                            Asia/Baku
      BAKT-4BAKST                          Asia/Baku
+     BDT-6BDST                            Asia/Dhaka
      CAT-2CAST                            Africa/Khartoum
      CAT10CAPT                            America/Anchorage
      CGT2CGST                             America/Scoresbysund
@@ -878,34 +882,36 @@ above.
      CST6CDDT                             America/Rankin_Inlet
                                           America/Resolute
      CST6CDT                              America/Chicago
-                                          America/Atikokan
-                                          America/Cancun
-                                          America/Chihuahua
-                                          America/Costa_Rica
-                                          America/El_Salvador
-                                          America/Guatemala
-                                          America/Indiana/Indianapolis
+                                          America/Winnipeg
                                           America/Indiana/Knox
-                                          America/Indiana/Marengo
-                                          America/Indiana/Petersburg
                                           America/Indiana/Tell_City
-                                          America/Indiana/Vevay
-                                          America/Indiana/Vincennes
-                                          America/Indiana/Winamac
-                                          America/Kentucky/Louisville
-                                          America/Kentucky/Monticello
-                                          America/Managua
                                           America/Menominee
-                                          America/Merida
+                                          America/Rainy_River
                                           America/Mexico_City
+                                          America/Rankin_Inlet
+                                          America/Matamoros
                                           America/Monterrey
                                           America/North_Dakota/Center
+                                          America/Merida
+                                          America/Cancun
                                           America/North_Dakota/New_Salem
-                                          America/Rainy_River
-                                          America/Rankin_Inlet
-                                          America/Resolute
+                                          America/Indiana/Petersburg
+                                          America/Indiana/Vincennes
+                                          America/Indiana/Winamac
+                                          America/Managua
+                                          America/Guatemala
                                           America/Tegucigalpa
-                                          America/Winnipeg
+                                          America/Resolute
+                                          America/Kentucky/Monticello
+                                          America/Chihuahua
+                                          America/Ojinaga
+                                          America/Costa_Rica
+                                          America/El_Salvador
+                                          America/Indiana/Marengo
+                                          America/Kentucky/Louisville
+                                          America/Indiana/Indianapolis
+                                          America/Indiana/Vevay
+                                          America/Atikokan
      CST6CPT                              America/Chicago
                                           America/Indiana/Indianapolis
                                           America/Indiana/Knox
@@ -1019,19 +1025,20 @@ above.
      MST7MDDT                             America/Yellowknife
                                           America/Cambridge_Bay
      MST7MDT                              America/Denver
+                                          America/Edmonton
                                           America/Boise
                                           America/Cambridge_Bay
-                                          America/Chihuahua
-                                          America/Edmonton
-                                          America/Hermosillo
                                           America/Inuvik
-                                          America/Mazatlan
-                                          America/North_Dakota/Center
-                                          America/North_Dakota/New_Salem
-                                          America/Phoenix
-                                          America/Regina
-                                          America/Swift_Current
                                           America/Yellowknife
+                                          America/Mazatlan
+                                          America/Chihuahua
+                                          America/Ojinaga
+                                          America/North_Dakota/New_Salem
+                                          America/Hermosillo
+                                          America/North_Dakota/Center
+                                          America/Phoenix
+                                          America/Swift_Current
+                                          America/Regina
      MST7MPT                              America/Denver
                                           America/Boise
                                           America/Cambridge_Bay
@@ -1048,16 +1055,18 @@ above.
      NZST-12NZDT                          Pacific/Auckland
                                           Antarctica/McMurdo
      PST8PDT                              America/Los_Angeles
-                                          America/Boise
-                                          America/Dawson
-                                          America/Dawson_Creek
-                                          America/Juneau
-                                          America/Tijuana
                                           America/Vancouver
+                                          America/Santa_Isabel
+                                          America/Tijuana
+                                          America/Dawson
                                           America/Whitehorse
+                                          America/Juneau
+                                          America/Dawson_Creek
+                                          America/Boise
      PST8PPT                              America/Los_Angeles
                                           America/Dawson_Creek
                                           America/Juneau
+                                          America/Santa_Isabel
                                           America/Tijuana
                                           America/Vancouver
      WART4ARST                            America/Argentina/Mendoza
@@ -1356,6 +1365,7 @@ Date::Manip::TZ module.
                         America/Whitehorse
                         America/Dawson
                         America/Tijuana
+                        America/Santa_Isabel
                         Pacific/Pitcairn
                         Etc/GMT-8
                         America/Inuvik
@@ -1367,6 +1377,7 @@ Date::Manip::TZ module.
      0       -07:52:58  America/Los_Angeles
      0       -07:48:04  America/Tijuana
      0       -07:44:49  America/Boise
+     0       -07:39:28  America/Santa_Isabel
      0       -07:33:52  America/Edmonton
      0       -07:28:18  America/Phoenix
      0       -07:23:52  America/Hermosillo
@@ -1380,7 +1391,9 @@ Date::Manip::TZ module.
                         America/Boise
                         America/Cambridge_Bay
                         America/Mazatlan
+                        America/Ojinaga
                         America/Tijuana
+                        America/Santa_Isabel
                         America/Chihuahua
                         America/Yellowknife
                         America/Inuvik
@@ -1397,9 +1410,11 @@ Date::Manip::TZ module.
                         G
      0       -06:59:56  America/Denver
      0       -06:58:36  America/Regina
+     0       -06:57:40  America/Ojinaga
      0       -06:45:39  America/North_Dakota/New_Salem
      0       -06:45:12  America/North_Dakota/Center
      0       -06:41:16  America/Monterrey
+     0       -06:40:00  America/Matamoros
      0       -06:36:36  America/Mexico_City
      0       -06:28:36  America/Winnipeg
      0       -06:18:16  America/Rainy_River
@@ -1416,8 +1431,10 @@ Date::Manip::TZ module.
                         America/Monterrey
                         America/Merida
                         America/Cancun
+                        America/Matamoros
                         America/Mazatlan
                         America/Mexico_City
+                        America/Ojinaga
                         America/Chihuahua
                         Pacific/Easter
                         America/Cambridge_Bay
@@ -2463,6 +2480,7 @@ Date::Manip::TZ module.
                         America/Boise
                         America/Vancouver
                         America/Tijuana
+                        America/Santa_Isabel
                         America/Whitehorse
                         America/Dawson
                         America/Juneau
@@ -2472,11 +2490,12 @@ Date::Manip::TZ module.
                         America/North_Dakota/New_Salem
                         America/North_Dakota/Center
                         America/Mazatlan
+                        America/Ojinaga
                         America/Chihuahua
                         Pacific/Easter
                         America/Boise
-                        America/Cambridge_Bay
                         America/Yellowknife
+                        America/Cambridge_Bay
                         America/Inuvik
                         America/Hermosillo
                         America/Swift_Current
@@ -2499,19 +2518,21 @@ Date::Manip::TZ module.
                         America/Kentucky/Monticello
                         America/Mexico_City
                         America/Iqaluit
+                        America/Resolute
                         America/Rankin_Inlet
                         America/Merida
                         America/Cancun
                         Pacific/Easter
                         America/Monterrey
+                        America/Matamoros
                         America/North_Dakota/Center
                         America/Pangnirtung
                         America/North_Dakota/New_Salem
                         America/Guatemala
                         America/Managua
-                        America/Resolute
                         America/Tegucigalpa
                         America/Cambridge_Bay
+                        America/Ojinaga
                         America/Chihuahua
                         America/Costa_Rica
                         America/El_Salvador
@@ -3356,6 +3377,8 @@ altering the order.
                       America/Havana
                       America/Mexico_City
                       America/Rankin_Inlet
+                      America/Resolute
+                      America/Matamoros
                       America/Monterrey
                       America/North_Dakota/Center
                       America/Merida
@@ -3366,13 +3389,13 @@ altering the order.
                       America/Indiana/Winamac
                       America/Guatemala
                       America/Managua
-                      America/Resolute
                       America/Tegucigalpa
                       America/Kentucky/Monticello
-                      America/Iqaluit
                       America/Cambridge_Bay
+                      America/Iqaluit
                       America/Pangnirtung
                       America/Chihuahua
+                      America/Ojinaga
                       America/Costa_Rica
                       Asia/Shanghai
                       Asia/Chongqing
@@ -3519,6 +3542,7 @@ altering the order.
                       Australia/Adelaide
                       Australia/Broken_Hill
                       America/Cancun
+                      America/Matamoros
                       America/Merida
                       America/Monterrey
                       America/Havana
@@ -3526,9 +3550,9 @@ altering the order.
                       America/Rankin_Inlet
                       America/North_Dakota/Center
                       America/North_Dakota/New_Salem
-                      America/Indiana/Winamac
-                      America/Indiana/Vincennes
                       America/Indiana/Petersburg
+                      America/Indiana/Vincennes
+                      America/Indiana/Winamac
                       America/Guatemala
                       America/Tegucigalpa
                       America/Managua
@@ -3539,6 +3563,7 @@ altering the order.
                       America/Pangnirtung
                       Asia/Macau
                       America/Chihuahua
+                      America/Ojinaga
                       America/Costa_Rica
                       Asia/Shanghai
                       Asia/Harbin
@@ -3550,14 +3575,14 @@ altering the order.
                       Asia/Taipei
                       America/Swift_Current
                       Asia/Jayapura
-                      America/Kentucky/Louisville
                       America/Indiana/Marengo
+                      America/Kentucky/Louisville
                       America/Regina
                       America/Indiana/Indianapolis
                       America/Indiana/Vevay
                       Australia/Darwin
-                      America/Mazatlan
                       America/Hermosillo
+                      America/Mazatlan
                       America/Atikokan
                       America/Detroit
                       America/Thunder_Bay
@@ -3798,6 +3823,7 @@ altering the order.
                       America/Yellowknife
                       America/Mazatlan
                       America/Chihuahua
+                      America/Ojinaga
                       America/North_Dakota/New_Salem
                       America/Hermosillo
                       America/North_Dakota/Center
@@ -3852,6 +3878,7 @@ altering the order.
                       America/Cambridge_Bay
                       America/Chihuahua
                       America/Mazatlan
+                      America/Ojinaga
                       America/Boise
                       America/Yellowknife
                       America/Inuvik
@@ -3863,6 +3890,7 @@ altering the order.
                       America/Phoenix
                       America/Regina
                       America/Mexico_City
+                      America/Santa_Isabel
                       America/Tijuana
                       Europe/Moscow
      MWT              America/Denver
@@ -3908,6 +3936,7 @@ altering the order.
                       Antarctica/McMurdo
      PDT              America/Los_Angeles
                       America/Vancouver
+                      America/Santa_Isabel
                       America/Tijuana
                       America/Dawson
                       America/Whitehorse
@@ -3925,10 +3954,12 @@ altering the order.
      PPT              America/Los_Angeles
                       America/Dawson_Creek
                       America/Juneau
+                      America/Santa_Isabel
                       America/Tijuana
                       America/Vancouver
      PST              America/Los_Angeles
                       America/Vancouver
+                      America/Santa_Isabel
                       America/Tijuana
                       America/Whitehorse
                       America/Dawson
@@ -3936,12 +3967,13 @@ altering the order.
                       America/Juneau
                       America/Inuvik
                       America/Dawson_Creek
-                      America/Mazatlan
                       America/Hermosillo
+                      America/Mazatlan
                       America/Boise
      PWT              America/Los_Angeles
                       America/Dawson_Creek
                       America/Juneau
+                      America/Santa_Isabel
                       America/Tijuana
                       America/Vancouver
                       Pacific/Palau

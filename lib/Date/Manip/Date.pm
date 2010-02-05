@@ -1,5 +1,5 @@
 package Date::Manip::Date;
-# Copyright (c) 1995-2009 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 ########################################################################
 # BASE METHODS
@@ -689,7 +689,7 @@ sub _format_regexp {
             $re .= '(?<d>\d\d)';
          }
          when ('e') {
-            $re .= '(?:(?<d>\d\d)| (?<d>\d))';
+            $re .= '(?:(?<d>\d\d)| ?(?<d>\d))';
          }
 
          when (['v','a','A']) {
@@ -859,7 +859,7 @@ sub _parse_check {
       }
    }
 
-   # Check date (and handle 24:00:00 times)
+   # Handle 24:00:00 times.
 
    if ($h == 24) {
       ($h,$mn,$s) = (0,0,0);
@@ -1253,6 +1253,7 @@ sub _other_rx {
               "(24)()$hm[$i](00)()()()"                          # 24:00
              );
       }
+      push(@time,"${h12}()()()()${ampm}") if ($ampm);            # H AM
 
       my $dmt    = $$self{'objs'}{'tz'};
       my $zrx    = $dmt->_zrx();
@@ -1453,7 +1454,6 @@ sub _parse_time {
    my($h,$mn,$s,$fh,$fm,$h24,$ampm,$tzstring,$zone,$abb,$off,$tmp);
 
    if ($string =~ s/$timerx/ /i) {
-
       ($h,$fh,$mn,$fm,$s,$ampm,$tzstring,$zone,$abb,$off,$tmp) =
         ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12);
 

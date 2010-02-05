@@ -1,13 +1,13 @@
 package Date::Manip::TZ::amnome00;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:34 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:42 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -628,13 +628,21 @@ $VERSION='6.05';
           'AKST',0,[2030,3,10,10,59,59],[2030,3,10,1,59,59],
           '2029110410:00:00','2029110401:00:00','2030031010:59:59','2030031001:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,3,10,11,0,0],[2030,3,10,3,0,0],'-08:00:00',[-8,0,0],
+          'AKDT',1,[2030,11,3,9,59,59],[2030,11,3,1,59,59],
+          '2030031011:00:00','2030031003:00:00','2030110309:59:59','2030110301:59:59' ],
+        [ [2030,11,3,10,0,0],[2030,11,3,1,0,0],'-09:00:00',[-9,0,0],
+          'AKST',0,[2031,3,9,10,59,59],[2031,3,9,1,59,59],
+          '2030110310:00:00','2030110301:00:00','2031030910:59:59','2031030901:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '-08:00:00',
                 'stdoff' => '-09:00:00',
-
                },
    'rules'  => {
                 '03' => {
@@ -655,7 +663,6 @@ $VERSION='6.05';
                          'isdst'   => '0',
                          'abb'     => 'AKST',
                         },
-
                },
 );
 

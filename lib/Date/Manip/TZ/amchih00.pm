@@ -1,13 +1,13 @@
 package Date::Manip::TZ::amchih00;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:24 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:34 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -382,13 +382,21 @@ $VERSION='6.05';
           'MST',0,[2030,4,7,8,59,59],[2030,4,7,1,59,59],
           '2029102808:00:00','2029102801:00:00','2030040708:59:59','2030040701:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,4,7,9,0,0],[2030,4,7,3,0,0],'-06:00:00',[-6,0,0],
+          'MDT',1,[2030,10,27,7,59,59],[2030,10,27,1,59,59],
+          '2030040709:00:00','2030040703:00:00','2030102707:59:59','2030102701:59:59' ],
+        [ [2030,10,27,8,0,0],[2030,10,27,1,0,0],'-07:00:00',[-7,0,0],
+          'MST',0,[2031,4,6,8,59,59],[2031,4,6,1,59,59],
+          '2030102708:00:00','2030102701:00:00','2031040608:59:59','2031040601:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '-06:00:00',
                 'stdoff' => '-07:00:00',
-
                },
    'rules'  => {
                 '04' => {
@@ -409,7 +417,6 @@ $VERSION='6.05';
                          'isdst'   => '0',
                          'abb'     => 'MST',
                         },
-
                },
 );
 

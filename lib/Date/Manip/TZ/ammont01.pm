@@ -1,13 +1,13 @@
 package Date::Manip::TZ::ammont01;
-# Copyright (c) 2008-2009 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 24 11:04:21 EST 2009
-#    Data version: tzdata2009s
-#    Code version: tzcode2009r
+#    Generated on: Fri Feb  5 08:49:31 EST 2010
+#    Data version: tzdata2010b
+#    Code version: tzcode2009t
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.05';
+$VERSION='6.06';
 
 %Dates         = (
    1    =>
@@ -364,13 +364,21 @@ $VERSION='6.05';
           'CST',0,[2030,4,7,7,59,59],[2030,4,7,1,59,59],
           '2029102807:00:00','2029102801:00:00','2030040707:59:59','2030040701:59:59' ],
      ],
+   2030 =>
+     [
+        [ [2030,4,7,8,0,0],[2030,4,7,3,0,0],'-05:00:00',[-5,0,0],
+          'CDT',1,[2030,10,27,6,59,59],[2030,10,27,1,59,59],
+          '2030040708:00:00','2030040703:00:00','2030102706:59:59','2030102701:59:59' ],
+        [ [2030,10,27,7,0,0],[2030,10,27,1,0,0],'-06:00:00',[-6,0,0],
+          'CST',0,[2031,4,6,7,59,59],[2031,4,6,1,59,59],
+          '2030102707:00:00','2030102701:00:00','2031040607:59:59','2031040601:59:59' ],
+     ],
 );
 
 %LastRule      = (
    'zone'   => {
                 'dstoff' => '-05:00:00',
                 'stdoff' => '-06:00:00',
-
                },
    'rules'  => {
                 '04' => {
@@ -391,7 +399,6 @@ $VERSION='6.05';
                          'isdst'   => '0',
                          'abb'     => 'CST',
                         },
-
                },
 );
 

@@ -7,7 +7,7 @@ $date = new Date::Manip::Date;
 chomp(@in);
 
 foreach $in (@in) {
-   $date->parse_format($in,'%b %e, %Y %T');
+   $date->parse_format('%b %e, %Y %T',$in);
 }
 
 # Local Variables:

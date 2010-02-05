@@ -20,7 +20,7 @@ if ($IsWin32{ $^O }) {
 
 WriteMakefile(
         NAME             => 'Date::Manip',
-        VERSION          => '6.05',
+        VERSION          => '6.06',
         ($] >= 5.010000
         ? (ABSTRACT=>'Date manipulation routines',
            AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')
