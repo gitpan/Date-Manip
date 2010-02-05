@@ -16,7 +16,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION='6.06';
+$VERSION='6.07';
 
 ########################################################################
 # METHODS

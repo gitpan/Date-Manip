@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION='6.06';
+$VERSION='6.07';
 
 use vars qw($TzdataVersion $TzcodeVersion
             $FirstDate $LastDate $LastYear

@@ -23,7 +23,7 @@ use integer;
 #use re 'debug';
 
 use vars qw($VERSION);
-$VERSION='6.06';
+$VERSION='6.07';
 
 ########################################################################
 # BASE METHODS

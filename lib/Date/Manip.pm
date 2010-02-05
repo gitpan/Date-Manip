@@ -56,7 +56,7 @@ use feature 'switch';
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.06';
+$VERSION='6.07';
 
 ###########################################################################
 
@@ -782,7 +782,8 @@ sub Date_DaySuffix {
 }
 
 sub Date_TimeZone {
-   return $dmb->_now('tz');
+   my($ret) = $dmb->_now('tz');
+   return $ret;
 }
 
 sub Date_ConvTZ {

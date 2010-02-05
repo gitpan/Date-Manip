@@ -824,7 +824,7 @@ Version 6.05  2009-12-09
       to Rene Schickbauer for testing.
    Added dm_date example script.
 
-Version 6.06  
+Version 6.06    2010-02-05
    Added dm_zdump example script.
    Minor bug where %Z printf format didn't always work.
    Improved TZ::periods functionality
@@ -836,3 +836,8 @@ Version 6.06
    Fixed a minor warning.  Morten Bjoernsvik
    Some additional speedups.
    Newest zoneinfo data.
+
+Version 6.07    2010-02-05
+   Fixed bug in Date_TimeZone where it wasn't returning the timezone.  Robert Eden
+
+Version 6.08
