@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 my %requires = (
-                 'perl'                     => '5.010000',
+                 'perl'                     => '5.001',
                  'Carp'                     => '0',
                  'IO::File'                 => '0',
                );
@@ -16,7 +16,7 @@ my %build_mods = (
 
 my $build = Module::Build->new(
         license            => 'perl',
-        dist_version       => '5.55',
+        dist_version       => '5.56',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'date manipulation routines',

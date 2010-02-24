@@ -13,14 +13,14 @@ name: Date-Manip
 provides:
   Date::Manip:
     file: lib/Date/Manip.pm
-    version: 5.55
+    version: 5.56
   Date::Manip::DM5abbrevs:
     file: lib/Date/Manip/DM5abbrevs.pm
-    version: 5.55
+    version: 6.08
 requires:
   Carp: 0
   IO::File: 0
-  perl: 5.010000
+  perl: 5.001
 resources:
   license: http://dev.perl.org/licenses/
-version: 5.55
+version: 5.56

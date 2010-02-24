@@ -1,6 +1,6 @@
 
 use ExtUtils::MakeMaker;
-use 5.010000;
+use 5.001;
 use strict;
 use warnings;
 my %requires = (
@@ -14,8 +14,8 @@ my %requires = (
 
 WriteMakefile(
         NAME             => 'Date::Manip',
-        VERSION          => '5.55',
-        ($] >= 5.010000
+        VERSION          => '5.56',
+        ($] >= 5.001
         ? (ABSTRACT=>'date manipulation routines',
            AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')
         : ()),

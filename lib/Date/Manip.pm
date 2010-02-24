@@ -220,7 +220,7 @@ use IO::File;
 use vars qw($Abbrevs);
 use Date::Manip::DM5abbrevs;
 
-$VERSION="5.55";
+$VERSION="5.56";
 
 ########################################################################
 ########################################################################
@@ -3639,10 +3639,6 @@ sub Date_PrevWorkDay {
 
   if (! Date_IsWorkDay($date,$time)) {
     if ($time) {
-      while (1) {
-        $date=Date_GetPrev($date,undef,0,$Cnf{"WorkDayEnd"});
-        last  if (Date_IsWorkDay($date,$time));
-      }
       while (1) {
         $date=Date_GetNext($date,undef,0,$Cnf{"WorkDayBeg"});
         last  if (Date_IsWorkDay($date,$time));

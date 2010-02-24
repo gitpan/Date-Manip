@@ -745,7 +745,12 @@ Version 5.55  2010-02-22
    Typo fix.  ddascalescu
    Added all of the timezone abbreviations from version 6.xx .
 
-Version 5.56
+Version 5.56  2010-02-24
+   Bug fix (Date_PrevWorkDay) and documentation fix.  RT #17005
+   Bug fix. I accidentally included a require 5.10 which made Date::Manip
+      not work with earlier versions of perl. Nicholas Riley
+
+Version 5.57
 
 #########################################################################
 # Backwards incompatibilities

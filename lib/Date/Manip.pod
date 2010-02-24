@@ -54,9 +54,9 @@ Date::Manip - date manipulation routines
 
  $flag = Date_IsWorkDay($date [,$flag]);
 
- $date = Date_NextWorkDay($date,$off [,$time]);
+ $date = Date_NextWorkDay($date,$off [,$flag]);
 
- $date = Date_PrevWorkDay($date,$off [,$time]);
+ $date = Date_PrevWorkDay($date,$off [,$flag]);
 
  $date = Date_NearestWorkDay($date [,$tomorrowfirst]);
 
@@ -1684,20 +1684,20 @@ if $date is not valid.
 
 =item Date_NextWorkDay
 
-  $date = Date_NextWorkDay($date,$off [,$time]);
+  $date = Date_NextWorkDay($date,$off [,$flag]);
 
-Finds the day $off work days from now.  If $time is passed in, we must also
+Finds the day $off work days from now.  If $flag is non-zero, we must also
 take into account the time of day.
 
-If $time is not passed in, day 0 is today (if today is a workday) or the
+If $flag is zero, day 0 is today (if today is a workday) or the
 next work day if it isn't.  In any case, the time of day is unaffected.
 
-If $time is passed in, day 0 is now (if now is part of a workday) or the
+If $flag is non-zero, day 0 is now (if now is part of a workday) or the
 start of the very next work day.
 
 =item Date_PrevWorkDay
 
-  $date = Date_PrevWorkDay($date,$off [,$time]);
+  $date = Date_PrevWorkDay($date,$off [,$flag]);
 
 Similar to Date_NextWorkDay.
 

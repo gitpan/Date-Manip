@@ -26,13 +26,13 @@ time zone handling to version 5.xx .
 
 =cut
 
-require 5.010000;
+require 5.000;
 
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='5.55';
+$VERSION='6.08';
 
 $Date::Manip::Abbrevs = join(' ',qw(
       idlw   -1200
