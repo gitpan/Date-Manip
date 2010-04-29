@@ -1,38 +1,4 @@
-perl -I../lib convtz.t 1
-perl -I../lib date.t 1
-perl -I../lib date_date_0.t 1
-perl -I../lib date_date_1.t 1
-perl -I../lib date_date_2a.t 1
-perl -I../lib date_date_2b.t 1
-perl -I../lib date_delta_0.t 1
-perl -I../lib date_delta_1.t 1
-perl -I../lib date_delta_2a.t 1
-perl -I../lib date_delta_2b.t 1
-perl -I../lib date_delta_french.t 1
-perl -I../lib date_delta_russian.t 1
-perl -I../lib date_delta_sign.t 1
-perl -I../lib date_french.t 1
-perl -I../lib date_german.t 1
-perl -I../lib date_misc_a.t 1
-perl -I../lib date_misc_b.t 1
-perl -I../lib date_romanian.t 1
-perl -I../lib date_russian.t 1
-perl -I../lib date_today_0.t 1
-perl -I../lib date_today_1.t 1
-perl -I../lib delta_a.t 1
-perl -I../lib delta_b.t 1
-perl -I../lib delta_delta_0.t 1
-perl -I../lib delta_delta_1.t 1
-perl -I../lib delta_delta_2a.t 1
-perl -I../lib delta_delta_2b.t 1
-perl -I../lib delta_format.t 1
-perl -I../lib delta_romanian.t 1
-perl -I../lib events.t 1
-perl -I../lib getnext.t 1
-perl -I../lib getprev.t 1
-perl -I../lib normalize_business.t 1
-perl -I../lib nthday.t 1
-perl -I../lib recur_0.t 1
-perl -I../lib recur_1.t 1
-perl -I../lib settime.t 1
-perl -I../lib unixdate.t 1
+set TI_MODE=inter
+set TI_QUIET=2
+set TI_SKIPPOD=1
+perl -I../lib *.t

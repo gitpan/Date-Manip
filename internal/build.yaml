@@ -1,0 +1,4 @@
+---
+winrequires:
+  -
+    - 'Tie::Registry'

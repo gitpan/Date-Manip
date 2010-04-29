@@ -1,28 +1,84 @@
-use Module::Build;
+use Module::Build 0.20;
 use strict;
 use warnings;
 
-my %requires = (
+my $INSTALL_DM5 = 0;
+my $DM_LIBDIR   = '';
+if ( $] < 5.010000  ||
+     $ENV{'INSTALL_DM5'} ) {
+   $INSTALL_DM5 = 1;
+   $DM_LIBDIR   = 'lib5';
+}
+
+my %test_requires = (
+                 'Test::Inter'              => '0',
+                 'Test::Pod'                => '0',
+                 'Test::Pod::Coverage'      => '0',
+);
+
+my %dm5_requires = (
+                 %test_requires,
                  'perl'                     => '5.001',
                  'Carp'                     => '0',
                  'IO::File'                 => '0',
-               );
-my %build_mods = (
-                 'Test::More'               => '0',
-                 'Test::Pod'                => '0',
-                 'Test::Pod::Coverage'      => '0',
+);
+
+my %dm6_requires = (
+                 %test_requires,
+                 'perl'                     => '5.010',
+                 'Carp'                     => '0',
+                 'IO::File'                 => '0',
+                 'Storable'                 => '0',
+                 'YAML::XS'                 => '0',
                );
 
+my %IsWin32 = map { $_ => 1 } qw( MSWin32 NetWare symbian );
+if ($IsWin32{ $^O }) {
+   $dm6_requires{'Tie::Registry'} = 0;
+}
+
+my(%pm,%pod);
+
+sub find_files {
+   my($dir) = @_;
+   opendir(DIR,$dir);
+   my @file = readdir(DIR);
+   closedir(DIR);
+
+   foreach my $file (@file) {
+      next  if ($file eq '.'  ||  $file eq '..');
+      my $path = "$dir/$file";
+      my $inst = $path;
+      $inst =~ s/lib(5|6)/lib/;
+      if (-d "$dir/$file") {
+         find_files("$dir/$file");
+      } elsif ($file =~ /\.pod$/) {
+         $pod{$path} = $inst;
+      } elsif ($file =~ /\.pm$/) {
+         $pm{$path} = $inst;
+      }
+   }
+}
+
+find_files($DM_LIBDIR)  if ($DM_LIBDIR);
 
 my $build = Module::Build->new(
-        license            => 'perl',
-        dist_version       => '5.56',
-        dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
-        dist_abstract      => 'date manipulation routines',
-        requires           => \%requires,
-        build_requires     => {},
-        build_recommends   => \%build_mods,
+        dist_abstract      => 'Date manipulation routines',
+        dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
+        ($INSTALL_DM5
+         ? (
+          dist_version     => '5.57',
+          requires         => \%dm5_requires,
+	  pm_files         => \%pm,
+	  pod_files        => \%pod,
+         ) : (
+          dist_version     => '6.10',
+          requires         => \%dm6_requires,
+         )
+        ),
+        license            => 'perl',
+        build_requires     => \%test_requires,
         sign               => 1,
 );
 
