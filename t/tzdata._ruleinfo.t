@@ -12,8 +12,7 @@ if ($Date::Manip::VERSION >= 6.00) {
 
 $t->skip_all('Date::Manip 6.xx required','DM6');
 
-
-use Date::Manip::TZdata;
+$t->use_ok('Date::Manip::TZdata');
 
 if ( -d "$testdir/../tzdata" ) {
   $obj = new Date::Manip::TZdata("$testdir/..");

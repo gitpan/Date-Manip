@@ -9,6 +9,8 @@ if ( $] < 5.010000  ||
    $INSTALL_DM5 = 1;
    $DM_LIBDIR   = 'lib5';
 }
+my $VERSION5 = '5.58';
+my $VERSION6 = '6.11';
 
 my %test_requires = (
                  'Test::Inter'              => '0',
@@ -29,7 +31,7 @@ my %dm6_requires = (
                  'Carp'                     => '0',
                  'IO::File'                 => '0',
                  'Storable'                 => '0',
-                 'YAML::XS'                 => '0',
+                 'YAML::Syck'               => '0',
                );
 
 my %IsWin32 = map { $_ => 1 } qw( MSWin32 NetWare symbian );
@@ -60,7 +62,10 @@ sub find_files {
    }
 }
 
-find_files($DM_LIBDIR)  if ($DM_LIBDIR);
+if ($DM_LIBDIR) {
+   find_files($DM_LIBDIR);
+   $pod{'lib/Date/Manip/Status5.pod'} = 'lib/Date/Manip/Status5.pod';
+}
 
 my $build = Module::Build->new(
         module_name        => 'Date::Manip',
@@ -68,12 +73,12 @@ my $build = Module::Build->new(
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         ($INSTALL_DM5
          ? (
-          dist_version     => '5.57',
+          dist_version     => $VERSION5,
           requires         => \%dm5_requires,
 	  pm_files         => \%pm,
 	  pod_files        => \%pod,
          ) : (
-          dist_version     => '6.10',
+          dist_version     => $VERSION6,
           requires         => \%dm6_requires,
          )
         ),

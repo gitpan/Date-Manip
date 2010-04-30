@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.10';
+$VERSION='6.11';
 
 %Dates         = (
    1    =>

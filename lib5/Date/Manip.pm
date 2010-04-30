@@ -220,7 +220,7 @@ use IO::File;
 use vars qw($Abbrevs);
 use Date::Manip::DM5abbrevs;
 
-$VERSION="5.57";
+$VERSION='5.58';
 
 ########################################################################
 ########################################################################
@@ -7092,7 +7092,7 @@ sub _Date_Init_Catalan {
   $$d{"month_name"}=
     [["Gener","Febrer","Marc","Abril","Maig","Juny",
       "Juliol","Agost","Setembre","Octubre","Novembre","Desembre"],
-     ["Gener","Febrer","Març","Abril","Maig","Juny",
+     ["Gener","Febrer","Mar?","Abril","Maig","Juny",
       "Juliol","Agost","Setembre","Octubre","Novembre","Desembre"],
      ["Gener","Febrer","Marc,","Abril","Maig","Juny",
       "Juliol","Agost","Setembre","Octubre","Novembre","Desembre"]];
@@ -7121,10 +7121,10 @@ sub _Date_Init_Catalan {
       "11e","12e","13e","14e","15e","16e","17e","18e","19e","20e",
       "21e","22e","23e","24e","25e","26e","27e","28e","29e","30e",
       "31e"],
-     ["1er","2n","3r","4t","5è","6è","7è","8è","9è","10è",
-      "11è","12è","13è","14è","15è","16è","17è","18è","19è","20è",
-      "21è","22è","23è","24è","25è","26è","27è","28è","29è","30è",
-      "31è"]];
+     ["1er","2n","3r","4t","5?","6?","7?","8?","9?","10?",
+      "11?","12?","13?","14?","15?","16?","17?","18?","19?","20?",
+      "21?","22?","23?","24?","25?","26?","27?","28?","29?","30?",
+      "31?"]];
   $$d{"num_word"}=
     [["primer","segon","tercer","quart","cinque","sise","sete","vuite",
       "nove","dese","onze","dotze","tretze","catorze",
@@ -7132,30 +7132,30 @@ sub _Date_Init_Catalan {
       "vinte","vint-i-une","vint-i-dose","vint-i-trese",
       "vint-i-quatre","vint-i-cinque","vint-i-sise","vint-i-sete",
       "vint-i-vuite","vint-i-nove","trente","trenta-une"],
-     ["primer","segon","tercer","quart","cinquè","sisè","setè","vuitè",
-      "novè","desè","onzè","dotzè","tretzè","catorzè",
-      "quinzè","setzè","dissetè","divuitè","dinovè",
-      "vintè","vint-i-unè","vint-i-dosè","vint-i-tresè",
-      "vint-i-quatrè","vint-i-cinquè","vint-i-sisè","vint-i-setè",
-      "vint-i-vuitè","vint-i-novè","trentè","trenta-unè"]];
+     ["primer","segon","tercer","quart","cinqu?","sis?","set?","vuit?",
+      "nov?","des?","onz?","dotz?","tretz?","catorz?",
+      "quinz?","setz?","disset?","divuit?","dinov?",
+      "vint?","vint-i-un?","vint-i-dos?","vint-i-tres?",
+      "vint-i-quatr?","vint-i-cinqu?","vint-i-sis?","vint-i-set?",
+      "vint-i-vuit?","vint-i-nov?","trent?","trenta-un?"]];
 
   $$d{"now"}     =["avui","ara"];
-  $$d{"last"}    =["darrer","últim","darrera","última"];
+  $$d{"last"}    =["darrer","?ltim","darrera","?ltima"];
   $$d{"each"}    =["cada","cadascun","cadascuna"];
   $$d{"of"}      =["de","d'"];
   $$d{"at"}      =["a les","a","al"];
   $$d{"on"}      =["el"];
-  $$d{"future"}  =["d'aquí a"];
+  $$d{"future"}  =["d'aqu? a"];
   $$d{"past"}    =["fa"];
   $$d{"next"}    =["proper"];
   $$d{"prev"}    =["passat","proppassat","anterior"];
-  $$d{"later"}   =["més tard"];
+  $$d{"later"}   =["m?s tard"];
 
   $$d{"exact"}   =["exactament"];
   $$d{"approx"}  =["approximadament"];
   $$d{"business"}=["empresa"];
 
-  $$d{"offset"}  =["ahir","-0:0:0:1:0:0:0","demà","+0:0:0:1:0:0:0","abans d'ahir","-0:0:0:2:0:0:0","demà passat","+0:0:0:2:0:0:0",];
+  $$d{"offset"}  =["ahir","-0:0:0:1:0:0:0","dem?","+0:0:0:1:0:0:0","abans d'ahir","-0:0:0:2:0:0:0","dem? passat","+0:0:0:2:0:0:0",];
   $$d{"times"}   =["migdia","12:00:00","mitjanit","00:00:00"];
 
   $$d{"years"}   =["a","an","any","anys"];

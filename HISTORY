@@ -768,6 +768,13 @@ Version 5.57  Released with 6.10
    Documentation improvement.  Josef Kreulich
    Improved timezone detection.  Stepan Kasal
 
+Version 5.58  Released with 6.11
+   Fixed a bug in some of the tests that were causing two tests to fail.  JD
+   Explicitly set TZ in all tests to avoid some failures (it got left out of
+      a few when it was bundled with 6.10).
+
+Version 5.59
+
 Version 6.00  2009-11-23
    Date::Manip 6.00 is a total rethink of the module, and a nearly complete
    rewrite. Please refer to the Date::Manip::Changes5to6 document for a list
@@ -819,6 +826,8 @@ Version 6.00  2009-11-23
       developed the Date::Manip::Base class.
    The regular expressions are all i18n friendly in anticipation of much
       better support for localization. First suggested by Alex Kapranoff.
+   Parsing a date ('today', 'Monday') gives a time of '00:00:00'. Suggested
+      by Mark Aitchison.
 
 Version 6.01  2009-11-23
    *** Fixed a bug where dates were sometimes getting the wrong timezone when
@@ -852,7 +861,7 @@ Version 6.05  2009-12-09
       to Rene Schickbauer for testing.
    Added dm_date example script.
 
-Version 6.06    2010-02-05
+Version 6.06  2010-02-05
    Added dm_zdump example script.
    Minor bug where %Z printf format didn't always work.
    Improved TZ::periods functionality
@@ -865,10 +874,10 @@ Version 6.06    2010-02-05
    Some additional speedups.
    Newest zoneinfo data (tzdata 2010b)
 
-Version 6.07    2010-02-05
+Version 6.07  2010-02-05
    Fixed bug in Date_TimeZone where it wasn't returning the timezone.  Robert Eden
 
-Version 6.10    2010-04-29
+Version 6.10  2010-04-29
    Fixed a bug where Date_ConvTZ not working correctly with timezones specified
       by offset.  Chris Butler
    Fixed a documentation bug in Date::Manip::TZ where "stdonly" was listed as the
@@ -884,4 +893,7 @@ Version 6.10    2010-04-29
    Fixed a bug where business mode calculations failed in some cases.  RT 56638
    Converted tests to Test::Inter
 
-Version 6.11
+Version 6.11  2010-04-30
+   Fixed a problem in Build.PL that had an incorrect module requirement.
+
+Version 6.12

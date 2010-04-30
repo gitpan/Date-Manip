@@ -22,7 +22,7 @@ use feature 'switch';
 #use re 'debug';
 
 use vars qw($VERSION);
-$VERSION='6.10';
+$VERSION='6.11';
 
 ########################################################################
 # BASE METHODS

@@ -11,6 +11,7 @@ if ($Date::Manip::VERSION < 6.00) {
 }
 
 $t->skip_all('Date::Manip 5.xx required','DM5');
+Date_Init("TZ=EST");
 
 $tests="
 1:1:1:1 2:2:2:2 1 => +0:0:0:3:3:3:3
