@@ -12,7 +12,8 @@ if ($Date::Manip::VERSION < 6.00) {
 
 $t->skip_all('Date::Manip 5.xx required','DM5');
 
-Date_Init(qw( PersonalCnf=Manip5.cnf PathSep=! PersonalCnfPath=./t!. IgnoreGlobalCnf=1 TZ=EST ));
+Date_Init("TZ=EST");
+Date_Init(qw( PersonalCnf=Manip5.cnf PathSep=! PersonalCnfPath=./t!. IgnoreGlobalCnf=1 ));
 Date_Init("WorkDayBeg=8:00","WorkDayEnd=17:00");
 
 $tests="

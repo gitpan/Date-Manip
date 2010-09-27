@@ -22,7 +22,7 @@ use feature 'switch';
 #use re 'debug';
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 ########################################################################
 # BASE METHODS
@@ -131,9 +131,9 @@ sub set {
          $delta[$f{$field}] = $val;
 
          if ($business) {
-            ($err,@delta) = $dmb->_normalize_business(0,@$val);
+            ($err,@delta) = $dmb->_normalize_business(0,@delta);
          } else {
-            ($err,@delta) = $dmb->_normalize_delta(0,@$val);
+            ($err,@delta) = $dmb->_normalize_delta(0,@delta);
          }
       }
 
@@ -192,12 +192,12 @@ sub _rx {
 
    } elsif ($rx eq 'mode') {
 
-      my $mode = qr/\b($$dmb{'data'}{'rx'}{'mode'}[0])\b/;
+      my $mode = qr/\b($$dmb{'data'}{'rx'}{'mode'}[0])\b/i;
       $$dmb{'data'}{'rx'}{'delta'}{$rx} = $mode;
 
    } elsif ($rx eq 'when') {
 
-      my $when = qr/\b($$dmb{'data'}{'rx'}{'when'}[0])\b/;
+      my $when = qr/\b($$dmb{'data'}{'rx'}{'when'}[0])\b/i;
       $$dmb{'data'}{'rx'}{'delta'}{$rx} = $when;
 
    }
@@ -206,97 +206,109 @@ sub _rx {
 }
 
 sub parse {
-   my($self,$string,$business) = @_;
-   my $instring                = $string;
-   my($dmb)                    = $$self{'objs'}{'base'};
-   my $gotmode                 = 0;
+   my($self,$instring,$business) = @_;
+   my($dmb)                      = $$self{'objs'}{'base'};
+   my($gotmode,$type,@delta);
    $self->_init();
 
-   # Get the mode
-
-   $gotmode  = 1  if (defined($business));
-   $business = 0  if (! $business);
-   my $mode  = $self->_rx('mode');
-   if ($string =~ s/$mode//) {
-      my $m = ($1);
-      if ($$dmb{'data'}{'wordmatch'}{'mode'}{lc($m)} == 1) {
-         $business = 0;
-      } else {
-         $business = 1;
-      }
-      $gotmode = 1;
-   }
-
-   my $type      = 'delta';
-   $type         = 'business'  if ($business);
-
-   # Parse the delta
-
-   my(@delta);
- PARSE: {
-
-      $string    =~ s/^\s*//;
-      $string    =~ s/\s*$//;
-
-      # Colon format
-
-      if ($string) {
-         my $tmp = $dmb->split($type,$string);
-         if (defined $tmp) {
-            @delta = @$tmp;
-            last;
-         }
-      }
-
-      # Expanded format
-
-      my $when      = $self->_rx('when');
-      my $past      = 0;
-      if ($string  &&
-          $string =~ s/$when//) {
-         my $when = ($1);
-         if ($$dmb{'data'}{'wordmatch'}{'when'}{lc($when)} == 1) {
-            $past   = 1;
-         }
-      }
-
-      my $rx        = $self->_rx('expanded');
-      if ($string  &&
-          $string   =~ $rx) {
-         @delta     = @+{qw(y m w d h mn s)};
-         foreach my $f (@delta) {
-            $f = 0  if (! defined $f);
-            $f =~ s/\s//g;
-         }
-         my $err;
-         if ($type eq 'business') {
-            ($err,@delta)  = $dmb->_normalize_business('split',@delta);
-         } else {
-            ($err,@delta)  = $dmb->_normalize_delta('split',@delta);
-         }
-
-         if ($err) {
-            $$self{'err'} = "[parse] Invalid delta string";
-            return 1;
-         }
-
-         # if $past, reverse the signs
-         if ($past) {
-            foreach my $v (@delta) {
-               if (defined $v) {
-                  $v *= -1;
-               }
-            }
-         }
-
-         last;
-      }
-
-      $$self{'err'} = "[parse] Invalid delta string";
+   if (! $instring) {
+      $$self{'err'} = '[parse] Empty delta string';
       return 1;
    }
 
-   $$self{'data'}{'in'}       = $string;
+   my $mode  = $self->_rx('mode');
+
+ ENCODING: foreach my $string ($dmb->_encoding($instring)) {
+
+      $type      = 'delta';
+
+      # Get the mode
+
+      $gotmode  = 0;
+      $gotmode  = 1  if (defined($business));
+      $business = 0  if (! $business);
+
+      if ($string =~ s/$mode//i) {
+         my $m = ($1);
+         if ($$dmb{'data'}{'wordmatch'}{'mode'}{lc($m)} == 1) {
+            $business = 0;
+         } else {
+            $business = 1;
+         }
+         $gotmode = 1;
+      }
+
+      $type         = 'business'  if ($business);
+
+      # Parse the delta
+
+    PARSE: {
+
+         $$self{'err'} = '';
+         $string    =~ s/^\s*//;
+         $string    =~ s/\s*$//;
+
+         # Colon format
+
+         if ($string) {
+            my $tmp = $dmb->split($type,$string);
+            if (defined $tmp) {
+               @delta = @$tmp;
+               last ENCODING;
+            }
+         }
+
+         # Expanded format
+
+         my $when      = $self->_rx('when');
+         my $past      = 0;
+         if ($string  &&
+             $string =~ s/$when//i) {
+            my $when = ($1);
+            if ($$dmb{'data'}{'wordmatch'}{'when'}{lc($when)} == 1) {
+               $past   = 1;
+            }
+         }
+
+         my $rx        = $self->_rx('expanded');
+         if ($string  &&
+             $string   =~ $rx) {
+            @delta     = @+{qw(y m w d h mn s)};
+            foreach my $f (@delta) {
+               $f = 0  if (! defined $f);
+               $f =~ s/\s//g;
+            }
+            my $err;
+            if ($type eq 'business') {
+               ($err,@delta)  = $dmb->_normalize_business('split',@delta);
+            } else {
+               ($err,@delta)  = $dmb->_normalize_delta('split',@delta);
+            }
+
+            if ($err) {
+               next ENCODING;
+            }
+
+            # if $past, reverse the signs
+            if ($past) {
+               foreach my $v (@delta) {
+                  if (defined $v) {
+                     $v *= -1;
+                  }
+               }
+            }
+
+            last ENCODING;
+         }
+      }
+
+      $$self{'err'} = "[parse] Invalid delta string";
+      last ENCODING;
+   }
+
+   return 1  if ($$self{'err'});
+
+   $$self{'data'}{'in'}       = $instring;
    $$self{'data'}{'delta'}    = [@delta];
    $$self{'data'}{'business'} = $business;
    $$self{'data'}{'gotmode'}  = $gotmode;

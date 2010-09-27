@@ -1,5 +1,5 @@
 ########################################################################
-# Prior to release of 6.10
+# +1 significant release
 ########################################################################
 
 Change Zones.pod to print out the offests associated with each abbreviation
@@ -34,11 +34,22 @@ Fix docs for Sorting Problems.  It should use Date_Cmp instead of cmp.
 
 Clear out all problems from CPAN (both for DateManip and Date-Manip)
 
+Methods which require a valid object (secs_since_1970_GMT) should exit
+instead of trying to perform the operation if the object is invalid.
+RT #60662 (Matt Blythe)
+
+Install both v5 and v6.
+   load the correct version at runtime (make sure only one can be loaded at a time?)
+   check a global variable or environment variable to load v5 if v6 could be in
+   Date::Manip.pod now contains a general description of the module
+   Date::Manip::DM5 contains version 5 functions (and docs)
+   Date::Manip::DM6 contains version 6 functions (and docs)
+
 ########################################################################
-# Prior to release of 6.20
+# +2 significant release
 ########################################################################
 
-Make sure that all languages are UTF-8.
+Switch to YAML::XS (but it converts text to non-UTF-8 so take that into account)
 
 Everywhere a timezone can be entered, allow:
    zone
@@ -52,8 +63,6 @@ followed by an option:
 
 Change Date::Manip::Base so that $date input can be reference or
 string.
-
-Write Lang.pod
 
 Clear as much of the backlog of suggestions as possible.
 
@@ -110,6 +119,15 @@ day, keep it, otherwise discard this date.
 # TO DO
 ########################################################################
 
+Get rid of the IntCharSet config variable (and all translations from the
+   language files that have been changed to ASCII) and only support strings in
+   the native script.  Also, add an 'Encoding' config varible so all output
+   (and input) will be in that encoding rather than UTF-8.
+
+Add support for parsing:
+  Thu Jan 21 17:13:27 2010 -0400
+(which means that the time and timezone are NOT next to each other).
+
 Make sure there is a correspondance between:
   time,localtime,gmtime
   Date_SecsSince1970,Date_SecsSince1970GMT
@@ -131,6 +149,9 @@ Mark Dedlow
 Change the Jan1Week1 variable to accept the values "m1-m7" (1st week contains
 Jan X) or "d1-d7" (1st week contains the 1st dX day of week ... so d1
 means that the 1st week of the year contains the 1st Monday).
+
+Free up the '%u', '%h', and '%X' printf formats. Reserve '%X' for
+  extended formats (%Xa, %Xb, ...).
 
 ########################################################################
 # TO CONSIDER
@@ -209,6 +230,8 @@ Switch to Math::BigInt instead of using "no integer".  Vishal Bhatia
 Use autoloader.  Ted Ashton
 
 Change EXPORT to EXPORT_OK (message 9 by Peter Bray)
+
+Better support for fractional seconds.  RT 61535
 
 ########################################################################
 # GRANULARITY

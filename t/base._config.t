@@ -19,7 +19,9 @@ sub test {
   return @ret;
 }
 
-$obj = new Date::Manip::Base;
+$dmt = new Date::Manip::TZ;
+$obj = $dmt->base();
+$obj->config("forcedate","now,America/New_York");
 $obj->config("ConfigFile","$testdir/Manip.cnf");
 
 $tests="

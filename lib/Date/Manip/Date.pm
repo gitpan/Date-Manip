@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 ########################################################################
 # BASE METHODS
@@ -88,123 +88,145 @@ sub _init_args {
 ########################################################################
 
 sub parse {
-   my($self,$string,@opts) = @_;
+   my($self,$instring,@opts) = @_;
    $self->_init();
    my $noupdate = 0;
 
-   if (! $string) {
+   if (! $instring) {
       $$self{'err'} = '[parse] Empty date string';
       return 1;
    }
 
    my %opts     = map { $_,1 } @opts;
-   my $instring = $string;
 
    my $dmb = $$self{'objs'}{'base'};
 
-   my($done,$y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off,$dow);
-   my $got_time     = 0;
-   my $default_time = 0;
+   my($done,$y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off,$dow,$got_time,
+      $default_time,$firsterr);
+
+ ENCODING: foreach my $string ($dmb->_encoding($instring)) {
+      $got_time     = 0;
+      $default_time = 0;
 
    # Put parse in a simple loop for an easy exit.
- PARSE: {
-      my(@tmp,$tmp);
+    PARSE: {
+         my(@tmp,$tmp);
+         $$self{'err'} = '';
 
-      # Check the standard date format
+         # Check the standard date format
 
-      $tmp = $dmb->split('date',$string);
-      if (defined($tmp)) {
-         ($y,$m,$d,$h,$mn,$s) = @$tmp;
-         $got_time = 1;
-         last PARSE;
-      }
-
-      # Parse ISO 8601 dates now (which may have a timezone).
-
-      unless (exists $opts{'noiso8601'}) {
-         ($done,@tmp) = $self->_parse_datetime_iso8601($string,\$noupdate);
-         if ($done) {
-            ($y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
+         $tmp = $dmb->split('date',$string);
+         if (defined($tmp)) {
+            ($y,$m,$d,$h,$mn,$s) = @$tmp;
             $got_time = 1;
             last PARSE;
          }
-      }
 
-      # There's lots of ways that commas may be included. Remove
-      # them.
+         # Parse ISO 8601 dates now (which may have a timezone).
 
-      $string =~ s/,/ /g;
-
-      # Some special full date/time formats
-
-      unless (exists $opts{'nospecial'}) {
-         ($done,@tmp) = $self->_parse_datetime_other($string,\$noupdate);
-         if ($done) {
-            ($y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
-            $got_time = 1;
-            last PARSE;
-         }
-      }
-
-      # Parse (and remove) the time
-
-      ($got_time,@tmp) = $self->_parse_time('parse',$string,\$noupdate,%opts);
-      if ($got_time) {
-         ($string,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
-      }
-
-      if (! $string) {
-         ($y,$m,$d) = $self->_def_date($y,$m,$d,\$noupdate);
-         last;
-      }
-
-      # Parse (and remove) the day of week. Also, handle the simple DoW
-      # formats.
-
-      unless (exists $opts{'nodow'}) {
-         ($done,@tmp) = $self->_parse_dow($string,\$noupdate);
-         if (@tmp) {
+         unless (exists $opts{'noiso8601'}) {
+            ($done,@tmp) = $self->_parse_datetime_iso8601($string,\$noupdate);
             if ($done) {
-               ($y,$m,$d)    = @tmp;
-               $default_time = 1;
+               ($y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
+               $got_time = 1;
                last PARSE;
-            } else {
-               ($string,$dow) = @tmp;
             }
          }
-      }
-      $dow = 0  if (! $dow);
 
-      (@tmp) = $self->_parse_date($string,$dow,\$noupdate,%opts);
-      if (@tmp) {
-         ($y,$m,$d,$dow) = @tmp;
-         $default_time = 1;
+         # There's lots of ways that commas may be included. Remove
+         # them.
+
+         $string =~ s/,/ /g;
+
+         # Some special full date/time formats
+
+         unless (exists $opts{'nospecial'}) {
+            ($done,@tmp) = $self->_parse_datetime_other($string,\$noupdate);
+            if ($done) {
+               ($y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
+               $got_time = 1;
+               last PARSE;
+            }
+         }
+
+         # Parse (and remove) the time
+
+         ($got_time,@tmp) = $self->_parse_time('parse',$string,\$noupdate,%opts);
+         if ($got_time) {
+            ($string,$h,$mn,$s,$tzstring,$zone,$abb,$off) = @tmp;
+         }
+
+         if (! $string) {
+            ($y,$m,$d) = $self->_def_date($y,$m,$d,\$noupdate);
+            last;
+         }
+
+         # Parse (and remove) the day of week. Also, handle the simple DoW
+         # formats.
+
+         unless (exists $opts{'nodow'}) {
+            ($done,@tmp) = $self->_parse_dow($string,\$noupdate);
+            if (@tmp) {
+               if ($done) {
+                  ($y,$m,$d)    = @tmp;
+                  $default_time = 1;
+                  last PARSE;
+               } else {
+                  ($string,$dow) = @tmp;
+               }
+            }
+         }
+         $dow = 0  if (! $dow);
+
+         (@tmp) = $self->_parse_date($string,$dow,\$noupdate,%opts);
+         if (@tmp) {
+            ($y,$m,$d,$dow) = @tmp;
+            $default_time = 1;
+            last PARSE;
+         }
+
+         # Parse deltas
+         #
+         # Occasionally, a delta is entered for a date (which is interpreted
+         # as the date relative to now). There can be some confusion between
+         # a date and a delta, but the most important conflicts are the
+         # ISO 8601 dates (many of which could be interpreted as a delta),
+         # but those have already been taken care of.
+
+         unless (exists $opts{'nodelta'}) {
+            ($done,@tmp) = $self->_parse_delta($string,$dow,$got_time,$h,$mn,$s,\$noupdate);
+            if (@tmp) {
+               ($y,$m,$d,$h,$mn,$s) = @tmp;
+               $got_time = 1;
+               $dow = '';
+            }
+            last PARSE  if ($done);
+         }
+
+         $$self{'err'} = '[parse] Invalid date string';
          last PARSE;
       }
 
-      # Parse deltas
-      #
-      # Occasionally, a delta is entered for a date (which is interpreted
-      # as the date relative to now). There can be some confusion between
-      # a date and a delta, but the most important conflicts are the
-      # ISO 8601 dates (many of which could be interpreted as a delta),
-      # but those have already been taken care of.
+      # We got an error parsing this encoding of the string. It could be that
+      # it is a genuine error, or it may be that we simply need to try a different
+      # encoding. If ALL encodings fail, we'll return the error from the first one.
 
-      unless (exists $opts{'nodelta'}) {
-         ($done,@tmp) = $self->_parse_delta($string,$dow,$got_time,$h,$mn,$s,\$noupdate);
-         if (@tmp) {
-            ($y,$m,$d,$h,$mn,$s) = @tmp;
-            $got_time = 1;
-            $dow = '';
+      if ($$self{'err'}) {
+         if (! $firsterr) {
+            $firsterr = $$self{'err'};
          }
-         last PARSE  if ($done);
+         next ENCODING;
       }
 
-      $$self{'err'} = '[parse] Invalid date string';
-      return 1;
+      # If we didn't get an error, this is the string to use.
+
+      last ENCODING;
    }
 
-   return 1  if ($$self{'err'});
+   if ($$self{'err'}) {
+      $$self{'err'} = $firsterr;
+      return 1;
+   }
 
    # Make sure that a time is set
 
@@ -1324,7 +1346,10 @@ sub _other_rx {
         "${y2}\\s+${mmm}${sep}?${d}|" .       # YY   mmmD    YY   mmm/D
         "${y4}\\s+${mmm}${sep}?${d}|" .       # YYYY mmmD    YYYY mmm/D
         "${y2}\\s+${d}${sep}?${mmm}|" .       # YY   Dmmm    YY   D/mmm
-        "${y4}\\s+${d}${sep}?${mmm}";         # YYYY Dmmm    YYYY D/mmm
+        "${y4}\\s+${d}${sep}?${mmm}|" .       # YYYY Dmmm    YYYY D/mmm
+
+        "${y4}:${m}:${d}";                    # YYYY:MM:DD
+
 
       $daterx = qr/^\s*(?:$daterx)\s*$/i;
       $$dmb{'data'}{'rx'}{'other'}{$rx} = $daterx;
@@ -2262,7 +2287,7 @@ sub set {
       }
 
       when (['y','m','d','h','mn','s']) {
-         my %tmp = qw(y 0 m 1 w 2 d 3 h 4 mn 5 s 6);
+         my %tmp = qw(y 0 m 1 d 2 h 3 mn 4 s 5);
          my $i   = $tmp{$field};
          my $val;
          if ($#val == 0) {
@@ -2975,6 +3000,11 @@ sub __calc_date_delta {
 
 # Calculates @date2 such that @date2 + @delta = @date .
 #
+# *** FIX ***
+# This is impossible in some cases. If @date is "Dec 31" and
+# @delta is "+ 1 month", there is no value for @date2 which
+# satisfies this.
+#
 sub __calc_date_delta_inverse {
    my($self,$date,$delta) = @_;
    my $dmb                = $$self{'objs'}{'base'};
@@ -2982,12 +3012,18 @@ sub __calc_date_delta_inverse {
    my @date     = @$date;
    my @delta    = @$delta;
 
-   # @deltasub is an intermediate delta that can be added to @date to
-   # hopefully get @date2. Add it to get a first guess for @date2.
-   # Then, add the original delta back to get @altdate (which we want
-   # to be identical to @date).
+   # Our first estimate for @date2 is:
+   #
+   #   @date2 = @date + -(@delta)
+   #
+   # @deltasub = -(@delta)
 
    my @deltasub = map { -1*$_ } @$delta;
+
+   # Add @deltasub to @date it to get a first guess for @date2.  Then,
+   # add the original delta back to get @altdate (which we want to be
+   # identical to @date).
+
    my @date2    = @{ $self->__calc_date_delta(0,[@date],[@deltasub]) };
    my @altdate  = @{ $self->__calc_date_delta(0,[@date2],[@delta]) };
 
@@ -3009,12 +3045,10 @@ sub __calc_date_delta_inverse {
    # a time until the resulting @date2 + @delta is equal to @date.
    #
    # If $flag < 0, it means that @date < @altdate and @date2 needs to
-   # be earlier.
+   # be 1 day earlier.
    #
    # If $flag > 0, it means that @altdate > @date, and @date2 needs to
-   # be later.
-
-   my $prev = ($flag < 0 ? 1 : 0);
+   # be 1 dat later.
 
    while (1) {
       @date2 = @{ $dmb->calc_date_days([@date2],$flag) };

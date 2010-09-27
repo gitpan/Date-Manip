@@ -215,6 +215,53 @@ translation for a new language, email me (see the AUTHOR section in
 the main Date::Manip documentation) and I'll send you a list of things
 that I need.
 
+=item B<Encoding>
+
+Date::Manip has some support for handling date strings encoded in
+alternate character encodings.
+
+By default, input strings may be tested using multiple encodings that
+are commonly used for the specific languages, as well as using
+standard perl escape sequences, and output is done in UTF-8.
+
+The input, output, or both can be overridden using the Encoding
+variable.
+
+Setting Encoding to the name of a single encoding (a name supported
+by the Encoding perl module), will force all input and output to be
+done in that encoding.
+
+So, setting:
+
+   Encoding = iso-8859-1
+
+means that all input and output will be in that encoding. The
+encoding 'perl' has the special meaning of storing the string in
+perl escape sequences.
+
+Encoding can also be set to the name of two encoding (separated
+by a comma).
+
+   Encoding = iso-8859-1,utf-16
+
+which means that all input is in iso-8859-1 encoding, but all output
+will be utf-16.
+
+Encoding may also be set as follows:
+
+   Encoding = iso-8859-1,
+
+meaning that input is in iso-8859-1 and output is in the default (i.e.
+UTF-8) encoding.
+
+   Encoding = ,utf-16
+
+means to check the input in all of the encodings, but all output will
+be in utf-16 encoding.
+
+Note that any time you change languages, it will reset the encodings,
+so you should set this config variable AFTER setting the language.
+
 =item B<DateFormat>
 
 Different countries look at the date 12/10 as Dec 10 or Oct 12.  In

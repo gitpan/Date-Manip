@@ -5,9 +5,9 @@ package Date::Manip::Offset::off476;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:33:45 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:17:24 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off476;
 
 =head1 NAME
 
-Date::Manip::Offset::off476 - Support for the -14:00:00 offset
+Date::Manip::Offset::off476 - Support for the -13:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,15 +32,15 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 use vars qw($Offset %Offset);
 
-$Offset        = '-14:00:00';
+$Offset        = '-13:00:00';
 
 %Offset        = (
    0 => [
-      'etc/gmt-14',
+      'etc/gmt-13',
       ],
 );
 

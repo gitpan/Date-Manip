@@ -27,347 +27,511 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 ISO-8859-15 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
 
 1;
 __DATA__
---- 
-ampm: 
-  - 
+---
+ampm:
+  -
     - FM
-  - 
+  -
     - EM
-at: 
+at:
   - kl
   - ''
   - kl.
   - klockan
-day_abb: 
-  - 
+day_abb:
+  -
     - Man
-    - "M\xE5n"
-  - 
+    - Mån
+  -
     - Tis
-  - 
+  -
     - Ons
-  - 
+  -
     - Tor
-  - 
+  -
     - Fre
-  - 
+  -
     - Lor
-    - "L\xF6r"
-  - 
+    - Lör
+  -
     - Son
-    - "S\xF6n"
-day_char: 
-  - 
+    - Sön
+day_char:
+  -
     - M
-  - 
+  -
     - Ti
-  - 
+  -
     - O
-  - 
+  -
     - To
-  - 
+  -
     - F
-  - 
+  -
     - L
-  - 
+  -
     - S
-day_name: 
-  - 
+day_name:
+  -
     - Mandag
-    - "M\xE5ndag"
-  - 
+    - Måndag
+  -
     - Tisdag
-  - 
+  -
     - Onsdag
-  - 
+  -
     - Torsdag
-  - 
+  -
     - Fredag
-  - 
+  -
     - Lordag
-    - "L\xF6rdag"
-  - 
+    - Lördag
+  -
     - Sondag
-    - "S\xF6ndag"
-each: 
+    - Söndag
+each:
   - varje
-fields: 
-  - 
+fields:
+  -
     - ar
-    - "\xE5r"
-  - 
+    - år
+  -
     - manader
-    - "m\xE5nader"
+    - månader
     - man
     - manad
-    - "m\xE5n"
-    - "m\xE5nad"
-  - 
+    - mån
+    - månad
+  -
     - veckor
     - ''
     - v
     - vecka
-  - 
+  -
     - dagar
     - ''
     - d
     - dag
-  - 
+  -
     - timmar
     - ''
     - t
     - tim
     - timme
-  - 
+  -
     - minuter
     - ''
     - m
     - min
     - minut
-  - 
+  -
     - sekunder
     - ''
     - s
     - sek
     - sekund
-last: 
+last:
   - forra
-  - "f\xF6rra"
+  - förra
   - senaste
-mode: 
-  - 
+mode:
+  -
     - exakt
     - ''
     - ungefar
-    - "ungef\xE4r"
-  - 
+    - ungefär
+  -
     - arbetsdag
     - ''
     - arbetsdagar
-month_abb: 
-  - 
+month_abb:
+  -
     - Jan
-  - 
+  -
     - Feb
-  - 
+  -
     - Mar
-  - 
+  -
     - Apr
-  - 
+  -
     - Maj
-  - 
+  -
     - Jun
-  - 
+  -
     - Jul
-  - 
+  -
     - Aug
-  - 
+  -
     - Sep
-  - 
+  -
     - Okt
-  - 
+  -
     - Nov
-  - 
+  -
     - Dec
-month_name: 
-  - 
+month_name:
+  -
     - Januari
-  - 
+  -
     - Februari
-  - 
+  -
     - Mars
-  - 
+  -
     - April
-  - 
+  -
     - Maj
-  - 
+  -
     - Juni
-  - 
+  -
     - Juli
-  - 
+  -
     - Augusti
-  - 
+  -
     - September
-  - 
+  -
     - Oktober
-  - 
+  -
     - November
-  - 
+  -
     - December
-nextprev: 
-  - 
+nextprev:
+  -
     - nasta
-    - "n\xE4sta"
-  - 
+    - nästa
+  -
     - forra
-    - "f\xF6rra"
-nth: 
-  - 
+    - förra
+nth:
+  -
     - 1:a
     - ''
+    - en
+    - ett
     - forsta
-    - "f\xF6rsta"
-  - 
+    - första
+  -
     - 2:a
     - ''
+    - två
+    - tva
     - andra
-  - 
+  -
     - 3:e
     - ''
+    - tre
     - tredje
-  - 
+  -
     - 4:e
     - ''
+    - fyra
     - fjarde
-    - "fj\xE4rde"
-  - 
+    - fjärde
+  -
     - 5:e
     - ''
+    - fem
     - femte
-  - 
+  -
     - 6:e
     - ''
+    - sex
     - sjatte
-    - "sj\xE4tte"
-  - 
+    - sjätte
+  -
     - 7:e
     - ''
+    - sju
     - sjunde
-  - 
+  -
     - 8:e
     - ''
+    - åtta
+    - atta
     - attonde
-    - "\xE5ttonde"
-  - 
+    - åttonde
+  -
     - 9:e
     - ''
+    - nio
     - nionde
-  - 
+  -
     - 10:e
     - ''
+    - tio
     - tionde
-  - 
+  -
     - 11:e
     - ''
+    - elva
     - elfte
-  - 
+  -
     - 12:e
     - ''
+    - tolv
     - tolfte
-  - 
+  -
     - 13:e
     - ''
+    - tretton
     - trettonde
-  - 
+  -
     - 14:e
     - ''
+    - fjorton
     - fjortonde
-  - 
+  -
     - 15:e
     - ''
+    - femton
     - femtonde
-  - 
+  -
     - 16:e
     - ''
+    - sexton
     - sextonde
-  - 
+  -
     - 17:e
     - ''
+    - sjutton
     - sjuttonde
-  - 
+  -
     - 18:e
     - ''
+    - arton
     - artonde
-  - 
+  -
     - 19:e
     - ''
+    - nitton
     - nittonde
-  - 
+  -
     - 20:e
     - ''
+    - tjugo
     - tjugonde
-  - 
+  -
     - 21:a
     - ''
+    - tjugoen
+    - tjugoett
     - tjugoforsta
-    - "tjugof\xF6rsta"
-  - 
+    - tjugoförsta
+  -
     - 22:a
     - ''
+    - tjugotvå
+    - tjugotva
     - tjugoandra
-  - 
+  -
     - 23:e
     - ''
+    - tjugotre
     - tjugotredje
-  - 
+  -
     - 24:e
     - ''
+    - tjugofyra
     - tjugofjarde
-    - "tjugofj\xE4rde"
-  - 
+    - tjugofjärde
+  -
     - 25:e
     - ''
+    - tjugofem
     - tjugofemte
-  - 
+  -
     - 26:e
     - ''
+    - tjugosex
     - tjugosjatte
-    - "tjugosj\xE4tte"
-  - 
+    - tjugosjätte
+  -
     - 27:e
     - ''
+    - tjugosju
     - tjugosjunde
-  - 
+  -
     - 28:e
     - ''
+    - tjugoåtta
+    - tjugoatta
     - tjugoattonde
-    - "tjugo\xE5ttonde"
-  - 
+    - tjugoåttonde
+  -
     - 29:e
     - ''
+    - tjugonio
     - tjugonionde
-  - 
+  -
     - 30:e
     - ''
+    - trettio
     - trettionde
-  - 
+  -
     - 31:a
     - ''
+    - trettioen
+    - trettioett
     - trettioforsta
-    - "trettiof\xF6rsta"
-of: 
+    - trettioförsta
+  -
+    - 32:a
+    - ''
+    - trettiotvå
+    - trettiotva
+    - trettioandra
+  -
+    - 33:e
+    - ''
+    - trettiotre
+    - trettiotredje
+  -
+    - 34:e
+    - ''
+    - trettiofyra
+    - trettiofjarde
+    - trettiofjärde
+  -
+    - 35:e
+    - ''
+    - trettiofem
+    - trettiofemte
+  -
+    - 36:e
+    - ''
+    - trettiosex
+    - trettiosjatte
+    - trettiosjätte
+  -
+    - 37:e
+    - ''
+    - trettiosju
+    - trettiosjunde
+  -
+    - 38:e
+    - ''
+    - trettioåtta
+    - trettioatta
+    - trettioattonde
+    - trettioåttonde
+  -
+    - 39:e
+    - ''
+    - trettionio
+    - trettionionde
+  -
+    - 40:e
+    - ''
+    - fyrtio
+    - fyrtionde
+  -
+    - 41:a
+    - ''
+    - fyrtioen
+    - fyrtioett
+    - fyrtioforsta
+    - fyrtioförsta
+  -
+    - 42:a
+    - ''
+    - fyrtiotvå
+    - fyrtiotva
+    - fyrtioandra
+  -
+    - 43:e
+    - ''
+    - fyrtiotre
+    - fyrtiotredje
+  -
+    - 44:e
+    - ''
+    - fyrtiofyra
+    - fyrtiofjarde
+    - fyrtiofjärde
+  -
+    - 45:e
+    - ''
+    - fyrtiofem
+    - fyrtiofemte
+  -
+    - 46:e
+    - ''
+    - fyrtiosex
+    - fyrtiosjatte
+    - fyrtiosjätte
+  -
+    - 47:e
+    - ''
+    - fyrtiosju
+    - fyrtiosjunde
+  -
+    - 48:e
+    - ''
+    - fyrtioåtta
+    - fyrtioatta
+    - fyrtioattonde
+    - fyrtioåttonde
+  -
+    - 49:e
+    - ''
+    - fyrtionio
+    - fyrtionionde
+  -
+    - 50:e
+    - ''
+    - femtio
+    - femtionde
+  -
+    - 51:a
+    - ''
+    - femtioen
+    - femtioett
+    - femtioforsta
+    - femtioförsta
+  -
+    - 52:a
+    - ''
+    - femtiotvå
+    - femtiotva
+    - femtioandra
+  -
+    - 53:e
+    - ''
+    - femtiotre
+    - femtiotredje
+of:
   - om
-offset_date: 
+offset_date:
   idag: 0:0:0:0:0:0:0
   igar: -0:0:0:1:0:0:0
-  "ig\xE5r": -0:0:0:1:0:0:0
+  igår: -0:0:0:1:0:0:0
   imorgon: +0:0:0:1:0:0:0
-offset_time: 
+offset_time:
   nu: 0:0:0:0:0:0:0
-'on': 
+'on':
   - pa
-  - "p\xE5"
+  - på
 sephm:
-  - "[.]"
+  - [.]
 sepms:
-  - "[:]"
-times: 
+  - [:]
+times:
   midnatt: 00:00:00
   mitt pa dagen: 12:00:00
-  "mitt p\xE5 dagen": 12:00:00
-when: 
-  - 
+  mitt på dagen: 12:00:00
+when:
+  -
     - sedan
-  - 
+  -
     - om
     - ''
     - senare

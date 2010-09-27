@@ -27,353 +27,536 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 iso-8859-1 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
 
 1;
 __DATA__
---- 
-ampm: 
-  - 
+---
+ampm:
+  -
     - ogleden once
-    - "\xF6gleden \xF6nce"
-  - 
+    - "ögleden önce"
+  -
     - ogleden sonra
-    - "\xF6\xF0leden sonra"
-at: 
+    - "öðleden sonra"
+at:
   - saat
-day_abb: 
-  - 
+day_abb:
+  -
     - pzt
-  - 
+  -
     - sal
-  - 
+  -
     - car
-    - "\xE7ar"
-  - 
+    - "çar"
+  -
     - per
-  - 
+  -
     - cum
-  - 
+  -
     - cts
-  - 
+    - ''
+    - cmt
+  -
     - paz
-day_char: 
-  - 
+day_char:
+  -
     - Pt
-  - 
+  -
     - S
-  - 
+  -
     - Cr
-    - "\xC7"
-  - 
+    - "Ç"
+  -
     - Pr
-  - 
+  -
     - C
-  - 
+  -
     - Ct
-  - 
+  -
     - P
-day_name: 
-  - 
+day_name:
+  -
     - pazartesi
-  - 
+  -
     - sali
-    - "sal\xFD"
-  - 
+    - "salý"
+  -
     - carsamba
-    - "\xE7ar\xFEamba"
-  - 
+    - "çarþamba"
+  -
     - persembe
-    - "per\xFEembe"
-  - 
+    - "perþembe"
+  -
     - cuma
-  - 
+  -
     - cumartesi
-  - 
+  -
     - pazar
-each: 
+each:
   - her
-fields: 
-  - 
+fields:
+  -
     - yil
     - ''
     - 'y'
-  - 
+  -
     - ay
     - ''
     - a
-  - 
+  -
     - hafta
     - ''
     - h
-  - 
+  -
     - gun
     - ''
     - g
-  - 
+  -
     - saat
     - ''
     - s
-  - 
+  -
     - dakika
     - ''
     - dak
     - d
-  - 
+  -
     - saniye
     - ''
     - sn
-last: 
+last:
   - son
   - ''
   - sonuncu
-mode: 
-  - 
+mode:
+  -
     - tam
     - ''
     - yaklasik
-    - "yakla\xFE\xFDk"
-  - 
+    - "yaklaþýk"
+  -
     - is
-    - "i\xFE"
-    - "\xE7al\xFD\xFEma"
+    - "iþ"
+    - "çalýþma"
     - calisma
-month_abb: 
-  - 
+month_abb:
+  -
     - oca
-  - 
+  -
     - sub
-    - "\xFEub"
-  - 
+    - "þub"
+  -
     - mar
-  - 
+  -
     - nis
-  - 
+  -
     - may
-  - 
+  -
     - haz
-  - 
+  -
     - tem
-  - 
+  -
     - agu
-    - "a\xF0u"
-  - 
+    - "aðu"
+  -
     - eyl
-  - 
+  -
     - eki
-  - 
+  -
     - kas
-  - 
+  -
     - ara
-month_name: 
-  - 
+month_name:
+  -
     - ocak
-  - 
+  -
     - subat
-    - "\xFEubat"
-  - 
+    - "þubat"
+  -
     - mart
-  - 
+  -
     - nisan
-  - 
+  -
     - mayis
-    - "may\xFDs"
-  - 
+    - "mayýs"
+  -
     - haziran
-  - 
+  -
     - temmuz
-  - 
+  -
     - agustos
-    - "a\xF0ustos"
-  - 
+    - "aðustos"
+  -
     - eylul
-    - "eyl\xFCl"
-  - 
+    - "eylül"
+  -
     - ekim
-  - 
+  -
     - kasim
-    - "kas\xFDm"
-  - 
+    - "kasým"
+  -
     - aralik
-    - "aral\xFDk"
-nextprev: 
-  - 
+    - "aralýk"
+nextprev:
+  -
     - gelecek
     - ''
     - sonraki
-  - 
+  -
     - onceki
-    - "\xF6nceki"
-nth: 
-  - 
+    - "önceki"
+nth:
+  -
     - 1.
     - ''
+    - bir
+    - ilk
     - birinci
-  - 
+  -
     - 2.
     - ''
+    - iki
     - ikinci
-  - 
+  -
     - 3.
     - ''
+    - "üç"
+    - uc
+    - "üçüncü"
     - ucuncu
-    - "\xFC\xE7\xFCnc\xFC"
-  - 
+  -
     - 4.
     - ''
+    - "dört"
+    - dort
+    - "dördüncü"
     - dorduncu
-    - "d\xF6rd\xFCnc\xFC"
-  - 
+  -
     - 5.
     - ''
+    - "beş"
+    - bes
+    - "beşinci"
     - besinci
-    - "be\xFEinci"
-  - 
+  -
     - 6.
     - ''
-    - altinci
-    - "alt\xFDnc\xFD"
-  - 
+    - "altı"
+    - alti
+    - altıncı
+  -
     - 7.
     - ''
+    - yedi
     - yedinci
-  - 
+  -
     - 8.
     - ''
+    - sekiz
     - sekizinci
-  - 
+  -
     - 9.
     - ''
+    - dokuz
     - dokuzuncu
-  - 
+  -
     - 10.
     - ''
+    - on
     - onuncu
-  - 
+  -
     - 11.
     - ''
-    - onbirinci
-  - 
+    - on bir
+    - on birinci
+  -
     - 12.
     - ''
-    - onikinci
-  - 
+    - on iki
+    - on ikinci
+  -
     - 13.
     - ''
-    - onucuncu
-    - "on\xFC\xE7\xFCnc\xFC"
-  - 
+    - "on üç"
+    - on uc
+    - "on üçüncü"
+    - on ucuncu
+  -
     - 14.
     - ''
-    - ondordoncu
-    - "ond\xF6rd\xFCnc\xFC"
-  - 
+    - "on dört"
+    - on dort
+    - "on dördüncü"
+    - on dorduncu
+  -
     - 15.
     - ''
-    - onbesinci
-    - "onbe\xFEinci"
-  - 
+    - "on beş"
+    - on bes
+    - "on beşinci"
+    - on besinci
+  -
     - 16.
     - ''
-    - onaltinci
-    - "onalt\xFDnc\xFD"
-  - 
+    - "on altı"
+    - on alti
+    - on altıncı
+  -
     - 17.
     - ''
-    - onyedinci
-  - 
+    - on yedi
+    - on yedinci
+  -
     - 18.
     - ''
-    - onsekizinci
-  - 
+    - on sekiz
+    - on sekizinci
+  -
     - 19.
     - ''
-    - ondokuzuncu
-  - 
+    - on dokuz
+    - on dokuzuncu
+  -
     - 20.
     - ''
+    - yirmi
     - yirminci
-  - 
+  -
     - 21.
     - ''
-    - yirmibirinci
-  - 
+    - yirmi bir
+    - yirminci birinci
+  -
     - 22.
     - ''
-    - yirmikinci
-  - 
+    - yirmi iki
+    - yirminci ikinci
+  -
     - 23.
     - ''
-    - yirmiucuncu
-    - "yirmi\xFC\xE7\xFCnc\xFC"
-  - 
+    - "yirmi üç"
+    - yirmi uc
+    - "yirminci üçüncü"
+    - yirminci ucuncu
+  -
     - 24.
     - ''
-    - yirmidorduncu
-    - "yirmid\xF6rd\xFCnc\xFC"
-  - 
+    - "yirmi dört"
+    - yirmi dort
+    - "yirminci dördüncü"
+    - yirminci dorduncu
+  -
     - 25.
     - ''
-    - yirmibesinci
-    - "yirmibe\xFEinci"
-  - 
+    - "yirmi beş"
+    - yirmi bes
+    - "yirminci beşinci"
+    - yirminci besinci
+  -
     - 26.
     - ''
-    - yirmialtinci
-    - "yirmialt\xFDnc\xFD"
-  - 
+    - "yirmi altı"
+    - yirmi alti
+    - yirminci altıncı
+  -
     - 27.
     - ''
-    - yirmiyedinci
-  - 
+    - yirmi yedi
+    - yirminci yedinci
+  -
     - 28.
     - ''
-    - yirmisekizinci
-  - 
+    - yirmi sekiz
+    - yirminci sekizinci
+  -
     - 29.
     - ''
-    - yirmidokuzuncu
-  - 
+    - yirmi dokuz
+    - yirminci dokuzuncu
+  -
     - 30.
     - ''
+    - otuz
     - otuzuncu
-  - 
+  -
     - 31.
     - ''
-    - otuzbirinci
-of: 
+    - otuz bir
+    - otuz birinci
+  -
+    - 32.
+    - ''
+    - otuz iki
+    - otuz ikinci
+  -
+    - 33.
+    - ''
+    - "otuz üç"
+    - otuz uc
+    - "otuz üçüncü"
+    - otuz ucuncu
+  -
+    - 34.
+    - ''
+    - "otuz dört"
+    - otuz dort
+    - "otuz dördüncü"
+    - otuz dorduncu
+  -
+    - 35.
+    - ''
+    - "otuz beş"
+    - otuz bes
+    - "otuz beşinci"
+    - otuz besinci
+  -
+    - 36.
+    - ''
+    - "otuz altı"
+    - otuz alti
+    - otuz altıncı
+  -
+    - 37.
+    - ''
+    - otuz yedi
+    - otuz yedinci
+  -
+    - 38.
+    - ''
+    - otuz sekiz
+    - otuz sekizinci
+  -
+    - 39.
+    - ''
+    - otuz dokuz
+    - otuz dokuzuncu
+  -
+    - 40.
+    - ''
+    - "kırk"
+    - kirk
+    - "kırkıncı"
+    - kirkinci
+  -
+    - 41.
+    - ''
+    - "kırk bir"
+    - kirk bir
+    - "kırk birinci"
+    - kirk birinci
+  -
+    - 42.
+    - ''
+    - "kırk iki"
+    - kirk iki
+    - "kırk ikinci"
+    - kirk ikinci
+  -
+    - 43.
+    - ''
+    - "kırk üç"
+    - kirk uc
+    - "kırk üçüncü"
+    - kirk ucuncu
+  -
+    - 44.
+    - ''
+    - "kırk dört"
+    - kirk dort
+    - "kırk dördüncü"
+    - kirk dorduncu
+  -
+    - 45.
+    - ''
+    - "kırk beş"
+    - kirk bes
+    - "kırk beşinci"
+    - kirk besinci
+  -
+    - 46.
+    - ''
+    - "kırk altı"
+    - kirk alti
+    - "kırk altıncı"
+    - kirk altıncı
+  -
+    - 47.
+    - ''
+    - "kırk yedi"
+    - kirk yedi
+    - "kırk yedinci"
+    - kirk yedinci
+  -
+    - 48.
+    - ''
+    - "kırk sekiz"
+    - kirk sekiz
+    - "kırk sekizinci"
+    - kirk sekizinci
+  -
+    - 49.
+    - ''
+    - "kırk dokuz"
+    - kirk dokuz
+    - "kırk dokuzuncu"
+    - kirk dokuzuncu
+  -
+    - 50.
+    - ''
+    - elli
+    - ellinci
+  -
+    - 51.
+    - ''
+    - elli bir
+    - elli birinci
+  -
+    - 52.
+    - ''
+    - elli iki
+    - elli ikinci
+  -
+    - 53.
+    - ''
+    - "elli üç"
+    - elli uc
+    - "elli üçüncü"
+    - elli ucuncu
+of:
   - of
-offset_date: 
+offset_date:
   bugun: 0:0:0:0:0:0:0
-  "bug\xFCn": 0:0:0:0:0:0:0
+  "bugün": 0:0:0:0:0:0:0
   dun: -0:0:0:1:0:0:0
-  "d\xFCn": -0:0:0:1:0:0:0
+  "dün": -0:0:0:1:0:0:0
   yarin: +0:0:0:1:0:0:0
-  "yar\xFDn": +0:0:0:1:0:0:0
-offset_time: 
+  "yarýn": +0:0:0:1:0:0:0
+offset_time:
   simdi: 0:0:0:0:0:0:0
-  "\xFEimdi": 0:0:0:0:0:0:0
-'on': 
+  "þimdi": 0:0:0:0:0:0:0
+'on':
   - 'on'
-times: 
+times:
   gece yarisi: 00:00:00
-  "gece yar\xFDs\xFD": 00:00:00
+  "gece yarýsý": 00:00:00
   oglen: 12:00:00
   yarim: 12:30:00
-  "yar\xFDm": 12:30:00
-  "\xF6\xF0len": 12:00:00
-when: 
-  - 
+  "yarým": 12:30:00
+  "öðlen": 12:00:00
+when:
+  -
     - gecmis
-    - "ge\xE7mi\xFE"
+    - "geçmiþ"
     - gecen
-    - "ge\xE7en"
-  - 
+    - "geçen"
+  -
     - gelecek
     - ''
     - sonra

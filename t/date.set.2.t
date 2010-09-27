@@ -28,17 +28,18 @@ $obj = new Date::Manip::Date;
 $obj->config("forcedate","now,America/New_York");
 $obj->config("printable",2);
 
-$tests="
-
-date [ 1996 1 1 12 0 0 ]  => 1996-01-01-12:00:00
-
-date [ 1996 13 1 12 0 0 ] => '[set] Invalid date argument'
-
-";
+$tests=join('',<DATA>);
 
 $t->tests(func  => \&test,
           tests => $tests);
 $t->done_testing();
+
+1;
+__DATA__
+
+date [ 1996 1 1 12 0 0 ]  => 1996-01-01-12:00:00
+
+date [ 1996 13 1 12 0 0 ] => '[set] Invalid date argument'
 
 #Local Variables:
 #mode: cperl

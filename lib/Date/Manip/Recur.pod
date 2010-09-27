@@ -45,6 +45,15 @@ for business mode recurrences. However, with the careful use of
 modifiers (discussed below), most recurring business events can be
 determined too.
 
+NOTE: unlike date parsing, support for frequencies written out in
+English (or whatever language you are working in) is extremely
+limited. For example, the string "the first of every month" will NOT
+be parsed as a valid frequency. A small number of frequencies can be
+expressed in a written out form (see OTHER FREQUENCY FORMATS below),
+but most must be expressed in the format described below in FREQUENCY
+NOTATION. In the documentation however, the written out form will
+often be used for the sake of clarity.
+
 =item B<Range>
 
 In order to actually get a list of dates on which a recurring event
@@ -55,8 +64,8 @@ For example, if the frequency was
 
    the first of every month
 
-and the start/end dates were Jan 1 2000 and May 31 2000, you could get
-the dates:
+and the start/end dates were Jan 1 2000 and May 31 2000, the list of
+dates would include:
 
    Jan 1 2000
    Feb 1 2000
@@ -113,6 +122,9 @@ The day after Thanksgiving can be defined as the frequency and modifier:
 Modifiers can also be used to create events that happen only on
 business days.
 
+NOTE: the syntax for the various modifiers is described below in
+the MODIFIERS section.
+
 =back
 
 With these pieces of information, the list of dates in the range can
@@ -145,8 +157,8 @@ asterisks:
  *1:2:3:4:5:6*7
 
 When an asterisk is included, the portion to the left of it is called
-the interval, and refers to a time interval between recurring events.
-For example, if the interval of the frequency is:
+the interval, and refers to an approximate time interval between
+recurring events.  For example, if the interval of the frequency is:
 
   1:2*
 
@@ -525,7 +537,7 @@ then went looking for a notation that could be used to define them.
 
 After looking in several specifications (including ISO 8601) and after
 a discussion on a mailing list of calendar related topics, it appeared
-like there was no concise, flexible notation for handling recurring
+that there was no concise, flexible notation for handling recurring
 events that would handle all of the common forms I'd come up with.
 
 So, as a matter of necessity, I set about inventing my own
@@ -967,6 +979,14 @@ new modifiers are appended to the list.
 
 In the start, end, and base methods, the date passed in can be a
 Date::Manip::Date object, or a string that can be parsed to get a date.
+
+NOTE: the parse method will overwrite all parts of the recurrence,
+so it is not appropriate to do:
+
+   $recur->modifiers($modifiers);
+   $recur->parse($string);
+
+The modifiers passed in in the first call will be overwritten.
 
 =item B<dates>
 

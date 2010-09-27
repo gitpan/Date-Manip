@@ -5,9 +5,9 @@ package Date::Manip::Offset::off416;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:33:44 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:17:22 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 use vars qw($Offset %Offset);
 
@@ -53,6 +53,7 @@ $Offset        = '-06:00:00';
       'america/cancun',
       'america/matamoros',
       'america/mazatlan',
+      'america/bahia_banderas',
       'america/mexico_city',
       'america/ojinaga',
       'america/chihuahua',
@@ -92,6 +93,7 @@ $Offset        = '-06:00:00';
       'america/north_dakota/new_salem',
       'america/north_dakota/center',
       'america/mazatlan',
+      'america/bahia_banderas',
       'america/ojinaga',
       'america/chihuahua',
       'pacific/easter',

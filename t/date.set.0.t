@@ -29,7 +29,14 @@ sub test {
 $obj = new Date::Manip::Date;
 $obj->config("forcedate","now,America/New_York");
 
-$tests="
+$tests=join('',<DATA>);
+
+$t->tests(func  => \&test,
+          tests => $tests);
+$t->done_testing();
+
+1;
+__DATA__
 
 date [ 1996 1 1 12 0 0 ]       => 1996010112:00:00 1996010112:00:00 1996010117:00:00
 
@@ -48,11 +55,9 @@ zdate [ 1996 01 01 12 00 00 ]  => 1996010112:00:00 1996010112:00:00 1996010117:0
 
 time [ 12 40 50 ]              => 1996010112:40:50 1996010112:40:50 1996010117:40:50
 
-";
+y 2010                         => 2010010112:40:50 2010010112:40:50 2010010117:40:50
 
-$t->tests(func  => \&test,
-          tests => $tests);
-$t->done_testing();
+d 15                           => 2010011512:40:50 2010011512:40:50 2010011517:40:50
 
 #Local Variables:
 #mode: cperl

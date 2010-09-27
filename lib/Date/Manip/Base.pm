@@ -19,11 +19,12 @@ use strict;
 use warnings;
 use integer;
 use IO::File;
+use Encode qw(encode_utf8 from_to);
 use feature 'switch';
 require Date::Manip::Lang::index;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 ###############################################################################
 # BASE METHODS
@@ -916,6 +917,9 @@ sub _calc_date_ymwd {
       $self->_mod_add(-12,$dm,\$m,\$y);
    }
 
+   my $dim = $self->days_in_month($y,$m);
+   $d      = $dim  if ($d > $dim);
+
    my $ymd;
    if ($dd == 0) {
       $ymd = [$y,$m,$d];
@@ -1354,8 +1358,15 @@ sub _config_var {
          return;
       }
 
+      when ('encoding') {
+         my $err = $self->_config_var_encoding($val);
+         return if ($err);
+      }
+
       when ('language') {
          my $err = $self->_language($val);
+         return  if ($err);
+         $err    = $self->_config_var_encoding();
          return  if ($err);
       }
 
@@ -1509,6 +1520,64 @@ sub _config_var {
 
 ###############################################################################
 # Specific config variable functions
+
+sub _config_var_encoding {
+   my($self,$val) = @_;
+
+   if (! $val) {
+      $$self{'data'}{'calc'}{'enc_in'}  = [ @{ $$self{'data'}{'enc'} } ];
+      $$self{'data'}{'calc'}{'enc_out'} = 'UTF-8';
+
+   } elsif ($val =~ /^(.*),(.*)$/) {
+      my($in,$out) = ($1,$2);
+      if ($in) {
+         my $o = find_encoding($in);
+         if (! $o) {
+            warn "ERROR: [config_var] invalid: Encoding: $in\n";
+            return 1;
+         }
+      }
+      if ($out) {
+         my $o = find_encoding($out);
+         if (! $o) {
+            warn "ERROR: [config_var] invalid: Encoding: $out\n";
+            return 1;
+         }
+      }
+
+      if ($in  &&  $out) {
+         $$self{'data'}{'calc'}{'enc_in'}  = [ $in ];
+         $$self{'data'}{'calc'}{'enc_out'} = $out;
+
+      } elsif ($in) {
+         $$self{'data'}{'calc'}{'enc_in'}  = [ $in ];
+         $$self{'data'}{'calc'}{'enc_out'} = 'UTF-8';
+
+      } elsif ($out) {
+         $$self{'data'}{'calc'}{'enc_in'}  = [ @{ $$self{'data'}{'enc'} } ];
+         $$self{'data'}{'calc'}{'enc_out'} = $out;
+
+      } else {
+         $$self{'data'}{'calc'}{'enc_in'}  = [ @{ $$self{'data'}{'enc'} } ];
+         $$self{'data'}{'calc'}{'enc_out'} = 'UTF-8';
+      }
+
+   } else {
+      my $o = find_encoding($val);
+      if (! $o) {
+         warn "ERROR: [config_var] invalid: Encoding: $val\n";
+         return 1;
+      }
+      $$self{'data'}{'calc'}{'enc_in'}  = [ $val ];
+      $$self{'data'}{'calc'}{'enc_out'} = $val;
+   }
+
+   if (! @{ $$self{'data'}{'calc'}{'enc_in'} }) {
+      $$self{'data'}{'calc'}{'enc_in'}  = [ qw(utf-8 perl) ];
+   }
+
+   return 0;
+}
 
 sub _config_var_recurnumfudgedays {
    my($self,$val) = @_;
@@ -1844,6 +1913,7 @@ sub _language {
 
    no warnings 'once';
    $$self{'data'}{'lang'} = ${ "Date::Manip::Lang::${mod}::Language" };
+   $$self{'data'}{'enc'}  = [ @{ "Date::Manip::Lang::${mod}::Encodings" } ];
 
    # Common words
    $self->_rx_wordlist('at');
@@ -2696,6 +2766,29 @@ sub _critical_date {
    $begLT    = $self->calc_date_time($begUT,($isdst ? $dstoff : $stdoff));
 
    return ($endUT,$endLT,$begUT,$begLT);
+}
+
+###############################################################################
+# Get a list of strings to try to parse.
+
+sub _encoding {
+   my($self,$string) = @_;
+   my @ret;
+
+   foreach my $enc (@{ $$self{'data'}{'calc'}{'enc_in'} }) {
+      if (lc($enc) eq 'utf-8') {
+         push(@ret,$string);
+      } elsif (lc($enc) eq 'perl') {
+         push(@ret,encode_utf8($string));
+      } else {
+         my $tmp = $string;
+         my $out = from_to($tmp,$enc,'utf-8');
+         next  if (! defined($out));
+         push(@ret,$tmp);
+      }
+   }
+
+   return @ret;
 }
 
 ###############################################################################

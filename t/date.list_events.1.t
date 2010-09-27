@@ -30,6 +30,7 @@ sub test {
 }
 
 $obj = new Date::Manip::Date;
+$obj->config("forcedate","now,America/New_York");
 $obj->config("ConfigFile","$testdir/Events.cnf");
 $obj2 = $obj->new_date();
 

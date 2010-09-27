@@ -27,372 +27,615 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 iso-8859-2 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
 
 1;
 __DATA__
---- 
-ampm: 
-  - 
+---
+ampm:
+  -
     - AM
     - ''
     - A.M.
-  - 
+  -
     - PM
     - ''
     - P.M.
-at: 
+at:
   - o
   - ''
   - u
-day_abb: 
-  - 
+day_abb:
+  -
     - po.
-  - 
+    - ''
+    - po
+    - pon.
+    - pon
+  -
     - wt.
-  - 
+    - ''
+    - wt
+  -
     - sr.
-    - "\x9Cr."
-  - 
+    - śr.
+    - sr
+    - śr
+  -
     - cz.
-  - 
+    - ''
+    - cz
+    - czw.
+    - czw
+  -
     - pi.
-  - 
+    - ''
+    - pi
+  -
     - so.
-  - 
+    - ''
+    - so
+  -
     - ni.
-day_char: 
-  - 
+    - ''
+    - ni
+day_char:
+  -
     - p
-  - 
+  -
     - w
-  - 
+  -
     - e
-    - "\x9C."
-  - 
+    - ś.
+  -
     - c
-  - 
+  -
     - p
-  - 
+  -
     - s
-  - 
-    - 'n'
-day_name: 
-  - 
+  -
+    - n
+day_name:
+  -
     - poniedzialek
-    - "poniedzia\x81\xB3ek"
-  - 
+    - poniedziałek
+  -
     - wtorek
-  - 
+  -
     - sroda
-    - "\x9Croda"
-  - 
+    - środa
+  -
     - czwartek
-  - 
+  -
     - piatek
-    - "pi\x81\xB9tek"
-  - 
+    - piątek
+  -
     - sobota
-  - 
+  -
     - niedziela
-each: 
+each:
   - kazdy
-  - "ka\x81\xBFdy"
+  - każdy
   - kazdym
-  - "ka\x81\xBFdym"
-fields: 
-  - 
+  - każdym
+fields:
+  -
     - rok
     - ''
     - lat
     - lata
     - latach
-  - 
+  -
     - miesiac
-    - "miesi\x81\xB9c"
+    - miesiąc
     - m.
     - m
     - miesiecy
-    - "miesi\x81\xEAcy"
+    - miesięcy
     - miesiacu
-    - "miesi\x81\xB9cu"
-  - 
+    - miesiącu
+  -
     - tydzien
-    - "tydzie\x81\xF1"
+    - tydzień
     - ty.
     - tygodniu
-  - 
+  -
     - dzien
-    - "dzie\x81\xF1"
+    - dzień
     - d.
     - dni
-  - 
+  -
     - godzinie
     - ''
     - g.
     - godzina
     - godziny
-  - 
+  -
     - minuty
     - ''
     - mn.
     - min.
     - minut
-  - 
+  -
     - sekundy
     - ''
     - s.
     - sekund
-last: 
+last:
   - ostatni
   - ''
   - ostatna
-mode: 
-  - 
+mode:
+  -
     - doklandnie
-    - "dok\x81\xB3andnie"
+    - dokłandnie
     - w przyblizeniu
-    - "w przybli\x81\xBFeniu"
+    - w przybliżeniu
     - mniej wiecej
-    - "mniej wi\x81\xEAcej"
+    - mniej więcej
     - okolo
-    - "oko\x81\xB3o"
-  - 
+    - około
+  -
     - sluzbowy
-    - "s\x81\xB3u\x81\xBFbowy"
+    - służbowy
     - sluzbowym
-    - "s\x81\xB3u\x81\xBFbowym"
-month_abb: 
-  - 
+    - służbowym
+month_abb:
+  -
     - sty.
-  - 
+    - ''
+    - sty
+  -
     - lut.
-  - 
+    - ''
+    - lut
+  -
     - mar.
-  - 
+    - ''
+    - mar
+  -
     - kwi.
-  - 
+    - ''
+    - kwi
+  -
     - maj
-  - 
+  -
     - cze.
-  - 
+    - ''
+    - cze
+  -
     - lip.
-  - 
+    - ''
+    - lip
+  -
     - sie.
-  - 
+    - ''
+    - sie
+  -
     - wrz.
-  - 
+    - ''
+    - wrz
+  -
     - paz.
-    - "pa\x9F."
-  - 
+    - paź.
+    - paz
+    - paź
+  -
     - lis.
-  - 
+    - ''
+    - lis
+  -
     - gru.
-month_name: 
-  - 
+    - ''
+    - gru
+month_name:
+  -
     - stycznia
-  - 
+  -
     - luty
-  - 
+  -
     - marca
-  - 
+  -
     - kwietnia
-  - 
+  -
     - maja
-  - 
+  -
     - czerwca
-  - 
+  -
     - lipca
-  - 
+  -
     - sierpnia
-  - 
+  -
     - wrzesnia
-    - "wrze\x9Cnia"
-  - 
+    - września
+  -
     - pazdziernika
-    - "pa\x9Fdziernika"
-  - 
+    - października
+  -
     - listopada
-  - 
+  -
     - grudnia
-nextprev: 
-  - 
+nextprev:
+  -
     - nastepny
-    - "nast\x81\xEApny"
+    - następny
     - nastepnym
-    - "nast\x81\xEApnym"
+    - następnym
     - przyszly
-    - "przysz\x81\xB3y"
+    - przyszły
     - przyszlym
-    - "przysz\x81\xB3ym"
-  - 
+    - przyszłym
+  -
     - zeszly
-    - "zesz\x81\xB3y"
+    - zeszły
     - zeszlym
-    - "zesz\x81\xB3ym"
-nth: 
-  - 
+    - zeszłym
+nth:
+  -
     - 1.
     - ''
+    - jeden
     - pierwszego
-  - 
+  -
     - 2.
     - ''
+    - dwa
     - drugiego
-  - 
+  -
     - 3.
     - ''
+    - trzy
     - trzeczego
-  - 
+  -
     - 4.
     - ''
+    - cztery
     - czwartego
-  - 
+  -
     - 5.
     - ''
+    - pięć
+    - piec
     - piatego
-    - "pi\x81\xB9tego"
-  - 
+    - piątego
+  -
     - 6.
     - ''
+    - sześć
+    - szesc
     - szostego
-    - "sz\x81\xF3stego"
-  - 
+    - szóstego
+  -
     - 7.
     - ''
+    - siedem
     - siodmego
-    - "si\x81\xF3dmego"
-  - 
+    - siódmego
+  -
     - 8.
     - ''
+    - osiem
     - osmego
-    - "\x81\xF3smego"
-  - 
+    - ósmego
+  -
     - 9.
     - ''
+    - dziewiąta
+    - dziewiata
     - dziewiatego
-    - "dziewi\x81\xB9tego"
-  - 
+    - dziewiątego
+  -
     - 10.
     - ''
+    - dziesięć
+    - dziesiec
     - dziesiatego
-    - "dziesi\x81\xB9tego"
-  - 
+    - dziesiątego
+  -
     - 11.
     - ''
+    - jedenaście
+    - jedenascie
     - jedenastego
-  - 
+  -
     - 12.
     - ''
+    - dwanaście
+    - dwanascie
     - dwunastego
-  - 
+  -
     - 13.
     - ''
+    - trzynaście
+    - trzynascie
     - trzynastego
-  - 
+  -
     - 14.
     - ''
+    - czternaście
+    - czternascie
     - czternastego
-  - 
+  -
     - 15.
     - ''
+    - piętnaście
+    - pietnascie
     - pietnastego
-    - "pi\x81\xEAtnastego"
-  - 
+    - piętnastego
+  -
     - 16.
     - ''
+    - szesnaście
+    - szesnascie
     - szestnastego
-  - 
+  -
     - 17.
     - ''
+    - siedemnaście
+    - siedemnascie
     - siedemnastego
-  - 
+  -
     - 18.
     - ''
+    - osiemnaście
+    - osiemnascie
     - osiemnastego
-  - 
+  -
     - 19.
     - ''
+    - dziewiętnaście
+    - dziewietnascie
     - dziewietnastego
-  - 
+  -
     - 20.
     - ''
+    - dwadzieścia
+    - dwadziescia
     - dwudziestego
-  - 
+  -
     - 21.
     - ''
+    - dwadzieścia jeden
+    - dwadziescia jeden
     - dwudziestego pierwszego
-  - 
+  -
     - 22.
     - ''
+    - dwadzieścia dwa
+    - dwadziescia dwa
     - dwudziestego drugiego
-  - 
+  -
     - 23.
     - ''
+    - dwadzieścia trzy
+    - dwadziescia trzy
     - dwudziestego trzeczego
-  - 
+  -
     - 24.
     - ''
+    - dwadzieścia cztery
+    - dwadziescia cztery
     - dwudziestego czwartego
-  - 
+  -
     - 25.
     - ''
+    - dwadzieścia pięć
+    - dwadziescia piec
     - dwudziestego piatego
-    - "dwudziestego pi\x81\xB9tego"
-  - 
+    - dwudziestego piątego
+  -
     - 26.
     - ''
+    - dwadzieścia sześć
+    - dwadziescia szesc
     - dwudziestego szostego
-    - "dwudziestego sz\x81\xF3stego"
-  - 
+    - dwudziestego szóstego
+  -
     - 27.
     - ''
+    - dwadzieścia siedem
+    - dwadziescia siedem
     - dwudziestego siodmego
-    - "dwudziestego si\x81\xF3dmego"
-  - 
+    - dwudziestego siódmego
+  -
     - 28.
     - ''
+    - dwadzieścia osiem
+    - dwadziescia osiem
     - dwudziestego osmego
-    - "dwudziestego \x81\xF3smego"
-  - 
+    - dwudziestego ósmego
+  -
     - 29.
     - ''
+    - dwadzieścia dziewięć
+    - dwadziescia dziewiec
     - dwudziestego dziewiatego
-    - "dwudziestego dziewi\x81\xB9tego"
-  - 
+    - dwudziestego dziewiątego
+  -
     - 30.
     - ''
+    - trzydzieści
+    - trzydziesci
     - trzydziestego
-  - 
+  -
     - 31.
     - ''
+    - trzydzieści jeden
+    - trzydziesci jeden
     - trzydziestego pierwszego
-of: 
+  -
+    - 32.
+    - ''
+    - trzydzieści dwa
+    - trzydziesci dwa
+    - trzydziestego drugiego
+  -
+    - 33.
+    - ''
+    - trzydzieści trzy
+    - trzydziesci trzy
+    - trzydziestego trzeczego
+  -
+    - 34.
+    - ''
+    - trzydzieści cztery
+    - trzydziesci cztery
+    - trzydziestego czwartego
+  -
+    - 35.
+    - ''
+    - trzydzieści pięć
+    - trzydziesci piec
+    - trzydziestego piątego
+    - trzydziestego piatego
+  -
+    - 36.
+    - ''
+    - trzydzieści sześć
+    - trzydziesci szesc
+    - trzydziestego szóstego
+    - trzydziestego szostego
+  -
+    - 37.
+    - ''
+    - trzydzieści siedem
+    - trzydziesci siedem
+    - trzydziestego siódmego
+    - trzydziestego siodmego
+  -
+    - 38.
+    - ''
+    - trzydzieści osiem
+    - trzydziesci osiem
+    - trzydziestego ósmego
+    - trzydziestego osmego
+  -
+    - 39.
+    - ''
+    - trzydzieści dziewięć
+    - trzydziesci dziewiec
+    - trzydziestego dziewiątego
+    - trzydziestego dziewiatego
+  -
+    - 40.
+    - ''
+    - czterdzieści
+    - czterdziesci
+    - czterdziestego
+  -
+    - 41.
+    - ''
+    - czterdzieści jeden
+    - czterdziesci jeden
+    - czterdziestego pierwszego
+  -
+    - 42.
+    - ''
+    - czterdzieści dwa
+    - czterdziesci dwa
+    - czterdziestego drugiego
+  -
+    - 43.
+    - ''
+    - czterdzieści trzy
+    - czterdziesci trzy
+    - czterdziestego trzeczego
+  -
+    - 44.
+    - ''
+    - czterdzieści cztery
+    - czterdziesci cztery
+    - czterdziestego czwartego
+  -
+    - 45.
+    - ''
+    - czterdzieści pięć
+    - czterdziesci piec
+    - czterdziestego piątego
+    - czterdziestego piatego
+  -
+    - 46.
+    - ''
+    - czterdzieści sześć
+    - czterdziesci szesc
+    - czterdziestego szóstego
+    - czterdziestego szostego
+  -
+    - 47.
+    - ''
+    - czterdzieści siedem
+    - czterdziesci siedem
+    - czterdziestego siódmego
+    - czterdziestego siodmego
+  -
+    - 48.
+    - ''
+    - czterdzieści osiem
+    - czterdziesci osiem
+    - czterdziestego ósmego
+    - czterdziestego osmego
+  -
+    - 49.
+    - ''
+    - czterdzieści dziewięć
+    - czterdziesci dziewiec
+    - czterdziestego dziewiątego
+    - czterdziestego dziewiatego
+  -
+    - 50.
+    - ''
+    - pięćdziesiąt
+    - piecdziesiat
+    - pięćdziesiątego
+    - piecdziesiatego
+  -
+    - 51.
+    - ''
+    - pięćdziesiąt jeden
+    - piecdziesiat jeden
+    - pięćdziesiątego pierwszego
+    - piecdziesiatego pierwszego
+  -
+    - 52.
+    - ''
+    - pięćdziesiąt dwa
+    - piecdziesiat dwa
+    - pięćdziesiątego drugiego
+    - piecdziesiatego drugiego
+  -
+    - 53.
+    - ''
+    - pięćdziesiąt trzy
+    - piecdziesiat trzy
+    - pięćdziesiątego trzeczego
+    - piecdziesiatego trzeczego
+of:
   - w
   - ''
   - z
-offset_date: 
+offset_date:
   dzisaj: 0:0:0:0:0:0:0
-  jutro: +0:0:1:0:0:0
-  wczoraj: -0:0:1:0:0:0
-offset_time: 
+  jutro: +0:0:0:1:0:0:0
+  wczoraj: -0:0:0:1:0:0:0
+offset_time:
   teraz: 0:0:0:0:0:0:0
-'on': 
+'on':
   - na
-times: 
+times:
   polnoc: 00:00:00
   poludnie: 12:00:00
-  "po\x81\xB3udnie": 12:00:00
-  "p\x81\xF3\x81\xB3noc": 00:00:00
-when: 
-  - 
+  południe: 12:00:00
+  północ: 00:00:00
+when:
+  -
     - temu
-  - 
+  -
     - za
     - ''
     - later

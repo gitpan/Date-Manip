@@ -29,8 +29,8 @@ sub test {
 }
 
 $obj1 = new Date::Manip::Date;
-$obj1->config("ConfigFile","$testdir/Manip.cnf");
 $obj1->config("forcedate","now,America/New_York");
+$obj1->config("ConfigFile","$testdir/Manip.cnf");
 $obj2 = $obj1->new_date();
 
 $tests="

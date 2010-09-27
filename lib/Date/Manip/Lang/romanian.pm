@@ -27,408 +27,563 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 iso-8859-16 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
 
 1;
 __DATA__
---- 
-ampm: 
-  - 
+---
+ampm:
+  -
     - AM
     - ''
     - A.M.
-  - 
+  -
     - PM
     - ''
     - P.M.
-at: 
+at:
   - la
-day_abb: 
-  - 
+day_abb:
+  -
     - lun
-  - 
+  -
     - mar
-  - 
+  -
     - mie
-  - 
+  -
     - joi
-  - 
+  -
     - vin
-  - 
-    - sim
-    - "s\xEEm"
-  - 
+  -
+    - sam
+    - sâm
+  -
     - dum
-day_char: 
-  - 
+day_char:
+  -
     - L
-  - 
+  -
     - Ma
-  - 
+  -
     - Mi
-  - 
+  -
     - J
-  - 
+  -
     - V
-  - 
+  -
     - S
-  - 
+  -
     - D
-day_name: 
-  - 
+day_name:
+  -
     - luni
-  - 
+  -
     - marti
-    - "mar\xFEi"
-  - 
+    - marți
+  -
     - miercuri
-  - 
+  -
     - joi
-  - 
+  -
     - vineri
-  - 
-    - simbata
-    - "s\xEEmb\xE3t\xE3"
-  - 
+  -
+    - sambata
+    - sâmbătă
+  -
     - duminica
-    - "duminic\xE3"
-each: 
+    - duminică
+each:
   - fiecare
-fields: 
-  - 
+fields:
+  -
     - ani
     - ''
     - an
     - a
-  - 
+  -
     - luna
-    - "lun\xE3"
+    - lună
     - luni
     - l
-  - 
+  -
     - saptamini
-    - "s\xE3pt\xE3m\xEEni"
+    - săptămîni
     - saptamina
-    - "s\xE3pt\xE3m\xEEna"
+    - săptămîna
     - sapt
-    - "s\xE3pt"
-  - 
+    - săpt
+  -
     - zile
     - ''
     - zi
     - z
-  - 
+  -
     - ora
-    - "or\xE3"
+    - oră
     - ore
     - h
-  - 
+  -
     - minute
     - ''
     - min
     - m
-  - 
+  -
     - secunde
     - ''
     - sec
     - s
-last: 
+last:
   - ultima
-mode: 
-  - 
+mode:
+  -
     - exact
     - ''
     - aproximativ
-  - 
+  -
     - lucratoare
-    - "lucr\xE3toare"
+    - lucrătoare
     - de lucru
-month_abb: 
-  - 
+month_abb:
+  -
     - ian
-  - 
+  -
     - febr
     - ''
     - feb
-  - 
+  -
     - mart
-  - 
+  -
     - apr
-  - 
+  -
     - mai
-  - 
+  -
     - iun
-  - 
+  -
     - iul
-  - 
+  -
     - aug
-  - 
+  -
     - sept
-  - 
+  -
     - oct
-  - 
+  -
     - nov
-  - 
+  -
     - dec
-month_name: 
-  - 
+month_name:
+  -
     - ianuarie
-  - 
+  -
     - februarie
-  - 
+  -
     - martie
-  - 
+  -
     - aprilie
-  - 
+  -
     - mai
-  - 
+  -
     - iunie
-  - 
+  -
     - iulie
-  - 
+  -
     - august
-  - 
+  -
     - septembrie
-  - 
+  -
     - octombrie
-  - 
+  -
     - noiembrie
-  - 
+  -
     - decembrie
-nextprev: 
-  - 
+nextprev:
+  -
     - urmatoarea
-    - "urm\xE3toarea"
-  - 
+    - următoarea
+  -
     - precedenta
     - ''
     - ultima
-nth: 
-  - 
+nth:
+  -
     - prima
     - ''
     - prima
     - intii
-    - "\xEEnt\xEEi"
-  - 
+    - întîi
+    - unu
+  -
     - a doua
     - ''
     - a doua
     - doi
-  - 
+  -
     - a 3-a
     - ''
     - a treia
     - trei
-  - 
+  -
     - a 4-a
     - ''
     - a patra
     - patru
-  - 
+  -
     - a 5-a
     - ''
     - a cincea
     - cinci
-  - 
+  -
     - a 6-a
     - ''
     - a sasea
-    - "a \xBAasea"
+    - a şasea
     - sase
-    - "\xBAase"
-  - 
+    - şase
+  -
     - a 7-a
     - ''
     - a saptea
-    - "a \xBAaptea"
+    - a şaptea
     - sapte
-    - "\xBAapte"
-  - 
+    - şapte
+  -
     - a 8-a
     - ''
     - a opta
     - opt
-  - 
+  -
     - a 9-a
     - ''
     - a noua
     - noua
-    - "nou\xE3"
-  - 
+    - nouă
+  -
     - a 10-a
     - ''
     - a zecea
     - zece
-  - 
+  -
     - a 11-a
     - ''
     - a unsprezecea
     - unsprezece
-  - 
+  -
     - a 12-a
     - ''
     - a doisprezecea
     - doisprezece
-  - 
+  -
     - a 13-a
     - ''
     - a treisprezecea
     - treisprezece
-  - 
+  -
     - a 14-a
     - ''
     - a patrusprezecea
     - patrusprezece
-  - 
+    - paisprezece
+  -
     - a 15-a
     - ''
     - a cincisprezecea
     - cincisprezece
-  - 
+  -
     - a 16-a
     - ''
     - a saiprezecea
-    - "a \xBAaiprezecea"
+    - a şaiprezecea
     - saiprezece
-    - "\xBAaiprezece"
-  - 
+    - şaiprezece
+  -
     - a 17-a
     - ''
     - a saptesprezecea
-    - "a \xBAaptesprezecea"
+    - a şaptesprezecea
     - saptesprezece
-    - "\xBAaptesprezece"
-  - 
+    - şaptesprezece
+  -
     - a 18-a
     - ''
     - a optsprezecea
     - optsprezece
-  - 
+  -
     - a 19-a
     - ''
     - a nouasprezecea
-    - "a nou\xE3sprezecea"
+    - a nouăsprezecea
     - nouasprezece
-    - "nou\xE3sprezece"
-  - 
+    - nouăsprezece
+  -
     - a 20-a
     - ''
     - a douazecea
-    - "a dou\xE3zecea"
+    - a douăzecea
     - douazeci
-    - "dou\xE3zeci"
-  - 
+    - douăzeci
+  -
     - a 21-a
     - ''
     - a douazecisiuna
-    - "a dou\xE3zeci\xBAiuna"
+    - a douăzecişiuna
     - douazecisiunu
-    - "dou\xE3zeci\xBAiunu"
-  - 
+    - douăzecişiunu
+  -
     - a 22-a
     - ''
     - a douazecisidoua
-    - "a dou\xE3zeci\xBAidoua"
+    - a douăzecişidoua
     - douazecisidoi
-    - "dou\xE3zeci\xBAidoi"
-  - 
+    - douăzecişidoi
+  -
     - a 23-a
     - ''
     - a douazecisitreia
-    - "a dou\xE3zeci\xBAitreia"
+    - a douăzecişitreia
     - douazecisitrei
-    - "dou\xE3zeci\xBAitrei"
-  - 
+    - douăzecişitrei
+  -
     - a 24-a
     - ''
     - a douazecisipatra
-    - "a dou\xE3zeci\xBAipatra"
+    - a douăzecişipatra
     - douazecisipatru
-    - "dou\xE3zecisipatru"
-  - 
+    - douăzecisipatru
+  -
     - a 25-a
     - ''
     - a douazecisicincea
-    - "a dou\xE3zeci\xBAicincea"
+    - a douăzecişicincea
     - douazecisicinci
-    - "dou\xE3zeci\xBAicinci"
-  - 
+    - douăzecişicinci
+  -
     - a 26-a
     - ''
     - a douazecisisasea
-    - "a dou\xE3zeci\xBAi\xBAasea"
+    - a douăzecişişasea
     - douazecisisase
-    - "dou\xE3zeci\xBAi\xBAase"
-  - 
+    - douăzecişişase
+  -
     - a 27-a
     - ''
     - a douazecisisaptea
-    - "a dou\xE3zeci\xBAi\xBAaptea"
+    - a douăzecişişaptea
     - douazecisisapte
-    - "dou\xE3zeci\xBAi\xBAapte"
-  - 
+    - douăzecişişapte
+  -
     - a 28-a
     - ''
     - a douazecisiopta
-    - "a dou\xE3zeci\xBAiopta"
+    - a douăzecişiopta
     - douazecisiopt
-    - "dou\xE3zeci\xBAiopt"
-  - 
+    - douăzecişiopt
+  -
     - a 29-a
     - ''
     - a douazecisinoua
-    - "a dou\xE3zeci\xBAinoua"
+    - a douăzecişinoua
     - douazecisinoua
-    - "dou\xE3zeci\xBAinou\xE3"
-  - 
+    - douăzecişinouă
+  -
     - a 30-a
     - ''
     - a treizecea
     - treizeci
-  - 
+  -
     - a 31-a
     - ''
     - a treizecisiuna
-    - "a treizeci\xBAiuna"
+    - a treizecişiuna
     - treizecisiunu
-    - "treizeci\xBAiunu"
-of: 
+    - treizecişiunu
+  -
+    - a 32-a
+    - ''
+    - a treizecisidoua
+    - a treizecişdoua
+    - treizecişidoi
+    - treizecisidoi
+  -
+    - a 33-a
+    - ''
+    - a treizecisitreia
+    - a treizeciştreia
+    - treizecişitrei
+    - treizecisitrei
+  -
+    - a 34-a
+    - ''
+    - a treizecisipatra
+    - a treizecişpatra
+    - treizecişipatru
+    - treizecisipatru
+  -
+    - a 35-a
+    - ''
+    - a treizecisicincea
+    - a treizecişcincea
+    - treizecişicinci
+    - treizecisicinci
+  -
+    - a 36-a
+    - ''
+    - a treizecisisasea
+    - a treizecişşasea
+    - treizecişişase
+    - treizecisisase
+  -
+    - a 37-a
+    - ''
+    - a treizecisisaptea
+    - a treizecişşaptea
+    - treizecişişapte
+    - treizecisisapte
+  -
+    - a 38-a
+    - ''
+    - a treizecisiopta
+    - a treizecişopta
+    - treizecişiopt
+    - treizecisiopt
+  -
+    - a 39-a
+    - ''
+    - a treizecisinoua
+    - a treizecişnoua
+    - treizecişinouă
+    - treizecisinoua
+  -
+    - a 40-a
+    - ''
+    - a patruzecea
+    - patruzeci
+  -
+    - a 41-a
+    - ''
+    - a patruzecisiuna
+    - a patruzecişiuna
+    - patruzecisiunu
+    - patruzecişiunu
+  -
+    - a 42-a
+    - ''
+    - a patruzecisidoua
+    - a patruzecişidoua
+    - patruzecişidoi
+    - patruzecisidoi
+  -
+    - a 43-a
+    - ''
+    - a patruzecisitreia
+    - a patruzecişitreia
+    - patruzecişitrei
+    - patruzecisitrei
+  -
+    - a 44-a
+    - ''
+    - a patruzecisipatra
+    - a patruzecişipatra
+    - patruzecişipatru
+    - patruzecisipatru
+  -
+    - a 45-a
+    - ''
+    - a patruzecisicincea
+    - a patruzecişicincea
+    - patruzecişicinci
+    - patruzecisicinci
+  -
+    - a 46-a
+    - ''
+    - a patruzecisisasea
+    - a patruzecişişasea
+    - patruzecişişase
+    - patruzecisisase
+  -
+    - a 47-a
+    - ''
+    - a patruzecisisaptea
+    - a patruzecişişaptea
+    - patruzecişişapte
+    - patruzecisisapte
+  -
+    - a 48-a
+    - ''
+    - a patruzecisiopta
+    - a patruzecişiopta
+    - patruzecişiopt
+    - patruzecisiopt
+  -
+    - a 49-a
+    - ''
+    - a patruzecisinoua
+    - a patruzecişinoua
+    - patruzecişinouă
+    - patruzecisinoua
+
+  -
+    - a 50-a
+    - ''
+    - a cincizecea
+    - cincizeci
+  -
+    - a 51-a
+    - ''
+    - a cincizecisiuna
+    - a cincizecişiuna
+    - cincizecisiunu
+    - cincizecişiunu
+  -
+    - a 52-a
+    - ''
+    - a cincizecisidoua
+    - a cincizecişidoua
+    - cincizecişidoi
+    - cincizecisidoi
+  -
+    - a 53-a
+    - ''
+    - a cincizecisitreia
+    - a cincizecişitreia
+    - cincizecişitrei
+    - cincizecisitrei
+
+of:
   - din
   - ''
   - in
   - 'n'
-offset_date: 
+offset_date:
   alaltaieri: -0:0:0:2:0:0:0
-  "alalt\xE3ieri": -0:0:0:2:0:0:0
+  alaltăieri: -0:0:0:2:0:0:0
   astazi: 0:0:0:0:0:0:0
-  "ast\xE3zi": 0:0:0:0:0:0:0
+  astăzi: 0:0:0:0:0:0:0
   azi: 0:0:0:0:0:0:0
   ieri: -0:0:0:1:0:0:0
   miine: +0:0:0:1:0:0:0
-  "m\xEEine": +0:0:0:1:0:0:0
+  mîine: +0:0:0:1:0:0:0
   poimiine: +0:0:0:2:0:0:0
-  "poim\xEEine": +0:0:0:2:0:0:0
-offset_time: 
+  poimîine: +0:0:0:2:0:0:0
+offset_time:
   acum: 0:0:0:0:0:0:0
-'on': 
+'on':
   - 'on'
-times: 
+times:
   amiaza: 12:00:00
-  "amiaz\xE3": 12:00:00
+  amiază: 12:00:00
   miezul noptii: 00:00:00
-  "miezul nop\xFEii": 00:00:00
-when: 
-  - 
+  miezul nopții: 00:00:00
+when:
+  -
     - in urma
-    - "\xEEn urm\xE3"
-  - 
+    - în urmă
+  -
     - in
-    - "\xEEn"
+    - în
     - mai tirziu
-    - "mai t\xEErziu"
+    - mai tîrziu

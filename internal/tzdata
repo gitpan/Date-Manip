@@ -16,12 +16,11 @@ use YAML;
 use IO::File;
 use Date::Manip::Base;
 use Date::Manip::TZdata;
-use Net::FTP;
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 use vars qw($dmb);
 $dmb = new Date::Manip::Base;
@@ -136,59 +135,35 @@ sub do_ftp {
    system("rm -rf tzdata");
 
    #
-   # Connect to the FTP server
+   # Get the files
    #
 
-   my $ftp = Net::FTP->new($tzdata_src, Debug => $verbose)
-     or die "Cannot connect to host: $tzdata_src: $@";
+   system("wget -q 'ftp://$tzdata_src/$tzdata_dir/tz*.tar.gz'");
+   opendir(DIR,".");
+   my @dir = readdir(DIR);
+   closedir(DIR);
 
-   $ftp->login("anonymous",'-anonymous@')
-     or die "Cannot login: ", $ftp->message;
-
-   $ftp->cwd($tzdata_dir)
-     or die "Cannot change working directory: $tzdata_dir: ", $ftp->message;
-
-   my @dir = $ftp->ls();
-   my @tzdata = grep(/^tzdata\d+.\.tar.gz/,@dir);
-   my @tzcode = grep(/^tzcode\d+.\.tar.gz/,@dir);
-
-   #
-   # Get the tzdata package
-   #
-
+   my @tzdata = grep(/^tzdata(.*)\.tar.gz/,@dir);
    if (! @tzdata) {
       die "No tzdata file found";
    }
    @tzdata = sort(@tzdata);
 
-   my $tzdata_file = pop(@tzdata);
-   $ftp->get($tzdata_file)
-     or die "Get failed: $tzdata_file: ", $ftp->message;
-
-   my $tzdata_vers = $tzdata_file;
-   $tzdata_vers =~ s/^tzdata(\d+.)\.tar.gz/$1/;
-
-   print "  TZdata : $tzdata_vers\n";
-
-   #
-   # Get the tzcode package
-   #
-
+   my @tzcode = sort grep(/^tzcode(.*)\.tar.gz/,@dir);
    if (! @tzcode) {
       die "No tzcode file found";
    }
    @tzcode = sort(@tzcode);
 
-   my $tzcode_file = pop(@tzcode);
-   $ftp->get($tzcode_file)
-     or die "Get failed: $tzcode_file: ", $ftp->message;
+   my $tzdata = pop(@tzdata);
+   my $tzcode = pop(@tzcode);
+   $tzdata =~ /^tzdata(.*)\.tar.gz/;
+   my $tzdata_vers = $1;
+   $tzcode =~ /^tzcode(.*)\.tar.gz/;
+   my $tzcode_vers = $1;
 
-   my $tzcode_vers = $tzcode_file;
-   $tzcode_vers =~ s/^tzcode(\d+.)\.tar.gz/$1/;
-
+   print "  TZdata : $tzdata_vers\n";
    print "  Tzcode : $tzcode_vers\n";
-
-   $ftp->quit;
 
    #
    # Untar the files
@@ -197,11 +172,12 @@ sub do_ftp {
    system("rm -rf tzdata; " .
           "mkdir -p tzdata; " .
           "cd tzdata; " .
-          "tar xzf ../$tzdata_file; " .
-          "tar xzf ../$tzcode_file; " .
+          "tar xzf ../$tzdata; " .
+          "tar xzf ../$tzcode; " .
           "echo $tzdata_vers > _version; " .
-          "echo $tzcode_vers >> _version; " .
-          "rm -f ../$tzdata_file ../$tzcode_file;");
+          "echo $tzcode_vers >> _version; ");
+
+   unlink(@tzcode,@tzdata);
 }
 
 # Build the package
@@ -1049,7 +1025,7 @@ require 5.010000;
 use vars qw(\%Dates \%LastRule);
 
 use vars qw(\$VERSION);
-\$VERSION='6.11';
+\$VERSION='6.12';
 
 \%Dates         = (
 ";
@@ -1301,7 +1277,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION='6.11';
+\$VERSION='6.12';
 
 use vars qw(\$Offset \%Offset);
 
@@ -1418,7 +1394,7 @@ use warnings;
 require 5.010000;
 
 use vars qw(\$VERSION);
-\$VERSION='6.11';
+\$VERSION='6.12';
 
 use vars qw(\$TzdataVersion \$TzcodeVersion
             \$FirstDate \$LastDate \$LastYear

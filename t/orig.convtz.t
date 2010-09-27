@@ -17,6 +17,8 @@ sub test {
   return Date_ConvTZ(@_);
 }
 
+Date_Init("ForceDate=now,America/New_York");
+
 $tests="
 
 2001012812:05:00   +0000 BST           => 2001012812:05:00

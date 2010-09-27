@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.10';
+$VERSION='6.12';
 
 $Date::Manip::Abbrevs = join(' ',qw(
       idlw   -1200
@@ -136,6 +136,7 @@ $Date::Manip::Abbrevs = join(' ',qw(
       chost  +1000
       chot   +0800
       chst   +1000
+      chut   +1000
       cit    +0800
       cjt    +0900
       ckhst  -0930
@@ -390,7 +391,6 @@ $Date::Manip::Abbrevs = join(' ',qw(
       tot    +1300
       trst   +0400
       trt    +0300
-      trut   +1000
       tsat   +0300
       tvt    +1200
       u      +0800
@@ -529,6 +529,7 @@ The following timezones are defined:
       CHOST  +1000
       CHOT   +0800
       CHST   +1000
+      CHUT   +1000
       CIT    +0800
       CJT    +0900
       CKHST  -0930
@@ -802,7 +803,6 @@ The following timezones are defined:
       TOT    +1300
       TRST   +0400
       TRT    +0300
-      TRUT   +1000
       TSAT   +0300
       TVT    +1200
       U      +0800

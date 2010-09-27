@@ -1,13 +1,13 @@
-package Date::Manip::TZ::papona00;
+package Date::Manip::TZ::papohn00;
 # Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:29:28 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:16:17 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::TZ::papona00;
 
 =head1 NAME
 
-Date::Manip::TZ::papona00 - Support for the Pacific/Ponape time zone
+Date::Manip::TZ::papohn00 - Support for the Pacific/Pohnpei time zone
 
 =head1 SYNPOSIS
 
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 %Dates         = (
    1    =>

@@ -25,27 +25,65 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 use vars qw(%Lang);
 
 # A list of languages, and their module name
 
-%Lang = qw( english     english
-            italian     italian
-            french      french
-            romanian    romanian
-            swedish     swedish
-            german      german
+%Lang = qw(
+            catalan     catalan
+            ca          catalan
+
+            danish      danish
+            da          danish
+
             dutch       dutch
             nederlands  dutch
+            nl          dutch
+
+            english     english
+            en          english
+            en_us       english
+
+            french      french
+            fr          french
+            fr_fr       french
+
+            german      german
+            de          german
+            de_de       german
+
+            italian     italian
+            it          italian
+            it_it       italian
+
             polish      polish
-            spanish     spanish
+            pl          polish
+            pl_pl       polish
+
             portuguese  portugue
+            pt          portugue
+            pt_pt       portugue
+
+            romanian    romanian
+            ro          romanian
+            ro_ro       romanian
+
             russian     russian
+            ru          russian
+            ru_ru       russian
+
+            spanish     spanish
+            es          spanish
+            es_es       spanish
+
+            swedish     swedish
+            sv          swedish
+
             turkish     turkish
-            danish      danish
-            catalan     catalan
+            tr          turkish
+            tr_tr       turkish
          );
 
 1;

@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:34:39 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:17:27 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -121,6 +121,7 @@ database:
      America/Asuncion                     amasun00
      America/Atikokan                     amatik00
      America/Bahia                        ambahi00
+     America/Bahia_Banderas               ambahi01
      America/Barbados                     ambarb00
      America/Belem                        ambele00
      America/Belize                       ambeli00
@@ -406,6 +407,7 @@ database:
      Pacific/Apia                         paapia00
      Pacific/Auckland                     paauck00
      Pacific/Chatham                      pachat00
+     Pacific/Chuuk                        pachuu00
      Pacific/Easter                       paeast00
      Pacific/Efate                        paefat00
      Pacific/Enderbury                    paende00
@@ -430,14 +432,13 @@ database:
      Pacific/Pago_Pago                    papago00
      Pacific/Palau                        papala00
      Pacific/Pitcairn                     papitc00
-     Pacific/Ponape                       papona00
+     Pacific/Pohnpei                      papohn00
      Pacific/Port_Moresby                 paport00
      Pacific/Rarotonga                    pararo00
      Pacific/Saipan                       pasaip00
      Pacific/Tahiti                       patahi00
      Pacific/Tarawa                       patara00
      Pacific/Tongatapu                    patong00
-     Pacific/Truk                         patruk00
      Pacific/Wake                         pawake00
      Pacific/Wallis                       pawall00
      WET                                  wet00
@@ -615,8 +616,10 @@ The zoneinfo database provides several standard aliases, including:
      NZ-CHAT                              Pacific/Chatham
      Navajo                               America/Denver
      PRC                                  Asia/Shanghai
+     Pacific/Ponape                       Pacific/Pohnpei
      Pacific/Samoa                        Pacific/Pago_Pago
-     Pacific/Yap                          Pacific/Truk
+     Pacific/Truk                         Pacific/Chuuk
+     Pacific/Yap                          Pacific/Chuuk
      Poland                               Europe/Warsaw
      Portugal                             Europe/Lisbon
      ROC                                  Asia/Taipei
@@ -897,6 +900,7 @@ above.
                                           America/Merida
                                           America/Cancun
                                           America/North_Dakota/New_Salem
+                                          America/Bahia_Banderas
                                           America/Indiana/Petersburg
                                           America/Indiana/Vincennes
                                           America/Indiana/Winamac
@@ -1035,6 +1039,7 @@ above.
                                           America/Mazatlan
                                           America/Chihuahua
                                           America/Ojinaga
+                                          America/Bahia_Banderas
                                           America/North_Dakota/New_Salem
                                           America/Hermosillo
                                           America/North_Dakota/Center
@@ -1374,6 +1379,7 @@ Date::Manip::TZ module.
                         America/Dawson_Creek
                         America/Hermosillo
                         America/Mazatlan
+                        America/Bahia_Banderas
                         America/Boise
                         H
      0       -07:52:58  America/Los_Angeles
@@ -1388,6 +1394,7 @@ Date::Manip::TZ module.
      0       -07:11:20  America/Swift_Current
      0       -07:05:40  America/Mazatlan
      0       -07:04:20  America/Chihuahua
+     0       -07:01:00  America/Bahia_Banderas
      0       -07:00:00  America/Denver
                         America/Edmonton
                         America/Boise
@@ -1400,6 +1407,7 @@ Date::Manip::TZ module.
                         America/Yellowknife
                         America/Inuvik
                         Etc/GMT-7
+                        America/Bahia_Banderas
                         America/North_Dakota/New_Salem
                         America/Hermosillo
                         America/North_Dakota/Center
@@ -1435,6 +1443,7 @@ Date::Manip::TZ module.
                         America/Cancun
                         America/Matamoros
                         America/Mazatlan
+                        America/Bahia_Banderas
                         America/Mexico_City
                         America/Ojinaga
                         America/Chihuahua
@@ -2380,7 +2389,7 @@ Date::Manip::TZ module.
                         Australia/Hobart
                         Australia/Sydney
                         Australia/Currie
-                        Pacific/Truk
+                        Pacific/Chuuk
                         Asia/Vladivostok
                         Asia/Sakhalin
                         Etc/GMT+10
@@ -2396,15 +2405,15 @@ Date::Manip::TZ module.
                         W
      0       +10:03:12  Asia/Magadan
      0       +10:04:52  Australia/Sydney
-     0       +10:07:08  Pacific/Truk
+     0       +10:07:08  Pacific/Chuuk
      0       +10:12:08  Australia/Brisbane
      0       +10:30:00  Australia/Lord_Howe
-     0       +10:32:52  Pacific/Ponape
+     0       +10:32:52  Pacific/Pohnpei
      0       +10:34:36  Asia/Kamchatka
      0       +10:36:20  Australia/Lord_Howe
      0       +10:39:48  Pacific/Guadalcanal
      0       +10:51:56  Pacific/Kosrae
-     0       +11:00:00  Pacific/Ponape
+     0       +11:00:00  Pacific/Pohnpei
                         Pacific/Guadalcanal
                         Asia/Kamchatka
                         Asia/Magadan
@@ -2495,6 +2504,7 @@ Date::Manip::TZ module.
                         America/North_Dakota/New_Salem
                         America/North_Dakota/Center
                         America/Mazatlan
+                        America/Bahia_Banderas
                         America/Ojinaga
                         America/Chihuahua
                         Pacific/Easter
@@ -2533,6 +2543,7 @@ Date::Manip::TZ module.
                         America/North_Dakota/Center
                         America/Pangnirtung
                         America/North_Dakota/New_Salem
+                        America/Bahia_Banderas
                         America/Guatemala
                         America/Managua
                         America/Tegucigalpa
@@ -2925,6 +2936,7 @@ will be used).  Abbreviations include the following:
      CHDT             America/Belize
      CHOST            Asia/Choibalsan
      CHOT             Asia/Choibalsan
+     CHUT             Pacific/Chuuk
      CKHST            Pacific/Rarotonga
      CKT              Pacific/Rarotonga
      COST             America/Bogota
@@ -3087,7 +3099,7 @@ will be used).  Abbreviations include the following:
      PMMT             Pacific/Port_Moresby
      PMST             America/Miquelon
      PNT              Pacific/Pitcairn
-     PONT             Pacific/Ponape
+     PONT             Pacific/Pohnpei
      PPMT             America/Port-au-Prince
      PYST             America/Asuncion
      PYT              America/Asuncion
@@ -3130,7 +3142,6 @@ will be used).  Abbreviations include the following:
      TOT              Pacific/Tongatapu
      TRST             Europe/Istanbul
      TRT              Europe/Istanbul
-     TRUT             Pacific/Truk
      TSAT             Europe/Volgograd
      TVT              Pacific/Funafuti
      U                U
@@ -3391,6 +3402,7 @@ altering the order.
                       America/Merida
                       America/Cancun
                       America/North_Dakota/New_Salem
+                      America/Bahia_Banderas
                       America/Indiana/Petersburg
                       America/Indiana/Vincennes
                       America/Indiana/Winamac
@@ -3553,6 +3565,7 @@ altering the order.
                       America/Merida
                       America/Monterrey
                       America/Havana
+                      America/Bahia_Banderas
                       America/Mexico_City
                       America/Rankin_Inlet
                       America/North_Dakota/Center
@@ -3832,6 +3845,7 @@ altering the order.
                       America/Mazatlan
                       America/Chihuahua
                       America/Ojinaga
+                      America/Bahia_Banderas
                       America/North_Dakota/New_Salem
                       America/Hermosillo
                       America/North_Dakota/Center
@@ -3890,6 +3904,7 @@ altering the order.
                       America/Boise
                       America/Yellowknife
                       America/Inuvik
+                      America/Bahia_Banderas
                       America/North_Dakota/New_Salem
                       America/Hermosillo
                       America/North_Dakota/Center
@@ -3975,6 +3990,7 @@ altering the order.
                       America/Juneau
                       America/Inuvik
                       America/Dawson_Creek
+                      America/Bahia_Banderas
                       America/Hermosillo
                       America/Mazatlan
                       America/Boise

@@ -27,332 +27,563 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 iso-8859-1 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
 
 1;
 __DATA__
---- 
-ampm: 
-  - 
+---
+ampm:
+  -
     - du matin
-  - 
+  -
     - du soir
-at: 
+at:
   - a
-  - "\xE1"
-day_abb: 
-  - 
+  - à
+day_abb:
+  -
     - lun
-  - 
+    - ''
+    - lun.
+  -
     - mar
-  - 
+    - ''
+    - mar.
+  -
     - mer
-  - 
+    - ''
+    - mer.
+  -
     - jeu
-  - 
+    - ''
+    - jeu.
+  -
     - ven
-  - 
+    - ''
+    - ven.
+  -
     - sam
-  - 
+    - ''
+    - sam.
+  -
     - dim
-day_char: 
-  - 
+    - ''
+    - dim.
+day_char:
+  -
     - l
-  - 
+  -
     - ma
-  - 
+  -
     - me
-  - 
+  -
     - j
-  - 
+  -
     - v
-  - 
+  -
     - s
-  - 
+  -
     - d
-day_name: 
-  - 
+day_name:
+  -
     - lundi
-  - 
+  -
     - mardi
-  - 
+  -
     - mercredi
-  - 
+  -
     - jeudi
-  - 
+  -
     - vendredi
-  - 
+  -
     - samedi
-  - 
+  -
     - dimanche
-each: 
+each:
   - chaque
   - ''
   - tous les
   - toutes les
-fields: 
-  - 
+fields:
+  -
     - annees
-    - "ann\xE9es"
+    - années
     - an
     - annee
     - ans
-    - "ann\xE9e"
-  - 
+    - année
+  -
     - mois
     - ''
     - m
-  - 
+  -
     - semaine
     - ''
     - sem
-  - 
+  -
     - jours
     - ''
     - j
     - jour
-  - 
+    - journee
+    - journée
+  -
     - heures
     - ''
     - h
     - heure
-  - 
+  -
     - minutes
     - ''
     - mn
     - min
     - minute
-  - 
+  -
     - secondes
     - ''
     - s
     - sec
     - seconde
-last: 
+last:
   - dernier
-mode: 
-  - 
+mode:
+  -
     - exactement
     - ''
     - approximativement
-  - 
+    - environ
+  -
     - professionel
-month_abb: 
-  - 
+    - ''
+    - ouvrable
+    - ouvrables
+month_abb:
+  -
     - jan
-  - 
+  -
     - fev
-    - "f\xE9v"
-  - 
+    - fév
+  -
     - mar
-  - 
+  -
     - avr
-  - 
+  -
     - mai
-  - 
+  -
     - juin
-  - 
+  -
     - juil
-  - 
+  -
     - aout
-    - "ao\xFBt"
-  - 
+    - août
+  -
     - sept
-  - 
+  -
     - oct
-  - 
+  -
     - nov
-  - 
+  -
     - dec
-    - "d\xE9c"
-month_name: 
-  - 
+    - déc
+month_name:
+  -
     - janvier
-  - 
+  -
     - fevrier
-    - "f\xE9vrier"
-  - 
+    - février
+  -
     - mars
-  - 
+  -
     - avril
-  - 
+  -
     - mai
-  - 
+  -
     - juin
-  - 
+  -
     - juillet
-  - 
+  -
     - aout
-    - "ao\xFBt"
-  - 
+    - août
+  -
     - septembre
-  - 
+  -
     - octobre
-  - 
+  -
     - novembre
-  - 
+  -
     - decembre
-    - "d\xE9cembre"
-nextprev: 
-  - 
+    - décembre
+nextprev:
+  -
     - suivant
-  - 
+    - ''
+    - suivante
+    - prochaine
+  -
     - precedent
-    - "pr\xE9c\xE9dent"
-nth: 
-  - 
+    - précédent
+    - precedente
+    - précédente
+    - derniere
+    - dernière
+nth:
+  -
     - 1er
     - ''
     - 1re
     - premier
-  - 
+    - un
+  -
     - 2e
     - ''
     - deux
-  - 
+    - deuxieme
+    - deuxième
+  -
     - 3e
     - ''
     - trois
-  - 
+    - troisieme
+    - troisième
+  -
     - 4e
     - ''
     - quatre
-  - 
+    - quatrieme
+    - quatrième
+  -
     - 5e
     - ''
     - cinq
-  - 
+    - cinquieme
+    - cinquième
+  -
     - 6e
     - ''
     - six
-  - 
+    - sixieme
+    - sixième
+  -
     - 7e
     - ''
     - sept
-  - 
+    - septieme
+    - septième
+  -
     - 8e
     - ''
     - huit
-  - 
+    - huitieme
+    - huitième
+  -
     - 9e
     - ''
     - neuf
-  - 
+    - neuvieme
+    - neuvième
+  -
     - 10e
     - ''
     - dix
-  - 
+    - dixieme
+    - dixième
+  -
     - 11e
     - ''
     - onze
-  - 
+    - onzieme
+    - onzième
+  -
     - 12e
     - ''
     - douze
-  - 
+    - douzieme
+    - douzième
+  -
     - 13e
     - ''
     - treize
-  - 
+    - treizieme
+    - treizième
+  -
     - 14e
     - ''
     - quatorze
-  - 
+    - quatorzieme
+    - quatorzième
+  -
     - 15e
     - ''
     - quinze
-  - 
+    - quinzieme
+    - quinzième
+  -
     - 16e
     - ''
     - seize
-  - 
+    - seizieme
+    - seizième
+  -
     - 17e
     - ''
     - dix-sept
-  - 
+    - dix-septieme
+    - dix-septième
+  -
     - 18e
     - ''
     - dix-huit
-  - 
+    - dix-huitieme
+    - dix-huitième
+  -
     - 19e
     - ''
     - dix-neuf
-  - 
+    - dix-neuvieme
+    - dix-neuvième
+  -
     - 20e
     - ''
     - vingt
-  - 
+    - vingtieme
+    - vingtième
+  -
     - 21e
     - ''
     - vingt et un
-  - 
+    - vingt et unieme
+    - vingt et unième
+  -
     - 22e
     - ''
     - vingt-deux
-  - 
+    - vingt-deuxieme
+    - vingt-deuxième
+  -
     - 23e
     - ''
     - vingt-trois
-  - 
+    - vingt-troisieme
+    - vingt-troisième
+  -
     - 24e
     - ''
     - vingt-quatre
-  - 
+    - vingt-quatrieme
+    - vingt-quatrième
+  -
     - 25e
     - ''
     - vingt-cinq
-  - 
+    - vingt-cinquieme
+    - vingt-cinquième
+  -
     - 26e
     - ''
     - vingt-six
-  - 
+    - vingt-sixieme
+    - vingt-sixième
+  -
     - 27e
     - ''
     - vingt-sept
-  - 
+    - vingt-septieme
+    - vingt-septième
+  -
     - 28e
     - ''
     - vingt-huit
-  - 
+    - vingt-huitieme
+    - vingt-huitième
+  -
     - 29e
     - ''
     - vingt-neuf
-  - 
+    - vingt-neuvieme
+    - vingt-neuvième
+  -
     - 30e
     - ''
     - trente
-  - 
+    - trentieme
+    - trentième
+  -
     - 31e
     - ''
     - trente et un
-of: 
+    - trente et unieme
+    - trente et unième
+  -
+    - 32e
+    - ''
+    - trente-deux
+    - trente-deuxieme
+    - trente-deuxième
+  -
+    - 33e
+    - ''
+    - trente-trois
+    - trente-troisieme
+    - trente-troisième
+  -
+    - 34e
+    - ''
+    - trente-quatre
+    - trente-quatrieme
+    - trente-quatrième
+  -
+    - 35e
+    - ''
+    - trente-cinq
+    - trente-cinquieme
+    - trente-cinquième
+  -
+    - 36e
+    - ''
+    - trente-six
+    - trente-sixieme
+    - trente-sixième
+  -
+    - 37e
+    - ''
+    - trente-sept
+    - trente-septieme
+    - trente-septième
+  -
+    - 38e
+    - ''
+    - trente-huit
+    - trente-huitieme
+    - trente-huitième
+  -
+    - 39e
+    - ''
+    - trente-neuf
+    - trente-neuvieme
+    - trente-neuvième
+  -
+    - 40e
+    - ''
+    - quarante
+    - quarantieme
+    - quarantième
+  -
+    - 41e
+    - ''
+    - quarante et un
+    - quarante et unieme
+    - quarante et unième
+  -
+    - 42e
+    - ''
+    - quarante-deux
+    - quarante-deuxieme
+    - quarante-deuxième
+  -
+    - 43e
+    - ''
+    - quarante-trois
+    - quarante-troisieme
+    - quarante-troisième
+  -
+    - 44e
+    - ''
+    - quarante-quatre
+    - quarante-quatrieme
+    - quarante-quatrième
+  -
+    - 45e
+    - ''
+    - quarante-cinq
+    - quarante-cinquieme
+    - quarante-cinquième
+  -
+    - 46e
+    - ''
+    - quarante-six
+    - quarante-sixieme
+    - quarante-sixième
+  -
+    - 47e
+    - ''
+    - quarante-sept
+    - quarante-septieme
+    - quarante-septième
+  -
+    - 48e
+    - ''
+    - quarante-huit
+    - quarante-huitieme
+    - quarante-huitième
+  -
+    - 49e
+    - ''
+    - quarante-neuf
+    - quarante-neuvieme
+    - quarante-neuvième
+  -
+    - 50e
+    - ''
+    - cinquante
+    - cinquantieme
+    - cinquantième
+  -
+    - 51e
+    - ''
+    - cinquante et un
+    - cinquante et unieme
+    - cinquante et unième
+  -
+    - 52e
+    - ''
+    - cinquante-deux
+    - cinquante-deuxieme
+    - cinquante-deuxième
+  -
+    - 53e
+    - ''
+    - cinquante-trois
+    - cinquante-troisieme
+    - cinquante-troisième
+of:
   - de
   - ''
   - en
-offset_date: 
+  - du
+offset_date:
   aujourd'hui: 0:0:0:0:0:0:0
   demain: +0:0:0:1:0:0:0
   hier: -0:0:0:1:0:0:0
-offset_time: 
+offset_time:
   maintenant: 0:0:0:0:0:0:0
-'on': 
+'on':
   - sur
-sephm: 
+sephm:
   - "[h]"
-sepms: 
+sepms:
   - "[:]"
-times: 
+times:
   midi: 12:00:00
   minuit: 00:00:00
-when: 
-  - 
+when:
+  -
     - il y a
-  - 
+    - ''
+    - auparavant
+    - dans le passé
+    - plus tot
+    - plus tôt
+  -
     - en
     - ''
     - plus tard
+    - "dans l'avenir"
+    - a venir
+    - à venir
+    - dans

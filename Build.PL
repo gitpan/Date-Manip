@@ -9,8 +9,8 @@ if ( $] < 5.010000  ||
    $INSTALL_DM5 = 1;
    $DM_LIBDIR   = 'lib5';
 }
-my $VERSION5 = '5.58';
-my $VERSION6 = '6.11';
+my $VERSION5 = '5.59';
+my $VERSION6 = '6.12';
 
 my %test_requires = (
                  'Test::Inter'              => '0',
@@ -27,7 +27,8 @@ my %dm5_requires = (
 
 my %dm6_requires = (
                  %test_requires,
-                 'perl'                     => '5.010',
+                 'perl'                     => '5.001',   # So the META.yml file doesn't
+                                                          # require 5.010
                  'Carp'                     => '0',
                  'IO::File'                 => '0',
                  'Storable'                 => '0',

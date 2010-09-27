@@ -33,15 +33,14 @@ following commands:
    ./internal/tzdata -d           : to dump all zones
    ./internal/tzdata -m           : to create the individual zone modules
    ./internal/tzdata -o           : to create the individual offset modules
+                                    *** see NOTE 2 below ***
    ./internal/tzdata -z           : to create the main Zone module
-
-All of the above steps can be run in the correct sequence by running:
-
-   ./internal/tzdata -a
+                                    *** see NOTE 2 below ***
 
 Before cleaning up the tzdata directory, run the following to double
 check every timezone in zoneinfo against the Date::Manip version:
 
+   ./Build install
    ./internal/dumps
 
 Run the two tzdata tests:
@@ -62,6 +61,23 @@ than me to run the above commands. If you DO choose to run them, please do
 not report problems due to differences in operating systems, or packages that
 are installed on your system. If you discover a bug in tzdata, I am interested
 in knowing about it however.
+
+NOTE 2: These steps often require manual intervention described
+below. After the intervention, rerun the command to make sure no
+output is produced.
+
+If any output is produced for any of these commands, the entries
+need to be added to the appropriate files (listed below) replacing
+the current entries. In all cases, the order of the lines must be
+checked for accuracy. It is especially important that the first
+line in each entry should remain unchanged (the order of remaining
+lines may change to some extent).
+
+If the '-o' option produces any output, the entries need to be added
+to the data.offset.pl file.
+
+If the '-z' option produces any output, the entries need to be added
+to the data.alias.pl or data.abbrev.pl file.
 
 #########################################################################
 Clean up stuff that shouldn't be in the manifest
@@ -113,14 +129,15 @@ Update the copyright
 Switch the system timezone to America/Central and run the tests.
 
 #########################################################################
-Update the history file with the date
+Update the Changes5/Changes6 docs with the date. Then update internal/VERSION
+to include the new version.
 
 #########################################################################
-After 6.xx is installed locally, run the following:
+Install the module. Then run the following:
 
    ./internal/gen_dm5abbrevs > lib5/Date/Manip/DM5abbrevs.pm
 
 #########################################################################
-Regenerate the MANIFEST, Build.PL Run the kwalitee tests
+Regenerate the MANIFEST and run the kwalitee tests
 
 Do this with INSTALL_DM5 set to 1 and not set.

@@ -272,6 +272,7 @@
                        "America/Merida",                         # 1996-2048
                        "America/Cancun",                         # 1999-2048
                        "America/North_Dakota/New_Salem",         # 2004-2048
+                       "America/Bahia_Banderas",                 # 2010-2048
                        "America/Indiana/Petersburg",             # 1918-2006
                        "America/Indiana/Vincennes",              # 1918-2006
                        "America/Indiana/Winamac",                # 1918-2006
@@ -324,6 +325,7 @@
                        "America/Mazatlan",                       # 1996-2048
                        "America/Chihuahua",                      # 1998-2048
                        "America/Ojinaga",                        # 1998-2048
+                       "America/Bahia_Banderas",                 # 1996-2009
                        "America/North_Dakota/New_Salem",         # 1918-2002
                        "America/Hermosillo",                     # 1996-1998
                        "America/North_Dakota/Center",            # 1918-1991

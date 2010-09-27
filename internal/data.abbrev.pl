@@ -270,6 +270,7 @@
                      "America/Merida",                           # 1996-2049
                      "America/Cancun",                           # 1998-2049
                      "America/North_Dakota/New_Salem",           # 2004-2049
+                     "America/Bahia_Banderas",                   # 2010-2049
                      "America/Indiana/Petersburg",               # 1918-2007
                      "America/Indiana/Vincennes",                # 1918-2007
                      "America/Indiana/Winamac",                  # 1918-2006
@@ -277,9 +278,9 @@
                      "America/Managua",                          # 1979-2006
                      "America/Tegucigalpa",                      # 1987-2006
                      "America/Kentucky/Monticello",              # 1918-2000
-                     "America/Cambridge_Bay",                    # 2000     
-                     "America/Iqaluit",                          # 2000     
-                     "America/Pangnirtung",                      # 2000     
+                     "America/Cambridge_Bay",                    # 2000
+                     "America/Iqaluit",                          # 2000
+                     "America/Pangnirtung",                      # 2000
                      "America/Chihuahua",                        # 1996-1997
                      "America/Ojinaga",                          # 1996-1997
                      "America/Costa_Rica",                       # 1979-1992
@@ -290,7 +291,7 @@
                      "Asia/Urumqi",                              # 1986-1991
                      "America/El_Salvador",                      # 1987-1988
                      "America/Belize",                           # 1973-1983
-                     "Asia/Taipei",                              # 1945-1980
+                     "Asia/Taipei",                              # 1945-1979
                      "America/Indiana/Marengo",                  # 1918-1974
                      "America/Kentucky/Louisville",              # 1918-1974
                      "America/Indiana/Indianapolis",             # 1918-1954
@@ -450,6 +451,7 @@
                      "America/Merida",                           # 1922-2049
                      "America/Monterrey",                        # 1922-2049
                      "America/Havana",                           # 1925-2049
+                     "America/Bahia_Banderas",                   # 1927-2049
                      "America/Mexico_City",                      # 1927-2049
                      "America/Rankin_Inlet",                     # 1957-2049
                      "America/North_Dakota/Center",              # 1992-2049
@@ -465,7 +467,7 @@
                      "America/Kentucky/Monticello",              # 1883-2000
                      "America/Iqaluit",                          # 1999-2000
                      "America/Pangnirtung",                      # 1999-2000
-                     "Asia/Macau",                               # 1999     
+                     "Asia/Macau",                               # 1999
                      "America/Chihuahua",                        # 1927-1998
                      "America/Ojinaga",                          # 1927-1998
                      "America/Costa_Rica",                       # 1921-1992
@@ -476,12 +478,12 @@
                      "Asia/Urumqi",                              # 1980-1991
                      "America/El_Salvador",                      # 1921-1988
                      "America/Belize",                           # 1912-1983
-                     "Asia/Taipei",                              # 1895-1980
-                     "America/Swift_Current",                    # 1972     
+                     "Asia/Taipei",                              # 1895-1979
+                     "America/Swift_Current",                    # 1972
                      "Asia/Jayapura",                            # 1944-1963
                      "America/Indiana/Marengo",                  # 1883-1961
                      "America/Kentucky/Louisville",              # 1883-1961
-                     "America/Regina",                           # 1960     
+                     "America/Regina",                           # 1960
                      "America/Indiana/Indianapolis",             # 1883-1958
                      "America/Indiana/Vevay",                    # 1883-1954
                      "Australia/Darwin",                         # 1895-1944
@@ -785,6 +787,7 @@
                      "America/Mazatlan",                         # 1996-2049
                      "America/Chihuahua",                        # 1998-2049
                      "America/Ojinaga",                          # 1998-2049
+                     "America/Bahia_Banderas",                   # 1996-2009
                      "America/North_Dakota/New_Salem",           # 1918-2003
                      "America/Hermosillo",                       # 1996-1998
                      "America/North_Dakota/Center",              # 1918-1992
@@ -855,6 +858,7 @@
                      "America/Boise",                            # 1923-2049
                      "America/Yellowknife",                      # 1935-2049
                      "America/Inuvik",                           # 1979-2049
+                     "America/Bahia_Banderas",                   # 1922-2010
                      "America/North_Dakota/New_Salem",           # 1883-2003
                      "America/Hermosillo",                       # 1922-1998
                      "America/North_Dakota/Center",              # 1883-1992
@@ -970,6 +974,7 @@
                      "America/Juneau",                           # 1900-1983
                      "America/Inuvik",                           # 1953-1979
                      "America/Dawson_Creek",                     # 1884-1972
+                     "America/Bahia_Banderas",                   # 1949-1970
                      "America/Hermosillo",                       # 1949-1970
                      "America/Mazatlan",                         # 1949-1970
                      "America/Boise",                            # 1883-1923

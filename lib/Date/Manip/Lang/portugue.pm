@@ -27,367 +27,537 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 iso-8859-1 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
 
 1;
 __DATA__
---- 
-ampm: 
-  - 
+---
+ampm:
+  -
     - AM
     - ''
     - A.M.
-  - 
+  -
     - PM
     - ''
     - P.M.
-at: 
+at:
   - as
-  - "\xE0s"
-day_abb: 
-  - 
+  - às
+day_abb:
+  -
     - Seg
-  - 
+  -
     - Ter
-  - 
+  -
     - Qua
-  - 
+  -
     - Qui
-  - 
+  -
     - Sex
-  - 
+  -
     - Sab
-    - "S\xE1b"
-  - 
+    - Sáb
+  -
     - Dom
-day_char: 
-  - 
+day_char:
+  -
     - Sg
-  - 
+  -
     - T
-  - 
+  -
     - Qa
-  - 
+  -
     - Qi
-  - 
+  -
     - Sx
-  - 
+  -
     - Sb
-  - 
+  -
     - D
-day_name: 
-  - 
+day_name:
+  -
     - Segunda
-  - 
+  -
     - Terca
-    - "Ter\xE7a"
-  - 
+    - Terça
+  -
     - Quarta
-  - 
+  -
     - Quinta
-  - 
+  -
     - Sexta
-  - 
+  -
     - Sabado
-    - "S\xE1bado"
-  - 
+    - Sábado
+  -
     - Domingo
-each: 
+each:
   - cada
-fields: 
-  - 
+fields:
+  -
     - anos
     - ''
     - ano
     - ans
     - an
     - a
-  - 
+  -
     - meses
     - ''
-    - "m\xEAs"
+    - mês
     - mes
     - m
-  - 
+  -
     - semanas
     - ''
     - semana
     - sem
     - sems
     - s
-  - 
+  -
     - dias
     - ''
     - dia
     - d
-  - 
+  -
     - horas
     - ''
     - hora
     - hr
     - hrs
-  - 
+  -
     - minutos
     - ''
     - minuto
     - min
     - mn
-  - 
+  -
     - segundos
     - ''
     - segundo
     - seg
     - sg
-last: 
+last:
   - ultimo
-  - "\xFAltimo"
-mode: 
-  - 
+  - último
+mode:
+  -
     - exactamente
     - ''
     - aproximadamente
-  - 
+  -
     - util
     - ''
     - uteis
-month_abb: 
-  - 
+month_abb:
+  -
     - Jan
-  - 
+  -
     - Fev
-  - 
+  -
     - Mar
-  - 
+  -
     - Abr
-  - 
+  -
     - Mai
-  - 
+  -
     - Jun
-  - 
+  -
     - Jul
-  - 
+  -
     - Ago
-  - 
+  -
     - Set
-  - 
+  -
     - Out
-  - 
+  -
     - Nov
-  - 
+  -
     - Dez
-month_name: 
-  - 
+month_name:
+  -
     - Janeiro
-  - 
+  -
     - Fevereiro
-  - 
+  -
     - Marco
-    - "Mar\xE7o"
-  - 
+    - Março
+  -
     - Abril
-  - 
+  -
     - Maio
-  - 
+  -
     - Junho
-  - 
+  -
     - Julho
-  - 
+  -
     - Agosto
-  - 
+  -
     - Setembro
-  - 
+  -
     - Outubro
-  - 
+  -
     - Novembro
-  - 
+  -
     - Dezembro
-nextprev: 
-  - 
+nextprev:
+  -
     - proxima
-    - "pr\xF3xima"
+    - próxima
     - proximo
-    - "pr\xF3ximo"
-  - 
+    - próximo
+  -
     - ultima
-    - "\xFAltima"
+    - última
     - ultimo
-    - "\xFAltimo"
-nth: 
-  - 
-    - "1\xBA"
+    - último
+nth:
+  -
+    - 1º
     - ''
+    - um
     - primeiro
-  - 
-    - "2\xBA"
+  -
+    - 2º
     - ''
+    - dois
     - segundo
-  - 
-    - "3\xBA"
+  -
+    - 3º
     - ''
+    - três
+    - tres
     - terceiro
-  - 
-    - "4\xBA"
+  -
+    - 4º
     - ''
+    - quatro
     - quarto
-  - 
-    - "5\xBA"
+  -
+    - 5º
     - ''
+    - cinco
     - quinto
-  - 
-    - "6\xBA"
+  -
+    - 6º
     - ''
+    - seis
     - sexto
-  - 
-    - "7\xBA"
+  -
+    - 7º
     - ''
+    - sete
     - setimo
-    - "s\xE9timo"
-  - 
-    - "8\xBA"
+    - sétimo
+  -
+    - 8º
     - ''
+    - oito
     - oitavo
-  - 
-    - "9\xBA"
+  -
+    - 9º
     - ''
+    - nove
     - nono
-  - 
-    - "10\xBA"
+  -
+    - 10º
     - ''
+    - dez
     - decimo
-    - "d\xE9cimo"
-  - 
-    - "11\xBA"
+    - décimo
+  -
+    - 11º
     - ''
+    - onze
     - decimo primeiro
-    - "d\xE9cimo primeiro"
-  - 
-    - "12\xBA"
+    - décimo primeiro
+  -
+    - 12º
     - ''
+    - doze
     - decimo segundo
-    - "d\xE9cimo segundo"
-  - 
-    - "13\xBA"
+    - décimo segundo
+  -
+    - 13º
     - ''
+    - treze
     - decimo terceiro
-    - "d\xE9cimo terceiro"
-  - 
-    - "14\xBA"
+    - décimo terceiro
+  -
+    - 14º
     - ''
+    - quatorze
     - decimo quarto
-    - "d\xE9cimo quarto"
-  - 
-    - "15\xBA"
+    - décimo quarto
+  -
+    - 15º
     - ''
+    - quinze
     - decimo quinto
-    - "d\xE9cimo quinto"
-  - 
-    - "16\xBA"
+    - décimo quinto
+  -
+    - 16º
     - ''
+    - dezasseis
     - decimo sexto
-    - "d\xE9cimo sexto"
-  - 
-    - "17\xBA"
+    - décimo sexto
+  -
+    - 17º
     - ''
+    - dezessete
     - decimo setimo
-    - "d\xE9cimo s\xE9timo"
-  - 
-    - "18\xBA"
+    - décimo sétimo
+  -
+    - 18º
     - ''
+    - dezoito
     - decimo oitavo
-    - "d\xE9cimo oitavo"
-  - 
-    - "19\xBA"
+    - décimo oitavo
+  -
+    - 19º
     - ''
+    - dezanove
     - decimo nono
-    - "d\xE9cimo nono"
-  - 
-    - "20\xBA"
+    - décimo nono
+  -
+    - 20º
     - ''
+    - vinte
     - vigesimo
-    - "vig\xE9simo"
-  - 
-    - "21\xBA"
+    - vigésimo
+  -
+    - 21º
     - ''
+    - vinte e um
     - vigesimo primeiro
-    - "vig\xE9simo primeiro"
-  - 
-    - "22\xBA"
+    - vigésimo primeiro
+  -
+    - 22º
     - ''
+    - vinte e dois
     - vigesimo segundo
-    - "vig\xE9simo segundo"
-  - 
-    - "23\xBA"
+    - vigésimo segundo
+  -
+    - 23º
     - ''
+    - vinte e três
+    - vinte e tres
     - vigesimo terceiro
-    - "vig\xE9simo terceiro"
-  - 
-    - "24\xBA"
+    - vigésimo terceiro
+  -
+    - 24º
     - ''
+    - vinte e quatro
     - vigesimo quarto
-    - "vig\xE9simo quarto"
-  - 
-    - "25\xBA"
+    - vigésimo quarto
+  -
+    - 25º
     - ''
+    - vinte cinco
     - vigesimo quinto
-    - "vig\xE9simo quinto"
-  - 
-    - "26\xBA"
+    - vigésimo quinto
+  -
+    - 26º
     - ''
+    - vinte seis
     - vigesimo sexto
-    - "vig\xE9simo sexto"
-  - 
-    - "27\xBA"
+    - vigésimo sexto
+  -
+    - 27º
     - ''
+    - vinte sete
     - vigesimo setimo
-    - "vig\xE9simo s\xE9timo"
-  - 
-    - "28\xBA"
+    - vigésimo sétimo
+  -
+    - 28º
     - ''
+    - vinte e oito
     - vigesimo oitavo
-    - "vig\xE9simo oitavo"
-  - 
-    - "29\xBA"
+    - vigésimo oitavo
+  -
+    - 29º
     - ''
+    - vinte e nove
     - vigesimo nono
-    - "vig\xE9simo nono"
-  - 
-    - "30\xBA"
+    - vigésimo nono
+  -
+    - 30º
     - ''
+    - trinta
     - trigesimo
-    - "trig\xE9simo"
-  - 
-    - "31\xBA"
+    - trigésimo
+  -
+    - 31º
     - ''
+    - trinta e um
     - trigesimo primeiro
-    - "trig\xE9simo primeiro"
-of: 
+    - trigésimo primeiro
+  -
+    - 32º
+    - ''
+    - trinta e dois
+    - trigésimo segundo
+    - trigesimo segundo
+  -
+    - 33º
+    - ''
+    - trinta e três
+    - trinta e tres
+    - trigésimo terceiro
+    - trigesimo terceiro
+  -
+    - 34º
+    - ''
+    - trinta e quatro
+    - trigésimo quarto
+    - trigesimo quarto
+  -
+    - 35º
+    - ''
+    - trinta e cinco
+    - trigésimo quinto
+    - trigesimo quinto
+  -
+    - 36º
+    - ''
+    - trinta e seis
+    - trigésimo sexto
+    - trigesimo sexto
+  -
+    - 37º
+    - ''
+    - trinta e sete
+    - trigésimo sétimo
+    - trigesimo setimo
+  -
+    - 38º
+    - ''
+    - trinta e oito
+    - trigésimo oitavo
+    - trigesimo oitavo
+  -
+    - 39º
+    - ''
+    - trinta e nove
+    - trigésimo nono
+    - trigesimo nono
+  -
+    - 40º
+    - ''
+    - quarenta
+    - quadragésimo
+    - quadragesimo
+    -
+  -
+    - 41º
+    - ''
+    - quarenta e um
+    - quadragésimo primeiro
+    - quadragesimo primeiro
+  -
+    - 42º
+    - ''
+    - quarenta e dois
+    - quadragésimo segundo
+    - quadragesimo segundo
+  -
+    - 43º
+    - ''
+    - quarenta e três
+    - quarenta e tres
+    - quadragésimo terceiro
+    - quadragesimo terceiro
+  -
+    - 44º
+    - ''
+    - quarenta e quatro
+    - quadragésimo quarto
+    - quadragesimo quarto
+  -
+    - 45º
+    - ''
+    - quarenta e cinco
+    - quadragésimo quinto
+    - quadragesimo quinto
+  -
+    - 46º
+    - ''
+    - quarenta e seis
+    - quadragésimo sexto
+    - quadragesimo sexto
+  -
+    - 47º
+    - ''
+    - quarenta e sete
+    - quadragésimo sétimo
+    - quadragesimo setimo
+  -
+    - 48º
+    - ''
+    - quarenta e oito
+    - quadragésimo oitavo
+    - quadragesimo oitavo
+  -
+    - 49º
+    - ''
+    - quarenta e nove
+    - quadragésimo nono
+    - quadragesimo nono
+  -
+    - 50º
+    - ''
+    - cinquenta
+    - quinquagésimo
+    - quinquagesimo
+  -
+    - 51º
+    - ''
+    - cinquenta e um
+    - quinquagésimo primeiro
+    - quinquagesimo primeiro
+  -
+    - 52º
+    - ''
+    - cinquenta e dois
+    - quinquagésimo segundo
+    - quinquagesimo segundo
+  -
+    - 53º
+    - ''
+    - cinqüenta e três anos
+    - cinquenta e tres anos
+    - quinquagésimo terceiro
+    - quinquagesimo terceiro
+of:
   - da
   - ''
   - do
-offset_date: 
+offset_date:
   amanha: +0:0:0:1:0:0:0
-  "amanh\xE3": +0:0:0:1:0:0:0
+  amanhã: +0:0:0:1:0:0:0
   hoje: 0:0:0:0:0:0:0
   ontem: -0:0:0:1:0:0:0
-offset_time: 
+offset_time:
   agora: 0:0:0:0:0:0:0
-'on': 
+'on':
   - na
   - ''
   - 'no'
-times: 
+times:
   meia-noite: 00:00:00
   meio-dia: 12:00:00
-when: 
-  - 
+when:
+  -
     - a
-    - "\xE0"
-  - 
+    - à
+  -
     - em
     - ''
     - passadas

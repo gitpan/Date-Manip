@@ -12,9 +12,9 @@ Date::Manip::Changes5to6 - describes differences between 5.xx and 6.00
 
 Date::Manip 6.00 represents a complete rethink and rewrite of
 Date::Manip.  A great deal of effort was made to make sure that 6.00
-is almost totally backwards compatible with 5.xx, but some functionality
-has changed in backwards incompatible ways. Other parts have been
-deprecated and will be removed at some point in the future.
+is almost backwards compatible with 5.xx whenever feasible, but some
+functionality has changed in backwards incompatible ways. Other parts
+have been deprecated and will be removed at some point in the future.
 
 This document describes the differences between the 5.xx series and
 version 6.00. This page is primarily for someone wanting to know
@@ -30,11 +30,11 @@ included:
 
 =over 4
 
-=item B<Minimal time zone support>
+=item B<Poor time zone support>
 
 Time zone support in 5.xx was broken. Determining a time zone, and
-understanding daylight saving time changes was minimal and was
-missing a lot of necessary functionality.
+understanding daylight saving time changes was incomplete (at best)
+and totally inadequate to do true timezone operations.
 
 =item B<Parsing too complicated and unstructured>
 
@@ -73,41 +73,8 @@ The most important changes are marked with asterisks.
 
 =item B<(*) Requires perl 5.10.0>
 
-The single most controversial change made in 6.00 is that it now
-required perl 5.10.0 or higher. Most of the negative feedback I've
-received is due to this.
-
-In the past, I've avoided using new features of perl in order to allow
-Date::Manip to run on older versions of perl.  Prior to 5.10, none of
-the new features would have had a major impact on how Date::Manip was
-written, however that changed in 5.10.
-
-One of the aspects of Date::Manip that has received the most positive
-response is the ability to parse almost every conceivable date format.
-Unfortunately, as I've added formats, the parsing routine became more
-and more complicated, and maintaining it was one of the least
-enjoyable aspect in maintaining Date::Manip . For several years, I've
-been extremely reluctant to add new formats due to the fact that too
-often, adding a new format broke other formats.
-
-As I was rewriting Date::Manip, I was looking for ways to improve the
-parsing and to make maintaining it easier. Perl 5.10 provides the
-feature "named capture buffers". Named capture buffers not only
-improves the ease of maintaining the complex regular expressions used
-by Date::Manip, it makes it dramatically easier to add additional
-formats in a way that is much less likely to interfere with other
-formats. The parsing in 6.00 is so much more robust, extensible, and
-flexible, that it will make parser maintenance possible for many years
-to come at a fraction of the effort and risk.
-
-It was too much to turn down. Hopefully, since 5.10 has been out for
-some time now, this will not prohibit too many people from using the
-new version of Date::Manip. I realize that there are many people out
-there using older versions of perl who do not have the option of
-upgrading perl.  The decision to use 5.10 wasn't made lightly... but I
-don't regret making it. I apologize to users who, as a result, cannot
-use 6.00 . Hopefully in the future you'll be able to benefit from the
-improvements in 6.00.
+Please see the Date::Manip::Problems document for a discussion of
+this problem. It's in the KNOWN COMPLAINTS section.
 
 =item B<(*) Breaking into smaller modules>
 
@@ -222,7 +189,7 @@ The following time zones were in Date::Manip 5.xx but not in 6.00.
    MEWT    +0100    Middle European Winter
    MEZ     +0100    Middle European
    FWT     +0100    French Winter
-   GB      +0100    GMT with daylight savings
+   GB      +0100    GMT with daylight saving
    SWT     +0100    Swedish Winter
    MESZ    +0200    Middle European Summer
    FST     +0200    French Summer
@@ -373,6 +340,10 @@ in some future version:
    UpdateCurrTZ    Ignored. With real time zone handling in
                    place, this is no longer necessary
 
+   IntCharSet      This has been replaced with better support for
+                   international character sets. The Encoding config
+                   variable may be used.
+
 =item B<Holidays>
 
 Previously, holidays could be defined as a "Date + Delta" or "Date -
@@ -401,7 +372,7 @@ is a good thing).
 =item B<(*) today, tomorrow, yesterday>
 
 The words "today", "tomorrow", and "yesterday" in 5.xx referred to the
-now, 24 hours in the future, and 24 hours in the past respectively.
+time now, 24 hours in the future, and 24 hours in the past respectively.
 
 As of 6.00, these are treated strictly as date strings, so they are
 the current day, the day before, or the day after at the time 00:00:00.

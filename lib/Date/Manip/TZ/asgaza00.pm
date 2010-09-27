@@ -5,9 +5,9 @@ package Date::Manip::TZ::asgaza00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:29:38 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:16:33 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -34,7 +34,7 @@ require 5.010000;
 use vars qw(%Dates %LastRule);
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 %Dates         = (
    1    =>
@@ -445,11 +445,11 @@ $VERSION='6.11';
    2010 =>
      [
         [ [2010,3,26,22,1,0],[2010,3,27,1,1,0],'+03:00:00',[3,0,0],
-          'EEST',1,[2010,9,2,22,59,59],[2010,9,3,1,59,59],
-          '2010032622:01:00','2010032701:01:00','2010090222:59:59','2010090301:59:59' ],
-        [ [2010,9,2,23,0,0],[2010,9,3,1,0,0],'+02:00:00',[2,0,0],
+          'EEST',1,[2010,8,10,20,59,59],[2010,8,10,23,59,59],
+          '2010032622:01:00','2010032701:01:00','2010081020:59:59','2010081023:59:59' ],
+        [ [2010,8,10,21,0,0],[2010,8,10,23,0,0],'+02:00:00',[2,0,0],
           'EET',0,[2011,3,25,22,0,59],[2011,3,26,0,0,59],
-          '2010090223:00:00','2010090301:00:00','2011032522:00:59','2011032600:00:59' ],
+          '2010081021:00:00','2010081023:00:00','2011032522:00:59','2011032600:00:59' ],
      ],
    2011 =>
      [

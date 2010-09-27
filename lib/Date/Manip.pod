@@ -13,46 +13,49 @@ Date::Manip - Date manipulation routines
 Date::Manip is a series of modules which can do pretty much any date/time
 operation you could ever want.
 
-As of 6.00, there are two ways to use Date::Manip.
+There are two ways to use Date::Manip.
 
 =over 4
 
 =item B<Functional>
 
-Prior to 6.00, Date::Manip had only a functional interface. Existing scripts
-which used older versions of Date::Manip will continue to work (though you
-should check out the Date::Manip::Migration5to6 document for a list of
-changes which may be necessary).
+Prior to 6.00, Date::Manip had only a functional interface. Existing
+scripts which used older versions of Date::Manip will continue to work
+(though you should check out the Date::Manip::Migration5to6 document
+for a list of changes which may be necessary).
 
 =item B<Object-Oriented>
 
-As of 6.00, Date::Manip consists of a set of OO modules. Each have their own
-document (see the SEE ALSO section below). The functional interface is now just
-a wrapper around these OO modules.
+As of 6.00, Date::Manip consists of a set of OO modules. Each have
+their own document (see the SEE ALSO section below). The functional
+interface is now just a wrapper around these OO modules.
 
 The OO interface consists of the following modules: Date::Manip::Date,
-Date::Manip::Delta, Date::Manip::Recur, Date::Manip::TZ, and Date::Manip::Base
+Date::Manip::Delta, Date::Manip::Recur, Date::Manip::TZ, and
+Date::Manip::Base
 
-All Date::Manip operations can be performed using the OO modules. Most of
-the common operations can also be done using the functional interface, but
-there are some limitations.
+All Date::Manip operations can be performed using the OO modules. Most
+of the common operations can also be done using the functional
+interface, but there are some limitations.
 
-The biggest limitation is that the functional interface has limited time zone
-handling (though what it has is now correct). For full time zone handling,
-you need to use the OO modules.
+The biggest limitation is that the functional interface has limited
+time zone handling (though what it has is now correct). For full time
+zone handling, you need to use the OO modules.
 
 =back
 
 Which interface should you use?
 
-If you need full time zone support, you need to use the OO interface since the
-functional interface is limited in it's ability to handle time zones correctly.
+If you need full time zone support, you need to use the OO interface
+since the functional interface is limited in it's ability to handle
+time zones correctly.
 
-If you want to write a script that will work with older versions of Date::Manip,
-you need to use the functional interface (but be aware that not all config
-variables in 6.00 are available in 5.xx).
+If you want to write a script that will work with older versions of
+Date::Manip, you need to use the functional interface (but be aware
+that not all config variables in 6.00 are available in 5.xx).
 
-For new scripts, it is suggested that the OO interface be used.
+For new scripts, it is suggested that the OO interface be used and you
+should refer to the documentation for those modules directly.
 
 =head1 FUNCTIONAL INTERFACE SYNOPSIS
 
@@ -275,8 +278,9 @@ which I could pass "@ARGV" to and have it remove a date from the beginning.
 
    $date = ParseDateString($string);
 
-This parses a string containing a date and returns it. Refer to the Date::Manip::Date
-documentation for valid date formats. The date returned is in the local time zone.
+This parses a string containing a date and returns it. Refer to the
+Date::Manip::Date documentation for valid date formats. The date
+returned is in the local time zone.
 
 =item B<UnixDate>
 
@@ -284,9 +288,9 @@ documentation for valid date formats. The date returned is in the local time zon
    @out = UnixDate($date,@in);
 
 This takes a date and a list of strings containing formats roughly
-identical to the format strings used by the UNIX date(1) command.  Each
-format is parsed and an array of strings corresponding to each format is
-returned.
+identical to the format strings used by the UNIX date(1) command.
+Each format is parsed and an array of strings corresponding to each
+format is returned.
 
 The formats are described in the Date::Manip::Date document.
 
@@ -815,13 +819,11 @@ Information about the module and administrative things:
                             Date::Manip (who should use it;
                             acknowledgements)
   Date::Manip::Status5    - status of Date::Manip 5.xx
-  Date::Manip::Changes5	  - backward incompatible changes in
-                            Date::Manip 5.xx
+  Date::Manip::Changes5	  - change log for Date::Manip 5.xx
   Date::Manip::Changes5to6- differences between version 5.xx
                             and 6.00 (including information
                             on upgrading)
-  Date::Manip::Changes6	  - backward incompatible changes in
-                            Date::Manip 6.xx
+  Date::Manip::Changes6	  - change log for Date::Manip 6.xx
   Date::Manip::Problems	  - common problems and instructions
                             for reporting bugs
   Date::Manip::Examples	  - examples of how to use Date::Manip

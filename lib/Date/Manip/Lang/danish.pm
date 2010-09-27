@@ -27,9 +27,10 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 iso-8859-1 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
@@ -40,8 +41,12 @@ __DATA__
 ampm:
   -
     - FM
+    - ''
+    - f.m.
   -
     - EM
+    - ''
+    - e.m.
 at:
   - klokken
   - ''
@@ -60,10 +65,10 @@ day_abb:
     - Fre
   -
     - Lor
-    - "L\xF8r"
+    - lør
   -
     - Son
-    - "S\xF8n"
+    - Søn
 day_char:
   -
     - M
@@ -92,23 +97,23 @@ day_name:
     - Fredag
   -
     - Lordag
-    - "L\xF8rdag"
+    - Lørdag
   -
     - Sondag
-    - "S\xF8ndag"
+    - Søndag
 each:
   - hver
 fields:
   -
     - ar
-    - "\xE5r"
+    - år
   -
     - maneder
-    - "m\xE5neder"
+    - måneder
     - man
     - maned
-    - "m\xE5n"
-    - "m\xE5ned"
+    - mån
+    - måned
   -
     - uger
     - ''
@@ -145,7 +150,7 @@ last:
 mode:
   -
     - pracist
-    - "pr\xE6cist"
+    - præcist
     - circa
   -
     - arbejdsdag
@@ -204,7 +209,7 @@ month_name:
 nextprev:
   -
     - nasta
-    - "n\xE6ste"
+    - næste
   -
     - forrige
 nth:
@@ -212,7 +217,7 @@ nth:
     - 1:e
     - ''
     - forste
-    - "f\xF8rste"
+    - første
   -
     - 2:e
     - ''
@@ -338,21 +343,21 @@ of:
 offset_date:
   idag: 0:0:0:0:0:0:0
   igar: -0:0:0:1:0:0:0
-  "ig\xE5r": -0:0:0:1:0:0:0
+  igår: -0:0:0:1:0:0:0
   imorgen: +0:0:0:1:0:0:0
 offset_time:
   nu: 0:0:0:0:0:0:0
 'on':
   - pa
-  - "p\xE5"
+  - på
 sephm:
-  - .
+  - '[.]'
 sepms:
-  - ':'
+  - '[:]'
 times:
   midnat: 00:00:00
   midt pa dagen: 12:00:00
-  "midt p\xE5 dagen": 12:00:00
+  midt på dagen: 12:00:00
 when:
   -
     - siden

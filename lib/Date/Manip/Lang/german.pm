@@ -27,9 +27,10 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
-use vars qw($Language);
+use vars qw($Language @Encodings);
+@Encodings = qw(utf-8 iso-8859-1 perl);
 
 my @in    = <DATA>;
 $Language = Load(join('',@in));
@@ -40,25 +41,43 @@ __DATA__
 ampm:
   -
     - FM
+    - ''
+    - vorm.
   -
     - EM
+    - ''
+    - nachm.
 at:
   - um
 day_abb:
   -
     - Mo
+    - ''
+    - Mo.
   -
     - Di
+    - ''
+    - Di.
   -
     - Mi
+    - ''
+    - Mi.
   -
     - Do
+    - ''
+    - Do.
   -
     - Fr
+    - ''
+    - Fr.
   -
     - Sa
+    - ''
+    - Sa.
   -
     - So
+    - ''
+    - So.
 day_char:
   -
     - M
@@ -87,6 +106,8 @@ day_name:
     - Freitag
   -
     - Samstag
+    - ''
+    - Sonnabend
   -
     - Sonntag
 each:
@@ -141,18 +162,20 @@ mode:
     - genau
     - ''
     - ungefahr
-    - "ungef\xE4hr"
+    - ungefähr
   -
     - Arbeitstag
+    - ''
+    - Arbeits
 month_abb:
   -
     - Jan
-    - "J\xE4n"
+    - Jän
   -
     - Feb
   -
     - Mar
-    - "M\xE4r"
+    - Mär
   -
     - Apr
   -
@@ -174,12 +197,13 @@ month_abb:
 month_name:
   -
     - Januar
-    - "J\xE4nner"
+    - Jänner
   -
     - Februar
   -
+    - Marz
+    - März
     - Maerz
-    - "M\xE4rz"
   -
     - April
   -
@@ -201,9 +225,9 @@ month_name:
 nextprev:
   -
     - nachsten
-    - "n\xE4chsten"
+    - nächsten
     - nachste
-    - "n\xE4chste"
+    - nächste
   -
     - vorherigen
     - ''
@@ -216,132 +240,323 @@ nth:
     - ''
     - erste
     - erster
+    - eins
   -
     - 2.
     - ''
     - zweite
+    - zwei
+    - zweiter
   -
     - 3.
     - ''
     - dritte
+    - drei
+    - dritter
   -
     - 4.
     - ''
     - vierte
+    - vier
   -
     - 5.
     - ''
     - funfte
-    - "f\xFCnfte"
+    - fünfte
+    - fünf
+    - fünfter
+    - funf
+    - funfter
   -
     - 6.
     - ''
     - sechste
+    - sechs
+    - sechster
   -
     - 7.
     - ''
     - siebente
+    - siebte
+    - sieben
+    - siebter
   -
     - 8.
     - ''
     - achte
+    - achten
   -
     - 9.
     - ''
     - neunte
+    - neun
+    - neunten
   -
     - 10.
     - ''
     - zehnte
+    - zehn
+    - zehnten
   -
     - 11.
     - ''
     - elfte
+    - elf
   -
     - 12.
     - ''
     - zwolfte
-    - "zw\xF6lfte"
+    - zwölfte
+    - zwölf
+    - zwölften
+    - zwolf
+    - zwolften
   -
     - 13.
     - ''
     - dreizehnte
+    - dreizehn
   -
     - 14.
     - ''
     - vierzehnte
+    - vierzehn
   -
     - 15.
     - ''
     - funfzehnte
-    - "f\xFCnfzehnte"
+    - fünfzehnte
+    - fünfzehn
+    - fünfzehnten
+    - funfzehn
+    - funfzehnten
   -
     - 16.
     - ''
     - sechzehnte
+    - sechzehn
   -
     - 17.
     - ''
     - siebzehnte
+    - siebzehn
   -
     - 18.
     - ''
     - achtzehnte
+    - achtzehn
   -
     - 19.
     - ''
     - neunzehnte
+    - neunzehn
   -
     - 20.
     - ''
     - zwanzigste
+    - zwanzig
+    - zwanzigsten
   -
     - 21.
     - ''
     - einundzwanzigste
+    - einundzwanzigsten
   -
     - 22.
     - ''
     - zweiundzwanzigste
+    - zweiundzwanzigsten
   -
     - 23.
     - ''
     - dreiundzwanzigste
+    - dreiundzwanzigsten
   -
     - 24.
     - ''
     - vierundzwanzigste
+    - vierundzwanzigsten
   -
     - 25.
     - ''
     - funfundzwanzigste
-    - "f\xFCnfundzwanzigste"
+    - fünfundzwanzigste
+    - fünfundzwanzigsten
+    - funfundzwanzigsten
   -
     - 26.
     - ''
-    - sechundzwanzigste
+    - sechsundzwanzigste
+    - sechsundzwanzigsten
   -
     - 27.
     - ''
-    - siebundzwanzigste
+    - siebenundzwanzigste
+    - siebenundzwanzigsten
   -
     - 28.
     - ''
     - achtundzwanzigste
+    - achtundzwanzigsten
   -
     - 29.
     - ''
     - neunundzwanzigste
+    - neunundzwanzigsten
   -
     - 30.
     - ''
     - dreibigste
-    - "drei\xDFigste"
+    - dreißigste
+    - dreißig
+    - dreißigsten
+    - dreibig
+    - dreibigsten
   -
     - 31.
     - ''
     - einunddreibigste
-    - "einunddrei\xDFigste"
+    - einunddreißigste
+    - einunddreißig
+    - einunddreißigsten
+    - einunddreibig
+    - einunddreibigsten
+  -
+    - 32.
+    - ''
+    - zweiunddreißig
+    - zweiunddreißigste
+    - zweiunddreibig
+    - zweiunddreibigste
+  -
+    - 33.
+    - ''
+    - dreiunddreißig
+    - dreiunddreißigsten
+    - dreiunddreibig
+    - dreiunddreibigsten
+  -
+    - 34.
+    - ''
+    - vierunddreißig
+    - vierunddreißigste
+    - vierunddreibig
+    - vierunddreibigste
+  -
+    - 35.
+    - ''
+    - fünfunddreißig
+    - fünfunddreißigste
+    - funfunddreibig
+    - funfunddreibigste
+  -
+    - 36.
+    - ''
+    - sechsunddreißig
+    - sechsunddreißigste
+    - sechsunddreibig
+    - sechsunddreibigste
+  -
+    - 37.
+    - ''
+    - siebenunddreißig
+    - siebenunddreißigsten
+    - siebenunddreibig
+    - siebenunddreibigsten
+  -
+    - 38.
+    - ''
+    - achtunddreißig
+    - achtunddreißigsten
+    - achtunddreibig
+    - achtunddreibigsten
+  -
+    - 39.
+    - ''
+    - neununddreißig
+    - neununddreißigsten
+    - neununddreibig
+    - neununddreibigsten
+  -
+    - 40.
+    - ''
+    - vierzig
+    - vierzigsten
+  -
+    - 41.
+    - ''
+    - einundvierzig
+    - einundvierzigsten
+  -
+    - 42.
+    - ''
+    - zweiundvierzig
+    - zweiundvierzigsten
+  -
+    - 43.
+    - ''
+    - dreiundvierzig
+    - dreiundvierzigsten
+  -
+    - 44.
+    - ''
+    - vierundvierzig
+    - vierundvierzigsten
+  -
+    - 45.
+    - ''
+    - fünfundvierzig
+    - fünfundvierzigsten
+    - funfundvierzig
+    - funfundvierzigsten
+  -
+    - 46.
+    - ''
+    - sechsundvierzig
+    - sechsundvierzigsten
+  -
+    - 47.
+    - ''
+    - siebenundvierzig
+    - siebenundvierzigste
+  -
+    - 47.
+    - ''
+    - siebenundvierzig
+    - siebenundvierzigste
+  -
+    - 49.
+    - ''
+    - neunundvierzig
+    - neunundvierzigsten
+  -
+    - 50.
+    - ''
+    - fünfzig
+    - fünfzigsten
+    - funfzig
+    - funfzigsten
+  -
+    - 51.
+    - ''
+    - einundfünfzig
+    - einundfünfzigsten
+    - einundfunfzig
+    - einundfunfzigsten
+  -
+    - 52.
+    - ''
+    - zweiundfünfzig
+    - zweiundfünfzigsten
+    - zweiundfunfzig
+    - zweiundfunfzigsten
+  -
+    - 53.
+    - ''
+    - dreiundfünfzig
+    - dreiundfünfzigsten
+    - dreiundfunfzig
+    - dreiundfunfzigsten
 of:
   - der
   - ''
@@ -351,7 +566,7 @@ offset_date:
   gestern: -0:0:0:1:0:0:0
   heute: 0:0:0:0:0:0:0
   morgen: +0:0:0:1:0:0:0
-  "\xFCbermorgen": +0:0:0:2:0:0:0
+  übermorgen: +0:0:0:2:0:0:0
 offset_time:
   jetzt: 0:0:0:0:0:0:0
 'on':
@@ -362,8 +577,12 @@ times:
 when:
   -
     - vor
+    - ''
+    - vorigen
+    - vorherigen
+    - vorherige
   -
     - in
     - ''
     - spater
-    - "sp\xE4ter"
+    - später

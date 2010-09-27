@@ -5,9 +5,9 @@ package Date::Manip::Offset::off433;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:33:44 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:17:23 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off433;
 
 =head1 NAME
 
-Date::Manip::Offset::off433 - Support for the -07:17:28 offset
+Date::Manip::Offset::off433 - Support for the -07:11:20 offset
 
 =head1 SYNPOSIS
 
@@ -32,15 +32,15 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 use vars qw($Offset %Offset);
 
-$Offset        = '-07:17:28';
+$Offset        = '-07:11:20';
 
 %Offset        = (
    0 => [
-      'pacific/easter',
+      'america/swift_current',
       ],
 );
 

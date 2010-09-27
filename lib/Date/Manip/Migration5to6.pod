@@ -78,6 +78,7 @@ they will be removed at a future date). These include:
    PathSep
    TZ
    Internal
+   IntCharSet
 
 The following variables have been removed. If you use any of them,
 you may need to modify your scripts:

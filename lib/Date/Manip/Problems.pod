@@ -36,8 +36,9 @@ produced:
 
 In other words, the second calculation appears to be off by one hour.
 In actuality, the result is correct. In the user's time zone, daylight
-saving time ended on Nov 1, and the results are correct. In America/New_York
-time (which has the same result), the calculation means that:
+saving time ended on Nov 1, and since "+ 1 day" is equivalent to "+ 24
+hours", the results are correct. In America/New_York time (which has
+the same result), the calculation means that:
 
    2009-11-01 00:00:00 EDT + 24 hours = 
    2009-11-01 23:00:00 EST
@@ -167,10 +168,10 @@ welcome suggestions and will definitely consider any such request.
 
 Date::Manip 6.xx has gotten some complaints (far more than 5.xx if the
 truth be told), so I'd like to address a couple of them here.  Perhaps
-an understanding of why things are will allay some of the
-complaints. If not, people are always welcome to stick with the 5.xx
-release. I will continue to support the 5.xx releases for a couple
-years (though I do NOT plan to add functionality to it).
+an understanding of why things are will allay some of the complaints.
+If not, people are always welcome to stick with the 5.xx release. I
+will continue to support the 5.xx releases for a couple years (though
+I do NOT plan to add functionality to it).
 
 These complaints come both from both the CPAN ratings site:
 
@@ -182,16 +183,49 @@ and from personal email.
 
 =item B<Requires perl 5.10>
 
-I've covered this in the Date::Manip::Changes5to6 document, but there
-are a few additional notes that I can add here.
+The single most controversial change made in 6.00 is that it now
+required perl 5.10.0 or higher. Most of the negative feedback I've
+received is due to this.
 
-First off, one complaint is that this in some way makes Date::Manip
-backwards incompatible, and this is simply not true. Version 6.xx DOES
-include some backwards incompatibilities (and these are covered in the
-Date::Manip::Migration5to6 document), however in almost all cases,
-these incompatibilities are with infrequently used features, or
-workarounds are in place to allow deprecated features to continue
-functioning for some period of time.
+In the past, I've avoided using new features of perl in order to allow
+Date::Manip to run on older versions of perl.  Prior to perl 5.10,
+none of the new features would have had a major impact on how
+Date::Manip was written, however that changed in 5.10.
+
+One of the aspects of Date::Manip that has received the most positive
+response is the ability to parse almost every conceivable date format.
+Unfortunately, as I've added formats, the parsing routine became more
+and more complicated, and maintaining it was one of the least
+enjoyable aspect in maintaining Date::Manip . For several years, I've
+been extremely reluctant to add new formats due to the fact that too
+often, adding a new format broke other formats.
+
+As I was rewriting Date::Manip, I was looking for ways to improve the
+parsing and to make maintaining it easier. Perl 5.10 provides the
+feature "named capture buffers". Named capture buffers not only
+improves the ease of maintaining the complex regular expressions used
+by Date::Manip, it makes it dramatically easier to add additional
+formats in a way that is much less likely to interfere with other
+formats. The parsing in 6.00 is so much more robust, extensible, and
+flexible, that it will make parser maintenance possible for many years
+to come at a fraction of the effort and risk.
+
+It was too much to turn down. Hopefully, since 5.10 has been out for
+some time now, this will not prohibit too many people from using the
+new version of Date::Manip. I realize that there are many people out
+there using older versions of perl who do not have the option of
+upgrading perl.  The decision to use 5.10 wasn't made lightly... but I
+don't regret making it. I apologize to users who, as a result, cannot
+use 6.00 . Hopefully in the future you'll be able to benefit from the
+improvements in 6.00.
+
+One complaint I've received is that this in some way makes Date::Manip
+backwards incompatible, but this is not an accurate complaint. Version
+6.xx DOES include some backwards incompatibilities (and these are
+covered in the Date::Manip::Migration5to6 document), however in almost
+all cases, these incompatibilities are with infrequently used
+features, or workarounds are in place to allow deprecated features to
+continue functioning for some period of time.
 
 Though I have no data to confirm this, I suspect that 90% or more of
 all scripts which were written with Date::Manip 5.xx will continue to
@@ -228,37 +262,43 @@ releases until 5.10 came out in December of 2007, so 5.8 was
 state-of-the art as little as 2 years prior to the release of
 Date::Manip 6.xx.
 
-To be honest, I actually agree with the argument that abandoning 5.8
-only 2 years after it was the current version is too soon. For that
-reason, I will continue to support the Date::Manip 5.xx releases for
-some years to come. I don't know exactly how long I'll continue to
-support them, but it'll be at least 2-3 years. Once perl 5.10 is 5
-years old, I'll be much more likely to drop support for the 5.xx
-releases, but I DO want to make use of the features of 5.10 for future
-development.  They make development so much easier, and the parsing so
-much more robust (something I've wanted for years), that I'm not
-willing to give up the advantages of 5.10.
+I agree completely with the argument that abandoning 5.8 only 2 years
+after it was the current version is too soon. For that reason, I will
+continue to support the Date::Manip 5.xx releases for some years to
+come. I don't know exactly how long I'll continue to support them,
+but it'll be at least 2-3 years. Once perl 5.10 is 5 years old, I'll
+be much more likely to drop support for the 5.xx releases, but I DO
+want to make use of the features of 5.10 for future development.
+They make development so much easier, and the parsing so much more
+robust (something I've wanted for years), that I'm not willing to
+give up the advantages of 5.10.
 
 But the next complaint is relevant.
 
 =item B<Automatic installs break>
 
-A bigger problem is that versions 6.01 through 6.07 broke automatic
-installs for older perl installations. If you try to install
-Date::Manip, the automatic tools (cpan/cpanp) will look for the
-most recent version. When this fails, rather than looking for an older
-version, the tool simply reports a failure in installing Date::Manip.
-The problem is clearly not due to Date::Manip itself, but are a
-result of how perl modules are currently managed, and since
-Date::Manip is managed by then, it's important avoid causing this
-type of problem.
+A more important problem is that versions 6.01 through 6.07 broke
+automatic installs for older perl installations. If you try to install
+Date::Manip, the automatic tools (cpan/cpanp) will look for the most
+recent version. If you are using a version of perl older than 5.10,
+this fails, and rather than looking for an older version, the tool
+simply reports a failure in installing Date::Manip.  The problem is
+not due to Date::Manip itself, but is a result of how perl modules are
+currently managed, and since Date::Manip is managed by then, it's
+important to avoid causing this type of problem (which I clearly failed
+to do).
 
-As of 6.10, this problem should no longer occur. As of 6.10,
-both the 5.xx and 6.xx versions of Date::Manip have been combined
-into a single distribution (so Date-Manip-6.10 contains both
-Date::Manip 6.10 and Date::Manip 5.57). At install time, the
-correct version will be installed, depending on the version
-of perl available.
+As of Date::Manip 6.10, this problem should no longer occur. Starting
+with version 6.10, both the 5.xx and 6.xx versions of Date::Manip have
+been combined into a single distribution (so Date-Manip-6.10 contains
+both Date::Manip 6.10 and Date::Manip 5.57). At install time, the
+correct version will be installed, depending on the version of perl
+available.
+
+All future version (for as long as 5.xx is supported) will include
+both the most current 5.xx and 6.xx releases of Date::Manip. In
+this way, automatic install tools will be able to install Date::Manip
+regardless of which version of perl you are running.
 
 =item B<Too many modules>
 
@@ -282,7 +322,9 @@ also choose to break up the data into a large number of files.
 My linux distribution (openSuSE 11.2) uses the standard zoneinfo
 database, and at this point, there are over 1700 files included in
 /usr/share/zoneinfo (though it does appear that there is some
-duplication of information).
+duplication of information). Current versions of RedHat also use
+over 1700 files, so Date::Manip isn't treating the time zone problem
+in a new or unreasonable way.
 
 =item B<Objects are large>
 
@@ -317,7 +359,7 @@ any number of Date::Manip::Date objects. They can almost be thought of
 as global data, except that they are accessible in the standard OO
 manner, and you are allowed to modify them on a per-object basis which
 WILL mean that you have to store more data. The Date::Manip::Base
-object especially is may be configured, so you may have multiple
+object especially may be configured, so you may have multiple
 Date::Manip::Base objects (at 15K each) running around. It's highly
 unlikely that you will have multiple Date::Manip::TZ objects.
 

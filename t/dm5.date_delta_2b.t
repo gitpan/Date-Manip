@@ -12,8 +12,8 @@ if ($Date::Manip::VERSION < 6.00) {
 
 $t->skip_all('Date::Manip 5.xx required','DM5');
 
-Date_Init("WorkDayBeg=08:30","WorkDayEnd=17:00");
 Date_Init("TZ=EST");
+Date_Init("WorkDayBeg=08:30","WorkDayEnd=17:00");
 
 $tests="
 'Wed Nov 20 1996 noon' +0:5:0:0 2 => 1996112108:30:00

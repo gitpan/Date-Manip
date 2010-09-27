@@ -12,7 +12,8 @@ if ($Date::Manip::VERSION < 6.00) {
 
 $t->skip_all('Date::Manip 5.xx required','DM5');
 
-Date_Init("ForceDate=1997-03-08-12:30:00","TZ=EST");
+Date_Init("TZ=EST");
+Date_Init("ForceDate=1997-03-08-12:30:00");
 
 ($currS,$currMN,$currH,$currD,$currM,$currY)=("00","30","12","08","03","1997");
 

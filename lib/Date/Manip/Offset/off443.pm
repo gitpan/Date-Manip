@@ -5,9 +5,9 @@ package Date::Manip::Offset::off443;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:33:45 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:17:23 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off443;
 
 =head1 NAME
 
-Date::Manip::Offset::off443 - Support for the -08:00:56 offset
+Date::Manip::Offset::off443 - Support for the -08:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,15 +32,38 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 use vars qw($Offset %Offset);
 
-$Offset        = '-08:00:56';
+$Offset        = '-08:00:00';
 
 %Offset        = (
    0 => [
+      'america/los_angeles',
+      'america/vancouver',
+      'america/juneau',
+      'america/whitehorse',
+      'america/dawson',
+      'america/tijuana',
+      'america/santa_isabel',
+      'pacific/pitcairn',
+      'etc/gmt-8',
+      'america/inuvik',
       'america/dawson_creek',
+      'america/hermosillo',
+      'america/mazatlan',
+      'america/bahia_banderas',
+      'america/boise',
+      'h',
+      ],
+   1 => [
+      'america/juneau',
+      'america/whitehorse',
+      'america/dawson',
+      'america/yakutat',
+      'america/nome',
+      'america/anchorage',
       ],
 );
 

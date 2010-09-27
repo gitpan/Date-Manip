@@ -515,7 +515,7 @@ $def_off{0} = {
                                "Australia/Hobart",              # 1895-9999
                                "Australia/Sydney",              # 1895-9999
                                "Australia/Currie",              # 1895-9999
-                               "Pacific/Truk",                  # 1900-9999
+                               "Pacific/Chuuk",                 # 1900-9999
                                "Asia/Vladivostok",              # 1930-9999
                                "Asia/Sakhalin",                 # 1991-9999
                                "Etc/GMT+10",                    # 0001-9999
@@ -531,7 +531,7 @@ $def_off{0} = {
                                "W",                             # 0001-9999
                               ],
                "+11:00:00" => [
-                               "Pacific/Ponape",                # 1900-9999
+                               "Pacific/Pohnpei",               # 1900-9999
                                "Pacific/Guadalcanal",           # 1912-9999
                                "Asia/Kamchatka",                # 1922-9999
                                "Asia/Magadan",                  # 1930-9999
@@ -797,6 +797,7 @@ $def_off{0} = {
                                "America/Cancun",                # 1922-9999
                                "America/Matamoros",             # 1922-9999
                                "America/Mazatlan",              # 1927-9999
+                               "America/Bahia_Banderas",        # 1927-9999
                                "America/Mexico_City",           # 1927-9999
                                "America/Ojinaga",               # 1927-9999
                                "America/Chihuahua",             # 1927-9999
@@ -843,6 +844,7 @@ $def_off{0} = {
                                "America/Yellowknife",           # 1935-9999
                                "America/Inuvik",                # 1979-9999
                                "Etc/GMT-7",                     # 0001-9999
+                               "America/Bahia_Banderas",        # 1922-2010
                                "America/North_Dakota/New_Salem",# 1883-2003
                                "America/Hermosillo",            # 1922-1998
                                "America/North_Dakota/Center",   # 1883-1992
@@ -868,6 +870,7 @@ $def_off{0} = {
                                "America/Dawson_Creek",          # 1884-1972
                                "America/Hermosillo",            # 1949-1970
                                "America/Mazatlan",              # 1949-1970
+                               "America/Bahia_Banderas",        # 1949-1970
                                "America/Boise",                 # 1883-1923
                                "H",                             # 0001-9999
                               ],
@@ -1312,6 +1315,7 @@ $def_off{1} = {
                                "America/North_Dakota/Center",   # 1993-9999
                                "America/Pangnirtung",           # 1995-9999
                                "America/North_Dakota/New_Salem",# 2004-9999
+                               "America/Bahia_Banderas",        # 2010-9999
                                "America/Guatemala",             # 1973-2006
                                "America/Managua",               # 1973-2006
                                "America/Tegucigalpa",           # 1987-2006
@@ -1330,6 +1334,7 @@ $def_off{1} = {
                                "America/North_Dakota/New_Salem",# 1918-9999
                                "America/North_Dakota/Center",   # 1918-9999
                                "America/Mazatlan",              # 1927-9999
+                               "America/Bahia_Banderas",        # 1927-9999
                                "America/Ojinaga",               # 1927-9999
                                "America/Chihuahua",             # 1927-9999
                                "Pacific/Easter",                # 1932-9999

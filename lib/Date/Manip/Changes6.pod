@@ -2,29 +2,104 @@
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
+# Changes are listed in the order:
+#
+#   =item SPECIFIC IMPORTANT CHANGE
+#   =item New features
+#   =item Bug fixes
+#   =item Time zone fixes
+#   =item Language fixes
+#   =item Test fixes
+#   =item Documentation fixes
+
 =pod
 
 =head1 NAME
 
-Date::Manip::Changes6 - backward incompatible changes in Date::Manip 6.xx
+Date::Manip::Changes6 - changes in Date::Manip 6.xx
 
 =head1 SYNOPSIS
 
-This describes all backwards incompatible changes made to the
-Date::Manip module starting at version 6.00.
-
-=head1 DESCRIPTION
+This describes the changes made to the Date::Manip module in the 6.xx
+series of releases.  Major changes are marked with asterisks (*).
 
 For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
-incompatible. These are documented here.  Major changes are marked
-with asterisks.
+incompatible. These are marked with an exclamation mark (!).
 
-=head1 6.08
+=head1 Version 6.12
 
 =over 4
 
-=item B<Zones specified by offset>
+=item B<(!) IntCharSet config variable deprecated>
+
+With better support for international character sets, the old IntCharSet
+config variable (which was a bandaid at best) is deprecated. Currently, the
+functionality still exists, but it will be removed at some point.
+
+=item New features
+
+Added the Encoding config variable.
+
+Now supports parsing the EXIF date format.  Rhesa Rozendaal
+
+=item Bug fixes
+
+Fixed Build.PL to not require perl 5.010 since the distribution as a whole
+does not require that (and I want that fact to be in META.yml).
+
+Fixed a bug where the Date::Manip::Date::set method was broken when setting
+individual fields.  Helmut A. Bender
+
+Fixed a bug where set didn't work in Date::Manip::Delta. Patch provided in
+RT 59096.
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2010m)
+
+=item Language fixes
+
+B<(*) Converted all language files to UTF-8 and added rudimentary support for
+character encodings. Some assistance by Stephen Ostermiller.>
+
+Fixed problem in Polish, Dutch.  Stephen Ostermiller
+
+Extended support for 'nth' up to 53rd.  Paco Regodon
+
+Added some corrections to German.  Dieter Lange
+
+=item Documentation fixes
+
+Clarified Date::Manip::Recur documentation based on RT 59132.
+
+=back
+
+=head1 Version 6.11 (2010-04-30)
+
+=over 4
+
+=item Bug fixes
+
+Fixed a problem in Build.PL that had an incorrect module requirement.
+
+=back
+
+=head1 Version 6.10 (2010-04-29)
+
+=over 4
+
+=item B<(*) Combined 5.xx and 6.xx releases into one distribution>
+
+Because the automatic module management tools cpan/cpanp would try
+to upgrade Date::Manip to the most recent version, and the most
+recent version will only work if perl 5.10.0 or higher is installed,
+both the 5.xx and 6.xx releases are now combined into a single
+distribution.
+
+This is described more fully in the Date::Manip::Problems document.
+
+=item B<(!) Zones specified by offset>
 
 In all operations involving time zones, the time zone must be determined.
 By default, it would take all of the information available (date, ISDST,
@@ -46,25 +121,269 @@ by standard times.
 See the Date::Manip::TZ manual (under the zone method) for more
 information.
 
+=item Bug fixes
+
+Fixed a bug where Date_ConvTZ not working correctly with time zones
+specified by offset.  Chris Butler
+
+Fixed a bug where business mode calculations involving minutes was not
+handled correctly.  Damien Moore
+
+Fixed a bug where business mode calculations failed in some cases.  RT
+56638
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2010i)
+
+Changed Date::Manip::TZ::zone so "dst" is sometimes the default
+$dstflag.  Based on the bug report by Chris Butler.
+
+OpenUNIX puts a colon at the start of some time zones. It's removed.
+Jean Hassler
+
+=item Test fixes
+
+Converted tests to Test::Inter
+
+=item Documentation fixes
+
+Fixed a documentation bug in Date::Manip::TZ where "stdonly" was
+listed as the default value for $dstflag, but in actuality, "std" is
+the default.
+
 =back
 
-=head1 6.05
+=head1 Version 6.07 (2010-02-05)
 
 =over 4
 
-=item B<%z format>
+=item Bug fixes
 
-In Date::Manip 5.xx, the %z format in UnixDate printed the offset in the
-form -0500. In 6.00, I changed that to -05:00:00, but this broke RFC 822
-compliance.
+Fixed bug in Date_TimeZone where it wasn't returning the time zone.
+Robert Eden
+
+=back
+
+=head1 Version 6.06 (2010-02-05)
+
+=over 4
+
+=item Bug fixes
+
+Minor bug where %Z printf format didn't always work.
+
+Added support for 5pm back in (it was omitted accidentally).  Mark Kennedy
+
+Fixed a minor warning.  Morten Bjoernsvik
+
+Some additional speedups.
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2010b)
+
+Added dm_zdump example script.
+
+Improved TZ::periods functionality
+
+Fixed bug in Date_ConvTZ where empty values weren't defaulting to local time zone.
+Robert Eden
+
+Fixed a couple of problems in the generated time zones for some odd
+cases (America/Resolute and Asia/Tehran).
+
+=back
+
+=head1 Version 6.05 (2009-12-09)
+
+=over 4
+
+=item B<(!) %z format>
+
+In Date::Manip 5.xx, the %z format in UnixDate printed the offset in
+the form -0500. In 6.00, I changed that to -05:00:00, but this broke
+RFC 822 compliance.
 
 I've changed %z back to -0500, and introduced a new format (%N) which
 returns -05:00:00.
 
-Incidentally, this is the LAST unused letter, so I am now going to have
-to either stop adding formats, or add some extended format syntax. Not
-sure yet which, but this may involve a backwards incompatible change in
-the future.
+Incidentally, this is the LAST unused letter, so I am now going to
+have to either stop adding formats, or add some extended format
+syntax. Not sure yet which, but this may involve a backwards
+incompatible change in the future.
+
+=item B<(*) Significant speedups.>
+
+Thanks to Moritz Lenz and BrowserUK on perlmonks for suggestions (and
+a number of other people on perlmonks for suggestions that I did not
+end up using, but which provided a great discussion).
+
+=item Bug fixes
+
+Fixed a bug in parse_date where the current time was getting used
+instead of the documented 00:00:00
+
+Bug fix where DateCalc didn't work with $mode in some cases.
+
+Fixed Makefile.PL/Build.PL to handle Win32::TieRegistry requirement.
+
+Changed %z printf behavior back to 5.xx and added %N format. Gilles
+Lamiral
+
+Added dm_date example script.
+
+=item Time zone fixes
+
+Fixed bug where non-English Windows versions didn't get the
+time zone. Thanks to Rene Schickbauer for testing.
+
+=item Test fixes
+
+Reduced the precision of 1 test to avoid a rounding difference when
+using a perl compiled with uselongdouble.  Andreas Koenig
+
+=back
+
+=head1 Version 6.04 (2009-11-25)
+
+=over 4
+
+=item Bug fixes
+
+Fixed a bug where events were not interpreted in the correct time zone
+if SetDate/ForceDate used.
+
+=back
+
+=head1 Version 6.03 (2009-11-24)
+
+=over 4
+
+=item Bug fixes
+
+Corrects a backward incompatibility with UnixDate. Rene Schickbauer
+
+=item Test fixes
+
+A couple more corrections to the tests.
+
+=back
+
+=head1 Version 6.02 (2009-11-24)
+
+=over 4
+
+=item Bug fixes
+
+Disabled curr_zone_methods when taint checking on. I believe that Date::Manip
+is completely taint friendly at this point.
+
+=item Test fixes
+
+A quick fix to make sure that the tests run correctly in other time zones.
+
+=back
+
+=head1 Version 6.01 (2009-11-23)
+
+=over 4
+
+=item Bug fixes
+
+B<(*) Fixed a bug where dates were sometimes getting the wrong time zone when
+SetDate/ForceDate in effect.>
+
+=back
+
+=head1 Version 6.00 (2009-11-23)
+
+Date::Manip 6.00 is a total rethink of the module, and a nearly complete
+rewrite. Please refer to the Date::Manip::Changes5to6 document for a list
+of incompatible changes.
+
+=over 4
+
+=item Reorganization
+
+B<(*) Massive reorganization and near total rewrite.>
+
+B<(*) Broke into several smaller modules>
+
+=item New Features
+
+B<(*) Full time zone support (using tzdata 2009s)>
+
+Added some functionality (suggested by James Elson to improve setting
+the "current time".  Done with the ForceDate config variable.
+
+B<(*) Converted languages to YAML for much easier maintenance. Patch and
+suggestion provided by Evan Carroll>
+
+Added much better formats for deltas. Suggested by Jim Hranicky.
+
+Borrowed the _FindWindowsTZName function from the DateTime-TimeZone
+module.
+
+Added SetDate config variable (based on a suggestion by Christian Campbell).
+
+Added parse_format which was first suggested by Kim Ryan.
+
+=item Other changes
+
+Several config variables deprecated
+
+Thanks to Jonathan Hogue for helping test Windows additions.
+
+=item Bug fixes (correctly problems in the 5.xx releases)
+
+Fixed a bug where "YYtoYYYY=c" wouldn't work.
+
+VMS bugfix to not call `date` command.  Lane
+
+New Year's Day defined using a recurrence which might push the observed
+day to the previous year was broken. Reported by Alan Burlison
+
+=item Language fixes
+
+Fixed typo in Turkish translation.
+
+Spelling fix in Dutch. Bart Van Loon
+
+=item Additional credits
+
+I have received many suggestions over time which were automatically
+handled during the 6.00 rewrite. Although the changes weren't made
+because of the suggestions specifically, I wanted to acknowledge
+them since I appreciate the suggestions.
+
+I believe the first person to suggest writing Date::Manip as an OO
+module was Eduard Derksen.
+
+Delta_Format initialization done outside of the function.  Eric Boehm
+
+Added $subtract to calculation routines. First suggested by Steve Berlage.
+
+Added ability to set individual parts of the date (Date::Manip::Date::set).
+First suggested by Martin Thurn.
+
+UnixDate (i.e. Date::Manip::Date::printf) only calculates formats when
+they are needed.  Eduard Derksen
+
+Parsing will skip some date/time formats if requested. This was first
+suggested by Eduard Derksen.
+
+It has been suggested several times to support multiple languages,
+multiple config files, or multiple sets of Date_Init
+options. These suggestions (by Meng Fang, Ed Avis, Christian
+Campbell, and perhaps others) were at the back of my mind as I
+developed the Date::Manip::Base class.
+
+The regular expressions are all i18n friendly in anticipation of much
+better support for localization. First suggested by Alex Kapranoff.
+
+Parsing a date ('today', 'Monday') gives a time of '00:00:00'. Suggested
+by Mark Aitchison.
 
 =back
 

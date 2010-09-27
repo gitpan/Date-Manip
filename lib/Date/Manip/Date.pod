@@ -1026,6 +1026,8 @@ The following date formats are supported:
    YY   D/mmm          09   5/Mar
    YYYY D/mmm          2009 5/Mar
 
+   YYYY:MM:DD          2010:01:15 (EXIF format)
+
 In the formats above, the slash (/) can be replace by any of the valid
 separators: whitespace, slash (/), period (.), or dash (-). The dash,
 though allowed, is discouraged since it may conflict with an ISO 8601

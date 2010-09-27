@@ -5,9 +5,9 @@ package Date::Manip::Offset::off429;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Apr 27 10:33:44 EDT 2010
-#    Data version: tzdata2010i
-#    Code version: tzcode2010f
+#    Generated on: Mon Sep 27 14:17:23 EDT 2010
+#    Data version: tzdata2010m
+#    Code version: tzcode2010m
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 use vars qw($VERSION);
-$VERSION='6.11';
+$VERSION='6.12';
 
 use vars qw($Offset %Offset);
 
@@ -52,6 +52,7 @@ $Offset        = '-07:00:00';
       'america/yellowknife',
       'america/inuvik',
       'etc/gmt-7',
+      'america/bahia_banderas',
       'america/north_dakota/new_salem',
       'america/hermosillo',
       'america/north_dakota/center',
