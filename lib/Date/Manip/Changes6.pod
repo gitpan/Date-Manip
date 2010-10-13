@@ -27,7 +27,61 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 Version 6.12
+=head1 VERSION 6.14
+
+=over 4
+
+=back
+
+=head1 VERSION 6.13 (2010-10-13)
+
+=over 4
+
+=item New features
+
+Added the input methods to Date::Manip::Date and Date::Manip::Delta.  Ed Avis.
+
+The 'date +%z' command will also be used to determine the timezone.  Oliver Schulze
+
+=item Bug fixes
+
+Several changes to try to get rid of a memory leaks reported in RT
+54937.  Huge thanks to BrowserUK on perlmonks for help.  Unfortunately, it
+ended up being a bug in perl, and will only be resolved when that bug is
+fixed. See the Date::Manip::Problems document for more information.
+
+   Reorganized Base/TZ to get rid of circular references.
+   Added end blocks to clean some global variables.
+   Got rid of switch/given structures.
+
+Fixed a bug where an incomplete date with 'last' in it was causing an
+error.  RT 60138
+
+Fixed a bug where 'Sunday, 9th Jan 1972' wasn't parsed correctly.  RT 57832
+
+=item Time zone fixes
+
+Fixed a bug where Zones.pm was generated with the abbreviations in the wrong
+order.  Amish Chana.
+
+=item Language fixes
+
+French month abbreviations now support periods.  Bernard Haerri
+
+=item Test fixes
+
+Added tests from RT 29655 to make sure that the problem never recurs.
+
+=item Documentation fixes
+
+Fixed documentation problem with the new_* methods in Date::Manip::Obj.  Options
+must be passed in as \@opts rather than @opts.
+
+Cleaned up some of the documentation.
+
+=back
+
+=head1 VERSION 6.12 (2010-09-27)
 
 =over 4
 
@@ -75,7 +129,7 @@ Clarified Date::Manip::Recur documentation based on RT 59132.
 
 =back
 
-=head1 Version 6.11 (2010-04-30)
+=head1 VERSION 6.11 (2010-04-30)
 
 =over 4
 
@@ -85,7 +139,7 @@ Fixed a problem in Build.PL that had an incorrect module requirement.
 
 =back
 
-=head1 Version 6.10 (2010-04-29)
+=head1 VERSION 6.10 (2010-04-29)
 
 =over 4
 
@@ -154,7 +208,7 @@ the default.
 
 =back
 
-=head1 Version 6.07 (2010-02-05)
+=head1 VERSION 6.07 (2010-02-05)
 
 =over 4
 
@@ -165,7 +219,7 @@ Robert Eden
 
 =back
 
-=head1 Version 6.06 (2010-02-05)
+=head1 VERSION 6.06 (2010-02-05)
 
 =over 4
 
@@ -195,7 +249,7 @@ cases (America/Resolute and Asia/Tehran).
 
 =back
 
-=head1 Version 6.05 (2009-12-09)
+=head1 VERSION 6.05 (2009-12-09)
 
 =over 4
 
@@ -245,7 +299,7 @@ using a perl compiled with uselongdouble.  Andreas Koenig
 
 =back
 
-=head1 Version 6.04 (2009-11-25)
+=head1 VERSION 6.04 (2009-11-25)
 
 =over 4
 
@@ -256,7 +310,7 @@ if SetDate/ForceDate used.
 
 =back
 
-=head1 Version 6.03 (2009-11-24)
+=head1 VERSION 6.03 (2009-11-24)
 
 =over 4
 
@@ -270,7 +324,7 @@ A couple more corrections to the tests.
 
 =back
 
-=head1 Version 6.02 (2009-11-24)
+=head1 VERSION 6.02 (2009-11-24)
 
 =over 4
 
@@ -285,7 +339,7 @@ A quick fix to make sure that the tests run correctly in other time zones.
 
 =back
 
-=head1 Version 6.01 (2009-11-23)
+=head1 VERSION 6.01 (2009-11-23)
 
 =over 4
 
@@ -296,7 +350,7 @@ SetDate/ForceDate in effect.>
 
 =back
 
-=head1 Version 6.00 (2009-11-23)
+=head1 VERSION 6.00 (2009-11-23)
 
 Date::Manip 6.00 is a total rethink of the module, and a nearly complete
 rewrite. Please refer to the Date::Manip::Changes5to6 document for a list

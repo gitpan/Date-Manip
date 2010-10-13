@@ -28,3 +28,38 @@ Time::Format
 perl -d:NYTProf parse-1.dm.pl
 nytprofhtml
 
+============
+
+time parse-1.dt.pl
+parse-1.dt.pl  0.51s user 0.01s system 83% cpu 0.626 total
+
+time ./parse-1.dm_no.pl
+./parse-1.dm_no.pl  3.36s user 0.01s system 100% cpu 3.366 total
+
+time ./parse-1.dm5.pl
+./parse-1.dm5.pl  6.21s user 0.03s system 100% cpu 6.233 total
+
+time ./parse-1.dm_fo.pl
+./parse-1.dm_fo.pl  5.09s user 0.03s system 99% cpu 5.123 total
+
+time ./parse-1.dm.pl
+./parse-1.dm.pl  3.64s user 0.04s system 99% cpu 3.706 total
+
+perl -d:NYTProf parse-1.dm.pl
+nytprofhtml
+
+11323   613ms   Date::::_parse_time Date::Manip::Date::_parse_time
+11323   442ms   Date::::parse Date::Manip::Date::parse
+11324   419ms   TZ::::date_period Date::Manip::TZ::date_period
+11323   399ms   Date::::_parse_date_common Date::Manip::Date::_parse_date_common
+11323   378ms   Date::::set Date::Manip::Date::set
+11324   298ms   TZ::::_all_periods Date::Manip::TZ::_all_periods
+11323   248ms   Date::::_parse_date Date::Manip::Date::_parse_date
+22646   233ms   Base::::check Date::Manip::Base::check
+11323   207ms   Date::::_parse_check Date::Manip::Date::_parse_check
+11323   174ms   Date::::_parse_datetime_iso8601 Date::Manip::Date::_parse_datetime_iso8601
+11324   163ms   Base::::_now Date::Manip::Base::_now
+11323   162ms   Date::::_parse_dow Date::Manip::Date::_parse_dow
+22646   159ms   Base::::check_time Date::Manip::Base::check_time
+22662   158ms   Base::::_is_int Date::Manip::Base::_is_int
+

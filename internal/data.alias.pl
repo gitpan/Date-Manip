@@ -257,444 +257,720 @@
   (
    # These are set in RFC 822 and the default (first) value will NOT
    # be modified ever.
-   "CST6CDT"       => [
-                       "America/Chicago",                        # 1918-2048
-                       "America/Winnipeg",                       # 1916-2048
-                       "America/Indiana/Knox",                   # 1918-2048
-                       "America/Indiana/Tell_City",              # 1918-2048
-                       "America/Menominee",                      # 1918-2048
-                       "America/Rainy_River",                    # 1918-2048
-                       "America/Mexico_City",                    # 1939-2048
-                       "America/Rankin_Inlet",                   # 1980-2048
-                       "America/Matamoros",                      # 1988-2048
-                       "America/Monterrey",                      # 1988-2048
-                       "America/North_Dakota/Center",            # 1993-2048
-                       "America/Merida",                         # 1996-2048
-                       "America/Cancun",                         # 1999-2048
-                       "America/North_Dakota/New_Salem",         # 2004-2048
-                       "America/Bahia_Banderas",                 # 2010-2048
-                       "America/Indiana/Petersburg",             # 1918-2006
-                       "America/Indiana/Vincennes",              # 1918-2006
-                       "America/Indiana/Winamac",                # 1918-2006
-                       "America/Managua",                        # 1979-2006
-                       "America/Guatemala",                      # 1983-2006
-                       "America/Tegucigalpa",                    # 1987-2006
-                       "America/Resolute",                       # 1980-2005
-                       "America/Kentucky/Monticello",            # 1918-1999
-                       "America/Chihuahua",                      # 1996-1997
-                       "America/Ojinaga",                        # 1996-1997
-                       "America/Costa_Rica",                     # 1979-1992
-                       "America/El_Salvador",                    # 1987-1988
-                       "America/Indiana/Marengo",                # 1918-1960
-                       "America/Kentucky/Louisville",            # 1918-1960
-                       "America/Indiana/Indianapolis",           # 1918-1954
-                       "America/Indiana/Vevay",                  # 1918-1919
-                       "America/Atikokan",                       # 1918
+   'CST6CDT'       => [
+                       'America/Chicago'                         ,1918,9999,
+                       'America/Winnipeg'                        ,1916,9999,
+                       'America/Indiana/Knox'                    ,1918,9999,
+                       'America/Indiana/Tell_City'               ,1918,9999,
+                       'America/Menominee'                       ,1918,9999,
+                       'America/Rainy_River'                     ,1918,9999,
+                       'America/Mexico_City'                     ,1939,9999,
+                       'America/Rankin_Inlet'                    ,1980,9999,
+                       'America/Matamoros'                       ,1988,9999,
+                       'America/Monterrey'                       ,1988,9999,
+                       'America/North_Dakota/Center'             ,1993,9999,
+                       'America/Merida'                          ,1996,9999,
+                       'America/Cancun'                          ,1999,9999,
+                       'America/North_Dakota/New_Salem'          ,2004,9999,
+                       'America/Bahia_Banderas'                  ,2010,9999,
+                       'America/Managua'                         ,1979,2006,
+                       'America/Guatemala'                       ,1983,2006,
+                       'America/Tegucigalpa'                     ,1987,2006,
+                       'America/Indiana/Petersburg'              ,1918,2006,
+                       'America/Indiana/Vincennes'               ,1918,2006,
+                       'America/Indiana/Winamac'                 ,1918,2006,
+                       'America/Resolute'                        ,1980,2005,
+                       'America/Kentucky/Monticello'             ,1918,1999,
+                       'America/Chihuahua'                       ,1996,1997,
+                       'America/Ojinaga'                         ,1996,1997,
+                       'America/Costa_Rica'                      ,1979,1992,
+                       'America/El_Salvador'                     ,1987,1988,
+                       'America/Indiana/Marengo'                 ,1918,1960,
+                       'America/Kentucky/Louisville'             ,1918,1960,
+                       'America/Indiana/Indianapolis'            ,1918,1954,
+                       'America/Indiana/Vevay'                   ,1918,1919,
+                       'America/Atikokan'                        ,1918,1918,
                       ],
-   "EST5EDT"       => [
-                       "America/New_York",                       # 1918-2047
-                       "America/Cancun",                         # 1996-1997
-                       "America/Detroit",                        # 1948-2047
-                       "America/Grand_Turk",                     # 1979-2047
-                       "America/Indiana/Indianapolis",           # 1969-2047
-                       "America/Indiana/Marengo",                # 1969-2047
-                       "America/Indiana/Petersburg",             # 2008-2047
-                       "America/Indiana/Tell_City",              # 1969-1970
-                       "America/Indiana/Vevay",                  # 1969-2047
-                       "America/Indiana/Vincennes",              # 1969-2047
-                       "America/Indiana/Winamac",                # 1969-2047
-                       "America/Iqaluit",                        # 1980-2047
-                       "America/Jamaica",                        # 1974-1983
-                       "America/Kentucky/Louisville",            # 1968-2047
-                       "America/Kentucky/Monticello",            # 2001-2047
-                       "America/Montreal",                       # 1917-2047
-                       "America/Nassau",                         # 1964-2047
-                       "America/Nipigon",                        # 1918-2047
-                       "America/Pangnirtung",                    # 1995-2047
-                       "America/Port-au-Prince",                 # 1983-2006
-                       "America/Thunder_Bay",                    # 1970-2047
-                       "America/Toronto",                        # 1918-2047
+   'EST5EDT'       => [
+                       'America/New_York'                        ,1918,9999,
+                       'America/Montreal'                        ,1917,9999,
+                       'America/Nipigon'                         ,1918,9999,
+                       'America/Toronto'                         ,1918,9999,
+                       'America/Detroit'                         ,1948,9999,
+                       'America/Nassau'                          ,1964,9999,
+                       'America/Kentucky/Louisville'             ,1968,9999,
+                       'America/Indiana/Indianapolis'            ,1969,9999,
+                       'America/Indiana/Marengo'                 ,1969,9999,
+                       'America/Indiana/Vevay'                   ,1969,9999,
+                       'America/Indiana/Vincennes'               ,1969,9999,
+                       'America/Indiana/Winamac'                 ,1969,9999,
+                       'America/Thunder_Bay'                     ,1970,9999,
+                       'America/Grand_Turk'                      ,1979,9999,
+                       'America/Iqaluit'                         ,1980,9999,
+                       'America/Pangnirtung'                     ,1995,9999,
+                       'America/Kentucky/Monticello'             ,2001,9999,
+                       'America/Indiana/Petersburg'              ,2008,9999,
+                       'America/Port-au-Prince'                  ,1983,2006,
+                       'America/Cancun'                          ,1996,1997,
+                       'America/Jamaica'                         ,1974,1983,
+                       'America/Indiana/Tell_City'               ,1969,1970,
                       ],
-   "MST7MDT"       => [
-                       "America/Denver",                         # 1918-2048
-                       "America/Edmonton",                       # 1918-2048
-                       "America/Boise",                          # 1967-2048
-                       "America/Cambridge_Bay",                  # 1980-2048
-                       "America/Inuvik",                         # 1980-2048
-                       "America/Yellowknife",                    # 1980-2048
-                       "America/Mazatlan",                       # 1996-2048
-                       "America/Chihuahua",                      # 1998-2048
-                       "America/Ojinaga",                        # 1998-2048
-                       "America/Bahia_Banderas",                 # 1996-2009
-                       "America/North_Dakota/New_Salem",         # 1918-2002
-                       "America/Hermosillo",                     # 1996-1998
-                       "America/North_Dakota/Center",            # 1918-1991
-                       "America/Phoenix",                        # 1918-1967
-                       "America/Swift_Current",                  # 1918-1961
-                       "America/Regina",                         # 1918-1959
+   'MST7MDT'       => [
+                       'America/Denver'                          ,1918,9999,
+                       'America/Edmonton'                        ,1918,9999,
+                       'America/Boise'                           ,1967,9999,
+                       'America/Cambridge_Bay'                   ,1980,9999,
+                       'America/Inuvik'                          ,1980,9999,
+                       'America/Yellowknife'                     ,1980,9999,
+                       'America/Mazatlan'                        ,1996,9999,
+                       'America/Chihuahua'                       ,1998,9999,
+                       'America/Ojinaga'                         ,1998,9999,
+                       'America/Bahia_Banderas'                  ,1996,2009,
+                       'America/North_Dakota/New_Salem'          ,1918,2002,
+                       'America/Hermosillo'                      ,1996,1998,
+                       'America/North_Dakota/Center'             ,1918,1991,
+                       'America/Phoenix'                         ,1918,1967,
+                       'America/Swift_Current'                   ,1918,1961,
+                       'America/Regina'                          ,1918,1959,
                       ],
-   "PST8PDT"       => [
-                       "America/Los_Angeles",                    # 1918-2048
-                       "America/Vancouver",                      # 1918-2048
-                       "America/Santa_Isabel",                   # 1931-2048
-                       "America/Tijuana",                        # 1931-2048
-                       "America/Dawson",                         # 1980-2048
-                       "America/Whitehorse",                     # 1980-2048
-                       "America/Juneau",                         # 1969-1982
-                       "America/Dawson_Creek",                   # 1918-1971
-                       "America/Boise",                          # 1918-1919
+   'PST8PDT'       => [
+                       'America/Los_Angeles'                     ,1918,9999,
+                       'America/Vancouver'                       ,1918,9999,
+                       'America/Santa_Isabel'                    ,1931,9999,
+                       'America/Tijuana'                         ,1931,9999,
+                       'America/Dawson'                          ,1980,9999,
+                       'America/Whitehorse'                      ,1980,9999,
+                       'America/Juneau'                          ,1969,1982,
+                       'America/Dawson_Creek'                    ,1918,1971,
+                       'America/Boise'                           ,1918,1919,
                       ],
 
    # Open to discussion
-   "ACT5ACST"      => [
-                       "America/Rio_Branco",                     # 1932-1987
-                       "America/Eirunepe",                       # 1932-1987
+
+   'ACT5ACST'      => [
+                       'America/Rio_Branco'                      ,1932,1987,
+                       'America/Eirunepe'                        ,1932,1987,
                       ],
-   "AKST9AKDT"     => [
-                       "America/Juneau",                         # 1984-2047
-                       "America/Anchorage",                      # 1984-2037
-                       "America/Nome",                           # 1984-2047
-                       "America/Yakutat",                        # 1984-2047
+   'AHST10AHDT'    => [
+                       'America/Anchorage'                       ,1969,1982,
                       ],
-   "AMT4AMST"      => [
-                       "America/Campo_Grande",                   # 1932-2047
-                       "America/Boa_Vista",                      # 1932-2000
-                       "America/Cuiaba",                         # 1932-2047
-                       "America/Manaus",                         # 1932-1987
-                       "America/Porto_Velho",                    # 1932-1987
-                       "America/Santarem",                       # 1932-1987
+   'AKST9AKDT'     => [
+                       'America/Anchorage'                       ,1984,9999,
+                       'America/Juneau'                          ,1984,9999,
+                       'America/Nome'                            ,1984,9999,
+                       'America/Yakutat'                         ,1984,9999,
                       ],
-   "AQTT-5AQTST"   => [
-                       "Asia/Aqtobe",                            # 1992-2004
-                       "Asia/Aqtau",                             # 1992-1994
+   'AKTT-5AKTST'   => [
+                       'Asia/Aqtobe'                             ,1982,1990,
                       ],
-   "ART3ARST"      => [
-                       "America/Argentina/Buenos_Aires",         # 1974-2047
-                       "America/Argentina/Cordoba",              # 1974-2047
-                       "America/Argentina/Tucuman",              # 1974-2047
-                       "America/Argentina/Catamarca",            # 1974-1992
-                       "America/Argentina/Jujuy",                # 1974-1992
-                       "America/Argentina/La_Rioja",             # 1974-1992
-                       "America/Argentina/Rio_Gallegos",         # 1974-1992
-                       "America/Argentina/Salta",                # 1974-1992
-                       "America/Argentina/San_Juan",             # 1974-1992
-                       "America/Argentina/Ushuaia",              # 1974-1992
-                       "America/Argentina/Mendoza",              # 1974-1989
-                       "America/Argentina/San_Luis",             # 1974-1989
-                       "Antarctica/Palmer",                      # 1974
+   'ALMT-6ALMST'   => [
+                       'Asia/Almaty'                             ,1981,2004,
+                      ],
+   'AMT-3AMST'     => [
+                       'Asia/Yerevan'                            ,1992,1994,
+                      ],
+   'AMT-4AMST'     => [
+                       'Asia/Yerevan'                            ,1997,9999,
+                      ],
+   'AMT4AMST'      => [
+                       'America/Campo_Grande'                    ,1932,9999,
+                       'America/Cuiaba'                          ,1932,9999,
+                       'America/Boa_Vista'                       ,1932,1987,
+                       'America/Manaus'                          ,1932,1987,
+                       'America/Porto_Velho'                     ,1932,1987,
+                       'America/Santarem'                        ,1932,1987,
+                      ],
+   'ANAT-11ANAST'  => [
+                       'Asia/Anadyr'                             ,1991,9999,
+                      ],
+   'ANAT-12ANAST'  => [
+                       'Asia/Anadyr'                             ,1982,2009,
+                      ],
+   'ANAT-13ANAST'  => [
+                       'Asia/Anadyr'                             ,1981,1981,
+                      ],
+   'AQTT-4AQTST'   => [
+                       'Asia/Aqtau'                              ,1995,2004,
+                      ],
+   'AQTT-5AQTST'   => [
+                       'Asia/Aqtobe'                             ,1992,2004,
+                       'Asia/Aqtau'                              ,1992,1994,
+                      ],
+   'ART3ARST'      => [
+                       'America/Argentina/Buenos_Aires'          ,1974,2008,
+                       'America/Argentina/Cordoba'               ,1974,2008,
+                       'America/Argentina/Tucuman'               ,1974,2008,
+                       'America/Argentina/Catamarca'             ,1974,1992,
+                       'America/Argentina/Jujuy'                 ,1974,1992,
+                       'America/Argentina/La_Rioja'              ,1974,1992,
+                       'America/Argentina/Rio_Gallegos'          ,1974,1992,
+                       'America/Argentina/Salta'                 ,1974,1992,
+                       'America/Argentina/San_Juan'              ,1974,1992,
+                       'America/Argentina/Ushuaia'               ,1974,1992,
+                       'America/Argentina/Mendoza'               ,1974,1989,
+                       'America/Argentina/San_Luis'              ,1974,1989,
+                       'Antarctica/Palmer'                       ,1974,1974,
                       ],
    "ART4ARST"      => [
-                       "America/Argentina/Buenos_Aires",         # 1931-1968
-                       "America/Argentina/Catamarca",            # 1931-1968
-                       "America/Argentina/Cordoba",              # 1931-1968
-                       "America/Argentina/Jujuy",                # 1931-1968
-                       "America/Argentina/La_Rioja",             # 1931-1968
-                       "America/Argentina/Mendoza",              # 1931-1968
-                       "America/Argentina/Rio_Gallegos",         # 1931-1968
-                       "America/Argentina/Salta",                # 1931-1968
-                       "America/Argentina/San_Juan",             # 1931-1968
-                       "America/Argentina/San_Luis",             # 1931-1968
-                       "America/Argentina/Tucuman",              # 1931-1968
-                       "America/Argentina/Ushuaia",              # 1931-1968
-                       "Antarctica/Palmer",                      # 1965-1968
+                       'America/Argentina/Buenos_Aires'          ,1931,1968,
+                       'America/Argentina/Catamarca'             ,1931,1968,
+                       'America/Argentina/Cordoba'               ,1931,1968,
+                       'America/Argentina/Jujuy'                 ,1931,1968,
+                       'America/Argentina/La_Rioja'              ,1931,1968,
+                       'America/Argentina/Mendoza'               ,1931,1968,
+                       'America/Argentina/Rio_Gallegos'          ,1931,1968,
+                       'America/Argentina/Salta'                 ,1931,1968,
+                       'America/Argentina/San_Juan'              ,1931,1968,
+                       'America/Argentina/San_Luis'              ,1931,1968,
+                       'America/Argentina/Tucuman'               ,1931,1968,
+                       'America/Argentina/Ushuaia'               ,1931,1968,
+                       'Antarctica/Palmer'                       ,1966,1968,
                       ],
-   "AST4ADDT"      => [
-                       "America/Goose_Bay",                      # 1988
-                       "America/Pangnirtung",                    # 1965
+   'ASHT-5ASHST'   => [
+                       'Asia/Ashgabat'                           ,1981,1990,
                       ],
-   "AST4ADT"       => [
-                       "America/Halifax",                        # 1916-2047
-                       "America/Barbados",                       # 1977-1980
-                       "America/Blanc-Sablon",                   # 1918
-                       "America/Glace_Bay",                      # 1918-2047
-                       "America/Goose_Bay",                      # 1966-2047
-                       "America/Martinique",                     # 1980
-                       "America/Moncton",                        # 1918-2047
-                       "America/Pangnirtung",                    # 1980-1994
-                       "America/Thule",                          # 1991-2047
-                       "Atlantic/Bermuda",                       # 1974-2047
+   'AST-3ADT'      => [
+                       'Asia/Baghdad'                            ,1982,2007,
                       ],
-   "AST4APT"       => [
-                       "America/Halifax",                        # 1945
-                       "America/Blanc-Sablon",                   # 1945
-                       "America/Glace_Bay",                      # 1945
-                       "America/Moncton",                        # 1945
-                       "America/Pangnirtung",                    # 1945
-                       "America/Puerto_Rico",                    # 1945
+   'AST4ADT'       => [
+                       'America/Halifax'                         ,1916,9999,
+                       'America/Glace_Bay'                       ,1918,9999,
+                       'America/Moncton'                         ,1918,9999,
+                       'America/Goose_Bay'                       ,1967,9999,
+                       'Atlantic/Bermuda'                        ,1974,9999,
+                       'America/Barbados'                        ,1977,1980,
+                       'America/Martinique'                      ,1980,1980,
+                       'America/Thule'                           ,1991,9999,
+                       'America/Pangnirtung'                     ,1980,1994,
+                       'America/Blanc-Sablon'                    ,1918,1918,
                       ],
-   "BRT3BRST"      => [
-                       "America/Sao_Paulo",                      # 1932-2047
-                       "America/Araguaina",                      # 1932-2002
-                       "America/Bahia",                          # 1932-2002
-                       "America/Belem",                          # 1932-1987
-                       "America/Fortaleza",                      # 1932-2000
-                       "America/Maceio",                         # 1932-2000
-                       "America/Recife",                         # 1932-2000
+   'AST4APT'       => [
+                       'America/Blanc-Sablon'                    ,1945,1945,
+                       'America/Puerto_Rico'                     ,1945,1945,
+                       'America/Glace_Bay'                       ,1945,1945,
+                       'America/Halifax'                         ,1945,1945,
+                       'America/Moncton'                         ,1945,1945,
+                       'America/Pangnirtung'                     ,1945,1945,
+                      ],
+   'AZOT1AZOST'    => [
+                       'Atlantic/Azores'                         ,1977,9999,
+                      ],
+   'AZOT2AZOST'    => [
+                       'Atlantic/Azores'                         ,1916,1965,
+                      ],
+   'AZT-4AZST'     => [
+                       'Asia/Baku'                               ,1996,9999,
+                      ],
+   'BAKT-4BAKST'   => [
+                       'Asia/Baku'                               ,1981,1990,
+                      ],
+   'BDT-6BDST'     => [
+                       'Asia/Dhaka'                              ,2009,2009,
+                      ],
+   'BRT3BRST'      => [
+                       'America/Sao_Paulo'                       ,1932,9999,
+                       'America/Araguaina'                       ,1932,2002,
+                       'America/Bahia'                           ,1932,2002,
+                       'America/Fortaleza'                       ,1932,1989,
+                       'America/Maceio'                          ,1932,1989,
+                       'America/Recife'                          ,1932,1989,
+                       'America/Belem'                           ,1932,1987,
                       ],
    "BST11BDT"      => [
-                       "America/Adak",                           # 1969-1982
-                       "America/Nome",                           # 1969-1982
+                       "America/Adak",                           ,1969,1982,
+                       "America/Nome",                           ,1969,1982,
                       ],
-   "CET-1CEST"     => [
-                       "CET",                                    # 1916-2047
-                       "Africa/Algiers",                         # 1944-1978
-                       "Africa/Ceuta",                           # 1986-2047
-                       "Africa/Tripoli",                         # 1951-1989
-                       "Africa/Tunis",                           # 1939-2047
-                       "Europe/Amsterdam",                       # 1943-2047
-                       "Europe/Andorra",                         # 1985-2047
-                       "Europe/Athens",                          # 1943
-                       "Europe/Belgrade",                        # 1943-2047
-                       "Europe/Berlin",                          # 1916-2047
-                       "Europe/Brussels",                        # 1916-2047
-                       "Europe/Budapest",                        # 1916-2047
-                       "Europe/Chisinau",                        # 1943
-                       "Europe/Copenhagen",                      # 1916-2047
-                       "Europe/Gibraltar",                       # 1982-2047
-                       "Europe/Kaliningrad",                     # 1916-1943
-                       "Europe/Lisbon",                          # 1993-1995
-                       "Europe/Luxembourg",                      # 1916-2047
-                       "Europe/Madrid",                          # 1949-2047
-                       "Europe/Malta",                           # 1916-2047
-                       "Europe/Minsk",                           # 1943
-                       "Europe/Monaco",                          # 1976-2047
-                       "Europe/Oslo",                            # 1916-2047
-                       "Europe/Paris",                           # 1943-2047
-                       "Europe/Prague",                          # 1916-2047
-                       "Europe/Riga",                            # 1943
-                       "Europe/Rome",                            # 1916-2047
-                       "Europe/Simferopol",                      # 1943
-                       "Europe/Sofia",                           # 1943-1944
-                       "Europe/Stockholm",                       # 1916-2047
-                       "Europe/Tallinn",                         # 1918-1943
-                       "Europe/Tirane",                          # 1943-2047
-                       "Europe/Uzhgorod",                        # 1943-1944
-                       "Europe/Vaduz",                           # 1981-2047
-                       "Europe/Vienna",                          # 1916-2047
-                       "Europe/Vilnius",                         # 1943-1998
-                       "Europe/Warsaw",                          # 1916-2047
-                       "Europe/Zurich",                          # 1940-2047
+   'CAT-2CAST'     => [
+                       'Africa/Khartoum'                         ,1970,1985,
+                      ],
+   'CAT10CAPT'     => [
+                       'America/Anchorage'                       ,1945,1945,
+                      ],
+   'CET-1CEST'     => [
+                       'CET'                                     ,1916,9999,
+                       'Europe/Berlin'                           ,1916,9999,
+                       'Europe/Brussels'                         ,1916,9999,
+                       'Europe/Budapest'                         ,1916,9999,
+                       'Europe/Copenhagen'                       ,1916,9999,
+                       'Europe/Luxembourg'                       ,1916,9999,
+                       'Europe/Malta'                            ,1916,9999,
+                       'Europe/Oslo'                             ,1916,9999,
+                       'Europe/Prague'                           ,1916,9999,
+                       'Europe/Rome'                             ,1916,9999,
+                       'Europe/Stockholm'                        ,1916,9999,
+                       'Europe/Vienna'                           ,1916,9999,
+                       'Europe/Warsaw'                           ,1916,9999,
+                       'Africa/Tunis'                            ,1939,2008,
+                       'Europe/Zurich'                           ,1941,9999,
+                       'Europe/Amsterdam'                        ,1943,9999,
+                       'Europe/Belgrade'                         ,1943,9999,
+                       'Europe/Paris'                            ,1943,9999,
+                       'Europe/Tirane'                           ,1943,9999,
+                       'Europe/Madrid'                           ,1949,9999,
+                       'Europe/Monaco'                           ,1976,9999,
+                       'Europe/Vaduz'                            ,1981,9999,
+                       'Europe/Gibraltar'                        ,1982,9999,
+                       'Europe/Andorra'                          ,1985,9999,
+                       'Africa/Ceuta'                            ,1986,9999,
+                       'Europe/Vilnius'                          ,1943,1998,
+                       'Europe/Lisbon'                           ,1993,1995,
+                       'Africa/Tripoli'                          ,1951,1989,
+                       'Africa/Algiers'                          ,1944,1978,
+                       'Europe/Sofia'                            ,1943,1944,
+                       'Europe/Uzhgorod'                         ,1943,1944,
+                       'Europe/Kaliningrad'                      ,1916,1943,
+                       'Europe/Tallinn'                          ,1943,1943,
+                       'Europe/Athens'                           ,1943,1943,
+                       'Europe/Chisinau'                         ,1943,1943,
+                       'Europe/Minsk'                            ,1943,1943,
+                       'Europe/Riga'                             ,1943,1943,
+                       'Europe/Simferopol'                       ,1943,1943,
                       ],
    "CET-1WEMT"     => [
-                       "Europe/Madrid",                          # 1946
-                       "Europe/Monaco",                          # 1945
-                       "Europe/Paris",                           # 1945
+                       "Europe/Madrid",                          ,1946,1946,
+                       "Europe/Monaco",                          ,1945,1945,
+                       "Europe/Paris",                           ,1945,1945,
                       ],
    "CET-1WEST"     => [
-                       "Europe/Lisbon",                          # 1992
-                       "Africa/Algiers",                         # 1977
-                       "Europe/Luxembourg",                      # 1944
+                       "Europe/Luxembourg",                      ,1944,1944,
                       ],
-   "CLT4CLST"      => [
-                       "America/Santiago",                       # 1969-2047
-                       "Antarctica/Palmer",                      # 1982-2047
+   'CGT2CGST'      => [
+                       'America/Scoresbysund'                    ,1980,1980,
                       ],
-   "CST-8CDT"      => [
-                       "Asia/Shanghai",                          # 1940-1991
-                       "Asia/Chongqing",                         # 1986-1991
-                       "Asia/Harbin",                            # 1986-1991
-                       "Asia/Kashgar",                           # 1986-1991
-                       "Asia/Taipei",                            # 1945-1980
-                       "Asia/Urumqi",                            # 1986-1991
+   'CHOT-9CHOST'   => [
+                       'Asia/Choibalsan'                         ,1983,2006,
                       ],
-   "CST6CDDT"      => [
-                       "America/Rankin_Inlet",                   # 1965
-                       "America/Resolute",                       # 1965
+   'CLT4CLST'      => [
+                       'America/Santiago'                        ,1969,9999,
+                       'Antarctica/Palmer'                       ,1982,9999,
+                      ],
+   'CLT5CLST'      => [
+                       'America/Santiago'                        ,1928,1942,
+                      ],
+   'CST-8CDT'      => [
+                       'Asia/Shanghai'                           ,1940,1991,
+                       'Asia/Chongqing'                          ,1986,1991,
+                       'Asia/Harbin'                             ,1986,1991,
+                       'Asia/Kashgar'                            ,1986,1991,
+                       'Asia/Urumqi'                             ,1986,1991,
+                       'Asia/Taipei'                             ,1945,1979,
+                      ],
+   'CST5CDT'       => [
+                       'America/Havana'                          ,1928,9999,
                       ],
    "CST6CPT"       => [
-                       "America/Chicago",                        # 1945
-                       "America/Indiana/Indianapolis",           # 1945
-                       "America/Indiana/Knox",                   # 1945
-                       "America/Indiana/Marengo",                # 1945
-                       "America/Indiana/Petersburg",             # 1945
-                       "America/Indiana/Tell_City",              # 1945
-                       "America/Indiana/Vevay",                  # 1945
-                       "America/Indiana/Vincennes",              # 1945
-                       "America/Indiana/Winamac",                # 1945
-                       "America/Kentucky/Louisville",            # 1945
-                       "America/Kentucky/Monticello",            # 1945
-                       "America/Menominee",                      # 1945
-                       "America/Rainy_River",                    # 1945
-                       "America/Winnipeg",                       # 1945
+                       "America/Chicago",                        ,1945,1945,
+                       "America/Indiana/Indianapolis",           ,1945,1945,
+                       "America/Indiana/Knox",                   ,1945,1945,
+                       "America/Indiana/Marengo",                ,1945,1945,
+                       "America/Indiana/Petersburg",             ,1945,1945,
+                       "America/Indiana/Tell_City",              ,1945,1945,
+                       "America/Indiana/Vevay",                  ,1945,1945,
+                       "America/Indiana/Vincennes",              ,1945,1945,
+                       "America/Indiana/Winamac",                ,1945,1945,
+                       "America/Kentucky/Louisville",            ,1945,1945,
+                       "America/Kentucky/Monticello",            ,1945,1945,
+                       "America/Menominee",                      ,1945,1945,
+                       "America/Rainy_River",                    ,1945,1945,
+                       "America/Winnipeg",                       ,1945,1945,
                       ],
-   "CST6EDT"       => [
-                       "America/Iqaluit",                        # 1999
-                       "America/Pangnirtung",                    # 1999
+   'DUST-6DUSST'   => [
+                       'Asia/Dushanbe'                           ,1981,1990,
                       ],
-   "CST6MDT"       => [
-                       "America/North_Dakota/New_Salem",         # 2003
-                       "America/Cambridge_Bay",                  # 1999
-                       "America/North_Dakota/Center",            # 1992
+   'EAST6EASST'    => [
+                       'Pacific/Easter'                          ,1982,9999,
                       ],
-   "EET-2CEST"     => [
-                       "Europe/Vilnius",                         # 1999
-                       "Africa/Tripoli",                         # 1997
-                       "Europe/Warsaw",                          # 1918
+   'EAST7EASST'    => [
+                       'Pacific/Easter'                          ,1942,1981,
                       ],
-   "EET-2EEST"     => [
-                       "EET",                                    # 1977-2047
-                       "Africa/Cairo",                           # 1940-2047
-                       "Asia/Amman",                             # 1973-2047
-                       "Asia/Beirut",                            # 1920-2047
-                       "Asia/Damascus",                          # 1920-2047
-                       "Asia/Gaza",                              # 1957-2047
-                       "Asia/Nicosia",                           # 1975-2047
-                       "Europe/Athens",                          # 1932-2047
-                       "Europe/Bucharest",                       # 1932-2047
-                       "Europe/Chisinau",                        # 1932-2047
-                       "Europe/Helsinki",                        # 1942-2047
-                       "Europe/Istanbul",                        # 1916-2047
-                       "Europe/Kaliningrad",                     # 1991-2047
-                       "Europe/Kiev",                            # 1992-2047
-                       "Europe/Minsk",                           # 1991-2047
-                       "Europe/Moscow",                          # 1991
-                       "Europe/Riga",                            # 1989-2047
-                       "Europe/Simferopol",                      # 1992-2047
-                       "Europe/Sofia",                           # 1979-2047
-                       "Europe/Tallinn",                         # 1989-2047
-                       "Europe/Uzhgorod",                        # 1992-2047
-                       "Europe/Vilnius",                         # 1991-2047
-                       "Europe/Warsaw",                          # 1919
-                       "Europe/Zaporozhye",                      # 1991-2047
+   'EAT-3EAST'     => [
+                       'Indian/Antananarivo'                     ,1954,1954,
                       ],
-   "EST5CDT"       => [
-                       "America/Indiana/Petersburg",             # 1977-2007
-                       "America/Indiana/Knox",                   # 1991
-                       "America/Indiana/Marengo",                # 1974
-                       "America/Indiana/Vincennes",              # 2007
-                       "America/Iqaluit",                        # 2000
-                       "America/Kentucky/Louisville",            # 1961-1974
-                       "America/Kentucky/Monticello",            # 2000
-                       "America/Pangnirtung",                    # 2000
-                       "America/Rankin_Inlet",                   # 2000
-                       "America/Resolute",                       # 2000-2006
+   'EET-2EEST'     => [
+                       'EET'                                     ,1977,9999,
+                       'Europe/Istanbul'                         ,1916,9999,
+                       'Asia/Beirut'                             ,1920,9999,
+                       'Asia/Damascus'                           ,1920,9999,
+                       'Europe/Athens'                           ,1932,9999,
+                       'Europe/Bucharest'                        ,1932,9999,
+                       'Europe/Chisinau'                         ,1932,9999,
+                       'Africa/Cairo'                            ,1940,9999,
+                       'Europe/Helsinki'                         ,1942,9999,
+                       'Asia/Gaza'                               ,1957,9999,
+                       'Asia/Amman'                              ,1973,9999,
+                       'Asia/Nicosia'                            ,1975,9999,
+                       'Europe/Sofia'                            ,1979,9999,
+                       'Europe/Riga'                             ,1989,9999,
+                       'Europe/Tallinn'                          ,1989,9999,
+                       'Europe/Kaliningrad'                      ,1991,9999,
+                       'Europe/Minsk'                            ,1991,9999,
+                       'Europe/Vilnius'                          ,1991,9999,
+                       'Europe/Zaporozhye'                       ,1991,9999,
+                       'Europe/Kiev'                             ,1992,9999,
+                       'Europe/Simferopol'                       ,1992,9999,
+                       'Europe/Uzhgorod'                         ,1992,9999,
+                       'Europe/Moscow'                           ,1991,1991,
+                       'Europe/Warsaw'                           ,1919,1919,
+                      ],
+   'EET-2EET'      => [
+                       'Asia/Gaza'                               ,1943,1946,
+                      ],
+   'EGT1EGST'      => [
+                       'America/Scoresbysund'                    ,1981,9999,
+                      ],
+   'EST-10EST'     => [
+                       'Australia/Currie'                        ,1942,9999,
+                       'Australia/Hobart'                        ,1942,9999,
+                       'Australia/Melbourne'                     ,1942,9999,
+                       'Australia/Sydney'                        ,1942,9999,
+                       'Antarctica/Macquarie'                    ,1942,2009,
+                       'Australia/Lindeman'                      ,1942,1993,
+                       'Australia/Brisbane'                      ,1942,1991,
                       ],
    "EST5EPT"       => [
-                       "America/Detroit",                        # 1945
-                       "America/Iqaluit",                        # 1945
-                       "America/Montreal",                       # 1945
-                       "America/New_York",                       # 1945
-                       "America/Nipigon",                        # 1945
-                       "America/Thunder_Bay",                    # 1945
-                       "America/Toronto",                        # 1945
+                       "America/Detroit",                        ,1945,1945,
+                       "America/Iqaluit",                        ,1945,1945,
+                       "America/Montreal",                       ,1945,1945,
+                       "America/New_York",                       ,1945,1945,
+                       "America/Nipigon",                        ,1945,1945,
+                       "America/Thunder_Bay",                    ,1945,1945,
+                       "America/Toronto",                        ,1945,1945,
                       ],
-   "GMT0BST"       => [
-                       "Europe/London",                          # 1916-2047
-                       "Europe/Dublin",                          # 1917-1921
-                       "Europe/Gibraltar",                       # 1916-1956
+   'FJT-12FJST'    => [
+                       'Pacific/Fiji'                            ,1999,2010,
                       ],
-   "IST-2IDT"      => [
-                       "Asia/Jerusalem",                         # 1943-2037
-                       "Asia/Gaza",                              # 1974-1994
+   'FKT3FKST'      => [
+                       'Atlantic/Stanley'                        ,1983,1984,
+                      ],
+   'FKT4FKST'      => [
+                       'Atlantic/Stanley'                        ,1938,9999,
+                      ],
+   'FNT2FNST'      => [
+                       'America/Noronha'                         ,1932,1989,
+                      ],
+   'FRUT-6FRUST'   => [
+                       'Asia/Bishkek'                            ,1981,1990,
+                      ],
+   'GET-3GEST'     => [
+                       'Asia/Tbilisi'                            ,1992,1993,
+                      ],
+   'GET-4GEST'     => [
+                       'Asia/Tbilisi'                            ,1995,2003,
+                      ],
+   'GMT0BST'       => [
+                       'Europe/London'                           ,1916,9999,
+                       'Europe/Gibraltar'                        ,1916,1956,
+                       'Europe/Dublin'                           ,1917,1921,
+                      ],
+   'GMT0IST'       => [
+                       'Europe/Dublin'                           ,1922,9999,
+                      ],
+   'GMT0SLST'      => [
+                       'Africa/Freetown'                         ,1958,1962,
+                      ],
+   'HAST10HADT'    => [
+                       'America/Adak'                            ,1984,9999,
+                      ],
+   'HKT-8HKST'     => [
+                       'Asia/Hong_Kong'                          ,1946,1979,
+                      ],
+   'HOVT-7HOVST'   => [
+                       'Asia/Hovd'                               ,1983,2006,
+                      ],
+   'IRKT-7IRKST'   => [
+                       'Asia/Irkutsk'                            ,1991,1991,
+                      ],
+   'IRKT-8IRKST'   => [
+                       'Asia/Irkutsk'                            ,1981,9999,
+                      ],
+   'IST-2EEST'     => [
+                       'Asia/Gaza'                               ,1967,1967,
+                      ],
+   'IST-2IDT'      => [
+                       'Asia/Jerusalem'                          ,1943,9999,
+                       'Asia/Gaza'                               ,1974,1994,
+                      ],
+   'IST1ISST'      => [
+                       'Atlantic/Reykjavik'                      ,1917,1967,
+                      ],
+   'JST-9JDT'      => [
+                       'Asia/Tokyo'                              ,1948,1951,
+                      ],
+   'KGT-5FRUST'    => [
+                       'Asia/Bishkek'                            ,1991,1991,
+                      ],
+   'KGT-5KGST'     => [
+                       'Asia/Bishkek'                            ,1992,2004,
+                      ],
+   'KIZT-5KIZST'   => [
+                       'Asia/Qyzylorda'                          ,1982,1990,
                       ],
    "KRAT-6KRAST"   => [
-                       "Asia/Krasnoyarsk",                       # 1991
-                       "Asia/Novokuznetsk",                      # 1991
+                       "Asia/Krasnoyarsk",                       ,1991,1991,
+                       "Asia/Novokuznetsk",                      ,1991,1991,
                       ],
-   "KRAT-7KRAST"   => [
-                       "Asia/Krasnoyarsk",                       # 1981-2047
-                       "Asia/Novokuznetsk",                      # 1981-2009
+   'KRAT-7KRAST'   => [
+                       'Asia/Krasnoyarsk'                        ,1981,9999,
+                       'Asia/Novokuznetsk'                       ,1981,2009,
+                      ],
+   'KST-8KDT'      => [
+                       'Asia/Seoul'                              ,1960,1960,
+                      ],
+   'KST-9KDT'      => [
+                       'Asia/Seoul'                              ,1987,1988,
+                      ],
+   'KUYT-3KUYST'   => [
+                       'Europe/Samara'                           ,1989,1990,
+                      ],
+   'KUYT-4KUYST'   => [
+                       'Europe/Samara'                           ,1981,1988,
+                      ],
+   'MADT1MADST'    => [
+                       'Atlantic/Madeira'                        ,1916,1965,
+                      ],
+   'MAGT-10MAGST'  => [
+                       'Asia/Magadan'                            ,1991,1991,
+                      ],
+   'MAGT-11MAGST'  => [
+                       'Asia/Magadan'                            ,1981,9999,
+                      ],
+   'MET-1MEST'     => [
+                       'MET'                                     ,1916,9999,
+                      ],
+   'MOT-8MOST'     => [
+                       'Asia/Macau'                              ,1961,1980,
                       ],
    "MSK-3CEST"     => [
-                       "Europe/Minsk",                           # 1944
-                       "Europe/Chisinau",                        # 1944
-                       "Europe/Simferopol",                      # 1944
-                       "Europe/Tallinn",                         # 1944
-                       "Europe/Vilnius",                         # 1944
+                       "Europe/Minsk",                           ,1944,1944,
+                       "Europe/Chisinau",                        ,1944,1944,
+                       "Europe/Simferopol",                      ,1944,1944,
+                       "Europe/Tallinn",                         ,1944,1944,
+                       "Europe/Vilnius",                         ,1944,1944,
                       ],
-   "MSK-3MSD"      => [
-                       "Europe/Moscow",                          # 1981-2047
-                       "Europe/Chisinau",                        # 1981-1989
-                       "Europe/Kaliningrad",                     # 1981-1990
-                       "Europe/Kiev",                            # 1981-1989
-                       "Europe/Minsk",                           # 1981-1989
-                       "Europe/Riga",                            # 1981-1988
-                       "Europe/Simferopol",                      # 1981-1996
-                       "Europe/Tallinn",                         # 1981-1988
-                       "Europe/Uzhgorod",                        # 1981-1989
-                       "Europe/Vilnius",                         # 1981-1990
-                       "Europe/Zaporozhye",                      # 1981-1990
-                      ],
-   "MST7MDDT"      => [
-                       "America/Yellowknife",                    # 1965
-                       "America/Cambridge_Bay",                  # 1965
+   'MSK-3MSD'      => [
+                       'Europe/Moscow'                           ,1981,9999,
+                       'Europe/Simferopol'                       ,1981,1996,
+                       'Europe/Kaliningrad'                      ,1981,1990,
+                       'Europe/Vilnius'                          ,1981,1990,
+                       'Europe/Zaporozhye'                       ,1981,1990,
+                       'Europe/Chisinau'                         ,1981,1989,
+                       'Europe/Kiev'                             ,1981,1989,
+                       'Europe/Minsk'                            ,1981,1989,
+                       'Europe/Uzhgorod'                         ,1981,1989,
+                       'Europe/Riga'                             ,1981,1988,
+                       'Europe/Tallinn'                          ,1981,1988,
                       ],
    "MST7MPT"       => [
-                       "America/Denver",                         # 1945
-                       "America/Boise",                          # 1945
-                       "America/Cambridge_Bay",                  # 1945
-                       "America/Edmonton",                       # 1945
-                       "America/North_Dakota/Center",            # 1945
-                       "America/North_Dakota/New_Salem",         # 1945
-                       "America/Regina",                         # 1945
-                       "America/Swift_Current",                  # 1945
-                       "America/Yellowknife",                    # 1945
+                       "America/Denver",                         ,1945,1945,
+                       "America/Boise",                          ,1945,1945,
+                       "America/Cambridge_Bay",                  ,1945,1945,
+                       "America/Edmonton",                       ,1945,1945,
+                       "America/North_Dakota/Center",            ,1945,1945,
+                       "America/North_Dakota/New_Salem",         ,1945,1945,
+                       "America/Regina",                         ,1945,1945,
+                       "America/Swift_Current",                  ,1945,1945,
+                       "America/Yellowknife",                    ,1945,1945,
                       ],
-   "NOVT-6NOVST"   => [
-                       "Asia/Novosibirsk",                       # 1991-2047
-                       "Asia/Novokuznetsk",                      # 2010-2047
+   'NCT-11NCST'    => [
+                       'Pacific/Noumea'                          ,1978,1978,
+                      ],
+   'NOVT-6NOVST'   => [
+                       'Asia/Novosibirsk'                        ,1991,9999,
+                       'Asia/Novokuznetsk'                       ,2010,9999,
+                      ],
+   'NOVT-7NOVST'   => [
+                       'Asia/Novosibirsk'                        ,1981,1990,
+                      ],
+   'NST11NDT'      => [
+                       'Pacific/Midway'                          ,1956,1956,
                       ],
    "NST11NPT"      => [
-                       "America/Adak",                           # 1945
-                       "America/Nome",                           # 1945
+                       "America/Adak",                           ,1945,1945,
+                       "America/Nome",                           ,1945,1945,
                       ],
-   "NZST-12NZDT"   => [
-                       "Pacific/Auckland",                       # 1975-2047
-                       "Antarctica/McMurdo",                     # 1975-2047
+   'NZST-12NZDT'   => [
+                       'Pacific/Auckland'                        ,1975,9999,
+                       'Antarctica/McMurdo'                      ,1975,9999,
+                      ],
+   'OMST-5OMSST'   => [
+                       'Asia/Omsk'                               ,1991,1991,
+                      ],
+   'OMST-6OMSST'   => [
+                       'Asia/Omsk'                               ,1981,9999,
+                      ],
+   'ORAT-4ORAST'   => [
+                       'Asia/Oral'                               ,1992,2004,
+                      ],
+   'PET5PEST'      => [
+                       'America/Lima'                            ,1939,1994,
+                      ],
+   'PETT-11PETST'  => [
+                       'Asia/Kamchatka'                          ,1991,9999,
+                      ],
+   'PETT-12PETST'  => [
+                       'Asia/Kamchatka'                          ,1981,2009,
+                      ],
+   'PHT-8PHST'     => [
+                       'Asia/Manila'                             ,1954,1978,
+                      ],
+   'PKT-5PKST'     => [
+                       'Asia/Karachi'                            ,2002,2009,
+                      ],
+   'PMST3PMDT'     => [
+                       'America/Miquelon'                        ,1987,9999,
                       ],
    "PST8PPT"       => [
-                       "America/Los_Angeles",                    # 1945
-                       "America/Dawson_Creek",                   # 1945
-                       "America/Juneau",                         # 1945
-                       "America/Santa_Isabel",                   # 1945
-                       "America/Tijuana",                        # 1945
-                       "America/Vancouver",                      # 1945
+                       "America/Los_Angeles",                    ,1945,1945,
+                       "America/Dawson_Creek",                   ,1945,1945,
+                       "America/Juneau",                         ,1945,1945,
+                       "America/Santa_Isabel",                   ,1945,1945,
+                       "America/Tijuana",                        ,1945,1945,
+                       "America/Vancouver",                      ,1945,1945,
                       ],
-   "WART4ARST"     => [
-                       "America/Argentina/Mendoza",              # 1992
-                       "America/Argentina/Catamarca",            # 1991
-                       "America/Argentina/Cordoba",              # 1991
-                       "America/Argentina/Jujuy",                # 1991
-                       "America/Argentina/Salta",                # 1991
-                       "America/Argentina/Tucuman",              # 1991
+   'PYT4PYST'      => [
+                       'America/Asuncion'                        ,1976,9999,
                       ],
-   "WART4WARST"    => [
-                       "America/Argentina/Mendoza",              # 1990-1991
-                       "America/Argentina/Jujuy",                # 1990
-                       "America/Argentina/San_Luis",             # 1990
+   'QYZT-6QYZST'   => [
+                       'Asia/Qyzylorda'                          ,1993,2004,
+                      ],
+   'SAKT-10SAKST'  => [
+                       'Asia/Sakhalin'                           ,1991,9999,
+                      ],
+   'SAKT-11SAKST'  => [
+                       'Asia/Sakhalin'                           ,1981,1996,
+                      ],
+   'SAMT-3SAMST'   => [
+                       'Europe/Samara'                           ,2010,9999,
+                      ],
+   'SAMT-4SAMST'   => [
+                       'Europe/Samara'                           ,1992,2009,
+                      ],
+   'SAMT-5SAMST'   => [
+                       'Asia/Samarkand'                          ,1982,1990,
+                      ],
+   'SAST-2SAST'    => [
+                       'Africa/Johannesburg'                     ,1943,1943,
+                      ],
+   'SHET-5SHEST'   => [
+                       'Asia/Aqtau'                              ,1982,1990,
+                      ],
+   'SVET-4SVEST'   => [
+                       'Asia/Yekaterinburg'                      ,1991,1991,
+                      ],
+   'SVET-5SVEST'   => [
+                       'Asia/Yekaterinburg'                      ,1981,1990,
+                      ],
+   'TAST-6TASST'   => [
+                       'Asia/Tashkent'                           ,1981,1990,
+                      ],
+   'TBIT-4TBIST'   => [
+                       'Asia/Tbilisi'                            ,1981,1990,
+                      ],
+   'TJT-5DUSST'    => [
+                       'Asia/Dushanbe'                           ,1991,1991,
+                      ],
+   'TOT-13TOST'    => [
+                       'Pacific/Tongatapu'                       ,2000,2001,
+                      ],
+   'TRT-3TRST'     => [
+                       'Europe/Istanbul'                         ,1980,1983,
+                      ],
+   'ULAT-8ULAST'   => [
+                       'Asia/Ulaanbaatar'                        ,1983,2006,
+                      ],
+   'URAT-4URAST'   => [
+                       'Asia/Oral'                               ,1989,1990,
+                      ],
+   'URAT-5URAST'   => [
+                       'Asia/Oral'                               ,1982,1988,
+                      ],
+   'UYT3UYST'      => [
+                       'America/Montevideo'                      ,1959,9999,
+                      ],
+   'VLAST-9VLASST' => [
+                       'Asia/Vladivostok'                        ,1991,1991,
+                      ],
+   'VLAT-10VLAST'  => [
+                       'Asia/Vladivostok'                        ,1981,9999,
+                      ],
+   'VOLT-3VOLST'   => [
+                       'Europe/Volgograd'                        ,1989,9999,
+                      ],
+   'VOLT-4VOLST'   => [
+                       'Europe/Volgograd'                        ,1981,1988,
+                      ],
+   'VUT-11VUST'    => [
+                       'Pacific/Efate'                           ,1984,1992,
+                      ],
+   'WART4WARST'    => [
+                       'America/Argentina/San_Luis'              ,1990,2009,
+                       'America/Argentina/Mendoza'               ,1990,1991,
+                       'America/Argentina/Jujuy'                 ,1990,1990,
+                      ],
+   'WAT-1WAST'     => [
+                       'Africa/Windhoek'                         ,1994,9999,
                       ],
    "WET0WEST"      => [
-                       "WET",                                    # 1977-2047
-                       "Africa/Algiers",                         # 1916-1980
-                       "Africa/Casablanca",                      # 1939-2008
-                       "Africa/Ceuta",                           # 1918-1978
-                       "Atlantic/Canary",                        # 1980-2047
-                       "Atlantic/Faroe",                         # 1981-2047
-                       "Atlantic/Madeira",                       # 1977-2047
-                       "Europe/Brussels",                        # 1919-1939
-                       "Europe/Lisbon",                          # 1916-2047
-                       "Europe/Luxembourg",                      # 1919-1939
-                       "Europe/Madrid",                          # 1917-1939
-                       "Europe/Monaco",                          # 1916-1939
-                       "Europe/Paris",                           # 1916-1939
+                       "WET",                                    ,1977,2047,
+                       "Africa/Algiers",                         ,1916,1980,
+                       "Africa/Casablanca",                      ,1939,2008,
+                       "Africa/Ceuta",                           ,1918,1978,
+                       "Atlantic/Canary",                        ,1980,2047,
+                       "Atlantic/Faroe",                         ,1981,2047,
+                       "Atlantic/Madeira",                       ,1977,2047,
+                       "Europe/Brussels",                        ,1919,1939,
+                       "Europe/Lisbon",                          ,1916,2047,
+                       "Europe/Luxembourg",                      ,1919,1939,
+                       "Europe/Madrid",                          ,1917,1939,
+                       "Europe/Monaco",                          ,1916,1939,
+                       "Europe/Paris",                           ,1916,1939,
                       ],
-   "WGT3WGST"      => [
-                       "America/Godthab",                        # 1980-2047
-                       "America/Danmarkshavn",                   # 1980-1995
+   'WET-1WEST'     => [
+                       'Europe/Luxembourg'                       ,1943,1943,
                       ],
-   "YST9YDDT"      => [
-                       "America/Dawson",                         # 1965
-                       "America/Whitehorse",                     # 1965
+   'WET0WEST'      => [
+                       'Europe/Lisbon'                           ,1916,9999,
+                       'Atlantic/Madeira'                        ,1977,9999,
+                       'WET'                                     ,1977,9999,
+                       'Atlantic/Canary'                         ,1980,9999,
+                       'Atlantic/Faroe'                          ,1981,9999,
+                       'Africa/Casablanca'                       ,1939,2010,
+                       'Africa/Algiers'                          ,1916,1980,
+                       'Africa/Ceuta'                            ,1918,1978,
+                       'Europe/Monaco'                           ,1916,1939,
+                       'Europe/Paris'                            ,1916,1939,
+                       'Europe/Madrid'                           ,1917,1939,
+                       'Europe/Brussels'                         ,1919,1939,
+                       'Europe/Luxembourg'                       ,1919,1939,
+                      ],
+   'WGT3WGST'      => [
+                       'America/Godthab'                         ,1980,9999,
+                       'America/Danmarkshavn'                    ,1980,1995,
+                      ],
+   'WST-8WST'      => [
+                       'Australia/Perth'                         ,1942,2008,
+                      ],
+   'YAKT-8YAKST'   => [
+                       'Asia/Yakutsk'                            ,1991,1991,
+                      ],
+   'YAKT-9YAKST'   => [
+                       'Asia/Yakutsk'                            ,1981,9999,
+                      ],
+   'YEKT-5YEKST'   => [
+                       'Asia/Yekaterinburg'                      ,1993,9999,
+                      ],
+   'YERT-4YERST'   => [
+                       'Asia/Yerevan'                            ,1981,1990,
                       ],
    "YST9YDT"       => [
-                       "America/Yakutat",                        # 1969-1982
-                       "America/Dawson",                         # 1918-1919
-                       "America/Whitehorse",                     # 1918-1919
+                       "America/Yakutat",                        ,1969,1982,
+                       "America/Dawson",                         ,1918,1919,
+                       "America/Whitehorse",                     ,1918,1919,
                       ],
    "YST9YPT"       => [
-                       "America/Yakutat",                        # 1945
-                       "America/Dawson",                         # 1945
-                       "America/Whitehorse",                     # 1945
+                       "America/Yakutat",                        ,1945,1945,
+                       "America/Dawson",                         ,1945,1945,
+                       "America/Whitehorse",                     ,1945,1945,
                       ],
   );
 

@@ -16,8 +16,8 @@ $t->skip_all('Date::Manip 6.xx required','DM6');
 sub test {
   (@test)=@_;
   if ($test[0] eq "config") {
-    $obj->config("jan1week1",$test[1]);
-    $obj->config("firstday",$test[2]);
+    $dmt->config("jan1week1",$test[1]);
+    $dmt->config("firstday",$test[2]);
     return 0;
   }
   @ret = $obj->weeks_in_year(@test);
@@ -26,7 +26,7 @@ sub test {
 
 $dmt = new Date::Manip::TZ;
 $obj = $dmt->base();
-$obj->config("forcedate","now,America/New_York");
+$dmt->config("forcedate","now,America/New_York");
 
 $tests="
 config 0 1 => 0

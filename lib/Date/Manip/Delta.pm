@@ -18,11 +18,11 @@ require 5.010000;
 use warnings;
 use strict;
 use IO::File;
-use feature 'switch';
 #use re 'debug';
 
-use vars qw($VERSION);
-$VERSION='6.12';
+our $VERSION;
+$VERSION='6.13';
+END { undef $VERSION; }
 
 ########################################################################
 # BASE METHODS
@@ -48,7 +48,8 @@ sub _init {
    my($self) = @_;
 
    my $def = [0,0,0,0,0,0,0];
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmt = $$self{'tz'};
+   my $dmb = $$dmt{'base'};
 
    $$self{'err'}              = '';
    $$self{'data'}{'delta'}    = $def;   # the delta
@@ -74,7 +75,8 @@ sub _init_args {
 
 sub value {
    my($self) = @_;
-   my $dmb   = $$self{'objs'}{'base'};
+   my $dmt = $$self{'tz'};
+   my $dmb = $$dmt{'base'};
 
    return undef  if ($$self{'err'});
    if (wantarray) {
@@ -86,24 +88,32 @@ sub value {
    }
 }
 
+sub input {
+   my($self) = @_;
+   return  $$self{'data'}{'in'};
+}
+
 ########################################################################
 # DELTA METHODS
 ########################################################################
 
-sub set {
-   my($self,$field,$val) = @_;
+BEGIN {
+   my %ops = map { $_,1 } qw( delta business normal );
+   my %f   = map { $_,1 } qw( y M w d h m s );
 
-   $field       = lc($field);
-   my $business = 0;
-   my $dmb      = $$self{'objs'}{'base'};
-   my $dmt      = $$self{'objs'}{'tz'};
-   my $zone     = $$self{'data'}{'tz'};
-   my $gotmode  = $$self{'data'}{'gotmode'};
-   my (@delta,$err);
+   sub set {
+      my($self,$field,$val) = @_;
 
-   given ($field) {
+      $field       = lc($field);
+      my $business = 0;
+      my $dmt      = $$self{'tz'};
+      my $dmb      = $$dmt{'base'};
+      my $zone     = $$self{'data'}{'tz'};
+      my $gotmode  = $$self{'data'}{'gotmode'};
+      my (@delta,$err);
 
-      when (['delta','business','normal']) {
+      if (exists $ops{$field}) {
+
          if ($field eq 'business') {
             $business = 1;
             $gotmode  = 1;
@@ -117,9 +127,9 @@ sub set {
          } else {
             ($err,@delta) = $dmb->_normalize_delta('norm',@$val);
          }
-      }
 
-      when (['y','M','w','d','h','m','s']) {
+      } elsif (exists $f{$field}) {
+
          if ($$self{'err'}) {
             $$self{'err'} = "[set] Invalid delta";
             return 1;
@@ -135,9 +145,9 @@ sub set {
          } else {
             ($err,@delta) = $dmb->_normalize_delta(0,@delta);
          }
-      }
 
-      when ('mode') {
+      } elsif ($field eq 'mode') {
+
          @delta             = @{ $$self{'data'}{'delta'} };
          $val = lc($val);
          if ($val eq "business"  ||  $val eq "normal") {
@@ -148,29 +158,31 @@ sub set {
             $$self{'err'} = "[set] Invalid mode: $val";
             return 1;
          }
-      }
 
-      default {
+      } else {
+
          $$self{'err'} = "[set] Invalid field: $field";
          return 1;
+
       }
-   }
 
-   if ($err) {
-      $$self{'err'} = "[set] Invalid field value: $field";
-      return 1;
-   }
+      if ($err) {
+         $$self{'err'} = "[set] Invalid field value: $field";
+         return 1;
+      }
 
-   $self->_init();
-   $$self{'data'}{'delta'}    = [ @delta ];
-   $$self{'data'}{'business'} = $business;
-   $$self{'data'}{'gotmode'}  = $gotmode;
-   return 0;
+      $self->_init();
+      $$self{'data'}{'delta'}    = [ @delta ];
+      $$self{'data'}{'business'} = $business;
+      $$self{'data'}{'gotmode'}  = $gotmode;
+      return 0;
+   }
 }
 
 sub _rx {
    my($self,$rx) = @_;
-   my $dmb       = $$self{'objs'}{'base'};
+   my $dmt = $$self{'tz'};
+   my $dmb = $$dmt{'base'};
 
    return $$dmb{'data'}{'rx'}{'delta'}{$rx}
      if (exists $$dmb{'data'}{'rx'}{'delta'}{$rx});
@@ -207,7 +219,8 @@ sub _rx {
 
 sub parse {
    my($self,$instring,$business) = @_;
-   my($dmb)                      = $$self{'objs'}{'base'};
+   my $dmt = $$self{'tz'};
+   my $dmb = $$dmt{'base'};
    my($gotmode,$type,@delta);
    $self->_init();
 
@@ -427,7 +440,8 @@ sub printf {
 
 sub _printf_delta {
    my($self,$sign,$pad,$width,$field0,$field1) = @_;
-   my($dmb)  = $$self{'objs'}{'base'};
+   my $dmt = $$self{'tz'};
+   my $dmb = $$dmt{'base'};
    my @delta = @{ $$self{'data'}{'delta'} };
    my $delta;
    my %tmp   = qw(y 0 M 1 w 2 d 3 h 4 m 5 s 6);
@@ -623,7 +637,8 @@ sub _printf_field_val {
       my $business = $$self{'data'}{'business'};
       my ($weeklen,$daylen,$yrlen);
       if ($business) {
-         my $dmb  = $$self{'objs'}{'base'};
+         my $dmt = $$self{'tz'};
+         my $dmb = $$dmt{'base'};
          $daylen  = $$dmb{'data'}{'calc'}{'bdlength'};
          $weeklen = $$dmb{'data'}{'calc'}{'workweek'};
          # The approximate length of the business year in business days
@@ -671,20 +686,16 @@ sub _printf_field_val {
 sub type {
    my($self,$op) = @_;
 
-   given ($op) {
+   if ($op eq 'business') {
+      return $$self{'data'}{'business'};
 
-      when ('business') {
-         return $$self{'data'}{'business'};
-      }
-
-      when ('exact') {
-         my $exact = 1;
-         $exact    = 0  if ($$self{'data'}{'delta'}[0] != 0  ||
-                            $$self{'data'}{'delta'}[1] != 0  ||
-                            ($$self{'data'}{'delta'}[2] != 0  &&
-                             $$self{'data'}{'business'}));
-         return $exact;
-      }
+   } elsif ($op eq 'exact') {
+      my $exact = 1;
+      $exact    = 0  if ($$self{'data'}{'delta'}[0] != 0  ||
+                         $$self{'data'}{'delta'}[1] != 0  ||
+                         ($$self{'data'}{'delta'}[2] != 0  &&
+                          $$self{'data'}{'business'}));
+      return $exact;
    }
 
    return undef;
@@ -719,7 +730,8 @@ sub calc {
 
 sub _calc_delta_delta {
    my($self,$delta,$subtract) = @_;
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmt = $$self{'tz'};
+   my $dmb = $$dmt{'base'};
    my $ret = $self->new_delta;
 
    if ($self->err()) {

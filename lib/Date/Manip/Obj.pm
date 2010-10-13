@@ -15,151 +15,149 @@ use Storable qw(dclone);
 use Date::Manip::Base;
 use Date::Manip::TZ;
 
-use vars qw($VERSION);
-$VERSION='6.12';
+our ($VERSION);
+$VERSION='6.13';
+END { undef $VERSION; }
 
 ########################################################################
 # METHODS
 ########################################################################
 
-my $dmo_rx = qr/^Date::Manip::(Base|TZ|Date|Delta|Recur)$/;
-my $dmh_rx = qr/^Date::Manip::(Date|Delta|Recur)$/;
+my %classes = ( 'Date::Manip::Base'   => 1,
+                'Date::Manip::TZ'     => 1,
+                'Date::Manip::Date'   => 1,
+                'Date::Manip::Delta'  => 1,
+                'Date::Manip::Recur'  => 1,
+              );
 
 sub new {
    my(@args)    = @_;
    my(@allargs) = @args;
 
-   # Get the object or class.
+   # $old    is the object (if any) being used to create a new object
+   # $new    is the new object
+   # $class  is the class of the new object
+   # $tz     is a Date::Manip::TZ object to base the new object on
+   #         (only for Date, Delta, Recur objects)
+   # $base   is the Date::Manip::Base object to base the new object on
+   # $string an initial parse string
+   # @opts   options to pass to config method
 
-   my($self,$class);
+   my($old,$new,$class,$tz,$base,$string,@opts);
 
-   if      (ref($args[0]) =~ $dmo_rx) {
-      $self  = shift(@args);
-      $class = ref($args[0]);
+   # Get the class of the new object
 
-   } elsif ($args[0] =~ $dmo_rx) {
+   if (exists $classes{ $args[0] }) {
+      # $obj = new CLASS
       $class = shift(@args);
+
+   } elsif (ref($args[0])) {
+      # $obj->new
+      $class = ref($args[0]);
 
    } else {
       warn "ERROR: [new] first argument must be a Date::Manip class/object\n";
       return undef;
    }
 
-   # Get an existing Date::Manip::* object, if any
+   # Get an old object
 
-   my $obj;
-   if ($self) {
-      $obj = $self;
-   } elsif (ref($args[0]) =~ $dmo_rx) {
-      $obj = shift(@args);
+   if (ref($args[0])) {
+      # $old->new
+      # new CLASS $old
+      $old = shift(@args);
    }
 
    # Find out if there are any config options (which will be the
    # final argument).
 
-   my @config;
    if (@args  &&  ref($args[$#args]) eq 'ARRAY') {
-      @config = @{ pop(@args) };
+      @opts = @{ pop(@args) };
    }
 
-   # Any other arguments at this point are passed to _init.
+   # There must be at most 1 additional argument ($string)
+
+   if (@args) {
+      if (@args > 1) {
+         warn "ERROR: [new] unknown arguments\n";
+         return undef;
+      }
+   }
+
+   ########################
 
    # Get Base/TZ objects from an existing object
 
-   my($dmt,$dmb);
-
-   if ($obj) {
-      $dmb = $$obj{'objs'}{'base'}  if (exists $$obj{'objs'}{'base'});
-      $dmt = $$obj{'objs'}{'tz'}    if (exists $$obj{'objs'}{'tz'});
+   if ($old) {
+      if (ref($old) eq 'Date::Manip::Base') {
+         $base = $old;
+      } elsif (ref($old) eq 'Date::Manip::TZ') {
+         $tz   = $old;
+         $base = $$tz{'base'};
+      } else {
+         $tz   = $$old{'tz'};
+         $base = $$tz{'base'};
+      }
    }
 
    # Create a new empty object.
 
-   my $new = {
-              'objs' => {},
-              'data' => {},
-              'args' => [ @args ],
-              'err'  => '',
-             };
+   $new = {
+           'data' => {},
+           'err'  => '',
+          };
 
-   # Create new Base/TZ objects if necessary
+   # Create Base/TZ objects if necessary
+
+   if ($base  &&  @opts) {
+      $base = dclone($base);
+      $tz   = new Date::Manip::TZ $base  if ($tz);
+   }
 
    my $init = 1;
-   if (! $dmb) {
-
-      # We're creating first-time instances:
-      #    $dmb = new Date::Manip::Base [,\@config];
-      #    $dmt = new Date::Manip::TZ [,\@config];
-      #    $obj = new Date::Manip::* [,\@config];
-
-      if      ($class eq 'Date::Manip::Base') {
-         $dmb = $new;
-
-      } elsif ($class eq 'Date::Manip::TZ') {
-         $dmb = new Date::Manip::Base;
-         $dmt = $new;
-
-      } else {
-         $dmb = new Date::Manip::Base;
-         $dmt = new Date::Manip::TZ $dmb;
+   if ($class eq 'Date::Manip::Base') {
+      if ($base) {
+         # new Date::Manip::Base $base
+         if (@opts) {
+            $new = $base;
+         } else {
+            $new  = dclone($base);
+         }
+         $init = 0;
       }
 
-   } elsif ($class eq 'Date::Manip::Base') {
-
-      # $dmb = new Date::Manip::Base $obj [,\@config];
-      #    This should create a new instance of a Base object
-      #    with the same configuration.
-
-      $new           = dclone($dmb);
-      $$new{'cache'} = $$dmb{'cache'};
-      $dmb           = $new;
-      $init          = 0;
-
-   } elsif (@config  &&  $class eq 'Date::Manip::TZ') {
-
-      # $dmt = new Date::Manip::TZ $obj,\@config;
-
-      $dmb           = new Date::Manip::Base $obj,[@config];
-      $dmt           = $new;
-
-   } elsif (@config) {
-
-      # $obj2 = new Date::Manip::* $obj1,\@config;
-
-      $dmb = new Date::Manip::Base $obj,\@config;
-      $dmt = new Date::Manip::TZ $dmb;
-
    } elsif ($class eq 'Date::Manip::TZ') {
-
-      # $dmt = new Date::Manip::TZ $obj;
-      #    Reuse $dmb object
-
-      $dmt = $new;
+      if ($tz) {
+         # new Date::Manip::TZ $tz
+         if (@opts) {
+            $new = $tz;
+         } else {
+            $new  = dclone($tz);
+         }
+         $init = 0;
+      } elsif (! $base) {
+         $base = new Date::Manip::Base;
+      }
+      $$new{'base'} = $base;
 
    } else {
-
-      # $obj2 = new Date::Manip::* $boj1;
-      #    Use existing $dmb/$dmt
-
+      if (! $tz) {
+         if ($base) {
+            $tz = new Date::Manip::TZ $base;
+         } else {
+            $tz = new Date::Manip::TZ;
+         }
+      }
+      $$new{'tz'} = $tz;
    }
 
+   $$new{'args'} = [ @args ];
    bless $new,$class;
 
-   $$new{'objs'}{'base'} = $dmb;
-   $$new{'objs'}{'tz'}   = $dmt  if ($dmt);
-   $$dmb{'objs'}{'tz'}   = $dmt  if ($dmt);
-
-   $new->_init()  unless (! $init);
-
-   # Apply configuration options and parse the string.
-
-   if (@config) {
-      $dmb->config(@config);
-   }
-
-   $new->_init_args()  if (@args);
+   $new->_init()        if ($init);
+   $new->config(@opts)  if (@opts);
+   $new->_init_args()   if (@args);
    $new->_init_final();
-
    return $new;
 }
 
@@ -190,38 +188,6 @@ sub new_config {
    return new(@args);
 }
 
-sub base {
-   my($self) = @_;
-   return $$self{'objs'}{'base'};
-}
-
-sub tz {
-   my($self) = @_;
-   return $$self{'objs'}{'tz'}  if (exists $$self{'objs'}{'tz'});
-   return undef;
-}
-
-sub config {
-   my($self,@config) = @_;
-   my $dmb = $$self{'objs'}{'base'};
-
-   while (@config) {
-      my $var = shift(@config);
-      my $val = shift(@config);
-      $dmb->_config_var($var,$val);
-   }
-}
-
-sub err {
-   my($self,$arg) = @_;
-   if ($arg) {
-      $$self{'err'} = '';
-      return;
-   } else {
-      return $$self{'err'};
-   }
-}
-
 sub new_date {
    my(@args) = @_;
    require Date::Manip::Date;
@@ -238,6 +204,58 @@ sub new_recur {
    return new Date::Manip::Recur @args;
 }
 
+sub base {
+   my($self) = @_;
+   my $t = ref($self);
+   if ($t eq 'Date::Manip::Base') {
+      return undef;
+   } elsif ($t eq 'Date::Manip::TZ') {
+      return $$self{'base'};
+   } else {
+      my $dmt = $$self{'tz'};
+      return $$dmt{'base'};
+   }
+}
+
+sub tz {
+   my($self) = @_;
+   my $t = ref($self);
+
+   if ($t eq 'Date::Manip::Base'  ||
+       $t eq 'Date::Manip::TZ') {
+      return undef;
+   }
+
+   return $$self{'tz'};
+}
+
+sub config {
+   my($self,@opts) = @_;
+   my $obj;
+   if (ref($self) eq 'Date::Manip::Base'  ||
+       ref($self) eq 'Date::Manip::TZ') {
+      $obj = $self;
+   } else {
+      $obj = $$self{'tz'};
+   }
+
+   while (@opts) {
+      my $var = shift(@opts);
+      my $val = shift(@opts);
+      $obj->_config_var($var,$val);
+   }
+}
+
+sub err {
+   my($self,$arg) = @_;
+   if ($arg) {
+      $$self{'err'} = '';
+      return;
+   } else {
+      return $$self{'err'};
+   }
+}
+
 sub is_date {
    return 0;
 }
@@ -250,9 +268,14 @@ sub is_recur {
 
 sub version {
    my($self,$flag) = @_;
-   if ($flag  &&  ref($self) ne "Date::Manip::Base") {
-      my $dmb  = $$self{'objs'}{'base'};
-      my ($tz) = $dmb->_now("systz");
+   if ($flag  &&  ref($self) ne 'Date::Manip::Base') {
+      my $dmt;
+      if (ref($self) eq 'Date::Manip::TZ') {
+         $dmt = $self;
+      } else {
+         $dmt  = $$self{'tz'};
+      }
+      my ($tz) = $dmt->_now("systz");
       return "$VERSION [$tz]";
    } else {
       return $VERSION;

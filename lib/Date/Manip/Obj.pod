@@ -25,113 +25,160 @@ which inherit from it.
 
 =head1 DESCRIPTION
 
-This module contains a set of methods used by all Date::Manip
-classes listed above.
+This module contains a set of methods used by all Date::Manip classes
+listed above.
 
 You should be familiar with the Date::Manip::Objects and
 Date::Manip::Config documentation.
 
-In the examples below, Date::Manip::Date objects will be used
-as examples, but (unless otherwise stated), all of the classes
-listed above have the same methods, and work in the same fashion.
+In the method descriptions below, Date::Manip::Date objects will
+usually be used as examples, but (unless otherwise stated), all of the
+classes listed above have the same methods, and work in the same
+fashion.
 
 =head1 METHODS FOR CREATING OBJECTS
+
+In the examples below, any $date ($date, $date1, $date2, ...) variable
+is a Date::Manip::Date object. Similarly, $delta, $recur, $tz, and
+$base refer to objects in the appropriate class.
+
+Any $obj variable refers to an object in any of the classes.
 
 =over 4
 
 =item B<new>
 
-   $date = new Date::Manip::Date;
-   $date = new Date::Manip::Date \@opts;
+There are two ways to use the new method. They are:
 
-   $date = new Date::Manip::Date $string;
+   $obj2  = new CLASS ($obj1,$string,\@opts);
+   $obj2  = $obj1->new($string,\@opts)
+
+In both cases, all arguments are optional.
+
+Here, CLASS is the class of the new object. For example:
+
+   $date  = new Date::Manip::Date;
+   $delta = new Date::Manip::Delta;
+
+if $obj1 is available, the new object will share as much information
+from the old object as possible. The class of the new object may
+be derived from the old object as well.
+
+For example, if you call either of these:
+
+   $date2 = new Date::Manip::Date $date1;
+   $date2 = $date1->new();
+
+the new date object will use the same embedded Date::Manip::TZ object. In
+the second case, the class of the new object ($date2) is Date::Manip::Date
+because that is the class of the original object.
+
+When specifying CLASS and including an old object, objects do not need to
+be of the same class.  For example, the following are all valid:
+
+   $date = new Date::Manip::Date $delta;
+   $date = new Date::Manip::Date $tz;
+
+You can even do:
+
+   $date = new Date::Manip::Date $base;
+
+but this will have to create a completely new Date::Manip::TZ object,
+which means that optimal performance may not be achieved if a
+Date::Manip::TZ object already exists.
+
+There are two special cases. Either of the following will create
+a new Date::Manip::Base object for handling multiple configurations:
+
+   $base2 = new Date::Manip::Base $base1;
+   $base2 = $base1->new();
+
+Either of the following will create a new Date::Manip::TZ object with
+the same Date::Manip::Base object embedded in it:
+
+   $tz2   = new Date::Manip::TZ $tz1;
+   $tz2   = $tz1->new();
+
+The new base object will initially have the same configuration as the
+original base object, but changing it's configuration will not
+affect the original base object.
+
+If the \@opts argument is passed in, it is a list reference containing
+a list suitable for passing to the config method (described below). In
+this case, a new Date::Manip::Base object (and perhaps Date::Manip::TZ
+object) will be created. The new Base object will start as identical
+to the original one (if a previously defined object was used to create
+the new object) with the additional options in @opts added.
+
+In other words, the following are equivalent:
+
+   $date  = new Date::Manip::Date $obj,\@opts;
+
+   $base  = $obj->base();
+   $base2 = $base->new();
+   $date = new Date::Manip::Date $base2;
+   $date->config(@opts);
+
+It should be noted that the options are applied to the NEW object,
+not the old one. That only matters in one situation:
+
+   $base2 = new Date::Manip::Base $base1,\@opts;
+   $base2 = $base1->new(\@opts);
+
+An optional string ($string) may be passed in only when creating
+a Date::Manip::Date, Date::Manip::Delta, or Date::Manip::Recur object.
+If it is passed in when creating a Date::Manip::TZ or Date::Manip::Base
+object, a warning will be issued, but execution will continue.
+
+If the string is included, it will be parsed to give an initial value
+to the object. This will only be done AFTER any options are handled,
+so the following are equivalent:
+
    $date = new Date::Manip::Date $string,\@opts;
 
-In order to create the first Date::Manip object, use any of the forms
-listed above. They will all create a new Date::Manip::Date object
-(with new Date::Manip::Base, and Date::Manip::TZ objects embedded in
-it).
+   $date = new Date::Manip::Date;
+   $date->config(@opts);
+   $date->parse($string);
 
-The Date::Manip::Date, Date::Manip::Delta, and Date::Manip::Recur
-classes work in exactly the same way.
-
-A set of options (described in the Date::Manip::Config documentation)
-can be passed to the object to set configuration variables.
-
-In addition, a string can be passed in which will be parsed to form
-the initial date stored in the object. Strings can also be passed in
-to the Date::Manip::Delta and Date::Manip::Recur objects which will be
-parsed to form initial values. In all cases, refer to the parse method
-of the class.
-
-   $dmt = new Date::Manip::TZ;
-   $dmt = new Date::Manip::TZ \@opts;
-
-If the first Date::Manip object you need is a Date::Manip::TZ object,
-use either of the above calls. This will also create a Date::Manip::Base
-object which will be embedded in the Date::Manip::TZ object.
-
-A set of options can be passed in as well, but there is no option
-for passing in a string.
-
-   $dmb = new Date::Manip::Base;
-   $dmb = new Date::Manip::Base \@opts;
-
-If you work with Date::Manip::Base objects directly, no other object
-will be created. The options can be passed in here as well.
+Note that it is generally not a good idea to pass in $string since all
+of the parse methods allow (but do not require) additional arguments, and
+this ability is not supported when passing in $string to the new method.
+As a result, it's generally a better practice to call the parse method
+separately.
 
 Once a Date::Manip::Date object (or any object in any other
-Date::Manip class) is created, one of calls below should be used in
-order to preserve cached data in the interest of performance and
-memory usage.
-
-   $date = new Date::Manip::Date $obj;
-   $date = new Date::Manip::Date $obj,\@opts;
-
-   $date = new Date::Manip::Date $obj,$string;
-   $date = new Date::Manip::Date $obj,$string,\@opts;
-
-$obj can be an object from any of the Date::Manip classes, but in the
-interest of making efficient use of cached data, you should pass in
-the highest level object available.
-
-In other words, you should always pass in a Date::Manip::Date,
-Date::Manip::Delta, or Date::Manip::Recur object if you have one.
-In their absence, pass in a Date::Manip::TZ object. Pass in a
-Date::Manip::Base object only if that is the only Date::Manip
-object available.
+Date::Manip class) is created, it should always be used to create
+additional objects in order to preserve cached data for optimal
+performance and memory usage.
 
 The one caveat is if you are working with multiple configurations
 as described in the Date::Manip::Objects document. In that case,
-additional care should be taken to make sure that the correct object
-is passed in.
-
-If $obj is a Date::Manip::Date object, these lines can be
-expressed equivalently as:
-
-   $date = $obj->new();
-   $date = $obj->new(\@opts);
-
-   $date = $obj->new($string);
-   $date = $obj->new($string,\@opts);
-
-If @opts is passed in, new Date::Manip::Base and Date::Manip::TZ
-objects will be created with the configuration specified, so you should
-only do this if you explicitly want to work with multiple configurations.
-
-If you want to modify an existing configuration, you must use the
-config method described below.
+you may need to create completely new objects to allow multiple
+Date::Manip::Base objects to be used.
 
 =item B<new_config>
 
-   $obj2 = $obj1->new_config();
-   $obj2 = $obj1->new_config($string);
-   $obj2 = $obj1->new_config($string,@opts);
-   $obj2 = $obj1->new_config(@opts);
+   $obj2 = $obj1->new_config($string,\@opts);
 
-This creates a new instance with a new Date::Manip::Base object and a
-separate set of config options (even if no config options are
-included).
+This creates a new instance with a new Date::Manip::Base object (and possibly
+a new Date::Manip::TZ object).
+
+For example,
+
+   $date2 = $date1->new_config();
+
+creates a new Date::Manip::Date object with a new Date::Manip::TZ (and
+Date::Manip::Base) object. Initially, it is the same configuration as
+the original object.
+
+If the object is a Date::Manip::Base object, the following are equivalent:
+
+   $base2 = $base1->new_config();
+
+   $base2 = $base1->new();
+
+Both $string and \@opts are optional. They are used in the same way they
+are used in the new method.
 
 =item B<new_date>
 
@@ -139,17 +186,16 @@ included).
 
 =item B<new_recur>
 
-   $date = $obj->new_date();
-   $date = $obj->new_date($string);
-   $date = $obj->new_date($string,@opts);
-   $date = $obj->new_date(@opts);
+These are shortcuts for specifying the class. The following sets of
+calls are all equivalent:
 
-These create a new instance of the specified object. In this case, $obj
-can be any of the Date::Manip classes, so a date can be created from a
-delta:
+   $date  = $obj->new_date();
+   $date  = new Date::Manip::Date($obj);
 
-   $delta = new Date::Manip::Delta;
-   $date  = $delta->new_date();
+   $delta = $obj->new_delta();
+   $delta = new Date::Manip::Date($obj);
+
+These methods all allow optional ($string,\@opts) arguments.
 
 =back
 
@@ -159,10 +205,21 @@ delta:
 
 =item B<base>
 
-   $dmb = $obj->base();
+=item B<tz>
+
+   $base = $obj->base();
 
 This returns the Date::Manip::Base object associated with the
 given object.
+
+If $obj is a Date::Manip::Base object, nothing is returned (i.e. it doesn't
+create a new copy of the object).
+
+   $tz = $obj->tz();
+
+This returns the Date::Manip::TZ object associated with the
+given object. If $obj is a Date::Manip::TZ or Date::Manip::Base object,
+nothing is returned.
 
 =item B<config>
 
@@ -193,13 +250,6 @@ will clear the error code.
 
 Returns 0 or 1, depending on the object. For example, a Date::Manip::Date
 object returns 1 with the is_date method, and 0 for the other two.
-
-=item B<tz>
-
-   $dmb = $obj->tz();
-
-This returns the Date::Manip::TZ object associated with the
-given object.
 
 =item B<version>
 

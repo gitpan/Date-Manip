@@ -19,21 +19,21 @@ use Date::Manip::TZdata;
 use strict;
 use warnings;
 
-use vars qw($VERSION);
-$VERSION='6.12';
+our $VERSION;
+$VERSION='6.13';
 
-use vars qw($dmb);
+our ($dmb);
 $dmb = new Date::Manip::Base;
 
-###############################################################################
+##############################################################################
 # GLOBAL VARIABLES
 ###############################################################################
 
-use vars qw($first_date $last_date $tzdata_src $tzdata_dir $mod_dir $off_dir
-            $curr_year $keep_year $test_year $zones_pm $zones_pod
-            %def_off %nontzdata_zones %def_alias2 %def_abbrev %no_last
-            %last_zone_offsets
-           );
+our ($first_date,$last_date,$tzdata_src,$tzdata_dir,$mod_dir,$off_dir,
+     $curr_year,$keep_year,$test_year,$zones_pm,$zones_pod,
+     %def_off,%nontzdata_zones,%def_alias2,%def_abbrev,%no_last,
+     %last_zone_offsets
+    );
 
 # The first and last dates (UT) known by this module (everything in the
 # 0001 - 9999 range except for the first and last 24 hours of that range).
@@ -51,11 +51,15 @@ require "data.abbrev.pl";
 require "data.alias.pl";
 require "data.misc.pl";
 
+# so the CPAN indexer won't treat this as a POD file
+our $podstr = '=pod';
+our $hdstr  = '=head1';
+
 ###############################################################################
 # HELP
 ###############################################################################
 
-use vars qw($usage);
+our ($usage);
 my $COM = $0;
 $COM =~ s/^.*\///;
 
@@ -81,7 +85,7 @@ $usage=
 # PARSE ARGUMENTS
 ###############################################################################
 
-use vars qw($verbose);
+our ($verbose);
 $verbose     = 0;
 my $do_all   = 0;
 my $do_ftp   = 0;
@@ -270,8 +274,10 @@ sub do_list {
       }
    }
 
-   _yaml_write(\%module,"tzdata/_zone",0);
-   _yaml_write(\%alias,"tzdata/_alias",0);
+   # Write out the official list of zones and aliases.
+
+   _yaml_write(\%module,"tzdata/_zone_list",0);
+   _yaml_write(\%alias, "tzdata/_alias_list",0);
 }
 
 # Takes a hashref $module{MODNAME} = ZONE and a zone and comes up
@@ -311,7 +317,7 @@ sub _do_list_modname {
 sub do_dump {
    print "Dump...\n";
 
-   my $tmp    = _yaml_read("tzdata/_zone");
+   my $tmp    = _yaml_read("tzdata/_zone_list");
    my %module = %$tmp;
    my $num    = keys %module;
    my $len    = length($num);
@@ -345,20 +351,21 @@ sub do_mods {
    my $tzd = Date::Manip::TZdata->new();
    system("rm -f $mod_dir/*");
 
-   my $tmp    = _yaml_read("tzdata/_zone");
-   my %module = %$tmp;
+   my $zone_list = _yaml_read("tzdata/_zone_list");
+   my %zone_list = %$zone_list;
+   my $num       = keys %zone_list;
+   my $len       = length($num);
+   my $i         = 0;
+
    my $abbrev = {};
    my $data   = {};
-   my $num    = keys %module;
-   my $len    = length($num);
-   my $i      = 0;
 
    print "   module "," "x($len-length($i)),"$i / $num";
 
-   foreach my $zone (keys %module) {
+   foreach my $zone (keys %zone_list) {
       $i++;
       print "\010"x($len*2+3)," "x($len-length($i)),"$i / $num";
-      my($module,$type,@args) = @{ $module{$zone} };
+      my($module,$type,@args) = @{ $zone_list{$zone} };
 
       if ($type eq "tzdata") {
          _do_mods_tzdata($tzd,$abbrev,$data,$zone,$module,@args);
@@ -366,71 +373,147 @@ sub do_mods {
       } elsif ($type eq "offset") {
          _do_mods_offset($tzd,$abbrev,$data,$zone,$module,@args);
       }
-      delete $$abbrev{"_lastabb"};
    }
    print "\n";
 
-   # Create a list of all EST5EDT style time zone aliases.
-   my $alias2 = {};
-   foreach my $zone (sort keys %$data) {
-      foreach my $year (sort keys %{ $$data{$zone} }) {
-         # There must be exactly two abbreviations during the year.
-         my @abb = keys %{ $$data{$zone}{$year} };
-         next  if ($#abb != 1);
-         my($abb0,$abb1) = @abb;
-         # They must have exactly one offset.
-         my @off0 = keys %{ $$data{$zone}{$year}{$abb0} };
-         my @off1 = keys %{ $$data{$zone}{$year}{$abb1} };
-         next  if ($#off0 != 0  ||
-                   $#off1 != 0);
-         my $off0 = $off0[0];
-         my $off1 = $off1[0];
-         # One must be savings time, the other not.
-         next  if ($$data{$zone}{$year}{$abb0}{$off0} ==
-                   $$data{$zone}{$year}{$abb1}{$off1});
-         # Both offsets must be even hours.
-         my ($o0,$o1) = ($off0,$off1);
-         next  if ($o0 !~ s/:00?:00?$//  ||
-                   $o1 !~ s/:00?:00?$//);
+   # $data now contains a hash of:
+   #    YEAR => [ TYPE, VAL1, VAL2, ... ]
+   # where TYPE is currently blank.
+   #
+   # VALi is a reference to a time change [ ABB, OFFSET, ISDST ]
+   #
+   # TYPE will be set to one of the following:
+   #
+   #    std0, : a standard year is  one with two time changes which must
+   #    std1    be  with ISDST  =  1 and  0, and  both must be integers
+   #            that differ by exactly 1.  If the ISDST = 0 comes first,
+   #            it is set to std0.  Otherwise it is set to std1.
+   #    last0,
+   #    last1 : if it's a standard year AND the year is after $keep_year
+   #    end   : a non-standard year after $keep_year
+   #    non   : a non-standard year before $keep_year
 
-         # Store the actual time zone
-         my $alias;
-         if ($$data{$zone}{$year}{$abb0}{$off0} == 0) {
-            $alias = $abb0 . -1*$o0 . $abb1;
-         } else {
-            $alias = $abb1 . -1*$o1 . $abb0;
-         }
-         if (exists $$alias2{$alias}{$zone}) {
-            my @y = @{ $$alias2{$alias}{$zone} };
-            my $y = $y[$#y];
-            if ($y =~ /^\d{4}$/) {
-               if ($y == $year-1) {
-                  pop(@y);
-                  push(@y,"$y-$year");
-               } else {
-                  push(@y,$year);
-               }
+   foreach my $zone (keys %$data) {
+      my $lasttype = '';
+      foreach my $year (keys %{ $$data{$zone} }) {
+         my $type;
+         my @tmp = @{ $$data{$zone}{$year} };
+         shift(@tmp);
+
+         # Standard times must have two changes
+
+         $type = 'std';
+         $type = 'non'  if (@tmp != 2);
+
+         # Standard times must have both offsets on the hour.
+
+         my ($off1,$off2);
+         if ($type eq 'std') {
+            $off1 = $tmp[0][1];
+            $off2 = $tmp[1][1];
+            if ($off1 !~ /:00:00$/  ||
+                $off2 !~ /:00:00$/) {
+               $type = 'non';
             } else {
-               $y =~ /(\d{4})$/;
-               if ($1 == $year-1) {
-                  $y =~ s/\d{4}$/$year/;
-                  pop(@y);
-                  push(@y,$y);
-               } else {
-                  push(@y,$year);
-               }
+               $type = 'std';
             }
-            $$alias2{$alias}{$zone} = [ @y ];
-
-         } else {
-            $$alias2{$alias}{$zone} = [ $year ];
          }
+
+         # Standard times must have offsets that are 1 hour apart.
+
+         if ($type eq 'std') {
+            $off1 =~ s/:00:00$//;
+            $off2 =~ s/:00:00$//;
+            $type = 'non'  if (abs($off1 - $off2) != 1);
+         }
+
+         # Standard times have offsets with two offsets with ISDST = 0 and 1
+
+         my $std;
+         if      ($type eq 'std'   &&
+                  $tmp[0][2] == 1  &&
+                  $tmp[1][2] == 0) {
+            $std = 1;
+         } elsif ($type eq 'std'  &&
+                  $tmp[0][2] == 0  &&
+                  $tmp[1][2] == 1) {
+            $std = 0;
+         } else {
+            $type = 'non';
+         }
+
+         # Set the type
+
+         if ($type eq 'std') {
+            if ($year > $keep_year) {
+               $type  = "last$std";
+            } else {
+               $type .= $std;
+            }
+
+         } elsif ($year > $keep_year) {
+            $type = 'end';
+         }
+
+         # We'll discard the very last year of a standard timezone
+         # because they end on the first change of a year instead of
+         # the second.
+         next  if ($lasttype =~ /last/  &&  $type eq 'end');
+         $lasttype = $type;
+
+         $$data{$zone}{$year}[0] = $type;
       }
    }
 
-   _yaml_write($abbrev,"tzdata/_abbrev",0);
-   _yaml_write($data,"tzdata/_data",0);
-   _yaml_write($alias2,"tzdata/_alias2",0);
+   # Create a list of all EST5EDT style time zone aliases.
+   # These only apply during standard years.
+
+   my $alias2 = {};
+ ZONE: foreach my $zone (keys %$data) {
+      foreach my $year (sort keys %{ $$data{$zone} }) {
+         my ($type,@tmp) = @{ $$data{$zone}{$year} };
+         next  if ($type ne 'std0'  &&
+                   $type ne 'std1'  &&
+                   $type ne 'last0' &&
+                   $type ne 'last1');
+
+         # The format is
+         #   STDABB STDOFFHR DSTABB
+         # where STDABB and DSTABB are the abbreviations, and STDOFFHR
+         # is the offset for standard time as an integer negated.
+
+         my ($stdabb,$dstabb,$stdoff);
+         if ($type eq 'std0'  ||  $type eq 'last0') {
+            $stdabb = $tmp[0][0];
+            $dstabb = $tmp[1][0];
+            $stdoff = $tmp[0][1];
+         } else {
+            $stdabb = $tmp[1][0];
+            $dstabb = $tmp[0][0];
+            $stdoff = $tmp[1][1];
+         }
+         $stdoff    =~ s/:00:00$//;
+         $stdoff   *= -1;
+
+         my $alias  = "${stdabb}${stdoff}${dstabb}";
+
+         if ($type eq 'last0'  ||  $type eq 'last1') {
+            _do_mods_years($alias2,$zone,$alias,$year,9999);
+            next ZONE;
+         }
+         _do_mods_years($alias2,$zone,$alias,$year,$year);
+      }
+   }
+
+   _yaml_write($data,  'tzdata/_data',0);
+   _yaml_write($abbrev,'tzdata/_abbrev_un',0);
+   _yaml_write($alias2,'tzdata/_alias2_un',0);
+
+   $abbrev = _order_elements($abbrev,\%def_abbrev,\&_sort_by_years);
+   $alias2 = _order_elements($alias2,\%def_alias2,\&_sort_by_years);
+
+   _yaml_write($abbrev,'tzdata/_abbrev_or',0);
+   _yaml_write($alias2,'tzdata/_alias2_or',0);
 }
 
 # This creates a module from a tzdata dump.
@@ -514,7 +597,7 @@ sub _do_mods_tzdata_mod {
 
    my @dates;
    my $last = 1;   # Whether or not to do LAST RULE
-   my $year;
+   my ($year,$year2);
 
    my $line = shift(@lines);
    my($dowU,$monU,$domU,$timeU,$yearU,$dowL,$monL,$domL,$timeL,$yearL,
@@ -550,8 +633,9 @@ sub _do_mods_tzdata_mod {
    my @begLT    = @{ $dmb->calc_date_time(\@begUT,\@offset) };
    @dates       = ("0001",[@begUT],[@begLT],$offset,[@offset],$abb,$isdst,[@endUT],[@endLT]);
 
-   _do_mods_abbrev($abbrev,$zone,$abb,"0001");
-   $$data{$zone}{"0001"}{$abb}{$offset} = $isdst;
+   $year2       = $endUT[0];
+   _do_mods_years($abbrev,$zone,$abb,"0001",$year2);
+   $$data{$zone}{"0001"} = [ '', [$abb,$offset,$isdst] ];
 
    #
    # Parse every pair of dump lines.
@@ -588,10 +672,12 @@ sub _do_mods_tzdata_mod {
       }
 
       #
-      # If a second line exists, it is the end of the period. If no
-      # second line exists, then either we need to switch to LAST RULE
-      # behavior (if the year of the first line is after $keep_year),
-      # or the zone abandoned doing daylight savings time.
+      # If a second line exists, it is the end of the period.
+      #
+      # If no second line exists, then either we need to switch to
+      # LAST RULE behavior (if the year of the first line is after
+      # $keep_year), or the zone abandoned doing daylight savings
+      # time and this line reflects the time until 9999.
       #
 
       if (@lines) {
@@ -649,8 +735,15 @@ sub _do_mods_tzdata_mod {
       # Now store the data for this time zone period
 
       push(@dates,$year,[@begUT],[@begLT],$offset,[@offset],$abb,$isdst,[@endUT],[@endLT]);
-      $$data{$zone}{$year}{$abb}{$offset} = $isdst;
-      _do_mods_abbrev($abbrev,$zone,$abb,$year);
+      $year2 = $endUT[0];
+
+      if (exists $$data{$zone}{$year}) {
+         push(@{ $$data{$zone}{$year} },[$abb,$offset,$isdst]);
+      } else {
+         $$data{$zone}{$year} = [ '', [$abb,$offset,$isdst] ];
+      }
+
+      _do_mods_years($abbrev,$zone,$abb,$year,$year2);
    }
 
    ###
@@ -719,6 +812,7 @@ sub _do_mods_tzdata_mod {
             }
 
             $last{"rules"}{$mon}{"abb"}    = $abb;
+            _do_mods_years($abbrev,$zone,$abb,$keep_year+1,9999);
             $didlast++;
          }
       }
@@ -876,76 +970,17 @@ sub _do_mods_splitdump {
            $abb,$isdst);
 }
 
-# This records the abbreviations used in a given year.
+# This records an element as having been used in a given year.
 #
-sub _do_mods_abbrev {
-   my($abbrev,$zone,$currabb,$year) = @_;
+sub _do_mods_years {
+   my($hash,$zone,$ele,$year,$year2) = @_;
 
-   # If we're parsing a set of lines:
-   #     ... 1918 ... EST (previous line)
-   #     ... 1936 ... EDT (current line)
-   # then we need to make sure that EST goes from 1918-1935 (or more).
-
-   if (exists $$abbrev{"_lastabb"}) {
-      my $abb   = $$abbrev{"_lastabb"};
-      my @y     = @{ $$abbrev{$abb}{$zone} };
-      my $oldy  = $y[$#y];
-      if ($oldy =~ /^\d{4}$/) {
-         # 1918   becomes  1918-1936
-         if ($oldy != $year) {
-            pop(@y);
-            push(@y,"$oldy-$year");
-            @{ $$abbrev{$abb}{$zone} } = @y;
-         }
-      } else {
-         # 1905-1918  becomes  1905-1936
-         $oldy =~ /-(\d{4})$/;
-         my $y = $1;
-         if ($y != $year) {
-            pop(@y);
-            $oldy =~ s/$y$/$year/;
-            push(@y,$oldy);
-            @{ $$abbrev{$abb}{$zone} } = @y;
-         }
-      }
-   }
-
-   if ($currabb eq "zzz"  ||
-       $currabb eq "LMT"  ||
-       ($currabb eq "GMT"  &&  $zone ne "Etc/GMT")
-      ) {
-      delete $$abbrev{"_lastabb"};
-      return;
-   }
-   $$abbrev{"_lastabb"} = $currabb;
-
-   if (exists $$abbrev{$currabb}{$zone}) {
-      my @y     = @{ $$abbrev{$currabb}{$zone} };
-      my $oldy  = $y[$#y];
-      my $ym1   = $year-1;
-
-      if ($oldy =~ /^\d{4}$/  &&  $oldy == $ym1) {
-         pop(@y);
-         push(@y,"$oldy-$year");
-
-      } elsif ($oldy =~ /-(\d{4})$/  &&  $1 == $ym1) {
-         $oldy =~ s/$ym1$/$year/;
-         pop(@y);
-         push(@y,$oldy);
-
-      } elsif ($oldy =~ /^\d{4}$/  &&  $oldy == $year) {
-      } elsif ($oldy =~ /-(\d{4})$/  &&  $1 == $year) {
-         # Nothing
-
-      } else {
-         push(@y,$year);
-      }
-      @{ $$abbrev{$currabb}{$zone} } = @y;
+   if (exists $$hash{$ele}{$zone}) {
+      $$hash{$ele}{$zone}[1] = $year2;
 
    } else {
-      $$abbrev{$currabb}{$zone} = [ $year ];
+      $$hash{$ele}{$zone} = [$year,$year2];
    }
-
 }
 
 # This creates a module from an offset.
@@ -955,7 +990,7 @@ sub _do_mods_offset {
 
    my($abb) = $zone;
    $abb =~ s/Etc\///;
-   _do_mods_abbrev($abbrev,$zone,$abb,"0001");
+   _do_mods_years($abbrev,$zone,$abb,"0001","9999");
 
    $offset      = $dmb->_delta_convert("offset",$offset);
    my @offset   = @{ $dmb->split("offset",$offset) };
@@ -970,7 +1005,7 @@ sub _do_mods_offset {
                   ["0001",[@begUT],[@begLT],$offset,[@offset],$abb,0,
                    [@endUT],[@endLT]],
                   ());
-   $$data{$zone}{"0001"}{$abb}{$offset} = 0;
+   $$data{$zone}{"0001"} = [ '', [$abb,$offset,0] ];
 }
 
 sub _do_mods_write {
@@ -984,8 +1019,6 @@ sub _do_mods_write {
    my $tzcode_vers = "tzcode" . $tmp[1];
    my $timestamp   = `date`;
    chomp($timestamp);
-
-   my $podstr = '=pod';    # so the CPAN indexer won't treat this as a POD file
 
    my $out = new IO::File;
    $out->open(">$mod_dir/$module.pm");
@@ -1006,11 +1039,11 @@ sub _do_mods_write {
 
 $podstr
 
-=head1 NAME
+$hdstr NAME
 
 Date::Manip::TZ::$module - Support for the $zone time zone
 
-=head1 SYNPOSIS
+$hdstr SYNPOSIS
 
 This module contains data from the Olsen database for the time zone. It
 is not intended to be used directly (other Date::Manip modules will
@@ -1022,10 +1055,15 @@ use strict;
 use warnings;
 require 5.010000;
 
-use vars qw(\%Dates \%LastRule);
+our (\%Dates,\%LastRule);
+END {
+   undef \%Dates;
+   undef \%LastRule;
+}
 
-use vars qw(\$VERSION);
-\$VERSION='6.12';
+our (\$VERSION);
+\$VERSION='6.13';
+END { undef \$VERSION; }
 
 \%Dates         = (
 ";
@@ -1123,17 +1161,55 @@ sub do_off {
 
    my $data = _yaml_read("tzdata/_data");
 
-   # Organize data by offset/isdst
+   # Get a list of all zones which an offset appears in, and the year
+   # range of the offset.
 
-   my %data2;
-   foreach my $zone (keys %$data) {
-      foreach my $year (keys %{ $$data{$zone} }) {
-         foreach my $abb (keys %{ $$data{$zone}{$year} }) {
-            foreach my $offset (keys %{ $$data{$zone}{$year}{$abb} }) {
-               my $isdst = $$data{$zone}{$year}{$abb}{$offset};
-               $data2{$offset}{$isdst}{$zone} = 1;
+   my %offset_un = ( 0 => {}, 1 => {} );
+
+ ZONE:foreach my $zone (keys %$data) {
+      my $lastoffset = '';
+      my $lastisdst  = '';
+      my @year       = sort keys %{ $$data{$zone} };
+      while (@year) {
+         my $year = shift(@year);
+
+         # The offset at the end of the previous year is still in
+         # affect.
+
+         if ($lastoffset) {
+            _do_mods_years($offset_un{$lastisdst},$zone,$lastoffset,$year,$year);
+         }
+
+         my ($type,@tmp) = @{ $$data{$zone}{$year} };
+
+         foreach my $tmp (@tmp) {
+            my($abb,$offset,$isdst) = @$tmp;
+            $lastoffset = $offset;
+            $lastisdst  = $isdst;
+
+            if ($type =~ /last/) {
+               _do_mods_years($offset_un{$isdst},$zone,$offset,$year,9999);
+            } else {
+               _do_mods_years($offset_un{$isdst},$zone,$offset,$year,$year);
             }
          }
+
+         next ZONE  if ($type =~ /last/);
+         _do_mods_years($offset_un{$lastisdst},$zone,$lastoffset,$year,9999)
+           if (! @year);
+      }
+   }
+
+   # Convert %offest to a couple other formats that will be useful.
+
+   my %offset_or;
+   $offset_or{0} = _order_elements($offset_un{0},$def_off{0},\&_sort_offsets);
+   $offset_or{1} = _order_elements($offset_un{1},$def_off{1},\&_sort_offsets);
+
+   my %offset2_or;
+   foreach my $isdst (keys %offset_un) {
+      foreach my $offset (keys %{ $offset_un{$isdst} }) {
+         $offset2_or{$offset}{$isdst} = $offset_or{$isdst}{$offset};
       }
    }
 
@@ -1141,7 +1217,7 @@ sub do_off {
 
    my %offmod;
    my $o = "000";
-   foreach my $offset (sort keys %data2) {
+   foreach my $offset (sort keys %offset2_or) {
       my $offmod = "off$o";
       $offmod{$offset} = $offmod;
       $o++;
@@ -1155,82 +1231,31 @@ sub do_off {
 
    print "   module "," "x($len-length($i)),"$i / $num";
 
-   my %warn;
-   foreach my $offset (sort keys %data2) {
+   system("rm -f $off_dir/*");
+   foreach my $offset (sort keys %offset2_or) {
       $i++;
       print "\010"x($len*2+3)," "x($len-length($i)),"$i / $num";
 
       my $offmod = $offmod{$offset};
-      _do_off($offset,$offmod,\%data2,$data,\%warn);
+      _do_off($offset,$offmod,\%offset_or);
    }
    print "\n";
 
-   if (%warn) {
-      foreach my $isdst (sort keys %warn) {
-         print "OFFSET test order unknown warnings: $isdst\n";
-         foreach my $offset (sort keys %{ $warn{$isdst} }) {
-            print "               \"$offset\" => [\n";
-            my @ele = @{ $warn{$isdst}{$offset} };
-            foreach my $ele (sort { _cmp_offsets($a,$b) } @ele) {
-               my ($z,$beg,$end) = @$ele;
-               print "                               \"$z\"," .
-                 " "x(30-length($z)) . "# $beg-$end\n";
-            }
-            print "                              ],\n";
-         }
-      }
-   }
+   my %def_off_un;
+   $def_off_un{0} = _unorder_elements($def_off{0});
+   $def_off_un{1} = _unorder_elements($def_off{1});
+
+   _warn_changes($offset_or{0},$offset_un{0},$def_off{0},$def_off_un{0},15,12,33,"0");
+   _warn_changes($offset_or{1},$offset_un{1},$def_off{1},$def_off_un{1},15,12,33,"1");
 
    _yaml_write(\%offmod,"tzdata/_offmod",0);
-   _yaml_write(\%data2,"tzdata/_data2",0);
-}
-
-#    later end time always before earlier end time
-#    earlier start time before later start time
-sub _cmp_offsets {
-   my($x,$y) = @_;
-
-   # One-character military time zones always come last.
-
-   if      ($$x[0] =~ /^[a-z]$/i) {
-      return 1;
-   } elsif ($$y[0] =~ /^[a-z]$/i) {
-      return -1;
-   }
-
-   # Antartica time zones always come after non-antarctica time zones
-
-   if      ($$x[0] =~ /^Antarctica/i  &&  $$y[0] !~ /^Antarctica/i) {
-      return 1;
-   } elsif ($$x[0] !~ /^Antarctica/i  &&  $$y[0] =~ /^Antarctica/i) {
-      return -1;
-   }
-
-   # A later end time always comes before an earlier end time
-
-   if ($$x[2] != $$y[2]) {
-      return $$y[2] <=> $$x[2];
-   }
-
-   # An Etc/GMT time zone always comes after other time zones
-
-   if      ($$x[0] =~ /^Etc/i) {
-      return 1;
-   } elsif ($$y[0] =~ /^Etc/i) {
-      return -1;
-   }
-
-   # An earlier start time always comes before a later start time
-
-   if ($$x[1] != $$y[1]) {
-      return $$x[1] <=> $$y[1];
-   }
-
-   return 0;
+   _yaml_write(\%offset_un,"tzdata/_offset_un",0);
+   _yaml_write(\%offset_or,"tzdata/_offset_or",0);
+   _yaml_write(\%offset2_or,"tzdata/_offset2_or",0);
 }
 
 sub _do_off {
-   my($offset,$module,$data,$alldata,$warn) = @_;
+   my($offset,$module,$offset_or) = @_;
 
    my @tmp = `cat tzdata/_version`;
    chomp(@tmp);
@@ -1239,9 +1264,8 @@ sub _do_off {
    my $timestamp   = `date`;
    chomp($timestamp);
 
-   my $podstr = '=pod';    # so the CPAN indexer won't treat this as a POD file
-
    my $out = new IO::File;
+   my $mod = "Date::Manip::Offset::$module";
    $out->open(">$off_dir/$module.pm");
    print $out "package Date::Manip::Offset::$module;
 # Copyright (c) 2008-$curr_year Sullivan Beck.  All rights reserved.
@@ -1260,11 +1284,11 @@ sub _do_off {
 
 $podstr
 
-=head1 NAME
+$hdstr NAME
 
-Date::Manip::Offset::$module - Support for the $offset offset
+$mod - Support for the $offset offset
 
-=head1 SYNPOSIS
+$hdstr SYNPOSIS
 
 This module contains data from the Olsen database for the offset. It
 is not intended to be used directly (other Date::Manip modules will
@@ -1276,53 +1300,30 @@ use strict;
 use warnings;
 require 5.010000;
 
-use vars qw(\$VERSION);
-\$VERSION='6.12';
+our (\$VERSION);
+\$VERSION='6.13';
+END { undef \$VERSION; }
 
-use vars qw(\$Offset \%Offset);
+our (\$Offset,\%Offset);
+END {
+   undef \$Offset;
+   undef \%Offset;
+}
 
 \$Offset        = '$offset';
 
 \%Offset        = (
 ";
 
- ISDST: foreach my $isdst (sort keys %{ $$data{$offset} }) {
-
-      # Check to make sure we know the order to test them
-      my @allz = keys %{ $$data{$offset}{$isdst} };
-      my @defz = ();
-      @defz    = @{ $def_off{$isdst}{$offset} }
-        if (exists $def_off{$isdst}{$offset});
-      @defz    = @allz  if ($#allz == 0);
-
-      if ($#allz != 0  &&  ! _lists_equal(\@allz,\@defz)) {
-         foreach my $z (@allz) {
-            my $beg = 9999;
-            my $end = 0;
-            my $on  = 0;
-            foreach my $y (sort keys %{ $$alldata{$z} }) {
-               $end = $y  if ($on);
-               my $i;
-               $on  = 0;
-               foreach my $abb (keys %{ $$alldata{$z}{$y} }) {
-                  if (exists $$alldata{$z}{$y}{$abb}{$offset}) {
-                     $beg = $y  if ($beg == 9999);
-                     $on  = 1;
-                     $i   = $$alldata{$z}{$y}{$abb}{$offset};
-                     last;
-                  }
-               }
-            }
-            $end = 9999  if ($end == 0  ||  $end>$curr_year);
-            push(@{ $$warn{$isdst}{$offset} },[$z,$beg,$end]);
-         }
-         next ISDST;
-      }
+   foreach my $isdst (sort keys %$offset_or) {
+      next  if (! exists $$offset_or{$isdst}{$offset});
+      my @tmp = @{ $$offset_or{$isdst}{$offset} };
 
       print $out " "x3,$isdst," => [\n";
-      $$data{$offset}{$isdst} = [@defz];
-
-      foreach my $zone (@defz) {
+      while (@tmp) {
+         my $zone  = shift(@tmp);
+         my $year1 = shift(@tmp);
+         my $year2 = shift(@tmp);
          $zone = lc($zone);
          print $out " "x6,"'$zone',\n";
       }
@@ -1335,18 +1336,6 @@ use vars qw(\$Offset \%Offset);
 ";
 
    $out->close;
-}
-
-sub _lists_equal {
-   my($list1,$list2) = @_;
-   my(@list1) = @$list1;
-   my(@list2) = @$list2;
-   return 0  if ($#list1 != $#list2);
-   my %list1  = map { lc($_),1 } @list1;
-   foreach my $ele (@list2) {
-      return 0  if (! exists $list1{lc($ele)});
-   }
-   return 1;
 }
 
 ############################################################################
@@ -1363,16 +1352,14 @@ sub do_zones {
    my $timestamp   = `date`;
    chomp($timestamp);
 
-   my $module = _yaml_read("tzdata/_zone");
-   my $alias  = _yaml_read("tzdata/_alias");
-   my $data2  = _yaml_read("tzdata/_data2");
+   my $zone_list   = _yaml_read("tzdata/_zone_list");
+   my $alias_list  = _yaml_read("tzdata/_alias_list");
+   my $offset2_or  = _yaml_read("tzdata/_offset2_or");
 
    my $out = new IO::File;
    $out->open(">$zones_pm");
    my $pod = new IO::File;
    $pod->open(">$zones_pod");
-
-   my $podstr = '=pod';    # so the CPAN indexer won't treat this as a POD file
 
    print $out "package Date::Manip::Zones;
 # Copyright (c) 2008-$curr_year Sullivan Beck.  All rights reserved.
@@ -1393,12 +1380,25 @@ use strict;
 use warnings;
 require 5.010000;
 
-use vars qw(\$VERSION);
-\$VERSION='6.12';
+our (\$VERSION);
+\$VERSION='6.13';
+END { undef \$VERSION; }
 
-use vars qw(\$TzdataVersion \$TzcodeVersion
-            \$FirstDate \$LastDate \$LastYear
-            \%Module \%ZoneNames \%Alias \%Abbrev \%Offmod);
+our (\$TzdataVersion,\$TzcodeVersion,
+     \$FirstDate,\$LastDate,\$LastYear,
+     \%Module,\%ZoneNames,\%Alias,\%Abbrev,\%Offmod);
+END {
+   undef \$TzdataVersion;
+   undef \$TzcodeVersion;
+   undef \$FirstDate;
+   undef \$LastDate;
+   undef \$LastYear;
+   undef \%Module;
+   undef \%ZoneNames;
+   undef \%Alias;
+   undef \%Abbrev;
+   undef \%Offmod;
+}
 
 \$TzdataVersion = '$tzdata_vers';
 \$TzcodeVersion = '$tzcode_vers';
@@ -1425,11 +1425,11 @@ use vars qw(\$TzdataVersion \$TzcodeVersion
 
 $podstr
 
-=head1 NAME
+$hdstr NAME
 
 Date::Manip::Zones - Time zone information
 
-=head1 DESCRIPTION
+$hdstr DESCRIPTION
 
 This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
@@ -1443,10 +1443,10 @@ to time zones, see the documentation for the Date::Manip::TZ module.
 
 ";
 
-   _do_zones_zones($out,$pod,$module);
-   _do_zones_names($out,$module);
-   _do_zones_aliases($out,$pod,$module,$alias);
-   _do_zones_defaults($out,$pod,$data2);
+   _do_zones_zones($out,$pod,$zone_list);
+   _do_zones_names($out,$zone_list);
+   _do_zones_aliases($out,$pod,$zone_list,$alias_list);
+   _do_zones_defaults($out,$pod,$offset2_or);
    _do_zones_abbrevs($out,$pod);
    _do_zones_offsets($out,$pod);
 
@@ -1457,25 +1457,25 @@ to time zones, see the documentation for the Date::Manip::TZ module.
    $out->close;
 
    print $pod "
-=head1 KNOWN BUGS
+$hdstr KNOWN BUGS
 
 None known.
 
-=head1 BUGS AND QUESTIONS
+$hdstr BUGS AND QUESTIONS
 
 Please refer to the Date::Manip::Problems documentation for
 information on submitting bug reports or questions to the author.
 
-=head1 SEE ALSO
+$hdstr SEE ALSO
 
 Date::Manip        - main module documentation
 
-=head1 LICENSE
+$hdstr LICENSE
 
 This script is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
 
-=head1 AUTHOR
+$hdstr AUTHOR
 
 Sullivan Beck (sbeck\@cpan.org)
 
@@ -1485,14 +1485,14 @@ Sullivan Beck (sbeck\@cpan.org)
 }
 
 sub _do_zones_zones {
-   my($out,$pod,$module) = @_;
+   my($out,$pod,$zone_list) = @_;
 
    print $out "
 \%Module = (
 ";
 
    print $pod "
-=head1 TIME ZONES
+$hdstr TIME ZONES
 
 A description for each time zone from the zoneinfo database is stored
 in a separate module. These modules will be loaded automatically as
@@ -1508,17 +1508,15 @@ The following time zones are derived from the standard zoneinfo
 database:
 
 ";
-   my($zone,$mod) = ("TIME ZONE","MODULE NAME");
-   print $pod " "x5,$zone," "x(35-length($zone)),"  $mod\n";
-   print $pod " "x5,"-"x35,"  ","-"x11,"\n";
 
-   foreach my $zone (sort keys %$module) {
-      my($mod,$type) = @{ $$module{$zone} };
+   _print_pod_row($pod,1,   5,'TIME ZONE',35,  2,'MODULE NAME',20);
+
+   foreach my $zone (sort keys %$zone_list) {
+      my($mod,$type) = @{ $$zone_list{$zone} };
       next  if ($type ne "tzdata");
 
-      print $pod " "x5,$zone," "x(35-length($zone)),"  $mod\n";
-      $zone = lc($zone);
-      print $out "  '$zone'" . " "x(25-length($zone)) . "=> '$mod',\n";
+      _print_pod_row($pod,0,   5,$zone,35,             2,$mod,0);
+      _print_mod_row($out,     2,$zone,35,'hashkey',   2,$mod,0,'hashval');
    }
 
    print $pod "
@@ -1528,17 +1526,14 @@ RFC 822):
 
 ";
 
-   ($zone,$mod) = ("TIME ZONE","MODULE NAME");
-   print $pod " "x5,$zone," "x(35-length($zone)),"  $mod\n";
-   print $pod " "x5,"-"x35,"  ","-"x11,"\n";
+   _print_pod_row($pod,1,   5,'TIME ZONE',35,  2,'MODULE NAME',20);
 
-   foreach my $zone (sort keys %$module) {
-      my($mod,$type) = @{ $$module{$zone} };
+   foreach my $zone (sort keys %$zone_list) {
+      my($mod,$type) = @{ $$zone_list{$zone} };
       next  if ($type eq "tzdata");
 
-      print $pod " "x5,$zone," "x(35-length($zone)),"  $mod\n";
-      $zone = lc($zone);
-      print $out "  '$zone'" . " "x(25-length($zone)) . "=> '$mod',\n";
+      _print_pod_row($pod,0,   5,$zone,35,             2,$mod,0);
+      _print_mod_row($out,     2,$zone,35,'hashkey',   2,$mod,0,'hashval');
    }
 
    print $out ");
@@ -1546,24 +1541,24 @@ RFC 822):
 }
 
 sub _do_zones_names {
-   my($out,$module) = @_;
+   my($out,$zone_list) = @_;
 
    print $out "
 \%ZoneNames = (
 ";
 
-   foreach my $zone (sort keys %$module) {
-      my($mod,$type) = @{ $$module{$zone} };
+   foreach my $zone (sort keys %$zone_list) {
+      my($mod,$type) = @{ $$zone_list{$zone} };
       next  if ($type ne "tzdata");
-      my $lcz = lc($zone);
-      print $out "  '$lcz'" . " "x(25-length($zone)) . "=> '$zone',\n";
+
+      _print_mod_row($out,     2,$zone,35,'hashkey',   2,$zone,0,'hashval,nocase');
    }
 
-   foreach my $zone (sort keys %$module) {
-      my($mod,$type) = @{ $$module{$zone} };
+   foreach my $zone (sort keys %$zone_list) {
+      my($mod,$type) = @{ $$zone_list{$zone} };
       next  if ($type eq "tzdata");
-      my $lcz = lc($zone);
-      print $out "  '$lcz'" . " "x(25-length($zone)) . "=> '$zone',\n";
+
+      _print_mod_row($out,     2,$zone,35,'hashkey',   2,$zone,0,'hashval,nocase');
    }
 
    print $out ");
@@ -1571,11 +1566,12 @@ sub _do_zones_names {
 }
 
 sub _do_zones_aliases {
-   my($out,$pod,$module,$aliases) = @_;
+   my($out,$pod,$zone_list,$alias_list) = @_;
 
-   my $tzd      = Date::Manip::TZdata->new();
-   my %tzdalias = %{ $$tzd{"alias"} };
-   my $alias2   = _yaml_read("tzdata/_alias2");
+   my $tzd       = Date::Manip::TZdata->new();
+   my %tzdalias  = %{ $$tzd{"alias"} };
+   my $alias2_un = _yaml_read("tzdata/_alias2_un");
+   my $alias2_or = _yaml_read("tzdata/_alias2_or");
 
    print $out "
 \%Alias = (
@@ -1583,15 +1579,14 @@ sub _do_zones_aliases {
 
    # Print out the standard 'zone => zone' aliases
 
-   foreach my $zone (sort keys %$module) {
-      my $alias = lc($zone);
-      print $out "  '$alias'" . " "x(25-length($alias)) . "=> '$alias',\n";
+   foreach my $zone (sort keys %$zone_list) {
+      _print_mod_row($out,     2,$zone,35,'hashkey',   2,$zone,0,'hashval');
    }
 
    # Print out alternate time zone names from tzdata files
 
    print $pod "
-=head1 TIME ZONE NAMES, ALIASES, AND ABBREVIATIONS
+$hdstr TIME ZONE NAMES, ALIASES, AND ABBREVIATIONS
 
 Time zones may be referred to as their full name
 (e.g. America/New_York), but there are also a number of standard
@@ -1605,22 +1600,18 @@ The zoneinfo database provides several standard aliases, including:
 
 ";
 
-   my ($alias,$zone) = ("ALTERNATE NAME","TIME ZONE");
-   print $pod " "x5,$alias," "x(35-length($alias)),"  $zone\n";
-   print $pod " "x5,"-"x35,"  ","-"x8,"\n\n";
+   _print_pod_row($pod,1,   5,'ALTERNATE NAME',35,  2,'TIME ZONE',20);
 
-   foreach $alias (sort keys %tzdalias) {
-      $zone = $tzdalias{$alias};
+   foreach my $alias (sort keys %tzdalias) {
+      my $zone = $tzdalias{$alias};
 
       # Don't duplicate the 'zone => zone' or 'EST5EDT => zone' aliases
-      next  if (exists $$module{$zone}   &&  $alias eq $zone);
-      next  if (exists $$aliases{$zone}  &&  $$aliases{$zone}[1] ne "tzdata");
-      next  if (exists $$alias2{$zone});
+      next  if (exists $$zone_list{$zone}   &&  $alias eq $zone);
+      next  if (exists $$alias_list{$zone}  &&  $$alias_list{$zone}[1] ne "tzdata");
+      next  if (exists $$alias2_un{$zone});
 
-      print $pod " "x5,$alias," "x(35-length($alias)),"  $zone\n";
-      $alias = lc($alias);
-      $zone  = lc($zone);
-      print $out "  '$alias'" . " "x(25-length($alias)) . "=> '$zone',\n";
+      _print_pod_row($pod,0,   5,$alias,35,             2,$zone,0);
+      _print_mod_row($out,     2,$alias,35,'hashkey',   2,$zone,0,'hashval');
    }
 
    # Do the EST5EDT style aliases
@@ -1629,113 +1620,31 @@ The zoneinfo database provides several standard aliases, including:
 There are a large number of possible time zone aliases of the form
 EST5EDT. The main 4 used in the United States are CST6CDT, EST5EDT,
 MST7MDT, and PST8PDT and these are specifically called for in RFC 822,
-so there is no ambiguity there, but some aliases may possibly refer to
-more than one time zone. In these instances, I have selected one of
-them to be the default time zone to use (based on how recently it was
-used, and for what period of time). In the list below, all possible
-time zones are listed for each alias. The first time zone listed is the
-one used by default. The default alias can be overridden as described
-above.
+so whenever possible, these will refer to the US time zones, but some
+aliases may possibly refer to more than one time zone. In these
+instances, I have selected one of them to be the default time zone to
+use (based on how recently it was used, and for what period of
+time). In the list below, all possible time zones are listed for each
+alias. The first time zone listed is the one used by default. The
+default alias can be overridden as described above.
 
 ";
 
-   ($alias,$zone) = ("ALTERNATE NAME","TIME ZONE");
-   print $pod " "x5,$alias," "x(35-length($alias)),"  $zone\n";
-   print $pod " "x5,"-"x35,"  ","-"x8,"\n\n";
+   _print_pod_row($pod,1,   5,'ALTERNATE NAME',35,  2,'TIME ZONE',20);
 
-   foreach $alias (sort keys %$alias2) {
-      my @zone = sort keys %{ $$alias2{$alias} };
-      if ($#zone == 0) {
-         $zone = $zone[0];
+   my $def_alias2_un = _unorder_elements(\%def_alias2);
+   _warn_changes($alias2_or,$alias2_un,\%def_alias2,$def_alias2_un,3,16,42);
 
-         print $pod " "x5,$alias," "x(35-length($alias)),"  $zone\n";
-         $alias = lc($alias);
-         $zone  = lc($zone);
-         print $out "  '$alias'" . " "x(25-length($alias)) . "=> '$zone',\n";
-      }
-   }
-
-   print $pod "\n";
-
-   ALIAS: foreach $alias (sort keys %$alias2) {
-      # @zone, %zone contain all the zones that $alias (EST5EDT) is in
-      my @zone = sort keys %{ $$alias2{$alias} };
-      next  if ($#zone == 0);
-      my %zone = map { $_,1 } @zone;
-
-      # @def, %def contain the zones that we've listed (so we know that
-      # we've made a decision based on all zones)
-      my @def  = (exists $def_alias2{$alias} ? @{ $def_alias2{$alias} } : ());
-      my $i    = 0;
-      my %def  = map { $_,$i++ } @def;
-
-      # %zone and %def must be identical
-      my $err = 0;
-      foreach my $z (@zone) {
-         if (! exists $def{$z}) {
-            $err = 1;
-            next;
-         }
-         delete $def{$z};
-      }
-      if (! $err) {
-         my @tmp = keys %def;
-         $err = 1  if (@tmp);
-      }
-
-      # If they're not identical, warn
-      if ($err) {
-         my @tmp;
-         foreach my $z (@zone,keys %def) {
-            my($y0,$y1) = ("","");
-            if (exists $zone{$z}) {
-               my @y       = @{ $$alias2{$alias}{$z} };
-               if ($#y == 0) {
-                  $y0      = $y[0];
-                  $y1      = $y0;
-               } else {
-                  $y0      = $y[0];
-                  $y1      = $y[$#y];
-               }
-            }
-            $y0      =~ s/-\d{4}$//;
-            $y1      =~ s/\d{4}-//;
-
-            push(@tmp,[$z,$y0,$y1]);
-         }
-
-         warn "[zone_alias] no default\n";
-         warn "   \042$alias\042" . " "x(14-length($alias)) . "=> [\n";
-
-         @tmp = sort { _cmp_offsets($a,$b) } @tmp;
-
-         my $blank   = " "x23;
-         foreach my $tmp (@tmp) {
-            my($z,$y0,$y1) = @$tmp;
-            if ($y0 == $y1) {
-               $y1 = "";
-            } else {
-               $y1 = "-$y1";
-            }
-            warn "$blank\042$z\042," . " "x(39-length($z)) . "\043 $y0$y1\n";
-         }
-         warn " "x22 . "],\n";
-
-         next ALIAS;
-      }
-
-      # If they are identical, add them to the pod and module
-
-      my $first = 1;
-      foreach my $z (@def) {
-         my $a   = lc($alias);
-         my $lcz = lc($z);
-         print $out "  '$a'" . " "x(25-length($a)) . "=> '$lcz',\n"
-           if ($first);
-
-         $a = ($first ? $alias : " "x(length($alias)));
-         print $pod " "x5,$a," "x(35-length($a)),"  $z\n";
-         $first = 0;
+   foreach my $ele (sort keys %$alias2_or) {
+      my @tmp = @{ $$alias2_or{$ele} };
+      my $first = $ele;
+      while (@tmp) {
+         my $alias  = shift(@tmp);
+         my $year1  = shift(@tmp);
+         my $year2  = shift(@tmp);
+         _print_pod_row($pod,0,  5,$first,35,             2,$alias,0);
+         _print_mod_row($out,    2,$first,35,'hashkey',   2,$alias,0,'hashval')  if ($first);
+         $first     = '';
       }
    }
 
@@ -1751,22 +1660,17 @@ Aliases include:
 
 ";
 
-   ($alias,$zone) = ("ALTERNATE NAME","TIME ZONE");
-   print $pod " "x5,$alias," "x(35-length($alias)),"  $zone\n";
-   print $pod " "x5,"-"x35,"  ","-"x8,"\n\n";
+   _print_pod_row($pod,1,   5,'ALTERNATE NAME',35,  2,'TIME ZONE',20);
 
-   foreach $alias (sort keys %$aliases) {
-      my($type);
-      ($zone,$type) = @{ $$aliases{$alias} };
+   foreach my $alias (sort keys %$alias_list) {
+      my($zone,$type) = @{ $$alias_list{$alias} };
       next  if ($type eq "tzdata"  ||  $type eq "ignore");
 
       # Don't duplicate the 'zone => zone' aliases
-      next  if (exists $$module{$zone}   &&  $alias eq $zone);
+      next  if (exists $$zone_list{$zone}   &&  $alias eq $zone);
 
-      print $pod " "x5,$alias," "x(35-length($alias)),"  $zone\n";
-      $alias = lc($alias);
-      $zone  = lc($zone);
-      print $out "  '$alias'" . " "x(25-length($alias)) . "=> '$zone',\n";
+      _print_pod_row($pod,0,   5,$alias,35,             2,$zone,0);
+      _print_mod_row($out,     2,$alias,35,'hashkey',   2,$zone,0,'hashval');
    }
 
    print $out ");
@@ -1774,7 +1678,7 @@ Aliases include:
 }
 
 sub _do_zones_defaults {
-   my($out,$pod,$data2) = @_;
+   my($out,$pod,$offset2_or) = @_;
 
    # Start the defaults (POD only)
 
@@ -1791,25 +1695,29 @@ Date::Manip::TZ module.
 
 ";
 
-   my($isdst,$off,$zone) = ("ISDST","OFFSET","TIME ZONE");
-   print $pod " "x5," "x(5-length($isdst)),$isdst,"  ",
-     " "x(10-length($off)),$off,"  $zone\n";
-   print $pod " "x5,"-"x5,"  ","-"x10,"  ","-"x8,"\n\n";
+   _print_pod_row($pod,1,   5,'ISDST',5,  2,'OFFSET',10,  2,'TIME ZONE',25);
 
-   foreach $isdst (0,1) {
+   foreach my $isdst (0,1) {
 
-      foreach $off (sort { _cmp_zoneoffsets($a,$b) } keys %$data2) {
-         next  unless (exists $$data2{$off}{$isdst});
-         my @zone = @{ $$data2{$off}{$isdst} };
+      foreach my $off (sort { _cmp_zoneoffsets($a,$b) } keys %$offset2_or) {
+         next  unless (exists $$offset2_or{$off}{$isdst});
+         my @tmp  = @{ $$offset2_or{$off}{$isdst} };
+         my $zone = shift(@tmp);
+         my $year1= shift(@tmp);
+         my $year2= shift(@tmp);
+
          my $dst  = $isdst;
-         $zone    = shift(@zone);
-         print $pod " "x5,$dst," "x(5-length($dst)),"  ",
-           " "x(10-length($off)),$off,"  $zone\n";
+
+         _print_pod_row($pod,0,   5,$dst,5,  2,$off,10,  2,$zone,0);
+
          $off = "";
          $dst = " ";
-         foreach $zone (@zone) {
-            print $pod " "x5,$dst," "x(5-length($dst)),"  ",
-              " "x(10-length($off)),$off,"  $zone\n";
+         while (@tmp) {
+            $zone  = shift(@tmp);
+            $year1 = shift(@tmp);
+            $year2 = shift(@tmp);
+
+            _print_pod_row($pod,0,   5,$dst,5,  2,$off,10,  2,$zone,0);
          }
       }
       print $pod "\n";
@@ -1841,7 +1749,8 @@ sub _cmp_zoneoffsets {
 sub _do_zones_abbrevs {
    my($out,$pod) = @_;
 
-   my $abbrev = _yaml_read("tzdata/_abbrev");
+   my $abbrev_or = _yaml_read("tzdata/_abbrev_or");
+   my $abbrev_un = _yaml_read("tzdata/_abbrev_un");
 
    # Start the aliases output (both POD and module)
 
@@ -1852,42 +1761,25 @@ sub _do_zones_abbrevs {
    # Print out EST => ZONE aliases for abbreviations which only occur
    # in a single zone.
 
+   delete $$abbrev_or{'LMT'};
+   delete $$abbrev_or{'zzz'};
+
+   # Print out EST => ZONE aliases
+
    print $pod "
 In the time zone definitions, abbreviations are used to specify the
 current time (e.g. EST in the America/New_York time zone). In some
-cases, the abbreviation appears in only a single time zone. In that
-case, these abbreviations may be used to refer to that time zone.  The
-abbreviations LMT and zzz which occur in the zoneinfo databases are
-ignored (and when parsing a date including them, the local time zone
-will be used).  Abbreviations include the following:
+cases, the abbreviation appears in only a single time zone, so for
+these, there is no ambiguity.
 
-";
-
-   my($abb,$zone) = ("ALIAS","TIME ZONE");
-   print $pod " "x5,$abb," "x(15-length($abb)),"  $zone\n";
-   print $pod " "x5,"-"x15,"  ","-"x8,"\n\n";
-
-   my (@abb) = sort keys %$abbrev;
-   foreach $abb (@abb) {
-      my(@zone) = sort keys %{ $$abbrev{$abb} };
-      if ($#zone == 0) {
-         delete $$abbrev{$abb};
-         $zone = $zone[0];
-         print $pod " "x5,$abb," "x(15-length($abb)),"  $zone\n";
-         $abb   = lc($abb);
-         $zone  = lc($zone);
-         print $out "  '$abb'" . " "x(10-length($abb)) . "=> [ '$zone' ],\n";
-      }
-   }
-
-   # Print out EST => ZONE aliases for abbreviations which occur in
-   # multiple zones.
-
-   print $pod "
-Most abbreviations are used in multiple time zones. When a date is
-parsed that contains one of these abbreviations, it will try to
-interpret the date using each of the time zones in the order listed
+More often though, abbreviations are used in multiple time zones. When
+a date is parsed that contains one of these abbreviations, it will try
+to interpret the date using each of the time zones in the order listed
 below until one is found which yields a valid date.
+
+The abbreviations LMT and zzz which occur in the zoneinfo databases
+are ignored (and when parsing a date including them, the local time
+zone will be used).
 
 The default order can be overridden using the abbrev method of the
 Date::Manip::TZ module.
@@ -1904,91 +1796,31 @@ altering the order.
 
 ";
 
-   ($abb,$zone) = ("ALIAS","TIME ZONE");
-   print $pod " "x5,$abb," "x(15-length($abb)),"  $zone\n";
-   print $pod " "x5,"-"x15,"  ","-"x8,"\n\n";
+   _print_pod_row($pod,1,   5,'ALIAS',15,  2,'TIME ZONE',20);
 
-   (@abb) = sort keys %$abbrev;
- ABB: foreach $abb (@abb) {
-      # @zone, %zone contain all the zones that $abb (EST) is in
-      my(@zone) = sort keys %{ $$abbrev{$abb} };
-      my %zone  = map { $_,1 } @zone;
+   my $def_abbrev_un = _unorder_elements(\%def_abbrev);
+   _warn_changes($abbrev_or,$abbrev_un,\%def_abbrev,$def_abbrev_un,3,14,44);
 
-      # @def, %def contain the zones that we've listed (so we know that
-      # we've made a decision based on all zones)
-      my @def  = (exists $def_abbrev{$abb} ? @{ $def_abbrev{$abb} } : ());
-      my $i    = 0;
-      my %def  = map { $_,$i++ } @def;
+   my (@abb) = sort keys %$abbrev_or;
+   foreach my $abb (@abb) {
+      my @tmp = @{ $$abbrev_or{$abb} };
 
-      # %zone and %def must be identical
-      my $err = 0;
-      foreach my $z (@zone) {
-         if (! exists $def{$z}) {
-            $err = 1;
-            next;
-         }
-         delete $def{$z};
-      }
-      if (! $err) {
-         @def = keys %def;
-         $err = 1  if (@def);
-      }
+      my $first = $abb;
+      my $opts1 = 'hashkey';
 
-      # If they're not identical, warn
-      if ($err) {
-         my @tmp;
-         foreach my $z (@zone) {
-            my($y0,$y1) = ("","");
-            if (exists $zone{$z}) {
-               my @y       = @{ $$abbrev{$abb}{$z} };
-               if ($#y == 0) {
-                  $y0      = $y[0];
-                  $y1      = $y0;
-               } else {
-                  $y0      = $y[0];
-                  $y1      = $y[$#y];
-               }
-            }
-            $y0      =~ s/-\d{4}$//;
-            $y1      =~ s/\d{4}-//;
+      while (@tmp) {
+         my $zone  = shift(@tmp);
+         shift(@tmp);
+         shift(@tmp);
 
-            push(@tmp,[$z,$y0,$y1]);
-         }
+         _print_pod_row($pod,0,   5,$first,15,  2,$zone,0);
+         my $opts2 = 'list,hashval';
+         $opts2   .= ',firstlist'  if ($first);
+         $opts2   .= ',lastlist'   if (! @tmp);
+         _print_mod_row($out,     2,$first,12,$opts1,   2,$zone,0,$opts2);
 
-         warn "[zone_abbrev] no default\n";
-         warn "   \042$abb\042" . " "x(12-length($abb)) . "=> [\n";
-
-         @tmp = sort { _cmp_offsets($a,$b) } @tmp;
-
-         my $blank   = " "x21;
-         foreach my $tmp (@tmp) {
-            my($z,$y0,$y1) = @$tmp;
-            if ($y0 == $y1) {
-               $y1 = "";
-            } else {
-               $y1 = "-$y1";
-            }
-            warn "$blank\042$z\042," . " "x(41-length($z)) . "\043 $y0$y1\n";
-         }
-         warn " "x20 . "],\n";
-
-         next ABB;
-      }
-
-      @zone  = @{ $def_abbrev{$abb} };
-      $zone  = shift(@zone);
-      print $pod " "x5,$abb," "x(15-length($abb)),"  $zone\n";
-      $abb   = lc($abb);
-      $zone  = lc($zone);
-      print $out "  '$abb'" . " "x(10-length($abb)) . "=> [ '$zone',\n";
-
-      $abb   = "";
-      foreach $zone (@zone) {
-         print $pod " "x5,$abb," "x(15-length($abb)),"  $zone\n";
-         $abb    = lc($abb);
-         my $end = ($zone eq $zone[$#zone] ? " ]," : ",");
-         $zone = lc($zone);
-         print $out " "x19 . "'$zone'$end\n";
+         $first = '';
+         $opts1 = 'hashkey,noquote';
       }
    }
 
@@ -2011,7 +1843,7 @@ sub _do_zones_offsets {
 
    foreach my $offset (sort keys %$offmod) {
       my $mod = $$offmod{$offset};
-      print $out "  '$offset'" . " "x(10-length($offset)) . "=> '$mod',\n";
+      _print_mod_row($out,   2,$offset,10,'hashkey',   2,$mod,0,'hashval');
    }
 
    print $out "
@@ -2020,12 +1852,312 @@ sub _do_zones_offsets {
 }
 
 ############################################################################
+# PRINT OUT POD AND MODULE LINES
+
+sub _print_pod_row {
+   my($out,$header,@cols) = @_;
+   my $under = '';
+
+   while (@cols) {
+      my $indent = shift(@cols);
+      my $val    = shift(@cols);
+      my $wid    = shift(@cols);
+      $wid       = length($val)  if (! $wid);
+
+      print $out ' 'x$indent,$val,' 'x($wid-length($val));
+      $under .= ' 'x$indent . '-'x$wid;
+   }
+   print $out "\n";
+   print $out "$under\n"  if ($header);
+}
+
+sub _print_mod_row {
+   my($out,@cols) = @_;
+
+   while (@cols) {
+      my $indent = shift(@cols);
+      my $val    = shift(@cols);
+      my $wid    = shift(@cols);
+      my $opts   = shift(@cols);
+
+      $val       = "'$val'"   unless ($opts =~ /noquote/);
+      $val       = lc($val)   unless ($opts =~ /nocase/);
+
+      if      ($opts =~ /hashkey/) {
+         # nothing
+
+      } elsif ($opts =~ /hashval/) {
+
+         if      ($opts =~ /firstlist/  &&   $opts =~ /lastlist/) {
+            $val = "=> [ $val ],";
+
+         } elsif ($opts =~ /firstlist/) {
+            $val = "=> [ $val,";
+
+         } elsif ($opts =~ /lastlist/) {
+            $val = "     $val ],";
+
+         } elsif ($opts =~ /list/) {
+            $val = "     $val,";
+
+         } else {
+            $val = "=> $val,";
+         }
+
+      } else {
+         $val   .= ',';
+      }
+
+      $wid       = length($val)  if (! $wid);
+
+      print $out ' 'x$indent,$val,' 'x($wid-length($val));
+   }
+   print $out "\n";
+}
+
+############################################################################
+# DEALING WITH THE ORDER OF ELEMENTS
+
+# This takes a hash of the form:
+#   $in  = { ELE => [ SUBELE,YEAR1,YEAR2, SUBELE,YEAR1,YEAR2, ... ] }
+# and converts it to:
+#   $out = { ELE => SUBELE => [YEAR1,YEAR2] }
+#
+sub _unorder_elements {
+   my($in) = @_;
+   my $out;
+
+   foreach my $ele (keys %$in) {
+      my @tmp = @{ $$in{$ele} };
+      while (@tmp) {
+         my $subele = shift(@tmp);
+         my $year1  = shift(@tmp);
+         my $year2  = shift(@tmp);
+
+         $$out{$ele}{$subele} = [ $year1,$year2 ];
+      }
+   }
+
+   return $out;
+}
+
+# This takes a hash of the form:
+#   $in  = { ELE => [ SUBELE,YEAR1,YEAR2, SUBELE,YEAR1,YEAR2, ... ] }
+# and an element and returns the subelements in the order given.
+#
+sub _order {
+   my($in,$ele) = @_;
+
+   return ()  if (! exists $$in{$ele});
+   my @tmp = @{ $$in{$ele} };
+   my @ret;
+   while (@tmp) {
+      my $subele = shift(@tmp);
+      my $year1  = shift(@tmp);
+      my $year2  = shift(@tmp);
+      push(@ret,$subele);
+   }
+
+   return @ret;
+}
+
+# This takes two hashes:
+#    $in  = { ELE => SUBELE => [YEAR1,YEAR2] }
+#    $def = { ELE => [ SUBELE,YEAR1,YEAR2, SUBELE,YEAR1,YEAR2, ... ] }
+# and converts $curr to be the same form as $def.
+#
+# The order of the elements is the same as in $def, but any new
+# elements are added at the end in an order returned by the the
+# function passed in as $sort_func (which is a function name.
+#
+sub _order_elements {
+   my($in,$def,$sort_func) = @_;
+   my $out;
+
+   my $def_un = _unorder_elements($def);
+   foreach my $ele (keys %$in) {
+      my @def = _order($def,$ele);
+      my @subele;
+
+      # Use the old order where possible
+
+      foreach my $subele (@def) {
+         next  if (! exists $$in{$ele}  ||
+                   ! exists $$in{$ele}{$subele});
+         push(@subele,$subele);
+      }
+
+      # Add any new elements to the end, but in the
+      # proper sorted order.
+
+      my @in = &$sort_func($$in{$ele});
+
+      foreach my $subele (@in) {
+         next  if (exists $$def_un{$ele}{$subele});
+         push(@subele,$subele);
+      }
+
+      $$out{$ele} = [];
+      foreach my $subele (@subele) {
+         my($year1,$year2);
+
+         if (exists $$in{$ele}  &&
+             exists $$in{$ele}{$subele}) {
+            ($year1,$year2) = @{ $$in{$ele}{$subele} };
+         } else {
+            ($year1,$year2) = @{ $$def_un{$ele}{$subele} };
+         }
+
+         push(@{ $$out{$ele} },($subele,$year1,$year2));
+      }
+   }
+
+   return $out;
+}
+
+# This sorts the keys of a hash of the form:
+#   $hash = { ELE => [YEAR1,YEAR2] }
+# by years.
+#
+sub _sort_by_years {
+   my($hash) = @_;
+
+   return sort { $$hash{$b}[1] <=> $$hash{$a}[1]  ||
+                 $$hash{$a}[0] <=> $$hash{$b}[0]  ||
+                 $a cmp $b } keys %$hash;
+}
+
+sub _sort_offsets {
+   my($hash) = @_;
+
+   return sort { _cmp_offsets($hash,$a,$b) } keys %$hash;
+}
+
+# This sorts
+#    later end time always before earlier end time
+#    earlier start time before later start time
+sub _cmp_offsets {
+   my($hash,$zone1,$zone2) = @_;
+
+   # One-character military time zones always come last.
+
+   if      ($zone1 =~ /^[a-z]$/i) {
+      return 1;
+   } elsif ($zone2 =~ /^[a-z]$/i) {
+      return -1;
+   }
+
+   # Antartica time zones always come after non-antarctica time zones
+
+   if      ($zone1 =~ /^Antarctica/i  &&  $zone2 !~ /^Antarctica/i) {
+      return 1;
+   } elsif ($zone1 !~ /^Antarctica/i  &&  $zone2 =~ /^Antarctica/i) {
+      return -1;
+   }
+
+   # A later end time always comes before an earlier end time
+
+   if ($$hash{$zone1}[1] != $$hash{$zone2}[1]) {
+      return $$hash{$zone2}[1] <=> $$hash{$zone1}[1];
+   }
+
+   # An Etc/GMT time zone always comes after other time zones
+
+   if      ($zone1 =~ /^Etc/i) {
+      return 1;
+   } elsif ($zone2 =~ /^Etc/i) {
+      return -1;
+   }
+
+   # An earlier start time always comes before a later start time
+
+   if ($$hash{$zone1}[0] != $$hash{$zone2}[0]) {
+      return $$hash{$zone1}[0] <=> $$hash{$zone2}[0];
+   }
+
+   return 0;
+}
+
+# This will warn if %curr is different than %old. They are both passed in
+# both ordered and unordered forms.
+#
+sub _warn_changes {
+   my($curr_or,$curr_un,$old_or,$old_un,$indent,$col1_len,$col2_len,$header) = @_;
+
+   my %tmp = map { $_,1 } (keys %$curr_or, keys %$old_or);
+
+   foreach my $ele (sort keys %tmp) {
+
+      if (! exists $$curr_or{$ele}) {
+
+         # If the element doesn't exist in the current set of
+         # elements, remove it from the old set.
+
+         warn "*** REMOVE ***\n";
+         warn "$header\n"  if (defined $header);
+         _warn_changes_ele($ele,$$old_or{$ele},$indent,$col1_len,$col2_len);
+
+      } elsif (! exists $$old_or{$ele}) {
+
+         # If the element doesn't exist in the old set, add it.
+
+         warn "*** NEW ELEMENT ***\n";
+         warn "$header\n"  if (defined $header);
+         _warn_changes_ele($ele,$$curr_or{$ele},$indent,$col1_len,$col2_len);
+
+      } else {
+
+         # Compare the two. All elements must exist in both, and have
+         # the same years.
+
+         my %tmp2    = map { $_,1 } (keys %{ $$curr_un{$ele} }, keys %{ $$old_un{$ele} });
+         my $changed = 0;
+
+         foreach my $subele (keys %tmp2) {
+            if (! exists $$curr_un{$ele}{$subele}  ||
+                ! exists $$old_un{$ele}{$subele}   ||
+                $$curr_un{$ele}{$subele}[0] != $$old_un{$ele}{$subele}[0]  ||
+                $$curr_un{$ele}{$subele}[1] != $$old_un{$ele}{$subele}[1]) {
+               $changed = 1;
+               last;
+            }
+         }
+
+         if ($changed) {
+            warn "$header\n"  if (defined $header);
+            _warn_changes_ele($ele,$$curr_or{$ele},$indent,$col1_len,$col2_len);
+         }
+      }
+   }
+}
+
+sub _warn_changes_ele {
+   my($ele,$curr,$indent,$col1_len,$col2_len) = @_;
+
+   $ele = "'$ele'";
+   warn " "x$indent, $ele," "x($col1_len-length($ele)),"=> [\n";
+
+   my @tmp = @$curr;
+   while (@tmp) {
+      my $subele = shift(@tmp);
+      my $year1  = shift(@tmp);
+      my $year2  = shift(@tmp);
+      my($col2)  = "'$subele'";
+      my($col3)  = ",$year1,$year2,";
+
+      warn " "x($indent + $col1_len + 4), $col2," "x($col2_len-length($col2)),"$col3\n";
+   }
+
+   warn " "x($indent + $col1_len + 3),"],\n";
+}
+
+############################################################################
 # DO_CLEAN
 ############################################################################
 
 sub do_clean {
    print "Cleaning...\n";
-   system("rm -rf tzdata");
+   system("rm -rf tzdata* tzcode*");
 }
 
 ############################################################################

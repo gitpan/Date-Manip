@@ -11,15 +11,12 @@ Date::Manip::Objects - A description of the various Date::Manip objects
 =head1 SYNOPSIS
 
 The Date::Manip package consist of several modules, each of which
-perform a set of operations on a specific type of information. This
+perform a set of operations on a specific class of objects.  This
 document describes how the various modules work together.
 
 =head1 DESCRIPTION
 
-Date::Manip consists of several different modules, each of which deal with
-a different type of data.
-
-The primary modules are:
+Date::Manip consists of the following primary modules:
 
 =over 4
 
@@ -43,7 +40,7 @@ A Date::Manip::Base object does not, of itself, contain any date
 information. Instead, it contains configuration information which
 determines how the Date::Manip package performs date operations.  The
 configuration information is documented in the Date::Manip::Config
-manual.
+document.
 
 The Date::Manip::Base object has one other property that is very
 important. When performing basic date properties, some intermediate
@@ -53,8 +50,8 @@ reuse the object as much as possible, rather than creating new
 Date::Manip::Base objects all the time.
 
 Much of the information in this document is related to this issue, and
-tells how to create various objects in order to get the most efficient
-reuse of this cached data.
+tells how to create various higher-level objects in order to get the
+most efficient reuse of this cached data.
 
 Because all other objects depend on a Date::Manip::Base object, a
 Date::Manip::Base object is embedded in all other objects, and the
@@ -63,13 +60,21 @@ maximum performance.
 
 =item B<Date::Manip::TZ>
 
-The Date::Manip::TZ module adds support for time zones. It is used
-to verify date and time zone information, convert dates from one
-time zone to another, and handle all daylight saving time transitions.
+The Date::Manip::TZ module adds support for time zones. It is used to
+verify date and time zone information, convert dates from one time
+zone to another, and handle all daylight saving time transitions.
 
-All higher level objects (those listed next) depend on both a
-Date::Manip::Base and Date::Manip::TZ object, so one of each are
-embedded into those objects.
+Similar to the Date::Manip::Base object, a great deal of information
+is cached in the Date::Manip::TZ object. This includes lists of all
+time zones, offsets, and abbreviations for all time zones. It also
+includes more a more detailed description of every time zone that has
+actually been worked used.
+
+A Date::Manip::TZ object relies on a Date::Manip::Base object (and a
+Date::Manip::Base object is always embedded in a Date::Manip::TZ
+object).  All higher level objects (those listed next) depend on both
+a Date::Manip::Base and Date::Manip::TZ object, so a Date::Manip::TZ
+object is embedded in them.
 
 =item B<Date::Manip::Date>
 
@@ -86,13 +91,14 @@ operations with deltas (amounts of time). The Date::Manip::Recur class
 performs operations on recurring events.
 
 As mentioned above, each of these high level classes rely on both a
-Date::Manip::TZ object and a Date::Manip::Base object, and one of each
-is embedded in each object.
+Date::Manip::TZ object and a Date::Manip::Base object, so a Date::Manip::TZ
+object is embedded in each one (and the Date::Manip::TZ object has a
+Date::Manip::Base object embedded in it).
 
 A Date::Manip::Date object contains a single date, so in order to
 work with multiple dates, multiple Date::Manip::Date objects will
 need to be created. In order to make the most effective use of cached
-information in the Date::Manip::Base object, the same Date::Manip::Base
+information in the Date::Manip::Base object, the same Date::Manip::TZ
 object can be embedded in each of the higher level objects.
 
 The same goes for multiple Date::Manip::Delta and Date::Manip::Recur
@@ -100,82 +106,87 @@ objects.
 
 =back
 
-=head1 WORKING WITH DATE::MANIP OBJECTS
+There are also many secondary modules including:
 
-The basic way to create the first instance of a Date::Manip object (of
-any class) is to use the "new" method of the appropriate class.  This
-is documented in the Date::Manip::Obj manual.  For example:
+   Date::Manip::TZ_Base
+   Date::Manip::TZdata
+   Date::Manip::Zones
+   Date::Manip::Lang::*
+   Date::Manip::TZ::*
+   Date::Manip::Offset::*
 
-   $tz   = new Date::Manip::TZ;
+None of these are intended to be used directly.
+
+=head1 WORKING WITH DATE::MANIP OBJECTS (SINGLE CONFIGURATION)
+
+By far the most common usage of Date::Manip involves setting a single
+local time zone, parsing dates in a single language, and having all
+other configuration parameters set to a single value that doesn't
+change over the course of the program.
+
+Whenever this is the case, you can use the methods listed in this
+section to create any number of Date::Manip objects. It will automatically
+optimize the use of cached data to get the best performance.
+
+If you do need to work with multiple different configurations (such as
+parsing dates from multiple languages), please refer to the next
+section WORKING WITH DATE::MANIP OBJECTS (MULTIPLE CONFIGURATIONS).
+
+=over 4
+
+=item B<Working with high level objects>
+
+The most common situation is one where you will need to use one or
+more high level objects (Date, Delta, or Recur objects). In addition, you
+may want to use the lower level (Base or TZ) objects.
+
+The first thing you should do is to create your initial object. Create the
+highest level object you will be using. For example if you will be working with
+dates, create the first date object with:
+
    $date = new Date::Manip::Date;
 
-Optionally, config options can be passed in:
+The next step is to set the configuration values. Use the config method to
+do this:
 
-   $tz   = new Date::Manip::TZ \@opts;
-   $date = new Date::Manip::Date \@opt;
+   $date->config(ARGS);
 
-In order to create additional Date::Manip objects, a previously
-created object should be passed in as the first argument. This will
-allow the same Base object to be embedded in both in order to maximize
-data reuse of the cached intermediate results, and will result in much
-better performance. For example:
+Although you can call the config method later, it is strongly
+suggested that the configuration be set soon after the initial object
+is created and not altered later. Every time you alter the
+configuration, some of the cached data is cleared, so for optimal
+performance, you don't want to alter the configuration if possible.
 
-   $date1 = new Date::Manip::Date;
-   $date2 = new Date::Manip::Date $date1;
+Additional high-level objects can be created using the calls:
 
-As a general rule, you should only pass in configuration options
-when the first object is created. In other words, the following
-behavior:
+   $date2 = $date->new_date();
+   $delta = $date->new_delta();
+   $recur = $date->new_recur();
 
-    $date1 = new Date::Manip::Date [$opt1,$val1,$opt2,$val2];
-    $date2 = new Date::Manip::Date $date1;
+To access the embedded Date::Manip::TZ and Date::Manip::Base objects,
+use the calls:
 
-will behave differently than:
+   $tz    = $date->tz();
+   $base  = $date->base();
 
-    $date1 = new Date::Manip::Date [$opt1,$val1];
-    $date2 = new Date::Manip::Date $date1,[$opt2,$val2];
+=item B<Working with low level objects only>
 
-In the first case, only a single Date::Manip::Base object is created.
-In the second case, two Date::Manip::Base objects are created.
+If you will only be working with low level objects, create them with one
+of the calls:
 
-Unless you specifically need to work with multiple sets of
-configurations (which is described below), it is far less complicated,
-and results in better performance, to work with only a single
-Date::Manip::Base object.
+   $tz    = new Date::Manip::TZ;
+   $base  = new Date::Manip::Base;
 
-It is also preferred that all configuration be done soon after the
-first object is created in order to keep things clear.
+To get the base object embedded in a Date::Manip::TZ object, use:
 
-To following example illustrates a potential pitfall:
+   $base  = $tz->base();
 
-    $date1 = new Date::Manip::Date [$opt1,$val1];
-    $date2 = new Date::Manip::Date $date1,
-    $date1->config($opt2,$val2);
+=back
 
-The first two lines create a total of 4 Date::Manip object. The first
-line creates a Date::Manip::Base object and a Date::Manip::TZ object,
-and then a Date::Manip::Date object with the first two embedded in it.
+For a more complete description of the methods used here, refer to the
+Date::Manip::Obj document.
 
-The second line creates a second Date::Manip::Date object, with the
-same Date::Manip::Base and Date::Manip::TZ objects embedded in it.
-
-The third line alters the configuration information used by the $date1
-object. Since configuration information is stored only in the Base
-object, that object is modified, and therefore, the configuration
-change impacts both $date1 and $date2 objects (and any additional
-Date::Manip objects created from either of them).
-
-In order to keep things clean, it is highly recommended that the
-above example be reordered:
-
-    $date1 = new Date::Manip::Date [$opt1,$val1];
-    $date1->config($opt2,$val2);
-    $date2 = new Date::Manip::Date $date1,
-
-and all configuration changes be made immediately after (or as close to
-it as possible) the creation of the first object.
-
-=head1 MULTIPLE CONFIGURATIONS
+=head1 WORKING WITH DATE::MANIP OBJECTS (MULTIPLE CONFIGURATION)
 
 Occasionally, it may be useful to have multiple sets of configurations.
 In order to do this, multiple Date::Manip::Base objects must be
@@ -194,8 +205,11 @@ language. If you need to parse dates from two (or more) languages,
 a Date::Manip::Base object needs to be created for each one. This
 could be done as:
 
-   $date_eng1 = new Date::Manip::Date ["language","English"];
-   $date_spa1 = new Date::Manip::Date $date_eng1,["language","Spanish"];
+   $date_eng1 = new Date::Manip::Date;
+   $date_eng1->config("language","English");
+
+   $date_spa1 = new Date::Manip::Date;
+   $date_spa1->config("language","Spanish");
 
 Any additional Date::Manip objects created from the first will work
 with English. Additional objects created from the second will work in
@@ -221,7 +235,7 @@ example, refer to the following lines:
    $date3 = new Date::Manip::Date $date1;
    $date4 = new Date::Manip::Date $date2;
 
-The first line creates 3 objects (a Date::Manip::Base object, a
+The first line creates 3 objects: a Date::Manip::Base object, a
 Date::Manip::TZ object, and a Date::Manip::Date object). The
 Date::Manip::Base object has the configuration set to contain the
 value(s) passed in as the final list reference argument.
@@ -241,21 +255,81 @@ The fourth line creates another Date::Manip::Date object which uses
 the second Date::Manip::Base and Date::Manip::TZ objects embedded in
 it.
 
-Luckily, most of the time there will only be one set of configuration
-options used, so this complexity is really for a very special, and not
-widely used, bit of functionality.
+Most of the time there will only be one set of configuration options
+used, so this complexity is really for a very special, and not widely
+used, bit of functionality.
 
-=head1 WORKING WITH BOTH HIGH LEVEL AND LOWER LEVEL OBJECTS
+=head1 WORKING WITH DATE::MANIP OBJECTS (ADDITIONAL NOTES)
 
-If you are working with any higher level Date::Manip modules
-(Date::Manip::Date, Date::Manip::Delta, or Date::Manip::Recur), you
-probably will not need to work with the lower Date::Manip::Base and
-Date::Manip::TZ objects directly.  However, if you want to make use of
-some of the faster Date::Manip::Base operations, or work directly with
-time zones, you can access the lower level objects using the "base"
-and "tz" methods from the higher level object.
+=over 4
 
-More information is in the Date::Manip::Obj manual.
+=item B<object reuse>
+
+In order to create additional Date::Manip objects, a previously
+created object should be passed in as the first argument. This will
+allow the same Base object to be embedded in both in order to maximize
+data reuse of the cached intermediate results, and will result in much
+better performance. For example:
+
+   $date1 = new Date::Manip::Date;
+   $date2 = new Date::Manip::Date $date1;
+
+This is important for two reasons. First is memory usage. The
+Date::Manip::Base object is quite large. It stores a large number of
+precompile regular expressions for language parsing, and as date
+operations are done, intermediate results are cached which can be
+reused later to improve performance. The Date::Manip::TZ object is
+even larger and contains information about all known time zones indexed
+several different ways (by offset, by abbreviation, etc.). As
+time zones are actually used, a description of all of the time change
+rules are loaded and added to this object.
+
+Since these objects are so large, it is important to reuse them, rather
+than to create lots of copies of them. It should be noted that because
+these objects are embedded in each of the high level object (Date::Manip::Date
+for example), it makes these objects appear quite large.
+
+The second reason to reuse Date::Manip::Base objects is
+performance. Since intermediate results are cached there, many date
+operations only need to be done once and then they can be reused any
+number of times. In essence, this is doing the same function as the
+Memoize module, but in a more efficient manner. Memoize caches results
+for function calls. For Date::Manip, this would often work, but if you
+change a config variable, the return value may change, so Memoize
+could cause things to break. In addition, Memoize caches primarily at
+the function level, but Date::Manip stores caches intermediate results
+wherever performance increase is seen. Every time I consider caching a
+result, I run a test to see if it increases performance. If it
+doesn't, or it doesn't make a significant impact, I don't cache it.
+
+Because the caching is quite finely tuned, it's much more efficient
+than using a generic (though useful) tool such as Memoize.
+
+=item B<configuration changes>
+
+As a general rule, you should only pass in configuration options
+when the first object is created. In other words, the following
+behavior is discouraged:
+
+    $date = new Date::Manip::Date;
+    $date->config(@opts);
+
+    ... do some stuff
+
+    $date->config(@opts);
+
+    ... do some other stuff
+
+Because some of the cached results are configuration specific, when a
+configuration change is made, some of the cached data must be discarded
+necessitating those results to be recalculated.
+
+If you really need to change configuration in the middle of execution,
+it is certainly allowed of course, but if you can define the configuration
+once immediately after the object is first created, and then leave the
+configuration alone, performance will be optimized.
+
+=back
 
 =head1 BUGS AND QUESTIONS
 

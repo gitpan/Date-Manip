@@ -21,7 +21,7 @@ sub test {
 
 $dmt = new Date::Manip::TZ;
 $obj = $dmt->base();
-$obj->config("forcedate","now,America/New_York");
+$dmt->config("forcedate","now,America/New_York");
 
 #################################################################################
 # Rule    Syria   2008    max     -       Apr     Fri>=1  0:00    1:00    S

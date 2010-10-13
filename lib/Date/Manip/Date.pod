@@ -104,6 +104,12 @@ This returns the name of the holiday if $date is a holiday. If $date
 is not a holiday, undef is returned. If $date is an unnamed holiday,
 an empty string is returned.
 
+=item B<input>
+
+   $str = $date->input();
+
+This returns the string that was parsed to form the date.
+
 =item B<is_business_day>
 
    $flag = $date->is_business_day($checktime);

@@ -17,6 +17,12 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
+=head1 VERSION 5.60
+
+=over 4
+
+=back
+
 =head1 VERSION 5.59 (Released with 6.12)
 
 =over 4

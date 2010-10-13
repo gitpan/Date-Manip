@@ -18,12 +18,12 @@ require 5.010000;
 use warnings;
 use strict;
 use IO::File;
-use feature 'switch';
 use integer;
 #use re 'debug';
 
-use vars qw($VERSION);
-$VERSION='6.12';
+our $VERSION;
+$VERSION='6.13';
+END { undef $VERSION; }
 
 ########################################################################
 # BASE METHODS
@@ -38,7 +38,8 @@ sub is_recur {
 #
 sub _init {
    my($self) = @_;
-   my $dmb   = $$self{'objs'}{'base'};
+   my $dmt   = $$self{'tz'};
+   my $dmb   = $$dmt{'base'};
 
    $$self{'err'}              = '';
    $$self{'data'}{'interval'} = [];    # (Y, M, ...)
@@ -49,58 +50,52 @@ sub _init {
 
    # Get the default start/end dates
 
-   given ($dmb->_config('recurrange')) {
+   my $range = $dmb->_config('recurrange');
 
-      when ('none') {
-         $$self{'data'}{'start'}    = undef;
-         $$self{'data'}{'end'}      = undef;
-      }
+   if ($range eq 'none') {
+      $$self{'data'}{'start'}    = undef;
+      $$self{'data'}{'end'}      = undef;
 
-      when ('year') {
-         my ($y)    = $dmb->_now('y',1);
-         my $start  = $self->new_date();
-         my $end    = $self->new_date();
-         $start->set('date',[$y, 1, 1,00,00,00]);
-         $end->set  ('date',[$y,12,31,23,59,59]);
-      }
+   } elsif ($range eq 'year') {
+      my ($y)    = $dmt->_now('y',1);
+      my $start  = $self->new_date();
+      my $end    = $self->new_date();
+      $start->set('date',[$y, 1, 1,00,00,00]);
+      $end->set  ('date',[$y,12,31,23,59,59]);
 
-      when ('month') {
-         my ($y,$m) = $dmb->_now('now',1);
-         my $dim    = $dmb->days_in_month($y,$m);
-         my $start  = $self->new_date();
-         my $end    = $self->new_date();
-         $start->set('date',[$y,$m,   1,00,00,00]);
-         $end->set  ('date',[$y,$m,$dim,23,59,59]);
-      }
+   } elsif ($range eq 'month') {
+      my ($y,$m) = $dmt->_now('now',1);
+      my $dim    = $dmb->days_in_month($y,$m);
+      my $start  = $self->new_date();
+      my $end    = $self->new_date();
+      $start->set('date',[$y,$m,   1,00,00,00]);
+      $end->set  ('date',[$y,$m,$dim,23,59,59]);
 
-      when ('week') {
-         my($y,$m,$d) = $dmb->_now('now',1);
-         my $w;
-         ($y,$w)    = $dmb->week_of_year([$y,$m,$d]);
-         ($y,$m,$d) = @{ $dmb->week_of_year($y,$w) };
-         my($yy,$mm,$dd)
-                    = @{ $dmb->_calc_date_ymwd([$y,$m,$d], [0,0,0,6], 0) };
+   } elsif ($range eq 'week') {
+      my($y,$m,$d) = $dmt->_now('now',1);
+      my $w;
+      ($y,$w)    = $dmb->week_of_year([$y,$m,$d]);
+      ($y,$m,$d) = @{ $dmb->week_of_year($y,$w) };
+      my($yy,$mm,$dd)
+        = @{ $dmb->_calc_date_ymwd([$y,$m,$d], [0,0,0,6], 0) };
 
-         my $start  = $self->new_date();
-         my $end    = $self->new_date();
-         $start->set('date',[$y, $m, $d, 00,00,00]);
-         $end->set  ('date',[$yy,$mm,$dd,23,59,59]);
-      }
+      my $start  = $self->new_date();
+      my $end    = $self->new_date();
+      $start->set('date',[$y, $m, $d, 00,00,00]);
+      $end->set  ('date',[$yy,$mm,$dd,23,59,59]);
 
-      when ('day') {
-         my($y,$m,$d) = $dmb->_now('now',1);
-         my $start  = $self->new_date();
-         my $end    = $self->new_date();
-         $start->set('date',[$y,$m,$d,00,00,00]);
-         $end->set  ('date',[$y,$m,$d,23,59,59]);
-      }
+   } elsif ($range eq 'day') {
+      my($y,$m,$d) = $dmt->_now('now',1);
+      my $start  = $self->new_date();
+      my $end    = $self->new_date();
+      $start->set('date',[$y,$m,$d,00,00,00]);
+      $end->set  ('date',[$y,$m,$d,23,59,59]);
 
-      when ('all') {
-         my $start  = $self->new_date();
-         my $end    = $self->new_date();
-         $start->set('date',[0001,02,01,00,00,00]);
-         $end->set  ('date',[9999,11,30,23,59,59]);
-      }
+   } elsif ($range eq 'all') {
+      my $start  = $self->new_date();
+      my $end    = $self->new_date();
+      $start->set('date',[0001,02,01,00,00,00]);
+      $end->set  ('date',[9999,11,30,23,59,59]);
    }
 
    # Based on the modifiers, this is what we have to add to the
@@ -421,7 +416,8 @@ sub frequency {
 
 sub _parse_lang {
    my($self,$string) = @_;
-   my $dmb           = $$self{'objs'}{'base'};
+   my $dmt           = $$self{'tz'};
+   my $dmb           = $$dmt{'base'};
 
    # Test the regular expression
 
@@ -522,7 +518,7 @@ sub _parse_lang {
    # Get the range (if YY is included)
 
    if (defined($y)) {
-      $y = $dmb->_fix_year($y);
+      $y = $dmt->_fix_year($y);
       my $start = "${y}010100:00:00";
       my $end   = "${y}123123:59:59";
 
@@ -574,7 +570,8 @@ sub base {
 
 sub modifiers {
    my($self,@flags) = @_;
-   my $dmb          = $$self{'objs'}{'base'};
+   my $dmt          = $$self{'tz'};
+   my $dmb          = $$dmt{'base'};
    if ($#flags == 0) {
       @flags        = split(/,/,lc($flags[0]));
    }
@@ -601,31 +598,23 @@ sub modifiers {
    my(@startm,@endm);
    my $n = $#int + 1;
 
-   given($n) {
+   if ($n <= 1) {
+      @endm = (1,0,0,0,0,0,0);
 
-      when ([0,1]) {
-         @endm = (1,0,0,0,0,0,0);
-      }
+   } elsif ($n <= 3) {
+      @endm = (0,1,0,0,0,0,0);
 
-      when ([2,3]) {
-         @endm = (0,1,0,0,0,0,0);
-      }
+   } elsif ($n == 4) {
+      @endm = (0,0,0,7,0,0,0);
 
-      when (4) {
-         @endm = (0,0,0,7,0,0,0);
-      }
+   } elsif ($n == 5) {
+      @endm = (0,0,0,1,0,0,0);
 
-      when (5) {
-         @endm = (0,0,0,1,0,0,0);
-      }
+   } elsif ($n == 6) {
+      @endm = (0,0,0,0,1,0,0);
 
-      when (6) {
-         @endm = (0,0,0,0,1,0,0);
-      }
-
-      when (7) {
-         @endm = (0,0,0,0,0,1,0);
-      }
+   } elsif ($n == 7) {
+      @endm = (0,0,0,0,0,1,0);
    }
    @startm = map { -1*$_ } @endm;
 
@@ -633,39 +622,31 @@ sub modifiers {
 
    foreach my $flag (@flags) {
 
-      given($flag) {
+      if ($flag =~ /^pd([1-7])$/) {
+         $startm[3] -= 7;
+         $endm[3]   -= 1;
 
-         when (/^pd([1-7])$/) {
-            $startm[3] -= 7;
-            $endm[3]   -= 1;
-         }
+      } elsif ($flag =~ /^pt([1-7])$/) {
+         $startm[3] -= 6;
+         $endm[3]   -= 0;
 
-         when (/^pt([1-7])$/) {
-            $startm[3] -= 6;
-            $endm[3]   -= 0;
-         }
+      } elsif ($flag =~ /^nd([1-7])$/) {
+         $startm[3] += 1;
+         $endm[3]   += 7;
 
-         when (/^nd([1-7])$/) {
-            $startm[3] += 1;
-            $endm[3]   += 7;
-         }
+      } elsif ($flag =~ /^nt([1-7])$/) {
+         $startm[3] += 0;
+         $endm[3]   += 6;
 
-         when (/^nt([1-7])$/) {
-            $startm[3] += 0;
-            $endm[3]   += 6;
-         }
+      } elsif ($flag =~ /^fd(\d+)$/) {
+         my $n = $1;
+         $startm[3] += $n;
+         $endm[3]   += $n;
 
-         when (/^fd(\d+)$/) {
-            my $n = $1;
-            $startm[3] += $n;
-            $endm[3]   += $n;
-         }
-
-         when (/^bd(\d+)$/) {
-            my $n = $1;
-            $startm[3] -= $n;
-            $endm[3]   -= $n;
-         }
+      } elsif ($flag =~ /^bd(\d+)$/) {
+         my $n = $1;
+         $startm[3] -= $n;
+         $endm[3]   -= $n;
 
          #
          # The business day flags are imperfectly handled... it's quite possible to
@@ -673,59 +654,55 @@ sub modifiers {
          # to moving forward many days.
          #
 
-         when (/^(fw|bw)(\d+)$/) {
-            my ($t,$n)  = ($1,$2);
+      } elsif ($flag =~ /^(fw|bw)(\d+)$/) {
+         my ($t,$n)  = ($1,$2);
 
-            my $wwbeg   = $dmb->_config('workweekbeg');
-            my $wwend   = $dmb->_config('workweekend');
-            my $wwlen   = $wwend - $wwbeg + 1;
-            my $wkend   = 7 - $wwlen;
-            my $fudge   = $dmb->_config('recurnumfudgedays');
-            # How many weekends likely in the interval?  Take best guess for maximum
-            # number of weeks and add 1 for a fudge factor.
-            my $num     = int($n/$wwlen) + 2;
+         my $wwbeg   = $dmb->_config('workweekbeg');
+         my $wwend   = $dmb->_config('workweekend');
+         my $wwlen   = $wwend - $wwbeg + 1;
+         my $wkend   = 7 - $wwlen;
+         my $fudge   = $dmb->_config('recurnumfudgedays');
+         # How many weekends likely in the interval?  Take best guess for maximum
+         # number of weeks and add 1 for a fudge factor.
+         my $num     = int($n/$wwlen) + 2;
 
-            if ($t eq 'fw') {
-               $startm[3] += $n;
-               $endm[3]   += $n + $num*$wkend + $fudge;
-            } else {
-               $startm[3] -= $n + $num*$wkend + $fudge;
-               $endm[3]   -= $n;
-            }
+         if ($t eq 'fw') {
+            $startm[3] += $n;
+            $endm[3]   += $n + $num*$wkend + $fudge;
+         } else {
+            $startm[3] -= $n + $num*$wkend + $fudge;
+            $endm[3]   -= $n;
          }
 
-         when ([qw( cwd cwn cwp nwd pwd dwd )]) {
-            # For closest work day, we'll move backwards/forwards 1
-            # weekend (+ 1 day) plus the fudge factor.
-            my $wwbeg   = $dmb->_config('workweekbeg');
-            my $wwend   = $dmb->_config('workweekend');
-            my $wwlen   = $wwend - $wwbeg + 1;
-            my $wkend   = 7 - $wwlen;
-            my $fudge   = $dmb->_config('recurnumfudgedays');
+      } elsif ($flag =~ /^(cwd|cwn|cwp|nwd|pwd|dwd)$/) {
+         # For closest work day, we'll move backwards/forwards 1
+         # weekend (+ 1 day) plus the fudge factor.
+         my $wwbeg   = $dmb->_config('workweekbeg');
+         my $wwend   = $dmb->_config('workweekend');
+         my $wwlen   = $wwend - $wwbeg + 1;
+         my $wkend   = 7 - $wwlen;
+         my $fudge   = $dmb->_config('recurnumfudgedays');
 
-            if ($flag eq 'pwd') {
-               $startm[3] -= $wkend+1 + $fudge;
-               $endm[3]   -= 1;
+         if ($flag eq 'pwd') {
+            $startm[3] -= $wkend+1 + $fudge;
+            $endm[3]   -= 1;
 
-            } elsif ($flag eq 'nwd') {
-               $startm[3] += 1;
-               $endm[3]   += $wkend+1 + $fudge;
+         } elsif ($flag eq 'nwd') {
+            $startm[3] += 1;
+            $endm[3]   += $wkend+1 + $fudge;
 
-            } else {
-               $startm[3] -= $wkend+1 + $fudge;
-               $endm[3]   += $wkend+1 + $fudge;
-            }
+         } else {
+            $startm[3] -= $wkend+1 + $fudge;
+            $endm[3]   += $wkend+1 + $fudge;
          }
 
-         when ('easter') {
-            $startm[0]--;
-            $endm[0]++;
-         }
+      } elsif ($flag eq 'easter') {
+         $startm[0]--;
+         $endm[0]++;
 
-         default {
-            $$self{'err'} = "[modifiers]: invalid modifier: $flag";
-            return 1;
-         }
+      } else {
+         $$self{'err'} = "[modifiers]: invalid modifier: $flag";
+         return 1;
       }
    }
 
@@ -739,7 +716,8 @@ sub dates {
    my($self,$start2,$end2) = @_;
    $self->err(1);
 
-   my $dmb   = $$self{'objs'}{'base'};
+   my $dmt   = $$self{'tz'};
+   my $dmb   = $$dmt{'base'};
    $dmb->_update_now();   # Update NOW
    my @int   = @{ $$self{'data'}{'interval'} };
    my @rtime = @{ $$self{'data'}{'rtime'} };
@@ -847,180 +825,122 @@ sub dates {
    my $w_empty   = $self->_field_empty($wf);
    my $d_empty   = $self->_field_empty($df);
 
-   given($n) {
+   if ($n <= 1) {
+      #
+      # *Y:M:W:D:H:MN:S
+      #  Y*M:W:D:H:MN:S
+      #
 
-      when ([0,1]) {
-         #
-         # *Y:M:W:D:H:MN:S
-         #  Y*M:W:D:H:MN:S
-         #
-
-         if ($#int == -1) {
-            ($err,@y)  = $self->_rtime_values('y',$yf);
-            return ()     if ($err);
-         } else {
-            my @tmp    = $self->_int_values($every,$yf,$start,$end);
-            @y         = map { $$_[0] } @tmp;
-         }
-
-         if ( ($m_empty  &&  $w_empty  &&  $d_empty) ||
-              (! $m_empty  &&  $w_empty) ) {
-
-            #  *0:0:0:0       Jan 1 of the current year
-            #  *1:0:0:0       Jan 1, 0001
-            #  *0:2:0:0       Feb 1 of the current year
-            #  *1:2:0:0       Feb 1, 0001
-            #  *0:2:0:4       Feb 4th of the current year
-            #  *1:2:0:4       Feb 4th, 0001
-            #   1*0:0:0       every year on Jan 1
-            #   1*2:0:0       every year on Feb 1
-            #   1*2:0:4       every year on Feb 4th
-
-            $mf = [1]  if ($m_empty);
-            $df = [1]  if ($d_empty);
-
-            ($err,@m)  = $self->_rtime_values('m',$mf);
-            return ()  if ($err);
-
-            foreach my $y (@y) {
-               foreach my $m (@m) {
-                  ($err,@d)  = $self->_rtime_values('day_of_month',$df,$y,$m);
-                  return ()  if ($err);
-                  foreach my $d (@d) {
-                     push(@date,[$y,$m,$d,0,0,0]);
-                  }
-               }
-            }
-
-         } elsif ($m_empty) {
-
-            if ($w_empty) {
-
-               #  *0:0:0:4       the 4th day of the current year
-               #  *1:0:0:4       the 4th day of 0001
-               #   1*0:0:4       every year on the 4th day of the year
-
-               foreach my $y (@y) {
-                  ($err,@doy)  = $self->_rtime_values('day_of_year',$df,$y);
-                  return ()  if ($err);
-                  foreach my $doy (@doy) {
-                     my($yy,$mm,$dd) = @{ $dmb->day_of_year($y,$doy) };
-                     push(@date,[$yy,$mm,$dd,0,0,0]);
-                  }
-               }
-
-            } elsif ($d_empty) {
-
-               #  *0:0:3:0       the first day of the 3rd week of the curr year
-               #  *1:0:3:0       the first day of the 3rd week of 0001
-               #   1*0:3:0       every year on the first day of 3rd week of year
-
-               foreach my $y (@y) {
-                  ($err,@woy)  = $self->_rtime_values('week_of_year',$wf,$y);
-                  return ()  if ($err);
-                  foreach my $woy (@woy) {
-                     my ($yy,$mm,$dd) = @{ $dmb->week_of_year($y,$woy) };
-                     push(@date,[$yy,$mm,$dd,0,0,0]);
-                  }
-               }
-
-            } else {
-
-               #  *1:0:3:4       in 0001 on the 3rd Thur of the year
-               #  *0:0:3:4       on the 3rd Thur of the current year
-               #   1*0:3:4       every year on the 3rd Thur of the year
-
-               ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
-               return ()  if ($err);
-               foreach my $y (@y) {
-                  foreach my $dow (@dow) {
-                     ($err,@n) = $self->_rtime_values('dow_of_year',$wf,$y,$dow);
-                     return ()  if ($err);
-                     foreach my $n (@n) {
-                        my $ymd =  $dmb->nth_day_of_week($y,$n,$dow);
-                        my($yy,$mm,$dd) = @$ymd;
-                        push(@date,[$yy,$mm,$dd,0,0,0]);
-                     }
-                  }
-               }
-            }
-
-         } else {
-
-            #  *1:2:3:4       in Feb 0001 on the 3rd Thur of the month
-            #  *0:2:3:4       on the 3rd Thur of Feb in the curr year
-            #  *1:2:3:0       the 3rd occurence of FirstDay in Feb 0001
-            #  *0:2:3:0       the 3rd occurence of FirstDay in Feb of curr year
-            #   1*2:3:4       every year in Feb on the 3rd Thur
-            #   1*2:3:0       every year on the 3rd occurence of FirstDay in Feb
-
-            ($err,@m)  = $self->_rtime_values('m',$mf);
-            return ()  if ($err);
-            if ($d_empty) {
-               @dow = ($dmb->_config('firstday'));
-            } else {
-               ($err,@dow) = $self->_rtime_values('day_of_week',$df);
-               return ()  if ($err);
-            }
-
-            foreach my $y (@y) {
-               foreach my $m (@m) {
-                  foreach my $dow (@dow) {
-                     ($err,@n)  = $self->_rtime_values('dow_of_month',
-                                                       $wf,$y,$m,$dow);
-                     return ()  if ($err);
-                     foreach my $n (@n) {
-                        my $ymd =  $dmb->nth_day_of_week($y,$n,$dow,$m);
-                        my($yy,$mm,$dd) = @$ymd;
-                        push(@date,[$yy,$mm,$dd,0,0,0]);
-                     }
-                  }
-               }
-            }
-         }
+      if ($#int == -1) {
+         ($err,@y)  = $self->_rtime_values('y',$yf);
+         return ()     if ($err);
+      } else {
+         my @tmp    = $self->_int_values($every,$yf,$start,$end);
+         @y         = map { $$_[0] } @tmp;
       }
 
-      when (2) {
-         #
-         #  Y:M*W:D:H:MN:S
-         #
+      if ( ($m_empty  &&  $w_empty  &&  $d_empty) ||
+           (! $m_empty  &&  $w_empty) ) {
 
-         my @tmp = $self->_int_values($every,$yf,$mf,$start,$end);
+         #  *0:0:0:0       Jan 1 of the current year
+         #  *1:0:0:0       Jan 1, 0001
+         #  *0:2:0:0       Feb 1 of the current year
+         #  *1:2:0:0       Feb 1, 0001
+         #  *0:2:0:4       Feb 4th of the current year
+         #  *1:2:0:4       Feb 4th, 0001
+         #   1*0:0:0       every year on Jan 1
+         #   1*2:0:0       every year on Feb 1
+         #   1*2:0:4       every year on Feb 4th
 
-         if ($w_empty) {
+         $mf = [1]  if ($m_empty);
+         $df = [1]  if ($d_empty);
 
-            #   0:2*0:0       every 2 months on the first day of the month
-            #   0:2*0:4       every 2 months on the 4th day of the month
-            #   1:2*0:0       every 1 year, 2 months on the first day of the month
-            #   1:2*0:4       every 1 year, 2 months on the 4th day of the month
+         ($err,@m)  = $self->_rtime_values('m',$mf);
+         return ()  if ($err);
 
-            $df  = [1]  if ($d_empty);
-
-            foreach my $date (@tmp) {
-               my($y,$m) = @$date;
+         foreach my $y (@y) {
+            foreach my $m (@m) {
                ($err,@d)  = $self->_rtime_values('day_of_month',$df,$y,$m);
                return ()  if ($err);
                foreach my $d (@d) {
                   push(@date,[$y,$m,$d,0,0,0]);
                }
             }
+         }
+
+      } elsif ($m_empty) {
+
+         if ($w_empty) {
+
+            #  *0:0:0:4       the 4th day of the current year
+            #  *1:0:0:4       the 4th day of 0001
+            #   1*0:0:4       every year on the 4th day of the year
+
+            foreach my $y (@y) {
+               ($err,@doy)  = $self->_rtime_values('day_of_year',$df,$y);
+               return ()  if ($err);
+               foreach my $doy (@doy) {
+                  my($yy,$mm,$dd) = @{ $dmb->day_of_year($y,$doy) };
+                  push(@date,[$yy,$mm,$dd,0,0,0]);
+               }
+            }
+
+         } elsif ($d_empty) {
+
+            #  *0:0:3:0       the first day of the 3rd week of the curr year
+            #  *1:0:3:0       the first day of the 3rd week of 0001
+            #   1*0:3:0       every year on the first day of 3rd week of year
+
+            foreach my $y (@y) {
+               ($err,@woy)  = $self->_rtime_values('week_of_year',$wf,$y);
+               return ()  if ($err);
+               foreach my $woy (@woy) {
+                  my ($yy,$mm,$dd) = @{ $dmb->week_of_year($y,$woy) };
+                  push(@date,[$yy,$mm,$dd,0,0,0]);
+               }
+            }
 
          } else {
 
-            #   0:2*3:0       every 2 months on the 3rd occurence of FirstDay
-            #   0:2*3:4       every 2 months on the 3rd Thur of the month
-            #   1:2*3:0       every 1 year, 2 months on 3rd occurence of FirstDay
-            #   1:2*3:4       every 1 year, 2 months on the 3rd Thur of the month
+            #  *1:0:3:4       in 0001 on the 3rd Thur of the year
+            #  *0:0:3:4       on the 3rd Thur of the current year
+            #   1*0:3:4       every year on the 3rd Thur of the year
 
-            if ($d_empty) {
-               @dow = ($dmb->_config('firstday'));
-            } else {
-               ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
-               return ()  if ($err);
+            ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
+            return ()  if ($err);
+            foreach my $y (@y) {
+               foreach my $dow (@dow) {
+                  ($err,@n) = $self->_rtime_values('dow_of_year',$wf,$y,$dow);
+                  return ()  if ($err);
+                  foreach my $n (@n) {
+                     my $ymd =  $dmb->nth_day_of_week($y,$n,$dow);
+                     my($yy,$mm,$dd) = @$ymd;
+                     push(@date,[$yy,$mm,$dd,0,0,0]);
+                  }
+               }
             }
+         }
 
-            foreach my $date (@tmp) {
-               my($y,$m) = @$date;
+      } else {
+
+         #  *1:2:3:4       in Feb 0001 on the 3rd Thur of the month
+         #  *0:2:3:4       on the 3rd Thur of Feb in the curr year
+         #  *1:2:3:0       the 3rd occurence of FirstDay in Feb 0001
+         #  *0:2:3:0       the 3rd occurence of FirstDay in Feb of curr year
+         #   1*2:3:4       every year in Feb on the 3rd Thur
+         #   1*2:3:0       every year on the 3rd occurence of FirstDay in Feb
+
+         ($err,@m)  = $self->_rtime_values('m',$mf);
+         return ()  if ($err);
+         if ($d_empty) {
+            @dow = ($dmb->_config('firstday'));
+         } else {
+            ($err,@dow) = $self->_rtime_values('day_of_week',$df);
+            return ()  if ($err);
+         }
+
+         foreach my $y (@y) {
+            foreach my $m (@m) {
                foreach my $dow (@dow) {
                   ($err,@n)  = $self->_rtime_values('dow_of_month',
                                                     $wf,$y,$m,$dow);
@@ -1035,75 +955,130 @@ sub dates {
          }
       }
 
-      when (3) {
-         #
-         #  Y:M:W*D:H:MN:S
-         #
+   } elsif ($n == 2) {
 
-         #   0:0:3*0       every 3 weeks on FirstDay
-         #   0:0:3*4       every 3 weeks on Thur
-         #   0:2:3*0       every 2 months, 3 weeks on FirstDay
-         #   0:2:3*4       every 2 months, 3 weeks on Thur
-         #   1:0:3*0       every 1 year, 3 weeks on FirstDay
-         #   1:0:3*4       every 1 year, 3 weeks on Thur
-         #   1:2:3*0       every 1 year, 2 months, 3 weeks on FirstDay
-         #   1:2:3*4       every 1 year, 2 months, 3 weeks on Thur
+      #
+      #  Y:M*W:D:H:MN:S
+      #
 
-         my @tmp = $self->_int_values($every,$yf,$mf,$wf,$start,$end);
+      my @tmp = $self->_int_values($every,$yf,$mf,$start,$end);
 
-         my $fdow = $dmb->_config('firstday');
+      if ($w_empty) {
+
+         #   0:2*0:0       every 2 months on the first day of the month
+         #   0:2*0:4       every 2 months on the 4th day of the month
+         #   1:2*0:0       every 1 year, 2 months on the first day of the month
+         #   1:2*0:4       every 1 year, 2 months on the 4th day of the month
+
+         $df  = [1]  if ($d_empty);
+
+         foreach my $date (@tmp) {
+            my($y,$m) = @$date;
+            ($err,@d)  = $self->_rtime_values('day_of_month',$df,$y,$m);
+            return ()  if ($err);
+            foreach my $d (@d) {
+               push(@date,[$y,$m,$d,0,0,0]);
+            }
+         }
+
+      } else {
+
+         #   0:2*3:0       every 2 months on the 3rd occurence of FirstDay
+         #   0:2*3:4       every 2 months on the 3rd Thur of the month
+         #   1:2*3:0       every 1 year, 2 months on 3rd occurence of FirstDay
+         #   1:2*3:4       every 1 year, 2 months on the 3rd Thur of the month
+
          if ($d_empty) {
-            @dow = ($fdow);
+            @dow = ($dmb->_config('firstday'));
          } else {
             ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
             return ()  if ($err);
          }
 
          foreach my $date (@tmp) {
-            my($y,$m,$d) = @$date;
-            my ($mm,$dd);
-            my($yy,$ww)     = $dmb->week_of_year([$y,$m,$d]);
-            ($yy,$mm,$dd)   = @{ $dmb->week_of_year($yy,$ww) };
-
+            my($y,$m) = @$date;
             foreach my $dow (@dow) {
-               $dow += 7  if ($dow < $fdow);
-               my($yyy,$mmm,$ddd) = @{ $dmb->calc_date_days([$yy,$mm,$dd],$dow-$fdow) };
-               push(@date,[$yyy,$mmm,$ddd]);
+               ($err,@n)  = $self->_rtime_values('dow_of_month',
+                                                 $wf,$y,$m,$dow);
+               return ()  if ($err);
+               foreach my $n (@n) {
+                  my $ymd =  $dmb->nth_day_of_week($y,$n,$dow,$m);
+                  my($yy,$mm,$dd) = @$ymd;
+                  push(@date,[$yy,$mm,$dd,0,0,0]);
+               }
             }
          }
       }
 
-      when (4) {
-         #
-         # Y:M:W:D*H:MN:S
-         #
+   } elsif ($n == 3) {
 
-         @date = $self->_int_values($every,$yf,$mf,$wf,$df,$start,$end);
+      #
+      #  Y:M:W*D:H:MN:S
+      #
+
+      #   0:0:3*0       every 3 weeks on FirstDay
+      #   0:0:3*4       every 3 weeks on Thur
+      #   0:2:3*0       every 2 months, 3 weeks on FirstDay
+      #   0:2:3*4       every 2 months, 3 weeks on Thur
+      #   1:0:3*0       every 1 year, 3 weeks on FirstDay
+      #   1:0:3*4       every 1 year, 3 weeks on Thur
+      #   1:2:3*0       every 1 year, 2 months, 3 weeks on FirstDay
+      #   1:2:3*4       every 1 year, 2 months, 3 weeks on Thur
+
+      my @tmp = $self->_int_values($every,$yf,$mf,$wf,$start,$end);
+
+      my $fdow = $dmb->_config('firstday');
+      if ($d_empty) {
+         @dow = ($fdow);
+      } else {
+         ($err,@dow)  = $self->_rtime_values('day_of_week',$df);
+         return ()  if ($err);
       }
 
-      when (5) {
-         #
-         # Y:M:W:D:H*MN:S
-         #
+      foreach my $date (@tmp) {
+         my($y,$m,$d) = @$date;
+         my ($mm,$dd);
+         my($yy,$ww)     = $dmb->week_of_year([$y,$m,$d]);
+         ($yy,$mm,$dd)   = @{ $dmb->week_of_year($yy,$ww) };
 
-         @date = $self->_int_values($every,$yf,$mf,$wf,$df,$hf,$start,$end);
+         foreach my $dow (@dow) {
+            $dow += 7  if ($dow < $fdow);
+            my($yyy,$mmm,$ddd) = @{ $dmb->calc_date_days([$yy,$mm,$dd],$dow-$fdow) };
+            push(@date,[$yyy,$mmm,$ddd]);
+         }
       }
 
-      when (6) {
-         #
-         # Y:M:W:D:H:MN*S
-         #
+   } elsif ($n == 4) {
 
-         @date = $self->_int_values($every,$yf,$mf,$wf,$df,$hf,$mnf,$start,$end);
-      }
+      #
+      # Y:M:W:D*H:MN:S
+      #
 
-      when (7) {
-         #
-         # Y:M:W:D:H:MN:S
-         #
+      @date = $self->_int_values($every,$yf,$mf,$wf,$df,$start,$end);
 
-         @date = $self->_int_values($every,$yf,$mf,$wf,$df,$hf,$mnf,$sf,$start,$end);
-      }
+   } elsif ($n == 5) {
+
+      #
+      # Y:M:W:D:H*MN:S
+      #
+
+      @date = $self->_int_values($every,$yf,$mf,$wf,$df,$hf,$start,$end);
+
+   } elsif ($n == 6) {
+
+      #
+      # Y:M:W:D:H:MN*S
+      #
+
+      @date = $self->_int_values($every,$yf,$mf,$wf,$df,$hf,$mnf,$start,$end);
+
+   } elsif ($n == 7) {
+
+      #
+      # Y:M:W:D:H:MN:S
+      #
+
+      @date = $self->_int_values($every,$yf,$mf,$wf,$df,$hf,$mnf,$sf,$start,$end);
    }
 
    #
@@ -1149,106 +1124,92 @@ sub dates {
          my ($y,$m,$d,$h,$mn,$s) = @$date;
 
          foreach my $flag (@flags) {
-
             my(@wd,$today);
-            given($flag) {
 
-               when ('easter') {
-                     ($m,$d) = $self->_easter($y);
-               }
+            if ($flag =~ /^([pn])([dt])([1-7])$/) {
+               my($forw,$today,$dow) = ($1,$2,$3);
+               $forw  = ($forw  eq 'p' ? 0 : 1);
+               $today = ($today eq 'd' ? 0 : 1);
+               ($y,$m,$d,$h,$mn,$s) =
+                 @{ $obj->__next_prev([$y,$m,$d,$h,$mn,$s],$forw,$dow,$today) };
 
-               when (/^([pn])([dt])([1-7])$/) {
-                  my($forw,$today,$dow) = ($1,$2,$3);
-                  $forw  = ($forw  eq 'p' ? 0 : 1);
-                  $today = ($today eq 'd' ? 0 : 1);
+            } elsif ($flag =~ /^([fb])([dw])(\d+)$/) {
+               my($prev,$business,$n) = ($1,$2,$3);
+               $prev     = ($prev     eq 'b' ? 1 : 0);
+               $business = ($business eq 'w' ? 1 : 0);
+
+               if ($business) {
                   ($y,$m,$d,$h,$mn,$s) =
-                    @{ $obj->__next_prev([$y,$m,$d,$h,$mn,$s],$forw,$dow,$today) };
+                    @{ $obj->__nextprev_business_day($prev,$n,0,[$y,$m,$d,$h,$mn,$s]) };
+               } else {
+                  ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],$n,$prev) };
                }
 
-               when (/^([fb])([dw])(\d+)$/) {
-                  my($prev,$business,$n) = ($1,$2,$3);
-                  $prev     = ($prev     eq 'b' ? 1 : 0);
-                  $business = ($business eq 'w' ? 1 : 0);
-
-                  if ($business) {
-                     ($y,$m,$d,$h,$mn,$s) =
-                       @{ $obj->__nextprev_business_day($prev,$n,0,[$y,$m,$d,$h,$mn,$s]) };
-                  } else {
-                     ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],$n,$prev) };
-                  }
+            } elsif ($flag eq 'nwd') {
+               if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
+                  ($y,$m,$d,$h,$mn,$s) =
+                    @{ $obj->__nextprev_business_day(0,0,0,[$y,$m,$d,$h,$mn,$s]) };
                }
 
-               when ('nwd') {
-                  if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
-                     ($y,$m,$d,$h,$mn,$s) =
-                       @{ $obj->__nextprev_business_day(0,0,0,[$y,$m,$d,$h,$mn,$s]) };
-                  }
+            } elsif ($flag eq 'pwd') {
+               if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
+                  ($y,$m,$d,$h,$mn,$s) =
+                    @{ $obj->__nextprev_business_day(1,1,0,[$y,$m,$d,$h,$mn,$s]) };
                }
 
-               when ('pwd') {
-                  if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
-                     ($y,$m,$d,$h,$mn,$s) =
-                       @{ $obj->__nextprev_business_day(1,1,0,[$y,$m,$d,$h,$mn,$s]) };
-                  }
-               }
+            } elsif ($flag eq 'easter') {
+               ($m,$d) = $self->_easter($y);
 
-               when ('dwd') {
-                  if (! $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
-                     continue;
-                  }
-               }
+            } elsif ($flag eq 'dwd'  &&
+                     $obj->__is_business_day([$y,$m,$d,$h,$mn,$s],0)) {
+               # nothing
 
-               when (['cwd','dwd']) {
+            } else {
+
+               if ($flag eq 'cwd'  ||  $flag eq 'dwd') {
                   if ($dmb->_config('tomorrowfirst')) {
                      @wd = ([$y,$m,$d,$h,$mn,$s],+1,  [$y,$m,$d,$h,$mn,$s],-1);
                   } else {
                      @wd = ([$y,$m,$d,$h,$mn,$s],-1,  [$y,$m,$d,$h,$mn,$s],+1);
                   }
-                  continue;
-               }
 
-               when ('cwn') {
+               } elsif ($flag eq 'cwn') {
                   @wd = ([$y,$m,$d,$h,$mn,$s],+1,  [$y,$m,$d,$h,$mn,$s],-1);
                   $today = 0;
-                  continue;
-               }
 
-               when ('cwp') {
+               } elsif ($flag eq 'cwp') {
                   @wd = ([$y,$m,$d,$h,$mn,$s],-1,  [$y,$m,$d,$h,$mn,$s],+1);
                   $today = 0;
-                  continue;
                }
 
-               default {
-                  while (1) {
-                     my(@d,$off);
+               while (1) {
+                  my(@d,$off);
 
-                     # Test in the first direction
+                  # Test in the first direction
 
-                     @d   = @{ $wd[0] };
-                     $off = $wd[1];
-                     @d   = @{ $dmb->calc_date_days(\@d,$off) };
+                  @d   = @{ $wd[0] };
+                  $off = $wd[1];
+                  @d   = @{ $dmb->calc_date_days(\@d,$off) };
 
-                     if ($obj->__is_business_day(\@d,0)) {
-                        ($y,$m,$d,$h,$mn,$s) = @d;
-                        last;
-                     }
-
-                     $wd[0] = [@d];
-
-                     # Test in the other direction
-
-                     @d   = @{ $wd[2] };
-                     $off = $wd[3];
-                     @d   = @{ $dmb->calc_date_days(\@d,$off) };
-
-                     if ($obj->__is_business_day(\@d,0)) {
-                        ($y,$m,$d,$h,$mn,$s) = @d;
-                        last;
-                     }
-
-                     $wd[2] = [@d];
+                  if ($obj->__is_business_day(\@d,0)) {
+                     ($y,$m,$d,$h,$mn,$s) = @d;
+                     last;
                   }
+
+                  $wd[0] = [@d];
+
+                  # Test in the other direction
+
+                  @d   = @{ $wd[2] };
+                  $off = $wd[3];
+                  @d   = @{ $dmb->calc_date_days(\@d,$off) };
+
+                  if ($obj->__is_business_day(\@d,0)) {
+                     ($y,$m,$d,$h,$mn,$s) = @d;
+                     last;
+                  }
+
+                  $wd[2] = [@d];
                }
 
             }
@@ -1298,7 +1259,8 @@ sub dates {
 
 sub _rx {
    my($self,$rx) = @_;
-   my $dmb       = $$self{'objs'}{'base'};
+   my $dmt       = $$self{'tz'};
+   my $dmb       = $$dmt{'base'};
 
    return $$dmb{'data'}{'rx'}{'recur'}{$rx}
      if (exists $$dmb{'data'}{'rx'}{'recur'}{$rx});
@@ -1467,7 +1429,8 @@ sub _int_values {
    my($self,$every,@args) = @_;
    my $end                = pop(@args);
    my $start              = pop(@args);
-   my $dmb                = $$self{'objs'}{'base'};
+   my $dmt                = $$self{'tz'};
+   my $dmb                = $$dmt{'base'};
    my @vals;
 
    # Get the start, end, and base dates.
@@ -1543,113 +1506,101 @@ sub _int_values {
 #
 sub _rtime_values {
    my($self,$type,$val,@args) = @_;
-   my $dmb                    = $$self{'objs'}{'base'};
+   my $dmt                    = $$self{'tz'};
+   my $dmb                    = $$dmt{'base'};
 
-   given($type) {
+   if ($type eq 'h') {
+      @args = (0,0,23,23);
 
-      when ('h') {
-         @args = (0,0,23,23);
+   } elsif ($type eq 'mn') {
+      @args = (0,0,59,59);
+
+   } elsif ($type eq 's') {
+      @args = (0,0,59,59);
+
+   } elsif ($type eq 'y') {
+      my ($curry) = $dmt->_now('y',1);
+      foreach my $y (@$val) {
+         $y = $curry  if (! ref($y)  &&  $y==0);
       }
 
-      when ('mn') {
-         @args = (0,0,59,59);
+      @args = (0,1,9999,9999);
+
+   } elsif ($type eq 'm') {
+      @args = (0,1,12,12);
+
+   } elsif ($type eq 'week_of_year') {
+      my($y)  = @args;
+      my $wiy = $dmb->weeks_in_year($y);
+      @args = (1,1,$wiy,53);
+
+   } elsif ($type eq 'dow_of_year') {
+      my($y,$dow) = @args;
+
+      # Get the 1st occurence of $dow
+      my $d0   = 1;
+      my $dow0 = $dmb->day_of_week([$y,1,$d0]);
+      if ($dow > $dow0) {
+         $d0  += ($dow-$dow0);
+      } elsif ($dow < $dow0) {
+         $d0  += 7-($dow0-$dow);
       }
 
-      when ('s') {
-         @args = (0,0,59,59);
+      # Get the last occurrence of $dow
+      my $d1   = 31;
+      my $dow1 = $dmb->day_of_week([$y,12,$d1]);
+      if ($dow1 > $dow) {
+         $d1  -= ($dow1-$dow);
+      } elsif ($dow1 < $dow) {
+         $d1  -= 7-($dow-$dow1);
       }
 
-      when ('y') {
-         my ($curry) = $dmb->_now('y',1);
-         foreach my $y (@$val) {
-            $y = $curry  if (! ref($y)  &&  $y==0);
-         }
+      # Find out the number of occurrenced of $dow
+      my $doy1 = $dmb->day_of_year([$y,12,$d1]);
+      my $n    = ($doy1 - $d0)/7 + 1;
 
-         @args = (0,1,9999,9999);
+      # Get the list of @w
+      @args = (1,1,$n,53);
+
+   } elsif ($type eq 'dow_of_month') {
+      my($y,$m,$dow) = @args;
+
+      # Get the 1st occurence of $dow in the month
+      my $d0   = 1;
+      my $dow0 = $dmb->day_of_week([$y,$m,$d0]);
+      if ($dow > $dow0) {
+         $d0  += ($dow-$dow0);
+      } elsif ($dow < $dow0) {
+         $d0  += 7-($dow0-$dow);
       }
 
-      when ('m') {
-         @args = (0,1,12,12);
+      # Get the last occurrence of $dow
+      my $d1   = $dmb->days_in_month($y,$m);
+      my $dow1 = $dmb->day_of_week([$y,$m,$d1]);
+      if ($dow1 > $dow) {
+         $d1  -= ($dow1-$dow);
+      } elsif ($dow1 < $dow) {
+         $d1  -= 7-($dow-$dow1);
       }
 
-      when ('week_of_year') {
-         my($y)  = @args;
-         my $wiy = $dmb->weeks_in_year($y);
-         @args = (1,1,$wiy,53);
-      }
+      # Find out the number of occurrenced of $dow
+      my $n    = ($d1 - $d0)/7 + 1;
 
-      when ('dow_of_year') {
-         my($y,$dow) = @args;
+      # Get the list of @w
+      @args = (1,1,$n,5);
 
-         # Get the 1st occurence of $dow
-         my $d0   = 1;
-         my $dow0 = $dmb->day_of_week([$y,1,$d0]);
-         if ($dow > $dow0) {
-            $d0  += ($dow-$dow0);
-         } elsif ($dow < $dow0) {
-            $d0  += 7-($dow0-$dow);
-         }
+   } elsif ($type eq 'day_of_year') {
+      my($y)  = @args;
+      my $diy = $dmb->days_in_year($y);
+      @args = (1,1,$diy,366);
 
-         # Get the last occurrence of $dow
-         my $d1   = 31;
-         my $dow1 = $dmb->day_of_week([$y,12,$d1]);
-         if ($dow1 > $dow) {
-            $d1  -= ($dow1-$dow);
-         } elsif ($dow1 < $dow) {
-            $d1  -= 7-($dow-$dow1);
-         }
+   } elsif ($type eq 'day_of_month') {
+      my($y,$m) = @args;
+      my $dim = $dmb->days_in_month($y,$m);
+      @args = (1,1,$dim,31);
 
-         # Find out the number of occurrenced of $dow
-         my $doy1 = $dmb->day_of_year([$y,12,$d1]);
-         my $n    = ($doy1 - $d0)/7 + 1;
-
-         # Get the list of @w
-         @args = (1,1,$n,53);
-      }
-
-      when ('dow_of_month') {
-         my($y,$m,$dow) = @args;
-
-         # Get the 1st occurence of $dow in the month
-         my $d0   = 1;
-         my $dow0 = $dmb->day_of_week([$y,$m,$d0]);
-         if ($dow > $dow0) {
-            $d0  += ($dow-$dow0);
-         } elsif ($dow < $dow0) {
-            $d0  += 7-($dow0-$dow);
-         }
-
-         # Get the last occurrence of $dow
-         my $d1   = $dmb->days_in_month($y,$m);
-         my $dow1 = $dmb->day_of_week([$y,$m,$d1]);
-         if ($dow1 > $dow) {
-            $d1  -= ($dow1-$dow);
-         } elsif ($dow1 < $dow) {
-            $d1  -= 7-($dow-$dow1);
-         }
-
-         # Find out the number of occurrenced of $dow
-         my $n    = ($d1 - $d0)/7 + 1;
-
-         # Get the list of @w
-         @args = (1,1,$n,5);
-      }
-
-      when ('day_of_year') {
-         my($y)  = @args;
-         my $diy = $dmb->days_in_year($y);
-         @args = (1,1,$diy,366);
-      }
-
-      when ('day_of_month') {
-         my($y,$m) = @args;
-         my $dim = $dmb->days_in_month($y,$m);
-         @args = (1,1,$dim,31);
-      }
-
-      when ('day_of_week') {
-         @args = (0,1,7,7);
-      }
+   } elsif ($type eq 'day_of_week') {
+      @args = (0,1,7,7);
    }
 
    my($err,@vals) = $self->__rtime_values($val,@args);

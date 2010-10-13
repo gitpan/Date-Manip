@@ -21,8 +21,8 @@ sub test {
 
 $dmt = new Date::Manip::TZ;
 $obj = $dmt->base();
-$obj->config("forcedate","now,America/New_York");
-$obj->config("ConfigFile","$testdir/Manip.cnf");
+$dmt->config("forcedate","now,America/New_York");
+$dmt->config("ConfigFile","$testdir/Manip.cnf");
 
 $tests="
 

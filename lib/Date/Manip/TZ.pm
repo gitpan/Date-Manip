@@ -12,19 +12,20 @@ package Date::Manip::TZ;
 ########################################################################
 
 use Date::Manip::Obj;
-@ISA = ('Date::Manip::Obj');
+use Date::Manip::TZ_Base;
+@ISA = qw(Date::Manip::Obj Date::Manip::TZ_Base);
 
 require 5.010000;
 use warnings;
 use strict;
-use feature 'switch';
 
 use IO::File;
 require Date::Manip::Zones;
 use Date::Manip::Base;
 
-use vars qw($VERSION);
-$VERSION='6.12';
+our $VERSION;
+$VERSION='6.13';
+END { undef $VERSION; }
 
 ########################################################################
 # BASE METHODS
@@ -74,7 +75,7 @@ sub _init {
 
    # OS specific stuff
 
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmb = $$self{'base'};
    my $os  = $dmb->_os();
 
    if ($os eq 'Unix') {
@@ -92,8 +93,11 @@ sub _init {
                                    qw(cmdfield /bin/date -2
                                       cmdfield /usr/bin/date -2
                                       cmdfield /usr/local/bin/date -2
-                                      gmtoff
                                     ),
+                                   'command',  '/bin/date +%z',
+                                   'command',  '/usr/bin/date +%z',
+                                   'command',  '/usr/local/bin/date +%z',
+                                   'gmtoff'
                                   ];
 
    } elsif ($os eq 'Windows') {
@@ -254,7 +258,7 @@ sub define_abbrev {
 
 sub define_offset {
    my($self,$offset,@args) = @_;
-   my $dmb                 = $$self{'objs'}{'base'};
+   my $dmb                 = $$self{'base'};
 
    if (lc($offset) eq 'reset') {
       $$self{'data'}{'MyOffsets'} = {};
@@ -338,13 +342,13 @@ sub define_offset {
 
 sub curr_zone {
    my($self,$reset) = @_;
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmb = $$self{'base'};
 
    if ($reset) {
       $self->_set_curr_zone();
    }
 
-   my($ret) = $dmb->_now('systz',1);
+   my($ret) = $self->_now('systz',1);
    return $$self{'data'}{'ZoneNames'}{$ret}
 }
 
@@ -361,7 +365,7 @@ sub curr_zone_methods {
 
 sub _set_curr_zone {
    my($self) = @_;
-   my $dmb   = $$self{'objs'}{'base'};
+   my $dmb   = $$self{'base'};
    my $currzone = $self->_get_curr_zone();
 
    $$dmb{'data'}{'now'}{'systz'} = $self->_zone($currzone);
@@ -372,7 +376,7 @@ sub _set_curr_zone {
 #
 sub _get_curr_zone {
    my($self) = @_;
-   my $dmb   = $$self{'objs'}{'base'};
+   my $dmb   = $$self{'base'};
 
    my $t = time;
    my($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($t);
@@ -384,111 +388,102 @@ sub _get_curr_zone {
       my $method = shift(@methods);
       my @zone   = ();
 
-      given ($method) {
+      if ($method eq 'main') {
 
-         when ('main') {
-            if (! @methods) {
-               warn "ERROR: [_set_curr_zone] main requires argument\n";
-               return;
-            }
-            my $var = shift(@methods);
-            push(@zone,$$::var)  if (defined $$::var);
-         }
-
-         when ('env') {
-            if (! @methods) {
-               warn "ERROR: [_set_curr_zone] env requires argument\n";
-               return;
-            }
-            my $var = shift(@methods);
-            push(@zone,$ENV{$var})  if (exists $ENV{$var});
-         }
-
-         when ('file') {
-            if (! @methods) {
-               warn "ERROR: [_set_curr_zone] file requires argument\n";
-               return;
-            }
-            my $file = shift(@methods);
-            next  if (! -f $file);
-
-            my $in = new IO::File;
-            $in->open($file)  ||  next;
-            my $firstline = 1;
-            while (! $in->eof) {
-               my $line = <$in>;
-               next  if ($line =~ /^\s*\043/  ||
-                         $line =~ /^\s*$/);
-               if ($line =~ /^\s*(?:TZ|TIMEZONE|ZONE)\s*=\s*(\S+)/i) {
-                  my $zone = $1;
-                  $zone    =~ s/["']//g;  # "
-                  push(@zone,$zone);
-                  last;
-               }
-               if ($firstline) {
-                  $firstline = 0;
-                  $line      =~ s/\s//g;
-                  $line      =~ s/["']//g;  # "
-                  push(@zone,$line);
-               }
-            }
-            close(IN);
-         }
-
-         when ('command') {
-            if (! @methods) {
-               warn "ERROR: [_set_curr_zone] command requires argument\n";
-               return;
-            }
-            my $command = shift(@methods);
-            my ($out)   = _cmd($command);
-            push(@zone,$out)  if ($out);
-         }
-
-         when ('cmdfield') {
-            if ($#methods < 1) {
-               warn "ERROR: [_set_curr_zone] cmdfield requires 2 arguments\n";
-               return;
-            }
-            my $command = shift(@methods);
-            my $n       = shift(@methods);
-            my ($out)   = _cmd($command);
-            if ($out) {
-               $out    =~ s/^\s*//;
-               $out    =~ s/\s*$//;
-               my @out = split(/\s+/,$out);
-               push(@zone,$out[$n])  if (defined $out[$n]);
-            }
-         }
-
-         when ('gmtoff') {
-            my($secUT,$minUT,$hourUT,$mdayUT,$monUT,$yearUT,$wdayUT,$ydayUT,
-               $isdstUT) = gmtime($t);
-            if ($mdayUT>($mday+1)) {
-               # UT = 28-31   LT = 1
-               $mdayUT=0;
-            } elsif ($mdayUT<($mday-1)) {
-               # UT = 1       LT = 28-31
-               $mday=0;
-            }
-            $sec    = (($mday*24   + $hour)*60   + $min)*60 + $sec;
-            $secUT  = (($mdayUT*24 + $hourUT)*60 + $minUT)*60 + $secUT;
-            my $off = $sec-$secUT;
-
-            $off    = $dmb->_delta_convert('time',"0:0:$off");
-            $off    = $dmb->_delta_convert('offset',$off);
-            push(@zone,$off);
-         }
-
-         when ('registry') {
-            my $z = $self->_windows_registry_val();
-            push(@zone,$z)  if ($z);
-         }
-
-         default {
-            warn "ERROR: [_set_curr_zone] invalid method: $method\n";
+         if (! @methods) {
+            warn "ERROR: [_set_curr_zone] main requires argument\n";
             return;
          }
+         my $var = shift(@methods);
+         push(@zone,$$::var)  if (defined $$::var);
+
+      } elsif ($method eq 'env') {
+         if (! @methods) {
+            warn "ERROR: [_set_curr_zone] env requires argument\n";
+            return;
+         }
+         my $var = shift(@methods);
+         push(@zone,$ENV{$var})  if (exists $ENV{$var});
+
+      } elsif ($method eq 'file') {
+         if (! @methods) {
+            warn "ERROR: [_set_curr_zone] file requires argument\n";
+            return;
+         }
+         my $file = shift(@methods);
+         next  if (! -f $file);
+
+         my $in = new IO::File;
+         $in->open($file)  ||  next;
+         my $firstline = 1;
+         while (! $in->eof) {
+            my $line = <$in>;
+            next  if ($line =~ /^\s*\043/  ||
+                      $line =~ /^\s*$/);
+            if ($line =~ /^\s*(?:TZ|TIMEZONE|ZONE)\s*=\s*(\S+)/i) {
+               my $zone = $1;
+               $zone    =~ s/["']//g;  # "
+               push(@zone,$zone);
+               last;
+            }
+            if ($firstline) {
+               $firstline = 0;
+               $line      =~ s/\s//g;
+               $line      =~ s/["']//g;  # "
+               push(@zone,$line);
+            }
+         }
+         close(IN);
+
+      } elsif ($method eq 'command') {
+         if (! @methods) {
+            warn "ERROR: [_set_curr_zone] command requires argument\n";
+            return;
+         }
+         my $command = shift(@methods);
+         my ($out)   = _cmd($command);
+         push(@zone,$out)  if ($out);
+
+      } elsif ($method eq 'cmdfield') {
+         if ($#methods < 1) {
+            warn "ERROR: [_set_curr_zone] cmdfield requires 2 arguments\n";
+            return;
+         }
+         my $command = shift(@methods);
+         my $n       = shift(@methods);
+         my ($out)   = _cmd($command);
+         if ($out) {
+            $out    =~ s/^\s*//;
+            $out    =~ s/\s*$//;
+            my @out = split(/\s+/,$out);
+            push(@zone,$out[$n])  if (defined $out[$n]);
+         }
+
+      } elsif ($method eq 'gmtoff') {
+         my($secUT,$minUT,$hourUT,$mdayUT,$monUT,$yearUT,$wdayUT,$ydayUT,
+            $isdstUT) = gmtime($t);
+         if ($mdayUT>($mday+1)) {
+            # UT = 28-31   LT = 1
+            $mdayUT=0;
+         } elsif ($mdayUT<($mday-1)) {
+            # UT = 1       LT = 28-31
+            $mday=0;
+         }
+         $sec    = (($mday*24   + $hour)*60   + $min)*60 + $sec;
+         $secUT  = (($mdayUT*24 + $hourUT)*60 + $minUT)*60 + $secUT;
+         my $off = $sec-$secUT;
+
+         $off    = $dmb->_delta_convert('time',"0:0:$off");
+         $off    = $dmb->_delta_convert('offset',$off);
+         push(@zone,$off);
+
+      } elsif ($method eq 'registry') {
+         my $z = $self->_windows_registry_val();
+         push(@zone,$z)  if ($z);
+
+      } else {
+         warn "ERROR: [_set_curr_zone] invalid method: $method\n";
+         return;
       }
 
       foreach my $zone (@zone) {
@@ -601,9 +596,9 @@ use warnings;
 
 sub zone {
    my($self,@args) = @_;
-   my $dmb         = $$self{'objs'}{'base'};
+   my $dmb         = $$self{'base'};
    if (! @args) {
-      my($tz) = $dmb->_now('tz',1);
+      my($tz) = $self->_now('tz',1);
       return $$self{'data'}{'ZoneNames'}{$tz}
    }
 
@@ -679,7 +674,7 @@ sub zone {
       if (! $zone  &&
           ! $abbrev  &&
           ! $offset) {
-         my($z) = $dmb->_now('tz',1);
+         my($z) = $self->_now('tz',1);
          @zone = (lc($z));
       }
 
@@ -1055,7 +1050,7 @@ sub date_period {
    $zone = $z;
    $self->_module($zone);
 
-   my $dmb  = $$self{'objs'}{'base'};
+   my $dmb  = $$self{'base'};
    my @date = @$date;
    my $year = $date[0];
    my $dates= $dmb->_join_date($date);
@@ -1141,7 +1136,7 @@ sub _lastrule {
    #
 
    my @dates = ();
-   my $dmb   = $$self{'objs'}{'base'};
+   my $dmb   = $$self{'base'};
 
    my $stdoff = $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'zone'}{'stdoff'};
    my $dstoff = $$self{'data'}{'Zones'}{$zone}{'LastRule'}{'zone'}{'dstoff'};
@@ -1210,10 +1205,10 @@ sub convert_to_gmt {
    my($err,$from,$isdst) = _convert_args('convert_to_gmt',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmb = $$self{'base'};
 
    if (! $from) {
-      ($from) = $dmb->_now('tz',1);
+      ($from) = $self->_now('tz',1);
    }
    $self->_convert('convert_to_gmt',$date,$from,'GMT',$isdst);
 }
@@ -1223,10 +1218,10 @@ sub convert_from_gmt {
    my($err,$to,$isdst) = _convert_args('convert_from_gmt',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmb = $$self{'base'};
 
    if (! $to) {
-      ($to) = $dmb->_now('tz',1);
+      ($to) = $self->_now('tz',1);
    }
    $self->_convert('convert_from_gmt',$date,'GMT',$to,$isdst);
 }
@@ -1236,12 +1231,12 @@ sub convert_to_local {
    my($err,$from,$isdst) = _convert_args('convert_to_local',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmb = $$self{'base'};
 
    if (! $from) {
       $from = 'GMT';
    }
-   $self->_convert('convert_to_local',$date,$from,$dmb->_now('tz',1),$isdst);
+   $self->_convert('convert_to_local',$date,$from,$self->_now('tz',1),$isdst);
 }
 
 sub convert_from_local {
@@ -1249,12 +1244,12 @@ sub convert_from_local {
    my($err,$to,$isdst) = _convert_args('convert_from_local',@arg);
    return (1) if ($err);
 
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmb = $$self{'base'};
 
    if (! $to) {
       $to = 'GMT';
    }
-   $self->_convert('convert_from_local',$date,$dmb->_now('tz',1),$to,$isdst);
+   $self->_convert('convert_from_local',$date,$self->_now('tz',1),$to,$isdst);
 }
 
 sub _convert_args {
@@ -1278,7 +1273,7 @@ sub _convert_args {
 
 sub _convert {
    my($self,$caller,$date,$from,$to,$isdst) = @_;
-   my $dmb = $$self{'objs'}{'base'};
+   my $dmb = $$self{'base'};
 
    # Handle $date as a reference and a string
    my (@date);
@@ -1448,6 +1443,223 @@ sub _sortByLength {
   return (length $b <=> length $a);
 }
 use strict 'vars';
+
+########################################################################
+# CONFIG VARS
+########################################################################
+
+# This sets a config variable. It also performs all side effects from
+# setting that variable.
+#
+sub _config_var_tz {
+   my($self,$var,$val) = @_;
+
+   if ($var eq 'tz') {
+      my $err = $self->_config_var_setdate("now,$val",0);
+      return  if ($err);
+      $$self{'data'}{'sections'}{'conf'}{'forcedate'} = 0;
+      $val = 1;
+
+   } elsif ($var eq 'setdate') {
+      my $err = $self->_config_var_setdate($val,0);
+      return  if ($err);
+      $$self{'data'}{'sections'}{'conf'}{'forcedate'} = 0;
+      $val = 1;
+
+   } elsif ($var eq 'forcedate') {
+      my $err = $self->_config_var_setdate($val,1);
+      return  if ($err);
+      $$self{'data'}{'sections'}{'conf'}{'setdate'} = 0;
+      $val = 1;
+   }
+
+   my $base = $$self{'base'};
+   $$base{'data'}{'sections'}{'conf'}{$var} = $val;
+   return;
+}
+
+sub _config_var_setdate {
+   my($self,$val,$force) = @_;
+   my $base = $$self{'base'};
+
+   my $dstrx = qr/(?:,(stdonly|dstonly|std|dst))?/i;
+   my $zonrx = qr/,(.+)/;
+   my $da1rx = qr/(\d\d\d\d)(\d\d)(\d\d)(\d\d):(\d\d):(\d\d)/;
+   my $da2rx = qr/(\d\d\d\d)\-(\d\d)\-(\d\d)\-(\d\d):(\d\d):(\d\d)/;
+   my $time  = time;
+
+   my($op,$date,$dstflag,$zone,@date,$offset,$abb);
+
+   #
+   # Parse the argument
+   #
+
+   if ($val =~ /^now${dstrx}${zonrx}$/oi) {
+      # now,ZONE
+      # now,DSTFLAG,ZONE
+      #    Sets now to the system date/time but sets the timezone to be ZONE
+
+      $op = 'nowzone';
+      ($dstflag,$zone) = ($1,$2);
+
+   } elsif ($val =~ /^zone${dstrx}${zonrx}$/oi) {
+      # zone,ZONE
+      # zone,DSTFLAG,ZONE
+      #    Converts 'now' to the alternate zone
+
+      $op = 'zone';
+      ($dstflag,$zone) = ($1,$2);
+
+   } elsif ($val =~ /^${da1rx}${dstrx}${zonrx}$/o  ||
+            $val =~ /^${da2rx}${dstrx}${zonrx}$/o) {
+      # DATE,ZONE
+      # DATE,DSTFLAG,ZONE
+      #    Sets the date and zone
+
+      $op = 'datezone';
+      my($y,$m,$d,$h,$mn,$s);
+      ($y,$m,$d,$h,$mn,$s,$dstflag,$zone) = ($1,$2,$3,$4,$5,$6,$7,$8);
+      $date = [$y,$m,$d,$h,$mn,$s];
+
+   } elsif ($val =~ /^${da1rx}$/o  ||
+            $val =~ /^${da2rx}$/o) {
+      # DATE
+      #    Sets the date in the system timezone
+
+      $op = 'date';
+      my($y,$m,$d,$h,$mn,$s) = ($1,$2,$3,$4,$5,$6);
+      $date   = [$y,$m,$d,$h,$mn,$s];
+      ($zone) = $self->_now('systz',1);
+
+   } elsif (lc($val) eq 'now') {
+      # now
+      #    Resets everything
+
+      my $systz = $$base{'data'}{'now'}{'systz'};
+      $base->_init_now();
+      $$base{'data'}{'now'}{'systz'} = $systz;
+      return 0;
+
+   } else {
+      warn "ERROR: [config_var] invalid SetDate/ForceDate value: $val\n";
+      return 1;
+   }
+
+   $dstflag = 'std'  if (! $dstflag);
+
+   #
+   # Get the date we're setting 'now' to
+   #
+
+   if ($op eq 'nowzone') {
+      # Use the system localtime
+
+      my($s,$mn,$h,$d,$m,$y) = localtime($time);
+      $y += 1900;
+      $m++;
+      $date = [$y,$m,$d,$h,$mn,$s];
+
+   } elsif ($op eq 'zone') {
+      # Use the system GMT time
+
+      my($s,$mn,$h,$d,$m,$y) = gmtime($time);
+      $y += 1900;
+      $m++;
+      $date = [$y,$m,$d,$h,$mn,$s];
+   }
+
+   #
+   # Find out what zone was passed in. It can be an alias or an offset.
+   #
+
+   if ($zone) {
+      my ($err,@args);
+      push(@args,$date)  if ($date);
+      push(@args,$zone);
+      push(@args,$dstflag);
+
+      $zone = $self->zone(@args);
+      if (! $zone) {
+         warn "ERROR: [config_var] invalid zone in SetDate\n";
+         return 1;
+      }
+
+   } else {
+      $zone = $$base{'data'}{'now'}{'systz'};
+   }
+
+   #
+   # Handle the zone
+   #
+
+   my($isdst,@isdst);
+   if      ($dstflag eq 'std') {
+      @isdst = (0,1);
+   } elsif ($dstflag eq 'stdonly') {
+      @isdst = (0);
+   } elsif ($dstflag eq 'dst') {
+      @isdst = (1,0);
+   } else {
+      @isdst = (1);
+   }
+
+   if ($op eq 'nowzone'  ||
+       $op eq 'datezone' ||
+       $op eq 'date') {
+
+      # Check to make sure that the date can exist in this zone.
+      my $per;
+      foreach my $dst (@isdst) {
+         next  if ($per);
+         $per = $self->date_period($date,$zone,1,$dst);
+      }
+
+      if (! $per) {
+         warn "ERROR: [config_var] invalid date: SetDate\n";
+         return 1;
+      }
+      $isdst  = $$per[5];
+      $abb    = $$per[4];
+      $offset = $$per[3];
+
+   } elsif ($op eq 'zone') {
+
+      # Convert to that zone
+      my($err);
+      ($err,$date,$offset,$isdst,$abb) = $self->convert_from_gmt($date,$zone);
+      if ($err) {
+         warn "ERROR: [config_var] invalid SetDate date/offset values\n";
+         return 1;
+      }
+   }
+
+   #
+   # Set NOW
+   #
+
+   $$base{'data'}{'now'}{'date'}   = $date;
+   $$base{'data'}{'now'}{'tz'}     = $self->_zone($zone);
+   $$base{'data'}{'now'}{'isdst'}  = $isdst;
+   $$base{'data'}{'now'}{'abb'}    = $abb;
+   $$base{'data'}{'now'}{'offset'} = $offset;
+
+   #
+   # Treate SetDate/ForceDate
+   #
+
+   if ($force) {
+      $$base{'data'}{'now'}{'force'}   = 1;
+      $$base{'data'}{'now'}{'set'}     = 0;
+   } else {
+      $$base{'data'}{'now'}{'force'}   = 0;
+      $$base{'data'}{'now'}{'set'}     = 1;
+      $$base{'data'}{'now'}{'setsecs'} = $time;
+      my($err,$setdate)                = $self->convert_to_gmt($date,$zone);
+      $$base{'data'}{'now'}{'setdate'} = $setdate;
+   }
+
+   return 0;
+}
 
 1;
 # Local Variables:

@@ -12,14 +12,20 @@ use strict;
 use integer;
 use warnings;
 
-use vars qw($VERSION);
-$VERSION='6.12';
+our $VERSION;
+$VERSION='6.13';
+END { undef $VERSION; }
 
 ###############################################################################
 # GLOBAL VARIABLES
 ###############################################################################
 
-use vars qw($Verbose @StdFiles $dmb);
+our ($Verbose,@StdFiles,$dmb);
+END {
+   undef $Verbose;
+   undef @StdFiles;
+   undef $dmb;
+}
 $dmb          = new Date::Manip::Base;
 
 # Whether to print some debugging stuff.
@@ -40,14 +46,25 @@ $Verbose      = 0;
                backward
               );
 
-use vars qw($TZ_DOM $TZ_LAST $TZ_GE $TZ_LE);
+our ($TZ_DOM,$TZ_LAST,$TZ_GE,$TZ_LE);
+END {
+   undef $TZ_DOM;
+   undef $TZ_LAST;
+   undef $TZ_GE;
+   undef $TZ_LE;
+}
 
 $TZ_DOM       = 1;
 $TZ_LAST      = 2;
 $TZ_GE        = 3;
 $TZ_LE        = 4;
 
-use vars qw($TZ_STANDARD $TZ_RULE $TZ_OFFSET);
+our ($TZ_STANDARD,$TZ_RULE,$TZ_OFFSET);
+END {
+   undef $TZ_STANDARD;
+   undef $TZ_RULE;
+   undef $TZ_OFFSET;
+}
 $TZ_STANDARD  = 1;
 $TZ_RULE      = 2;
 $TZ_OFFSET    = 3;

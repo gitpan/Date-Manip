@@ -783,10 +783,9 @@ package:
 An introduction to the Date::Manip classes and how to configure
 them:
 
-  Date::Manip::Objects 	  - a basic description of the various
-                       	    Date::Manip modules, and how they
-                       	    work together, and how configuration
-                       	    affects them
+  Date::Manip::Objects 	  - an overview of the various
+                       	    Date::Manip modules, and how
+                            to use them
   Date::Manip::Config  	  - information for configuring
                             Date::Manip
 

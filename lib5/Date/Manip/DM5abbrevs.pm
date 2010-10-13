@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.12';
+$VERSION='6.13';
 
 $Date::Manip::Abbrevs = join(' ',qw(
       idlw   -1200
@@ -223,7 +223,7 @@ $Date::Manip::Abbrevs = join(' ',qw(
       gmt-7  -0700
       gmt-8  -0800
       gmt-9  -0900
-      gst    +0400
+      gst    -0200
       gyt    -0400
       h      -0800
       hadt   -0900
@@ -623,7 +623,7 @@ The following timezones are defined:
       GMT-7  -0700
       GMT-8  -0800
       GMT-9  -0900
-      GST    +0400
+      GST    -0200
       GYT    -0400
       H      -0800
       HADT   -0900

@@ -27,7 +27,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.12';
+$VERSION='6.13';
 
 use vars qw($Language @Encodings);
 @Encodings = qw(utf-8 iso-8859-1 perl);
@@ -166,31 +166,55 @@ mode:
 month_abb:
   -
     - jan
+    - ''
+    - jan.
   -
     - fev
     - fév
+    - fev.
+    - fév.
   -
     - mar
+    - ''
+    - mar.
   -
     - avr
+    - ''
+    - avr.
   -
     - mai
+    - ''
+    - mai.
   -
     - juin
+    - ''
+    - juin.
   -
     - juil
+    - ''
+    - juil.
   -
     - aout
     - août
+    - aout.
+    - août.
   -
     - sept
+    - ''
+    - sept.
   -
     - oct
+    - ''
+    - oct.
   -
     - nov
+    - ''
+    - nov.
   -
     - dec
     - déc
+    - dec.
+    - déc.
 month_name:
   -
     - janvier

@@ -290,6 +290,12 @@ available and serve the same purpose (they no longer determine whether
 the delta is exact or not... that is determined only by the fields
 that are included as described above).
 
+=item B<input>
+
+   $str = $delta->input();
+
+This returns the string that was parsed to form the delta.
+
 =item B<set>
 
    $err = $delta->set($field,$val);

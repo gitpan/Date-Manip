@@ -21,7 +21,7 @@ sub test {
 
 $dmt = new Date::Manip::TZ;
 $obj = $dmt->base();
-$obj->config("forcedate","now,America/New_York");
+$dmt->config("forcedate","now,America/New_York");
 $obj->_method("c1890");
 
 $tests="

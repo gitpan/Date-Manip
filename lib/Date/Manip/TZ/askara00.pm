@@ -5,7 +5,7 @@ package Date::Manip::TZ::askara00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Sep 27 14:16:39 EDT 2010
+#    Generated on: Tue Oct 12 10:30:51 EDT 2010
 #    Data version: tzdata2010m
 #    Code version: tzcode2010m
 
@@ -31,10 +31,15 @@ use strict;
 use warnings;
 require 5.010000;
 
-use vars qw(%Dates %LastRule);
+our (%Dates,%LastRule);
+END {
+   undef %Dates;
+   undef %LastRule;
+}
 
-use vars qw($VERSION);
-$VERSION='6.12';
+our ($VERSION);
+$VERSION='6.13';
+END { undef $VERSION; }
 
 %Dates         = (
    1    =>

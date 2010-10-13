@@ -23,19 +23,9 @@ many Date::Manip behaviors.
 
 There are three ways to set config variables. The first two are to
 pass them in when creating an object, or to pass them to the config
-method after the object is created.
-
-All modules which are designed to be used directly
-(i.e. Date::Manip::Base, Date::Manip::TZ, Date::Manip::Date,
-Date::Manip::Delta, and Date::Manip::Recur) have a config method in
-them which is used to set configuration variables. Alternately, config
-variables can be passed to the new method when creating new objects.
-The values of the config variables are stored in the Date::Manip::Base
-object. So, if you have a Date::Manip::Date object, it has a
-Date::Manip::Base object associated with it, and the configuration
-information is stored there. The same Date::Manip::Base object may be
-used by any number of higher objects, and all will share the same
-configuration.
+method after the object is created. All of the main Date::Manip
+modules (Date::Manip::Base, Date::Manip::TZ, Date::Manip::Date,
+Date::Manip::Delta, and Date::Manip::Recur) have the config method.
 
 As an example, you can create and configure a
 Date::Manip::Date object using the commands:
@@ -47,12 +37,24 @@ This can be shortened to:
 
    $date = new Date::Manip::Date [$var1,$val1,...];
 
+The values of the config variables are stored in the Date::Manip::Base
+object. So, if you have a Date::Manip::Date object, it has a
+Date::Manip::Base object associated with it, and the configuration
+information is stored there. The same Date::Manip::Base object may be
+used by any number of higher objects, and all will share the same
+configuration. If multiple Date::Manip::Date objects share the same
+Date::Manip::Base object, setting a configuration variable on any of
+them affects all of the Date::Manip::Date objects. If you need to work
+with different configurations simultaneously, it is necessary to work
+with multiple Date::Manip::Base objects. This is covered in the
+Date::Manip::Objects document.
+
 The third way to set config variables is to store them in a config
 file. The config file is read in by passing the appropriate values to
 the config method as described below.  A config file is a good way to
 easily change a large number of settings. They are also necessary for
 other purposes (such as events and holidays which are covered
-elsewhere in the documentation).
+in the Date::Manip::Holidays document).
 
 =head1 CONFIG FILES
 
@@ -101,7 +103,7 @@ The following is a sample config file:
 All config variables that may appear in the main part of a config file
 are described in the next section. Other sections are described elsewhere.
 The *Holidays and *Events sections are both described in the
-Date::Manip::Holidyas documentation.
+Date::Manip::Holidays documentation.
 
 A sample config file is included with the Date::Manip distribution.
 Modify it as appropriate and copy it to some appropriate directory and
@@ -156,17 +158,13 @@ An example call to the config function might be:
    $date->config("ConfigFile","/tmp/file1",
                  "ConfigFile","/tmp/file2");
 
-An example of a config file might be a file containing the following
-lines:
+Config files are parsed immediately. So if the file '/tmp/file1'
+contains the following lines:
 
    ConfigFile = /tmp/file3
    ConfigFile = /tmp/file4
 
-When parsing config variables (either from the config function or from
-a file), every option is handled immediately, and in the order it is
-read in.  For example, if you call $date->config as listed in the example
-call above, and if /tmp/file1 contains the two lines in the config
-file example, then option parsing is done as such:
+the following sequence of events occur:
 
 First, /tmp/file1 is opened. All options from it are parsed until
 you get to the first ConfigFile line.
@@ -211,9 +209,8 @@ are case insensitive.
 
 Additional languages may be added with the help of someone fluent in
 English and the other language.  If you are interested in providing a
-translation for a new language, email me (see the AUTHOR section in
-the main Date::Manip documentation) and I'll send you a list of things
-that I need.
+translation for a new language, please refer to the Date::Manip::Lang
+document for instructions.
 
 =item B<Encoding>
 
@@ -302,11 +299,11 @@ year period.  C1950 refers to 1950-2049.
 
 =item B<FirstDay>
 
-It is sometimes necessary to know what day of week is regarded as first.
-By default, this is set to Monday, but many countries and people will
-prefer Sunday (and in a few cases, a different day may be desired).  Set
-the FirstDay variable to be the first day of the week (1=Monday, 7=Sunday)
-Monday should be chosen to to comply with ISO 8601.
+It is sometimes necessary to know what day of week is regarded as
+first.  By default, this is set to Monday as that conforms to ISO
+8601, but many countries and people will prefer Sunday (and in a few
+cases, a different day may be desired).  Set the FirstDay variable to
+be the first day of the week (1=Monday, 7=Sunday).
 
 =item B<Jan1Week1>
 
@@ -338,13 +335,6 @@ compatibility, and may actually be deprecated at some point. As such,
 additional formats will not be added. Instead, use the printf method
 in the Date::Manip::Date module to extract information with complete
 flexibility.
-
-=item B<IntCharSet>
-
-If set to 0, use the US character set (7-bit ASCII) to return strings such
-as the month name.  If set to 1, use the appropriate international character
-set.  For example, If you want your French representation of December to
-have the accent over the first "e", you'll want to set this to 1.
 
 =item B<DefaultTime>
 
@@ -713,6 +703,13 @@ so this is no longer necessary.
 =item B<TZ>
 
 This is discussed above. Use SetDate or ForceDate instead.
+
+=item B<IntCharSet>
+
+If set to 0, use the US character set (7-bit ASCII) to return strings such
+as the month name.  If set to 1, use the appropriate international character
+set.  For example, If you want your French representation of December to
+have the accent over the first "e", you'll want to set this to 1.
 
 =back
 

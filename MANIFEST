@@ -21,6 +21,7 @@ internal/data.offset.pl
 internal/dm_translate.html
 internal/dumps
 internal/gen_dm5abbrevs
+internal/leak.pl
 internal/manip.isp
 internal/NOTES
 internal/TODO
@@ -996,6 +997,8 @@ lib/Date/Manip/TZ/wet00.pm
 lib/Date/Manip/TZ/x00.pm
 lib/Date/Manip/TZ/y00.pm
 lib/Date/Manip/TZ/z00.pm
+lib/Date/Manip/TZ_Base.pm
+lib/Date/Manip/TZ_Base.pod
 lib/Date/Manip/TZdata.pm
 lib/Date/Manip/TZdata.pod
 lib/Date/Manip/Zones.pm

@@ -209,7 +209,6 @@ Make DateFormat variable handle y/m/d y/d/m m/d/y and d/m/y formats
 in addition to m/d vs. d/m .  Also, make "%D" and "%x" UnixDate formats
 use this variable.  Benjamin Low
 
-"which dofw after HOLIDAY".  Hacksaw
 Use of holidays and other named days in ParseDate ("Christmas 1995")
 Abigal
 

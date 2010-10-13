@@ -196,6 +196,16 @@ now => 2000012112:00:00 2000012117:00:00
 
 'today week at 4:00' => 2000012804:00:00 2000012809:00:00
 
+###
+
+'5th Sunday in October 2010' => 2010103100:00:00 2010103104:00:00
+
+'9th Sunday in October 2010' => '[parse] Invalid date string'
+
+'Sunday, 3rd October 2010' => 2010100300:00:00 2010100304:00:00
+
+'Monday, 3rd October 2010' => '[parse] Day of week invalid'
+
 ";
 
 $t->tests(func  => \&test,

@@ -66,12 +66,14 @@ NOTE 2: These steps often require manual intervention described
 below. After the intervention, rerun the command to make sure no
 output is produced.
 
-If any output is produced for any of these commands, the entries
-need to be added to the appropriate files (listed below) replacing
-the current entries. In all cases, the order of the lines must be
-checked for accuracy. It is especially important that the first
-line in each entry should remain unchanged (the order of remaining
-lines may change to some extent).
+The old values of data are stored in the internal/data.* files. This is
+so that I am explicitly notified of every change to the zoneinfo data
+which could impact Date::Manip.  Any output reflects potential changes
+so every entry should be checked to ensure that it acceptable. Then,
+the output needs to be added to the appropriate data.* file, replacing
+any previous value for the entry.  It is especially important that the first
+line in each entry should remain unchanged unless there is good reason
+to change it. The order of remaining lines may change to some extent.
 
 If the '-o' option produces any output, the entries need to be added
 to the data.offset.pl file.
@@ -141,3 +143,9 @@ Install the module. Then run the following:
 Regenerate the MANIFEST and run the kwalitee tests
 
 Do this with INSTALL_DM5 set to 1 and not set.
+
+#########################################################################
+Run the internal/leak.pl whenever a new version of perl is available to
+see if the leak persists. When it's fixed, note this in the known problems
+section.
+

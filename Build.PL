@@ -9,8 +9,8 @@ if ( $] < 5.010000  ||
    $INSTALL_DM5 = 1;
    $DM_LIBDIR   = 'lib5';
 }
-my $VERSION5 = '5.59';
-my $VERSION6 = '6.12';
+my $VERSION5 = '5.60';
+my $VERSION6 = '6.13';
 
 my %test_requires = (
                  'Test::Inter'              => '0',
