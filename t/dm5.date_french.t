@@ -5,12 +5,11 @@ $t = new Test::Inter 'Date (French)';
 $testdir = '';
 $testdir = $t->testdir();
 
-use Date::Manip;
-if ($Date::Manip::VERSION < 6.00) {
-   $t->feature("DM5",1);
+BEGIN {
+   $Date::Manip::Backend = 'DM5';
 }
 
-$t->skip_all('Date::Manip 5.xx required','DM5');
+use Date::Manip;
 
 Date_Init("TZ=EST");
 Date_Init("Language=French","DateFormat=US","Internal=0");

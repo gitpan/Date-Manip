@@ -5,12 +5,11 @@ $t = new Test::Inter 'DateCalc (date,delta,business 8:30-5:00)';
 $testdir = '';
 $testdir = $t->testdir();
 
-use Date::Manip;
-if ($Date::Manip::VERSION < 6.00) {
-   $t->feature("DM5",1);
+BEGIN {
+   $Date::Manip::Backend = 'DM5';
 }
 
-$t->skip_all('Date::Manip 5.xx required','DM5');
+use Date::Manip;
 
 Date_Init("TZ=EST");
 Date_Init("WorkDayBeg=08:30","WorkDayEnd=17:00");

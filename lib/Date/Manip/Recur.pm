@@ -22,7 +22,7 @@ use integer;
 #use re 'debug';
 
 our $VERSION;
-$VERSION='6.13';
+$VERSION='6.14';
 END { undef $VERSION; }
 
 ########################################################################
@@ -718,7 +718,7 @@ sub dates {
 
    my $dmt   = $$self{'tz'};
    my $dmb   = $$dmt{'base'};
-   $dmb->_update_now();   # Update NOW
+   $dmt->_update_now();   # Update NOW
    my @int   = @{ $$self{'data'}{'interval'} };
    my @rtime = @{ $$self{'data'}{'rtime'} };
    my ($yf,$mf,$wf,$df,$hf,$mnf,$sf) = (@int,@rtime);

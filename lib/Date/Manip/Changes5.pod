@@ -17,9 +17,18 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 5.60
+=head1 VERSION 5.60 (Released with 6.14)
 
 =over 4
+
+=item B<Fully integrated with 6.xx>
+
+As of Date::Manip 6.14, the 5.xx release is fully integrated into the
+distribution. Both will be installed automatically and you can switch
+between them (if you have a recent version of perl). This simplifies
+the package management process considerably. The downside is that
+Date::Manip 6.xx will be installed, even if you do not have a recent
+version of perl and cannot use it.
 
 =back
 

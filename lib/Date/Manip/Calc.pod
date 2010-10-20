@@ -423,7 +423,7 @@ actually how most people would think of the delta.
 As of Date::Manip 6.0, the delta is +2:0:-0:3:0:0:0 (or 2 years minus
 3 days). Although this leads to mixed-sign deltas, it is actually how
 more people would think about the delta. It has the additional
-advantage of being MUCH easier to calculate.
+advantage of being easier to calculate.
 
 For non-business mode calculations, the year/month part of the
 approximate delta will move a date from the year/month of the first

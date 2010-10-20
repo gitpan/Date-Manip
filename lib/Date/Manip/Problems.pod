@@ -156,7 +156,7 @@ them unless there is a very compelling reason to do so, and in that
 case, the change will be clearly documented in the
 Date::Manip::Changes6 documentation for this module.
 
-Date::Manip also consists of a large number of functions which are NOT
+Date::Manip also includes a large number of functions which are NOT
 documented. These are for internal use only.  Please do not use them!
 I can (and do) change their use, and even their name, without notice,
 and without apology!  Some of these internal functions even have test
@@ -185,10 +185,10 @@ welcome suggestions and will definitely consider any such request.
 
 Date::Manip 6.xx has gotten some complaints (far more than 5.xx if the
 truth be told), so I'd like to address a couple of them here.  Perhaps
-an understanding of why things are will allay some of the complaints.
-If not, people are always welcome to stick with the 5.xx release. I
-will continue to support the 5.xx releases for a couple years (though
-I do NOT plan to add functionality to it).
+an understanding of why some of the changes were made will allay some
+of the complaints.  If not, people are always welcome to stick with
+the 5.xx release. I will continue to support the 5.xx releases for a
+couple years (though I do NOT plan to add functionality to it).
 
 These complaints come both from both the CPAN ratings site:
 
@@ -296,18 +296,18 @@ But the next complaint is relevant.
 
 A more important problem is that versions 6.01 through 6.07 broke
 automatic installs for older perl installations. If you try to install
-Date::Manip, the automatic tools (cpan/cpanp) will look for the most
-recent version. If you are using a version of perl older than 5.10,
-this fails, and rather than looking for an older version, the tool
-simply reports a failure in installing Date::Manip.  The problem is
-not due to Date::Manip itself, but is a result of how perl modules are
-currently managed, and since Date::Manip is managed by then, it's
-important to avoid causing this type of problem (which I clearly failed
-to do).
+Date::Manip using the automatic tools (cpan/cpanp), they will look for
+the most recent version. If you are using a version of perl older than
+5.10, this fails, and rather than looking for an older version, the
+tool simply reports a failure in installing Date::Manip.  Technically,
+the problem is not due to Date::Manip itself, but is a result of how
+perl modules are currently managed, and since Date::Manip is managed
+by then, it's important to avoid causing this type of problem (which I
+clearly failed to do).
 
 As of Date::Manip 6.10, this problem should no longer occur. Starting
 with version 6.10, both the 5.xx and 6.xx versions of Date::Manip have
-been combined into a single distribution (so Date-Manip-6.10 contains
+been combined into a single distribution (so Date-Manip-6.10 contained
 both Date::Manip 6.10 and Date::Manip 5.57). At install time, the
 correct version will be installed, depending on the version of perl
 available.
@@ -368,17 +368,20 @@ Similarly, a description of the time zones are stored in a second
 object (a Date::Manip::TZ object).
 
 The size of the Date::Manip::Base object is almost 15K. The size of
-the Date::Manip::TZ object is 100K. The size of the actual
+the Date::Manip::TZ object is 100K. That may seem excessive, but you
+have to remember that there are almost 500 time zones, and they have to
+be indexed by name, alias, abbreviation, and offset, and by the time
+you do this, it does take a fair bit of space.  The size of the actual
 Date::Manip::Date object is a little over 300 bytes.
 
 Both the Date::Manip::Base and Date::Manip::TZ objects are reused by
 any number of Date::Manip::Date objects. They can almost be thought of
 as global data, except that they are accessible in the standard OO
 manner, and you are allowed to modify them on a per-object basis which
-WILL mean that you have to store more data. The Date::Manip::Base
-object especially may be configured, so you may have multiple
-Date::Manip::Base objects (at 15K each) running around. It's highly
-unlikely that you will have multiple Date::Manip::TZ objects.
+WILL mean that you have to store more data. If you work with multiple
+configurations (see Date::Manip::Config), you'll need multiple Base
+and TZ objects. However, most of the time you will not need to do
+this.
 
 The Date::Manip::Date object is a bit larger than suggested in the
 complaint, but it should be noted that Date::Manip actually stores the
@@ -389,11 +392,10 @@ this information as it is used, it has a huge impact on the
 performance.
 
 So, Date::Manip typically consists of one 100K Date::Manip::TZ object,
-a small number (most often only a single one) 15K Date::Manip::Base
-objects, and any number of small 300 byte Date::Manip::Date objects.
-Date::Manip::Delta objects are even smaller. Date::Manip::Recur
-objects are tricky since they may contain a number of
-Date::Manip::Date objects which makes them more difficult to quantify.
+one 15K Date::Manip::Base objects, and any number of small 300 byte
+Date::Manip::Date objects.  Date::Manip::Delta objects are even
+smaller. Date::Manip::Recur objects are also small, but they
+contain any number of Date objects in them.
 
 I am certainly open to suggestions as to how I can improve the OO
 interface... but I don't believe it is a dud. While I'm not an expert

@@ -21,7 +21,7 @@ use IO::File;
 #use re 'debug';
 
 our $VERSION;
-$VERSION='6.13';
+$VERSION='6.14';
 END { undef $VERSION; }
 
 ########################################################################

@@ -43,7 +43,7 @@ configuration information is documented in the Date::Manip::Config
 document.
 
 The Date::Manip::Base object has one other property that is very
-important. When performing basic date properties, some intermediate
+important. When performing basic date operations, some intermediate
 results are cached in the object which leads to significant
 performance increases in later operations. As such, it is important to
 reuse the object as much as possible, rather than creating new

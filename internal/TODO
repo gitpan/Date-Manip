@@ -2,8 +2,6 @@
 # +1 significant release
 ########################################################################
 
-Change Zones.pod to print out the offests associated with each abbreviation
-
 Add ways to get timezone in cygwin
 
 Cache Date::Manip::TZ::zone for ($abbrev,isdst), ($abbrev,$isdst,$offset),
@@ -32,18 +30,11 @@ Rewrite Problems.pod (Date Manip is slow)
 
 Fix docs for Sorting Problems.  It should use Date_Cmp instead of cmp.
 
-Clear out all problems from CPAN (both for DateManip and Date-Manip)
+Clear out all problems from CPAN
 
 Methods which require a valid object (secs_since_1970_GMT) should exit
 instead of trying to perform the operation if the object is invalid.
 RT #60662 (Matt Blythe)
-
-Install both v5 and v6.
-   load the correct version at runtime (make sure only one can be loaded at a time?)
-   check a global variable or environment variable to load v5 if v6 could be in
-   Date::Manip.pod now contains a general description of the module
-   Date::Manip::DM5 contains version 5 functions (and docs)
-   Date::Manip::DM6 contains version 6 functions (and docs)
 
 ########################################################################
 # +2 significant release
@@ -228,7 +219,7 @@ Switch to Math::BigInt instead of using "no integer".  Vishal Bhatia
 
 Use autoloader.  Ted Ashton
 
-Change EXPORT to EXPORT_OK (message 9 by Peter Bray)
+Change EXPORT to EXPORT_OK. Peter Bray
 
 Better support for fractional seconds.  RT 61535
 

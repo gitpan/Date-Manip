@@ -254,27 +254,30 @@ unimplemented ideas, so I'm not discarding it completely.
 
 =head1 ACKNOWLEDGMENTS
 
-There are many people who have contributed to Date::Manip over the years
-that I'd like to thank.  The most important contributions have come in the
-form of suggestions and bug reports by users.  I have tried to include the
-name of every person who first suggested each improvement or first reported
-each bug.  These are included in the HISTORY file in the Date::Manip
-distribution in the order the changes are made.  The list is simply too
-long to appear here, but I appreciate their help.
+There are many people who have contributed to Date::Manip over the
+years that I'd like to thank.  The most important contributions have
+come in the form of suggestions and bug reports by users.  I have
+tried to include the name of every person who first suggested each
+improvement or first reported each bug.  These are included in the
+Date::Manip::Changes5 and Date::Manip::Changes6 documents.  The list
+is simply too long to appear here, but I appreciate their help.
 
 A number of people have made suggestions or reported bugs which are
-not mentioned in the HISTORY file.  These include suggestions which
+not mentioned in these documents.  These include suggestions which
 have not been implemented and people who have made a suggestion or bug
 report which has already been suggested/reported by someone else.  For
 those who's suggestions have not yet been implemented, they will be
-added to the HISTORY file when (if) their suggestions are implemented.
-I keep every single suggestion I've ever received and periodically
-review the unimplemented ones to see if it's something I'm interested
-in, so even suggestions made years in the past may still appear in
-future versions of Date::Manip, and the original requester will be
-attributed at that point. For those who have sent in requests/reports
-that had been previously made by someone else, thank you too.  I'd
-much rather have a suggestion made twice than not at all.
+added to the appropriate Changes document when (if) their suggestions
+are implemented.  I keep every single suggestion I've ever received
+and periodically review the unimplemented ones to see if it's
+something I'm interested in, so even suggestions made years in the
+past may still appear in future versions of Date::Manip, and the
+original requester will be attributed at that point (some of the
+changes made to Date::Manip 6.00 were based on suggestions 10 years
+old which never fit in with version 5.xx, but which I knew I wanted to
+implement). For those who have sent in requests/reports that had been
+previously made by someone else, thank you too.  I'd much rather have
+a suggestion made twice than not at all.
 
 Thanks to Alan Cezar and Greg Schiedler for paying me to implement the
 Events_List routine.  They gave me the idea, and were then willing to pay

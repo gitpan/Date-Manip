@@ -6,7 +6,7 @@ $testdir = '';
 $testdir = $t->testdir();
 
 use Date::Manip;
-if ($Date::Manip::VERSION >= 6.00) {
+if (DateManipVersion() >= 6.00) {
    $t->feature("DM6",1);
 }
 

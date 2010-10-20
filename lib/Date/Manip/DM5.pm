@@ -1,4 +1,4 @@
-package Date::Manip;
+package Date::Manip::DM5;
 # Copyright (c) 1995-2010 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
@@ -39,9 +39,9 @@ $OS="AIX"      if (defined $^O and
 
 # Determine if we're doing taint checking
 #if ($] < 5.0080) {
-  $Date::Manip::NoTaint = eval { local $^W=0; eval("#" . substr($^X, 0, 0)); 1 };
+  $Date::Manip::DM5::NoTaint = eval { local $^W=0; eval("#" . substr($^X, 0, 0)); 1 };
 #} else {
-#  $Date::Manip::NoTaint = (${^TAINT} == 0 ? 1 : 0);
+#  $Date::Manip::DM5::NoTaint = (${^TAINT} == 0 ? 1 : 0);
 #}
 
 ###########################################################################
@@ -61,7 +61,7 @@ $Cnf{"IgnoreGlobalCnf"}="";
 # expansions are allowed.  This should be set in Date_Init arguments or in
 # the global config file.
 
-@Date::Manip::DatePath=();
+@Date::Manip::DM5::DatePath=();
 if ($OS eq "Windows") {
   $Cnf{"PathSep"}         = ";";
   $Cnf{"PersonalCnf"}     = "Manip.cnf";
@@ -98,7 +98,7 @@ if ($OS eq "Windows") {
   $Cnf{"PathSep"}         = ":";
   $Cnf{"PersonalCnf"}     = ".DateManip.cnf";
   $Cnf{"PersonalCnfPath"} = ".:~";
-  @Date::Manip::DatePath=qw(/bin /usr/bin /usr/local/bin);
+  @Date::Manip::DM5::DatePath=qw(/bin /usr/bin /usr/local/bin);
 }
 
 ### Date::Manip variables set in the global or personal config file
@@ -3011,7 +3011,9 @@ sub Date_IsHoliday {
   return undef  if (! $date);
   $date=Date_SetTime($date,0,0,0);
   my($y)=(_Date_Split($date, 1))[0];
-  _Date_UpdateHolidays($y)  if (! exists $Holiday{"dates"}{$y});
+
+  _Date_UpdateHolidays($y)    if (! exists $Holiday{"dates"}{$y});
+
   return undef  if (! exists $Holiday{"dates"}{$y}{$date});
   my($name)=$Holiday{"dates"}{$y}{$date};
   return ""   if (! $name);
@@ -3443,7 +3445,7 @@ sub Date_TimeZone {
           ($OS eq "Windows") or
           ($OS eq "Netware") or
           ($OS eq "VMS")) {
-     if ($Date::Manip::NoTaint) {
+     if ($Date::Manip::DM5::NoTaint) {
         if ($OS eq "VMS") {
            $tz=$ENV{'SYS$TIMEZONE_NAME'};
            if (! $tz) {
@@ -3473,7 +3475,7 @@ sub Date_TimeZone {
         # We need to satisfy taint checking, but also look in all the
         # directories in @DatePath.
         #
-        local $ENV{PATH} = join(':', @Date::Manip::DatePath);
+        local $ENV{PATH} = join(':', @Date::Manip::DM5::DatePath);
         local $ENV{BASH_ENV} = '';
         $tz=`date +%Z 2> /dev/null`;
         chomp($tz);

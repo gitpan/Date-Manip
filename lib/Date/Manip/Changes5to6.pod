@@ -17,11 +17,10 @@ functionality has changed in backwards incompatible ways. Other parts
 have been deprecated and will be removed at some point in the future.
 
 This document describes the differences between the 5.xx series and
-version 6.00. This page is primarily for someone wanting to know
-exactly what changed.
-
-If you want to make sure that a script which ran with 5.xx will run
-with 6.xx, refer to the Date::Manip::Migration5to6 document.
+version 6.00. This page primarily describes technical details, most of
+which do not impact how Date::Manip is used in scripts. If you want to
+make sure that a script which ran with 5.xx will run with 6.xx, refer
+to the Date::Manip::Migration5to6 document.
 
 =head1 OVERVIEW
 
@@ -389,11 +388,10 @@ Dates are now parsed according to the spec (though a couple extensions
 have been made, which are also documented in the Date::Manip::Date
 documentation).
 
-There is one change with respect to Date::Manip 5.xx that results
-from a possible misinterpretation of the standard.
-
-There is a small amount of ambiguity in how the Www-D date formats
-are understood.
+There is one change with respect to Date::Manip 5.xx that results from
+a possible misinterpretation of the standard. In Date::Manip, there is
+a small amount of ambiguity in how the Www-D date formats are
+understood.
 
 The date:
 

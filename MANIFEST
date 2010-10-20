@@ -4,7 +4,6 @@ examples/dm_zdump
 examples/README.examples
 HISTORY
 INSTALL
-internal/_no_build
 internal/benchmarks/parse-1.dm.pl
 internal/benchmarks/parse-1.dm5.pl
 internal/benchmarks/parse-1.dm_fo.pl
@@ -41,6 +40,11 @@ lib/Date/Manip/Date.pm
 lib/Date/Manip/Date.pod
 lib/Date/Manip/Delta.pm
 lib/Date/Manip/Delta.pod
+lib/Date/Manip/DM5.pm
+lib/Date/Manip/DM5.pod
+lib/Date/Manip/DM5abbrevs.pm
+lib/Date/Manip/DM6.pm
+lib/Date/Manip/DM6.pod
 lib/Date/Manip/Examples.pod
 lib/Date/Manip/Holidays.pod
 lib/Date/Manip/Lang.pod
@@ -548,7 +552,6 @@ lib/Date/Manip/Offset/off480.pm
 lib/Date/Manip/Problems.pod
 lib/Date/Manip/Recur.pm
 lib/Date/Manip/Recur.pod
-lib/Date/Manip/Status5.pod
 lib/Date/Manip/TZ.pm
 lib/Date/Manip/TZ.pod
 lib/Date/Manip/TZ/a00.pm
@@ -1003,10 +1006,8 @@ lib/Date/Manip/TZdata.pm
 lib/Date/Manip/TZdata.pod
 lib/Date/Manip/Zones.pm
 lib/Date/Manip/Zones.pod
-lib5/Date/Manip.pm
-lib5/Date/Manip.pod
-lib5/Date/Manip/DM5abbrevs.pm
 LICENSE
+Makefile.PL
 MANIFEST			This list of files
 README
 README.first
@@ -1072,6 +1073,8 @@ t/date.parse.polish.t
 t/date.parse.portuguese.t
 t/date.parse.romanian.t
 t/date.parse.russian.t
+t/date.parse.spanish.t
+t/date.parse.swedish.t
 t/date.parse_date.common.t
 t/date.parse_date.iso.t
 t/date.parse_date.misc.0.t
@@ -1109,14 +1112,12 @@ t/dm5.date_delta_1.t
 t/dm5.date_delta_2a.t
 t/dm5.date_delta_2b.t
 t/dm5.date_delta_french.t
-t/dm5.date_delta_russian.t
 t/dm5.date_delta_sign.t
 t/dm5.date_french.t
 t/dm5.date_german.t
 t/dm5.date_misc_a.t
 t/dm5.date_misc_b.t
 t/dm5.date_romanian.t
-t/dm5.date_russian.t
 t/dm5.date_today_0.t
 t/dm5.date_today_1.t
 t/dm5.delta_a.t
@@ -1154,8 +1155,6 @@ t/orig.parsedatestring.t
 t/orig.parserecur.t
 t/orig.settime.t
 t/orig.unixdate.t
-t/parse.date.spanish.t
-t/parse.date.swedish.t
 t/pod.t
 t/pod_coverage.t
 t/recur.dates.0.t

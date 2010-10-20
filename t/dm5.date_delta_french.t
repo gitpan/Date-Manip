@@ -5,12 +5,11 @@ $t = new Test::Inter 'DateCalc (French,date,delta,business 8:00-5:00)';
 $testdir = '';
 $testdir = $t->testdir();
 
-use Date::Manip;
-if ($Date::Manip::VERSION < 6.00) {
-   $t->feature("DM5",1);
+BEGIN {
+   $Date::Manip::Backend = 'DM5';
 }
 
-$t->skip_all('Date::Manip 5.xx required','DM5');
+use Date::Manip;
 
 Date_Init("TZ=EST");
 Date_Init("Language=French","WorkDayBeg=08:00","WorkDayEnd=17h00","EraseHolidays=1");

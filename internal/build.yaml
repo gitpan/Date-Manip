@@ -1,4 +1,5 @@
 ---
 winrequires:
   -
-    - 'Tie::Registry'
+    - 'Win32::TieRegistry'
+pvers: 5.006

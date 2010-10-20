@@ -32,9 +32,9 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.13';
+$VERSION='6.14';
 
-$Date::Manip::Abbrevs = join(' ',qw(
+$Date::Manip::DM5::Abbrevs = join(' ',qw(
       idlw   -1200
       nt     -1100
       sat    -0400

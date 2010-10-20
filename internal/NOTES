@@ -11,7 +11,7 @@ module (though I hope that won't be necessary).
 #########################################################################
 Before every release, spellcheck the documents:
 
-   for i in `find lib lib5 -type f -name \*.pod` ;do
+   for i in `find lib -type f -name \*.pod` ;do
       podspell $i > $i.txt
       ispell -p internal/manip.isp $i.txt
       rm -f $i.txt $i.txt.bak
@@ -91,18 +91,6 @@ In internal/benchmarks directory
 #########################################################################
 Set the release version
 
-   # DM5
-
-   v=`cat internal/VERSION | head -1`
-   for i in \
-       lib5/Date/Manip.pm \
-   ;do
-      sed -e "s,VERSION='.*',VERSION='$v'," $i > z
-      mv z $i
-   done
-   sed -e "s,VERSION5 = .*,VERSION5 = '$v';," Build.PL > z
-   mv z Build.PL
-
    # DM6
 
    v=`cat internal/VERSION | tail -1`
@@ -116,6 +104,18 @@ Set the release version
    done
    chmod +x internal/tzdata internal/gen_dm5abbrevs
    sed -e "s,VERSION6 = .*,VERSION6 = '$v';," Build.PL > z
+   mv z Build.PL
+
+   # DM5
+
+   v=`cat internal/VERSION | head -1`
+   for i in \
+       lib/Date/Manip/DM5.pm \
+   ;do
+      sed -e "s,VERSION='.*',VERSION='$v'," $i > z
+      mv z $i
+   done
+   sed -e "s,VERSION5 = .*,VERSION5 = '$v';," Build.PL > z
    mv z Build.PL
 
 #########################################################################

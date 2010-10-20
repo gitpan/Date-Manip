@@ -27,9 +27,23 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.14
+=head1 VERSION 6.14 (2010-10-20)
 
 =over 4
+
+=item B<Date::Manip 5.xx fully integrated with 6.xx>
+
+Date::Manip 5.xx and 6.xx are both installed automatically, and the
+correct one will be chosen.
+
+=item Bug fixes
+
+Fixed a bug where recurrence handling was broken.  RT 62128
+
+=item Documentation fixes
+
+A lot of documentation was cleaned up to be easier to read, and better
+organized.
 
 =back
 
@@ -389,14 +403,14 @@ Several config variables deprecated
 
 Thanks to Jonathan Hogue for helping test Windows additions.
 
-=item Bug fixes (correctly problems in the 5.xx releases)
+=item Bug fixes (correcting problems in the 5.xx releases)
 
 Fixed a bug where "YYtoYYYY=c" wouldn't work.
 
 VMS bugfix to not call `date` command.  Lane
 
 New Year's Day defined using a recurrence which might push the observed
-day to the previous year was broken. Reported by Alan Burlison
+day to the previous year was broken. Reported by Jerry Wilcox.
 
 =item Language fixes
 
