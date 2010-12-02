@@ -27,6 +27,57 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
+=head1 VERSION 6.21
+
+=over 4
+
+=back
+
+=head1 VERSION 6.20 (2010-12-01)
+
+=over 4
+
+=item B<(*) (!) Reworked recurrences>
+
+Recurrences were reworked in a (slightly) backward incompatible way to
+improve their usefulness (and to make them conform to the expected
+results). Most recurrences will work the same, but a few will
+differ. Most of this was suggested by Jay Jacobs.
+
+A recurring event is now calculated relative to the base date, NOT relative
+to a previous event. For example, if a recurrence occurs every month, and
+the base date was Jan 31, then previously, recurring events would have
+been (in a non-leap year):
+
+   D(0)                   = Jan 31
+   D(1)  = D(0) + 1 month = Feb 28
+   D(2)  = D(1) + 1 month = Mar 28
+   ...
+
+The new behavior is:
+
+   D(0)                   = Jan 31
+   D(1)  = D(0) + 1 month = Feb 28
+   D(2)  = D(0) + 2 month = Mar 31
+   ...
+
+Previously, if a base date were not specified, it was not determined
+from the date range. Now, the start date of the date range acts as the
+base date.
+
+The meaning of the base date has changed slightly. It is much more
+meaningful and useful now.
+
+Added iterator functions.  Daniel LaLiberte
+
+The RecurNumFudgeDays variable is now deprecated.
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2010o)
+
+=back
+
 =head1 VERSION 6.14 (2010-10-20)
 
 =over 4

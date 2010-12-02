@@ -142,6 +142,7 @@ perl -I../lib recur.dates.0.t 1
 perl -I../lib recur.dates.1.t 1
 perl -I../lib recur.dates.2.t 1
 perl -I../lib recur.frequency.t 1
+perl -I../lib recur.nth.t 1
 perl -I../lib tz.all_periods.t 1
 perl -I../lib tz.convert.t 1
 perl -I../lib tz.convert_from_gmt.t 1

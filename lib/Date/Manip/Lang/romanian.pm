@@ -27,7 +27,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION='6.14';
+$VERSION='6.20';
 
 use vars qw($Language @Encodings);
 @Encodings = qw(utf-8 iso-8859-16 perl);

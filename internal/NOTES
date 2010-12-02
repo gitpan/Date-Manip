@@ -40,7 +40,7 @@ following commands:
 Before cleaning up the tzdata directory, run the following to double
 check every timezone in zoneinfo against the Date::Manip version:
 
-   ./Build install
+   make install
    ./internal/dumps
 
 Run the two tzdata tests:
@@ -103,8 +103,6 @@ Set the release version
       mv z $i
    done
    chmod +x internal/tzdata internal/gen_dm5abbrevs
-   sed -e "s,VERSION6 = .*,VERSION6 = '$v';," Build.PL > z
-   mv z Build.PL
 
    # DM5
 
@@ -115,8 +113,6 @@ Set the release version
       sed -e "s,VERSION='.*',VERSION='$v'," $i > z
       mv z $i
    done
-   sed -e "s,VERSION5 = .*,VERSION5 = '$v';," Build.PL > z
-   mv z Build.PL
 
 #########################################################################
 Update the copyright
@@ -137,12 +133,10 @@ to include the new version.
 #########################################################################
 Install the module. Then run the following:
 
-   ./internal/gen_dm5abbrevs > lib5/Date/Manip/DM5abbrevs.pm
+   ./internal/gen_dm5abbrevs > lib/Date/Manip/DM5abbrevs.pm
 
 #########################################################################
 Regenerate the MANIFEST and run the kwalitee tests
-
-Do this with INSTALL_DM5 set to 1 and not set.
 
 #########################################################################
 Run the internal/leak.pl whenever a new version of perl is available to

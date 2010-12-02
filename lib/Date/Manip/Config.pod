@@ -456,11 +456,6 @@ variable, and can be set to any of the following:
 
 The default value is "none".
 
-=item B<RecurNumFudgeDays>
-
-See the Date::Manip::Recur manual (the section on MODIFIERS) for
-information on this variable.
-
 =back
 
 =head1 TIME ZONE RELATED CONFIGURATION VARIABLES
@@ -710,6 +705,10 @@ If set to 0, use the US character set (7-bit ASCII) to return strings such
 as the month name.  If set to 1, use the appropriate international character
 set.  For example, If you want your French representation of December to
 have the accent over the first "e", you'll want to set this to 1.
+
+=item B<RecurNumFudgeDays>
+
+This is no longer used since recurrences were reworked in 6.20.
 
 =back
 

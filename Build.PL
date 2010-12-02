@@ -13,8 +13,6 @@ my %requires = (
                );
 my %build_mods = (
                  'Test::Inter'              => '0',
-                 'Test::Pod'                => '1.0',
-                 'Test::Pod::Coverage'      => '1.0',
                );
 
 my %IsWin32 = map { $_ => 1 } qw( MSWin32 NetWare symbian );
@@ -24,7 +22,7 @@ if ($IsWin32{ $^O }) {
 
 my $build = Module::Build->new(
         license            => 'perl',
-        dist_version       => '6.14',
+        dist_version       => '6.20',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',

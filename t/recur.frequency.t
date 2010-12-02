@@ -59,11 +59,11 @@ $tests="
 
 1:2:3*--4:5:6:7
    => 
-   '[parse] Invalid rtime string'
+   '[frequency] Invalid rtime string'
 
 1:2:3*4-3:5:6:7
    => 
-   '[parse] Invalid rtime range string'
+   '[frequency] Invalid rtime range string'
 
 1:2:0:0*5,8:6:7 => 1 2 0 0 * 5,8 6 7
 
@@ -73,15 +73,15 @@ $tests="
 
 1:2:0:0*5-8,11:-1:7
    => 
-   '[parse] Negative values allowed for day/week'
+   '[frequency] Negative values allowed for day/week'
 
 1:2:0:0*5-8,11:-3--1:7
    => 
-   '[parse] Negative values allowed for day/week'
+   '[frequency] Negative values allowed for day/week'
 
 1:2*-1--3:0:5-8,11:1:7
    => 
-   '[parse] Invalid rtime range string'
+   '[frequency] Invalid rtime range string'
 
 1:2*-3--1:0:5-8,11:1:7 => 1 2 * -3,-2,-1 0 5,6,7,8,11 1 7
 

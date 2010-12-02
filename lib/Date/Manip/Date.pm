@@ -25,7 +25,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.14';
+$VERSION='6.20';
 END { undef $VERSION; }
 
 ########################################################################
@@ -3546,7 +3546,15 @@ sub _holidays_year {
       if (ref($obj)) {
          # It's a recurrence
 
-         my @d     = $obj->dates($beg,$end);
+         # If the recurrence has a date range built in, we won't override it.
+         # Otherwise, we'll only look for dates in this year.
+
+         my @d;
+         if ($obj->start()  &&  $obj->end()) {
+            @d     = $obj->dates();
+         } else {
+            @d     = $obj->dates($beg,$end);
+         }
 
          foreach my $d (@d) {
             my($y,$m,$d) = @{ $$d{'data'}{'date'} };

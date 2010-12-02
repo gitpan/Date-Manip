@@ -24,7 +24,7 @@ use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.14';
+$VERSION='6.20';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -153,14 +153,11 @@ sub _init_config {
       # recurrence.
       'recurrange'       => '',
 
-      # Use this to set the fudge factor for days
-      # when applying business day modifiers.
-      'recurnumfudgedays' => 10,
-
       # Use this to set the default time.
       'defaulttime'      => 'midnight',
 
       # *** DEPRECATED ***
+      'recurnumfudgedays'=> '',
       'tz'               => '',
       'convtz'           => '',
       'globalcnf'        => '',
@@ -192,7 +189,6 @@ sub _init_config {
    $self->_config_var('workweekend',  5);
    $self->_config_var('language',     'english');
    $self->_config_var('recurrange',   'none');
-   $self->_config_var('recurnumfudgedays',5);
    $self->_config_var('defaulttime',  'midnight');
 
    # Set OS specific defaults
@@ -1222,10 +1218,6 @@ sub _config_var_base {
       my $err = $self->_config_var_recurrange($val);
       return  if ($err);
 
-   } elsif ($var eq 'recurnumfudgedays') {
-      my $err = $self->_config_var_recurnumfudgedays($val);
-      return  if ($err);
-
    } elsif ($var eq 'defaulttime') {
       my $err = $self->_config_var_defaulttime($val);
       return  if ($err);
@@ -1250,6 +1242,7 @@ sub _config_var_base {
             $var eq 'deltasigns' ||
             $var eq 'internal' ||
             $var eq 'udpatecurrtz' ||
+            $var eq 'recurnumfudgedays'  ||
             $var eq 'intcharset') {
          # do nothing
 
@@ -1346,16 +1339,6 @@ sub _config_var_encoding {
       $$self{'data'}{'calc'}{'enc_in'}  = [ qw(utf-8 perl) ];
    }
 
-   return 0;
-}
-
-sub _config_var_recurnumfudgedays {
-   my($self,$val) = @_;
-
-   if (! $self->_is_int($val,1)) {
-      warn "ERROR: [config_var] invalid: RecurNumFudgeDays: $val\n";
-      return 1;
-   }
    return 0;
 }
 

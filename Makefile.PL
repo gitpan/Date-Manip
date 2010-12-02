@@ -11,8 +11,6 @@ my %requires = (
                  'Storable'                 => '0',
                  'YAML::Syck'               => '0',
                  'Test::Inter'              => '0',
-                 'Test::Pod'                => '1.0',
-                 'Test::Pod::Coverage'      => '1.0',
                );
 
 my %IsWin32 = map { $_ => 1 } qw( MSWin32 NetWare symbian );
@@ -22,7 +20,7 @@ if ($IsWin32{ $^O }) {
 
 WriteMakefile(
         NAME             => 'Date::Manip',
-        VERSION          => '6.14',
+        VERSION          => '6.20',
         ($] >= 5.006
         ? (ABSTRACT=>'Date manipulation routines',
            AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')

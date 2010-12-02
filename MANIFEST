@@ -1011,6 +1011,7 @@ Makefile.PL
 MANIFEST			This list of files
 README
 README.first
+t/.ppo.yaml
 t/base._calc_date_ymwd.t
 t/base._config.t
 t/base._critical_date.t
@@ -1161,6 +1162,7 @@ t/recur.dates.0.t
 t/recur.dates.1.t
 t/recur.dates.2.t
 t/recur.frequency.t
+t/recur.nth.t
 t/runtests
 t/runtests.bat
 t/tz.all_periods.t

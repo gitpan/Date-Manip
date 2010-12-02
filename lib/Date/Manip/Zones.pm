@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed Oct 13 09:24:19 EDT 2010
-#    Data version: tzdata2010m
-#    Code version: tzcode2010m
+#    Generated on: Tue Nov 30 14:56:56 EST 2010
+#    Data version: tzdata2010o
+#    Code version: tzcode2010n
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.14';
+$VERSION='6.20';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,8 +37,8 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2010m';
-$TzcodeVersion = 'tzcode2010m';
+$TzdataVersion = 'tzdata2010o';
+$TzcodeVersion = 'tzcode2010n';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
 $LastYear      = '2030';
@@ -1518,7 +1518,7 @@ $LastYear      = '2030';
   'almt-6almst'                        => 'asia/almaty',
   'amt-3amst'                          => 'asia/yerevan',
   'amt-4amst'                          => 'asia/yerevan',
-  'amt4amst'                           => 'america/boa_vista',
+  'amt4amst'                           => 'america/campo_grande',
   'anat-11anast'                       => 'asia/anadyr',
   'anat-12anast'                       => 'asia/anadyr',
   'anat-13anast'                       => 'asia/anadyr',

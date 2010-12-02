@@ -59,47 +59,8 @@ Clear as much of the backlog of suggestions as possible.
 
 #### Recur
 
-Add value to Recur
-
-Jay Jacobs
-   Recurrences are broken slightly.  The way to calculate the Nth date
-   is currently:
-      D(N) = D(N-1) + O
-   This leads to the following:
-      D(0) = Jan 31
-      O    = 1 month
-      D(1) = Feb 28
-      D(2) = Mar 28
-      D(3) = Apr 28
-   The desired dates would be Jan 31, Feb 28, Mar 31, Apr 30, ...
-   To fix this, change the calculation to be:
-      D(N) = D(0) + N*O
-
-If start_date/end_date are set, we will calculate
-start_counter/end_counter as needed.  start_counter=I is the Ith date
-from the base date and is the first date which occurs in the date
-range. end_counter=J is the Jth date from the base date and is the
-last date in the range.  We'll also have curr_counter which will
-always be undef (i.e. not yet used) or in the range I <= curr <= J.
-If the start_date is changed, start_counter is unset and so is
-curr_counter. If end_date is changed, end_counter is unset and so
-is curr_counter.  To get start_counter, we'll estimate the length
-of the frequency, and use the amount of time between a date and
-the base date to estimate begin_counter, then adjust it accordingly.
-Same for end_counter.  counters can be positive, negative, or 0 or
-undef (not set). A flag no_dates can be set if no dates fall within
-the range.
-
 Add ParseRecur flag:
    WDn (n=1-7): Day n of the current week.
-
-Add an iterator to return the next date in the sequence (or the
-previous date in the sequence). Allow it to start from the start or
-end of the range.  Daniel LaLiberte
-
-Also, return the Nth date in the sequence (possibly ignoring an end
-date) or the Nth date from the base date (ignoring start/end
-completely) (N may be negative to go backwards).
 
 Add a new flag:
   IBD  = is business day
