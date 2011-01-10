@@ -1,5 +1,5 @@
 package Date::Manip::DM5abbrevs;
-# Copyright (c) 2003-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 2003-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -31,8 +31,8 @@ require 5.000;
 use strict;
 use warnings;
 
-use vars qw($VERSION);
-$VERSION='6.20';
+our($VERSION);
+$VERSION='6.21';
 
 $Date::Manip::DM5::Abbrevs = join(' ',qw(
       idlw   -1200
@@ -84,7 +84,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       amst   -0300
       amt    -0400
       anast  +1200
-      anat   +1200
+      anat   +1100
       ant    -0430
       apt    -0300
       aqtst  +0500
@@ -156,7 +156,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       cxt    +0700
       d      -0400
       dact   +0600
-      davt   +0500
+      davt   +0700
       ddut   +1000
       dusst  +0600
       dust   +0600
@@ -330,7 +330,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       pest   -0400
       pet    -0500
       petst  +1200
-      pett   +1200
+      pett   +1100
       pgt    +1000
       phot   +1300
       phst   +0900
@@ -359,7 +359,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       sakst  +1100
       sakt   +1000
       samst  +0400
-      samt   +0400
+      samt   +0300
       sast   +0200
       sbt    +1100
       sct    +0400
@@ -473,7 +473,7 @@ The following timezones are defined:
       AMST   -0300
       AMT    -0400
       ANAST  +1200
-      ANAT   +1200
+      ANAT   +1100
       ANT    -0430
       APT    -0300
       AQTST  +0500
@@ -550,7 +550,7 @@ The following timezones are defined:
       CXT    +0700
       D      -0400
       DACT   +0600
-      DAVT   +0500
+      DAVT   +0700
       DDUT   +1000
       DUSST  +0600
       DUST   +0600
@@ -739,7 +739,7 @@ The following timezones are defined:
       PEST   -0400
       PET    -0500
       PETST  +1200
-      PETT   +1200
+      PETT   +1100
       PGT    +1000
       PHOT   +1300
       PHST   +0900
@@ -769,7 +769,7 @@ The following timezones are defined:
       SAKST  +1100
       SAKT   +1000
       SAMST  +0400
-      SAMT   +0400
+      SAMT   +0300
       SAST   +0200
       SAT    -0400
       SBT    +1100

@@ -1,7 +1,8 @@
 #!/usr/bin/perl
 
-use lib "/home/sulbeck/perl-modules/Date-Manip-5.55/lib";
-
+BEGIN {
+   $Date::Manip::Backend = 'DM5';
+}
 use Date::Manip;
 
 @in = `cat parse-1.in`;

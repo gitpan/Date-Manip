@@ -1,11 +1,11 @@
 package Date::Manip::TZ::afwind00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 30 14:55:51 EST 2010
+#    Generated on: Mon Jan 10 15:36:08 EST 2011
 #    Data version: tzdata2010o
 #    Code version: tzcode2010n
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -410,6 +410,15 @@ END { undef $VERSION; }
         [ [2030,9,1,1,0,0],[2030,9,1,3,0,0],'+02:00:00',[2,0,0],
           'WAST',1,[2031,4,5,23,59,59],[2031,4,6,1,59,59],
           '2030090101:00:00','2030090103:00:00','2031040523:59:59','2031040601:59:59' ],
+     ],
+   2031 =>
+     [
+        [ [2031,4,6,0,0,0],[2031,4,6,1,0,0],'+01:00:00',[1,0,0],
+          'WAT',0,[2031,9,7,0,59,59],[2031,9,7,1,59,59],
+          '2031040600:00:00','2031040601:00:00','2031090700:59:59','2031090701:59:59' ],
+        [ [2031,9,7,1,0,0],[2031,9,7,3,0,0],'+02:00:00',[2,0,0],
+          'WAST',1,[2032,4,3,23,59,59],[2032,4,4,1,59,59],
+          '2031090701:00:00','2031090703:00:00','2032040323:59:59','2032040401:59:59' ],
      ],
 );
 

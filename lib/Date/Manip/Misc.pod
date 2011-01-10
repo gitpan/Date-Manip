@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -63,13 +63,13 @@ performance, so performance should improve over time.
 Did Date::Manip have any problems with Y2K compliance? Did it have any
 problems with the revised daylight saving time changes made in 2007?
 
-Date::Manip is basically just a parser.  You give it a date and it'll
-manipulate it.  Date::Manip does store the date internally as a 4 digit
-year, and performs all operations using this internal representation, so
-Date::Manip had no problems with the Y2K issue. Of course, applications
-written which stored the year as 2 digits (whether or not it used
-Date::Manip) may have had problems, but they were not because of this
-module.
+Although Date::Manip will parse many date strings (including dates
+with 2-digit years), internally they are stored as a 4 digit year, and
+all operations are performed using this internal representation, so
+Date::Manip had no problems with the Y2K issue. Of course,
+applications written which stored the year as 2 digits (whether or not
+it used Date::Manip) may have had problems, but they were not because
+of this module.
 
 Similarly for the 2007 changes in daylight saving time made in the United
 States, Date::Manip was not affected. Date::Manip makes use of the
@@ -180,31 +180,6 @@ need to be corrected (probably by adding 1900 to the result) before
 they can be passed to any Date::Manip routine.
 
 =back
-
-=head1 VERSION NUMBERS
-
-A note about version numbers.
-
-Prior to version 5.00, Date::Manip was distributed as a perl4 library.
-There were no numbering conventions in place, so I used a simple
-MAJOR.MINOR numbering scheme.
-
-With version 5.00, I switched to a perl5 module and at that time switched
-to the perl5 numbering convention of a major version followed by a 2 digit
-minor version.
-
-As of 5.41/5.42, all versions released to CPAN were even numbered.
-Odd numbered were development versions available from my web site.
-For example, after 5.40 was released, I started making changes, and
-called the development version 5.41.  When released to CPAN, it was
-called 5.42.
-
-As of 5.55/6.00, I'm abandoning the even/odd behavior started in
-5.41. Every release meant changing the version number twice. I had to
-change it from the odd (development version) to the even (release
-version). Then I had to package it up. Then I had to change it to the
-next odd (development version). It's more error prone, and more of a
-nuisance, and I've seen no benefit from it.
 
 =head1 FUTURE IDEAS
 

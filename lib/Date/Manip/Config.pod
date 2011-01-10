@@ -1,4 +1,4 @@
-# Copyright (c) 1996-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 1996-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -202,6 +202,7 @@ version in which they added is included for historical interest):
    Turkish      (5.41)
    Danish       (5.41)
    Catalan      (5.43)
+   Norwegian    (6.21)
 
 To parse dates in a different language, just use the Language config
 variable with the name of the language as the value. Language names

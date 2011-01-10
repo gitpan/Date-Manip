@@ -1,5 +1,5 @@
 package Date::Manip::Lang::spanish;
-# Copyright (c) 1998-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 1998-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -26,10 +26,10 @@ use YAML::Syck;
 use strict;
 use warnings;
 
-use vars qw($VERSION);
-$VERSION='6.20';
+our($VERSION);
+$VERSION='6.21';
 
-use vars qw($Language @Encodings);
+our($Language,@Encodings);
 @Encodings = qw(utf-8 iso-8859-1 perl);
 
 my @in    = <DATA>;

@@ -22,7 +22,7 @@ if ($IsWin32{ $^O }) {
 
 my $build = Module::Build->new(
         license            => 'perl',
-        dist_version       => '6.20',
+        dist_version       => '6.21',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',

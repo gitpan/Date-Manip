@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -20,8 +20,8 @@ problems.
 There is a known memory leak in perl related to named regexp captures
 that directly affects Date::Manip . The leak is in all versions of
 perl that I have tested starting at 5.10. I have submitted a bug
-report (perlbug #78266). Until that time, if you need to use Date::Manip
-in a persistent environment, you should be aware of this.
+report (perlbug #78266). Until perl is fixed, if you need to use
+Date::Manip in a persistent environment, you should be aware of this.
 
 Date::Manip 5.xx is not susceptible, so using it may be a feasible workaround,
 but if you need accurate timezone handling, this isn't possible.
@@ -57,7 +57,7 @@ saving time ended on Nov 1, and since "+ 1 day" is equivalent to "+ 24
 hours", the results are correct. In America/New_York time (which has
 the same result), the calculation means that:
 
-   2009-11-01 00:00:00 EDT + 24 hours = 
+   2009-11-01 00:00:00 EDT + 24 hours =
    2009-11-01 23:00:00 EST
 
 which is correct.
@@ -301,25 +301,28 @@ the most recent version. If you are using a version of perl older than
 5.10, this fails, and rather than looking for an older version, the
 tool simply reports a failure in installing Date::Manip.  Technically,
 the problem is not due to Date::Manip itself, but is a result of how
-perl modules are currently managed, and since Date::Manip is managed
-by then, it's important to avoid causing this type of problem (which I
-clearly failed to do).
+perl modules are currently managed.  However, since Date::Manip is
+managed by then, it's important to avoid causing this type of problem
+(which I clearly failed to do).
 
 As of Date::Manip 6.10, this problem should no longer occur. Starting
 with version 6.10, both the 5.xx and 6.xx versions of Date::Manip have
 been combined into a single distribution (so Date-Manip-6.10 contained
-both Date::Manip 6.10 and Date::Manip 5.57). At install time, the
-correct version will be installed, depending on the version of perl
-available.
+both Date::Manip 6.10 and Date::Manip 5.57). From Date::Manip 6.10 to
+6.13, the perl version was determined at install time and either the
+5.xx or 6.xx version was installed.  From Date::Manip 6.14 on, both
+versions are installed, and at run time, the correct version will be
+chosen (and if you're running a recent version of perl, you can select
+to run the old or new version).
 
 All future version (for as long as 5.xx is supported) will include
-both the most current 5.xx and 6.xx releases of Date::Manip. In
-this way, automatic install tools will be able to install Date::Manip
+both the most current 5.xx and 6.xx releases of Date::Manip. In this
+way, automatic install tools will be able to install Date::Manip
 regardless of which version of perl you are running.
 
 =item B<Too many modules>
 
-One complaint is that there are too many files. One person
+One minor complaint is that there are too many files. One person
 specifically objects to the fact that there are over 470 modules
 covering non-minute offsets. This complaint is (IMO)
 absurd. Date::Manip supports ALL historical time zones, including those
@@ -332,16 +335,16 @@ Date::Manip, and I find that to be a very poor solution. Instead,
 storing the information in a per-time zone and per-offset manner
 dramatically decreases the amount of data that has to be loaded.
 
-While it is true that Date::Manip includes over 920 modules for all of
+While it is true that Date::Manip includes over 900 modules for all of
 the time zone information, most implementations of time zone handling
 also choose to break up the data into a large number of files.
 
-My linux distribution (openSuSE 11.2) uses the standard zoneinfo
-database, and at this point, there are over 1700 files included in
-/usr/share/zoneinfo (though it does appear that there is some
-duplication of information). Current versions of RedHat also use
-over 1700 files, so Date::Manip isn't treating the time zone problem
-in a new or unreasonable way.
+My linux distribution (openSuSE 11.2 at the time of writing this) uses
+the standard zoneinfo database, and at this point, there are over 1700
+files included in /usr/share/zoneinfo (though it does appear that
+there is some duplication of information). Current versions of RedHat
+also use over 1700 files, so Date::Manip isn't treating the time zone
+problem in a new or unreasonable way.
 
 =item B<Objects are large>
 
@@ -391,11 +394,11 @@ was parsed in, the local time zone (if different) and GMT. By caching
 this information as it is used, it has a huge impact on the
 performance.
 
-So, Date::Manip typically consists of one 100K Date::Manip::TZ object,
-one 15K Date::Manip::Base objects, and any number of small 300 byte
-Date::Manip::Date objects.  Date::Manip::Delta objects are even
-smaller. Date::Manip::Recur objects are also small, but they
-contain any number of Date objects in them.
+So, Date::Manip in typical usage consists of one 100K Date::Manip::TZ
+object, one 15K Date::Manip::Base objects, and any number of small 300
+byte Date::Manip::Date objects.  Date::Manip::Delta objects are even
+smaller. Date::Manip::Recur objects are also small, but they contain
+any number of Date objects in them.
 
 I am certainly open to suggestions as to how I can improve the OO
 interface... but I don't believe it is a dud. While I'm not an expert
@@ -404,6 +407,29 @@ accepted procedures for accessing the data.
 
 Please refer to the Date::Manip::Objects document for more
 information.
+
+=item Date::Manip has an inconsistent interface
+
+I've gotten a few complaints that the interface to Date::Manip is
+inconsistent... and I agree (at least when using the functional
+interfaces).
+
+Date::Manip was originally written in an unplanned way... as a need/want
+came up, it was extended. That's not the way to write a major package
+of course, but it wasn't expected to be a major package at the start.
+
+As it became more and more widely used, I too wished for a more
+consistent interface, but I did not want to break backward compatibility
+for everyone using it.
+
+When 6.xx was written, I spent a good deal of time trying to make a very
+standard interface, so I do not believe that this complaint can be
+applied to the OO interface (though I'm interested in suggestions for
+improving it of course).
+
+As far as the functional interface goes, I'll continue to support it
+in a backward compatible (and therefore inconsistent) form. I'd
+encourage the use of the OO interface whenever possible.
 
 =back
 

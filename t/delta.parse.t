@@ -87,6 +87,8 @@ $tests="
 
 '+35x 10 month'             => '[parse] Invalid delta string'
 
+'two weeks ago'             => +0:0:-2:0:0:0:0 0
+
 ";
 
 $t->tests(func  => \&test,

@@ -1,11 +1,11 @@
 package Date::Manip::TZ::asirku00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 30 14:55:37 EST 2010
+#    Generated on: Mon Jan 10 15:35:57 EST 2011
 #    Data version: tzdata2010o
 #    Code version: tzcode2010n
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -518,6 +518,15 @@ END { undef $VERSION; }
         [ [2030,10,26,18,0,0],[2030,10,27,2,0,0],'+08:00:00',[8,0,0],
           'IRKT',0,[2031,3,29,17,59,59],[2031,3,30,1,59,59],
           '2030102618:00:00','2030102702:00:00','2031032917:59:59','2031033001:59:59' ],
+     ],
+   2031 =>
+     [
+        [ [2031,3,29,18,0,0],[2031,3,30,3,0,0],'+09:00:00',[9,0,0],
+          'IRKST',1,[2031,10,25,17,59,59],[2031,10,26,2,59,59],
+          '2031032918:00:00','2031033003:00:00','2031102517:59:59','2031102602:59:59' ],
+        [ [2031,10,25,18,0,0],[2031,10,26,2,0,0],'+08:00:00',[8,0,0],
+          'IRKT',0,[2032,3,27,17,59,59],[2032,3,28,1,59,59],
+          '2031102518:00:00','2031102602:00:00','2032032717:59:59','2032032801:59:59' ],
      ],
 );
 

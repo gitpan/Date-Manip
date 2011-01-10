@@ -1,5 +1,5 @@
 package Date::Manip::DM5;
-# Copyright (c) 1995-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -8,7 +8,7 @@ package Date::Manip::DM5;
 
 use warnings;
 
-use vars qw($OS %Lang %Holiday %Events %Curr %Cnf %Zone $VERSION @ISA @EXPORT);
+our($OS,%Lang,%Holiday,%Events,%Curr,%Cnf,%Zone,$VERSION,@ISA,@EXPORT);
 
 # Determine the type of OS...
 $OS="Unix";
@@ -217,10 +217,10 @@ use Carp;
 
 use IO::File;
 
-use vars qw($Abbrevs);
+our($Abbrevs);
 use Date::Manip::DM5abbrevs;
 
-$VERSION='5.61';
+$VERSION='5.62';
 
 ########################################################################
 ########################################################################

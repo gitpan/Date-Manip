@@ -1,11 +1,11 @@
 package Date::Manip::TZ::askamc00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 30 14:55:56 EST 2010
+#    Generated on: Mon Jan 10 15:36:14 EST 2011
 #    Data version: tzdata2010o
 #    Code version: tzcode2010n
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -512,6 +512,15 @@ END { undef $VERSION; }
         [ [2030,10,26,15,0,0],[2030,10,27,2,0,0],'+11:00:00',[11,0,0],
           'PETT',0,[2031,3,29,14,59,59],[2031,3,30,1,59,59],
           '2030102615:00:00','2030102702:00:00','2031032914:59:59','2031033001:59:59' ],
+     ],
+   2031 =>
+     [
+        [ [2031,3,29,15,0,0],[2031,3,30,3,0,0],'+12:00:00',[12,0,0],
+          'PETST',1,[2031,10,25,14,59,59],[2031,10,26,2,59,59],
+          '2031032915:00:00','2031033003:00:00','2031102514:59:59','2031102602:59:59' ],
+        [ [2031,10,25,15,0,0],[2031,10,26,2,0,0],'+11:00:00',[11,0,0],
+          'PETT',0,[2032,3,27,14,59,59],[2032,3,28,1,59,59],
+          '2031102515:00:00','2031102602:00:00','2032032714:59:59','2032032801:59:59' ],
      ],
 );
 

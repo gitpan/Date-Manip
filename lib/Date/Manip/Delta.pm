@@ -1,5 +1,5 @@
 package Date::Manip::Delta;
-# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -21,7 +21,7 @@ use IO::File;
 #use re 'debug';
 
 our $VERSION;
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 ########################################################################
@@ -191,13 +191,22 @@ sub _rx {
       my $sign    = '[-+]?\s*';
       my $sep     = '(?:,\s*|\s+|$)';
 
-      my $y       = "(?:(?<y>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[1])$sep)";
-      my $m       = "(?:(?<m>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[2])$sep)";
-      my $w       = "(?:(?<w>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[3])$sep)";
-      my $d       = "(?:(?<d>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[4])$sep)";
-      my $h       = "(?:(?<h>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[5])$sep)";
-      my $mn      = "(?:(?<mn>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[6])$sep)";
-      my $s       = "(?:(?<s>$sign\\d+)\\s*(?:$$dmb{data}{rx}{fields}[7])?)";
+      my $nth     = $$dmb{'data'}{'rx'}{'nth'}[0];
+      my $yf      = $$dmb{data}{rx}{fields}[1];
+      my $mf      = $$dmb{data}{rx}{fields}[2];
+      my $wf      = $$dmb{data}{rx}{fields}[3];
+      my $df      = $$dmb{data}{rx}{fields}[4];
+      my $hf      = $$dmb{data}{rx}{fields}[5];
+      my $mnf     = $$dmb{data}{rx}{fields}[6];
+      my $sf      = $$dmb{data}{rx}{fields}[7];
+
+      my $y       = "(?:(?:(?<y>$sign\\d+)|(?<y>$nth))\\s*(?:$yf)$sep)";
+      my $m       = "(?:(?:(?<m>$sign\\d+)|(?<m>$nth))\\s*(?:$mf)$sep)";
+      my $w       = "(?:(?:(?<w>$sign\\d+)|(?<w>$nth))\\s*(?:$wf)$sep)";
+      my $d       = "(?:(?:(?<d>$sign\\d+)|(?<d>$nth))\\s*(?:$df)$sep)";
+      my $h       = "(?:(?:(?<h>$sign\\d+)|(?<h>$nth))\\s*(?:$hf)$sep)";
+      my $mn      = "(?:(?:(?<mn>$sign\\d+)|(?<mn>$nth))\\s*(?:$mnf)$sep)";
+      my $s       = "(?:(?:(?<s>$sign\\d+)|(?<s>$nth))\\s*(?:$sf)?)";
 
       my $exprx   = qr/^\s*$y?$m?$w?$d?$h?$mn?$s?\s*$/i;
       $$dmb{'data'}{'rx'}{'delta'}{$rx} = $exprx;
@@ -288,8 +297,13 @@ sub parse {
              $string   =~ $rx) {
             @delta     = @+{qw(y m w d h mn s)};
             foreach my $f (@delta) {
-               $f = 0  if (! defined $f);
-               $f =~ s/\s//g;
+               if (! defined $f) {
+                  $f = 0;
+               } elsif (exists $$dmb{'data'}{'wordmatch'}{'nth'}{lc($f)}) {
+                  $f = $$dmb{'data'}{'wordmatch'}{'nth'}{lc($f)};
+               } else {
+                  $f =~ s/\s//g;
+               }
             }
             my $err;
             if ($type eq 'business') {

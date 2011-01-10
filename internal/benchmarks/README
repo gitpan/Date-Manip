@@ -1,3 +1,18 @@
+Parse 10,000 dates
+
+Date::Manip 5          8.6 sec
+Date::Manip 6          4.1 sec
+            format     3.0 sec
+            'no' opts  3.8 sec
+
+Date::Parse            0.6 sec     handles multilingual dates
+                                   limited number of formats
+                                   active development
+Date::Time             0.7 sec     (wrapper around Date::Parse)
+
+-------------------
+
+
 These files are used for running benchmarks and performance testing of Date::Manip.
 They are not generally useful, and are not installed anywhere.
 

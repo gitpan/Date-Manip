@@ -1,5 +1,5 @@
 package Date::Manip::TZ;
-# Copyright (c) 2008-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 ########################################################################

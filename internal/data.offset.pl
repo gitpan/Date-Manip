@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -1397,7 +1397,7 @@ $def_off{0} = {
                                'America/Cayenne'                ,0001,1911,
                               ],
                '-03:30:00' => [
-                               'America/St_Johns'               ,1935,2049,
+                               'America/St_Johns'               ,1935,2050,
                                'America/Paramaribo'             ,1945,1984,
                                'America/Goose_Bay'              ,1935,1966,
                                'America/Montevideo'             ,1920,1942,
@@ -2383,8 +2383,8 @@ $def_off{1} = {
                                'Asia/Tokyo'                     ,1948,1951,
                               ],
                '+10:30:00' => [
-                               'Australia/Broken_Hill'          ,1916,2049,
-                               'Australia/Adelaide'             ,1916,2049,
+                               'Australia/Broken_Hill'          ,1916,2050,
+                               'Australia/Adelaide'             ,1916,2050,
                                'Australia/Darwin'               ,1916,1944,
                               ],
                '+11:00:00' => [
@@ -2395,7 +2395,7 @@ $def_off{1} = {
                                'Asia/Magadan'                   ,1991,1991,
                                'Asia/Sakhalin'                  ,1991,9999,
                                'Asia/Vladivostok'               ,1981,9999,
-                               'Australia/Lord_Howe'            ,1985,2049,
+                               'Australia/Lord_Howe'            ,1985,2050,
                                'Australia/Lindeman'             ,1916,1994,
                                'Australia/Brisbane'             ,1916,1992,
                                'Antarctica/Macquarie'           ,1916,2010,
@@ -2423,7 +2423,7 @@ $def_off{1} = {
                                'Antarctica/McMurdo'             ,1974,9999,
                               ],
                '+13:45:00' => [
-                               'Pacific/Chatham'                ,1974,2049,
+                               'Pacific/Chatham'                ,1974,2050,
                               ],
                '+14:00:00' => [
                                'Pacific/Tongatapu'              ,1999,2002,

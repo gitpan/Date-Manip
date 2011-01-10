@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2009-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2009-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -16,7 +16,7 @@ use warnings;
 # HELP
 ###############################################################################
 
-use vars qw($usage);
+our($usage);
 my $COM = $0;
 $COM =~ s/^.*\///;
 
@@ -104,7 +104,7 @@ Sullivan Beck (sbeck@cpan.org)
 # PARSE ARGUMENTS
 ###############################################################################
 
-use vars qw($date $dmt $dmb $verbose $cutoff @zone);
+our($date,$dmt,$dmb,$verbose,$cutoff,@zone);
 
 $date    = new Date::Manip::Date "now";
 $dmt     = $date->tz();

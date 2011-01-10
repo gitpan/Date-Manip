@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 2009-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -27,9 +27,30 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.21
+=head1 VERSION 6.22
+
+=head1 VERSION 6.21 (2011-01-10)
 
 =over 4
+
+=item New features
+
+Deltas may now contain spelled out numbers, so 'in 2 weeks' and 'in two weeks'
+will both work.  Daniel Shahaf
+
+=item Bug fixes
+
+Fixed a bug where week_of_year didn't work in some cases.  Chris Eveland.
+
+Fixed a minor potential bug.  Geraint Edwards.
+
+=item Time zone fixes
+
+Updated windows time zone aliases.  Daniel Harding
+
+=item Language fixes
+
+Added Norwegian.  Glenn Sogn
 
 =back
 

@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -230,7 +230,12 @@ At minimum, it must be expressed as:
 
 In the the expanded format, all fields must be given in the order: Y M
 W D H MN S.  Any number of them may be omitted provided the rest
-remain in the correct order.
+remain in the correct order. Numbers may be spelled out, so
+
+   in two weeks
+   in 2 weeks
+
+both work.
 
 Most languages also allow a word to specify whether the delta is an
 amount of time after or before a fixed point. In English, the word "in"

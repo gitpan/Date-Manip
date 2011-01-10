@@ -1,5 +1,5 @@
 package Date::Manip::Base;
-# Copyright (c) 1995-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -24,7 +24,7 @@ use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -584,8 +584,8 @@ sub check {
    my($y,$m,$d,$h,$mn,$s) = @$date;
 
    return 0  if (! $self->check_time([$h,$mn,$s])  ||
-                 ($y<1  ||  $y>9999)  ||
-                 ($m<1  ||  $m>12));
+                 $y<1  ||  $y>9999  ||
+                 $m<1  ||  $m>12);
 
    my $days = $self->days_in_month($y,$m);
 
@@ -597,11 +597,10 @@ sub check_time {
    my($self,$hms) = @_;
    my($h,$mn,$s) = @$hms;
 
-   return 0  if (! $self->_is_int($h,0,24));
-   return 1  if ($h==24  &&  ! $mn  &&  ! $s);
-   return 0  if ($h==24  ||
-                 ($mn<0  ||  $mn>59)  ||
-                 ($s<0   ||  $s>59));
+   return 0  if ($h  !~ /^[0-2]?[0-9]$/  ||  $h > 24  ||
+                 $mn !~ /^[0-5]?[0-9]$/ ||
+                 $s  !~ /^[0-5]?[0-9]$/ ||
+                 ($h == 24  &&  ($mn  ||  $s)));
    return 1;
 }
 
@@ -687,22 +686,11 @@ sub _week_of_year {
       # (y,m,d) = week_of_year(y,w)
       my($year,$w) = @args;
 
-      return $self->_week1_day1($firstday,$year)  if ($w == 1);
-
       return $$self{'cache'}{'woy1'}{$firstday}{$jan1week1}{$year}{$w}
         if (exists $$self{'cache'}{'woy1'}{$firstday}{$jan1week1}{$year}{$w});
 
-      my($y,$m,$d,$w0,$ymd);
-      ($y,$m,$d) = @{ $self->_week1_day1($firstday,$year) };
-      if ($y<$year) {
-         $y  = $year;
-         $m  = 1;
-         $d  = 7-(31-$d);
-         $w0 = $w-2;
-      } else {
-         $w0 = $w-1;
-      }
-      $ymd = $self->day_of_year($y,$d + $w0*7)  if ($w0>0);
+      my $ymd = $self->_week1_day1($firstday,$year);
+      $ymd = $self->calc_date_days($ymd,($w-1)*7)  if ($w > 1);
 
       $$self{'cache'}{'woy1'}{$firstday}{$jan1week1}{$year}{$w} = $ymd;
       return $ymd;
@@ -1597,7 +1585,7 @@ sub _rx_replace {
    my($self,$ele) = @_;
 
    if (! exists $$self{'data'}{'lang'}{$ele}) {
-      $$self{'data'}{'rx'}{$ele} = {};
+      $$self{'data'}{'rx'}{$ele} = [];
       return;
    }
 
@@ -1899,15 +1887,15 @@ sub _normalize_offset {
    return (1)  if ($#fields != 2);
 
    my($h,$mn,$s) = @fields;
-   $h   *= 1;
    $mn   = 0  if (! $mn);
-   $mn  *= 1;
    $s    = 0  if (! $s);
-   $s   *= 1;
+   return (1)  if ($h  !~ /^[+-]?[0-2]?[0-9]$/  ||  $h < -23  ||  $h > 23  ||
+                   $mn !~ /^[+-]?[0-5]?[0-9]$/  ||
+                   $s  !~ /^[+-]?[0-5]?[0-9]$/);
 
-   return (1)  if (! $self->_is_int($h,-23,23)  ||
-                   ! $self->_is_int($mn,-59,59) ||
-                   ! $self->_is_int($s,-59,59));
+   $h   *= 1;
+   $mn  *= 1;
+   $s   *= 1;
 
    if ($op eq 'join') {
       if ($h >= 0  &&  $mn >= 0  &&  $s >= 0) {

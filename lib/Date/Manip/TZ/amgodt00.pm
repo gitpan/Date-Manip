@@ -1,11 +1,11 @@
 package Date::Manip::TZ::amgodt00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 30 14:55:54 EST 2010
+#    Generated on: Mon Jan 10 15:36:11 EST 2011
 #    Data version: tzdata2010o
 #    Code version: tzcode2010n
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -512,6 +512,15 @@ END { undef $VERSION; }
         [ [2030,10,27,1,0,0],[2030,10,26,22,0,0],'-03:00:00',[-3,0,0],
           'WGT',0,[2031,3,30,0,59,59],[2031,3,29,21,59,59],
           '2030102701:00:00','2030102622:00:00','2031033000:59:59','2031032921:59:59' ],
+     ],
+   2031 =>
+     [
+        [ [2031,3,30,1,0,0],[2031,3,29,23,0,0],'-02:00:00',[-2,0,0],
+          'WGST',1,[2031,10,26,0,59,59],[2031,10,25,22,59,59],
+          '2031033001:00:00','2031032923:00:00','2031102600:59:59','2031102522:59:59' ],
+        [ [2031,10,26,1,0,0],[2031,10,25,22,0,0],'-03:00:00',[-3,0,0],
+          'WGT',0,[2032,3,28,0,59,59],[2032,3,27,21,59,59],
+          '2031102601:00:00','2031102522:00:00','2032032800:59:59','2032032721:59:59' ],
      ],
 );
 

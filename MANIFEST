@@ -4,11 +4,13 @@ examples/dm_zdump
 examples/README.examples
 HISTORY
 INSTALL
-internal/benchmarks/parse-1.dm.pl
+internal/.NOTES.swp
+internal/benchmarks/parse-1.date_parse.pl
+internal/benchmarks/parse-1.date_time.pl
 internal/benchmarks/parse-1.dm5.pl
-internal/benchmarks/parse-1.dm_fo.pl
-internal/benchmarks/parse-1.dm_no.pl
-internal/benchmarks/parse-1.dt.pl
+internal/benchmarks/parse-1.dm6.pl
+internal/benchmarks/parse-1.dm6_format.pl
+internal/benchmarks/parse-1.dm6_opts.pl
 internal/benchmarks/parse-1.in.pl
 internal/benchmarks/parse-1.sh
 internal/benchmarks/README
@@ -27,6 +29,7 @@ internal/TODO
 internal/translate
 internal/tzdata
 internal/VERSION
+internal/windows.compare
 lib/Date/Manip.pm
 lib/Date/Manip.pod
 lib/Date/Manip/Base.pm
@@ -56,6 +59,7 @@ lib/Date/Manip/Lang/french.pm
 lib/Date/Manip/Lang/german.pm
 lib/Date/Manip/Lang/index.pm
 lib/Date/Manip/Lang/italian.pm
+lib/Date/Manip/Lang/norwegian.pm
 lib/Date/Manip/Lang/polish.pm
 lib/Date/Manip/Lang/portugue.pm
 lib/Date/Manip/Lang/romanian.pm

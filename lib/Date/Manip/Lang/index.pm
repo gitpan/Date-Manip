@@ -1,5 +1,5 @@
 package Date::Manip::Lang::index;
-# Copyright (c) 2003-2010 Sullivan Beck. All rights reserved.
+# Copyright (c) 2003-2011 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -24,10 +24,10 @@ require 5.010000;
 use strict;
 use warnings;
 
-use vars qw($VERSION);
-$VERSION='6.20';
+our($VERSION);
+$VERSION='6.21';
 
-use vars qw(%Lang);
+our(%Lang);
 
 # A list of languages, and their module name
 
@@ -57,6 +57,10 @@ use vars qw(%Lang);
             italian     italian
             it          italian
             it_it       italian
+
+            norwegian   norwegian
+            nb          norwegian
+            nb_no       norwegian
 
             polish      polish
             pl          polish

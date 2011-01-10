@@ -1,11 +1,11 @@
 package Date::Manip::TZ::amhava00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 30 14:55:35 EST 2010
+#    Generated on: Mon Jan 10 15:35:55 EST 2011
 #    Data version: tzdata2010o
 #    Code version: tzcode2010n
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -692,6 +692,15 @@ END { undef $VERSION; }
         [ [2030,10,27,5,0,0],[2030,10,27,0,0,0],'-05:00:00',[-5,0,0],
           'CST',0,[2031,3,9,4,59,59],[2031,3,8,23,59,59],
           '2030102705:00:00','2030102700:00:00','2031030904:59:59','2031030823:59:59' ],
+     ],
+   2031 =>
+     [
+        [ [2031,3,9,5,0,0],[2031,3,9,1,0,0],'-04:00:00',[-4,0,0],
+          'CDT',1,[2031,10,26,4,59,59],[2031,10,26,0,59,59],
+          '2031030905:00:00','2031030901:00:00','2031102604:59:59','2031102600:59:59' ],
+        [ [2031,10,26,5,0,0],[2031,10,26,0,0,0],'-05:00:00',[-5,0,0],
+          'CST',0,[2032,3,14,4,59,59],[2032,3,13,23,59,59],
+          '2031102605:00:00','2031102600:00:00','2032031404:59:59','2032031323:59:59' ],
      ],
 );
 

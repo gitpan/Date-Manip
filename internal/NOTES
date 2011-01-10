@@ -18,6 +18,24 @@ Before every release, spellcheck the documents:
    done
 
 #########################################################################
+Update the windows zones.  Useful information in determining timezone
+mapping may be obtained by searching for 'Time Zone Index Values' at:
+
+   http://support.microsoft.com/
+   http://support.microsoft.com/kb/973627
+
+Go to:
+   http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/zone_tzid.html
+and copy the contents of the 'Mapping for: windows' table into a file 'windows.new'
+and run the script:
+   windows.compare
+
+Make sure that new and changed zones refer to valid Olsen time zones. Make
+the changes in data.alias.pl .
+
+Then remove windows.new .
+
+#########################################################################
 Get the newest tzdata package.
 
 The tzdata/tzcode archives are obtained from

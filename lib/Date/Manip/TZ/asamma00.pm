@@ -1,11 +1,11 @@
 package Date::Manip::TZ::asamma00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 30 14:55:39 EST 2010
+#    Generated on: Mon Jan 10 15:35:59 EST 2011
 #    Data version: tzdata2010o
 #    Code version: tzcode2010n
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -521,6 +521,15 @@ END { undef $VERSION; }
         [ [2030,10,24,22,0,0],[2030,10,25,0,0,0],'+02:00:00',[2,0,0],
           'EET',0,[2031,3,27,21,59,59],[2031,3,27,23,59,59],
           '2030102422:00:00','2030102500:00:00','2031032721:59:59','2031032723:59:59' ],
+     ],
+   2031 =>
+     [
+        [ [2031,3,27,22,0,0],[2031,3,28,1,0,0],'+03:00:00',[3,0,0],
+          'EEST',1,[2031,10,30,21,59,59],[2031,10,31,0,59,59],
+          '2031032722:00:00','2031032801:00:00','2031103021:59:59','2031103100:59:59' ],
+        [ [2031,10,30,22,0,0],[2031,10,31,0,0,0],'+02:00:00',[2,0,0],
+          'EET',0,[2032,3,25,21,59,59],[2032,3,25,23,59,59],
+          '2031103022:00:00','2031103100:00:00','2032032521:59:59','2032032523:59:59' ],
      ],
 );
 

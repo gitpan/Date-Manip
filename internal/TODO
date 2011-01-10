@@ -2,6 +2,12 @@
 # +1 significant release
 ########################################################################
 
+Add UseTZ
+  = %all      use all timezones
+  = %local    use local timezone
+  = Z1 Z2 ... use zones Z1, Z2, etc. (one can be %local)
+Only affects parsing.
+
 Add ways to get timezone in cygwin
 
 Cache Date::Manip::TZ::zone for ($abbrev,isdst), ($abbrev,$isdst,$offset),
@@ -27,8 +33,6 @@ Benchmarks
       10,000 scripts (parse 1 date + 2 adds + 1 unix date each) time
 
 Rewrite Problems.pod (Date Manip is slow)
-
-Fix docs for Sorting Problems.  It should use Date_Cmp instead of cmp.
 
 Clear out all problems from CPAN
 
@@ -70,11 +74,6 @@ day, keep it, otherwise discard this date.
 ########################################################################
 # TO DO
 ########################################################################
-
-Get rid of the IntCharSet config variable (and all translations from the
-   language files that have been changed to ASCII) and only support strings in
-   the native script.  Also, add an 'Encoding' config varible so all output
-   (and input) will be in that encoding rather than UTF-8.
 
 Add support for parsing:
   Thu Jan 21 17:13:27 2010 -0400

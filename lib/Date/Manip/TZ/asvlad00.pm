@@ -1,11 +1,11 @@
 package Date::Manip::TZ::asvlad00;
-# Copyright (c) 2008-2010 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Nov 30 14:55:35 EST 2010
+#    Generated on: Mon Jan 10 15:35:56 EST 2011
 #    Data version: tzdata2010o
 #    Code version: tzcode2010n
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.20';
+$VERSION='6.21';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -512,6 +512,15 @@ END { undef $VERSION; }
         [ [2030,10,26,16,0,0],[2030,10,27,2,0,0],'+10:00:00',[10,0,0],
           'VLAT',0,[2031,3,29,15,59,59],[2031,3,30,1,59,59],
           '2030102616:00:00','2030102702:00:00','2031032915:59:59','2031033001:59:59' ],
+     ],
+   2031 =>
+     [
+        [ [2031,3,29,16,0,0],[2031,3,30,3,0,0],'+11:00:00',[11,0,0],
+          'VLAST',1,[2031,10,25,15,59,59],[2031,10,26,2,59,59],
+          '2031032916:00:00','2031033003:00:00','2031102515:59:59','2031102602:59:59' ],
+        [ [2031,10,25,16,0,0],[2031,10,26,2,0,0],'+10:00:00',[10,0,0],
+          'VLAT',0,[2032,3,27,15,59,59],[2032,3,28,1,59,59],
+          '2031102516:00:00','2031102602:00:00','2032032715:59:59','2032032801:59:59' ],
      ],
 );
 
