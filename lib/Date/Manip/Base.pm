@@ -24,7 +24,7 @@ use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -1468,6 +1468,9 @@ sub _language {
 
    my $mod = $Date::Manip::Lang::index::Lang{$lang};
    eval "require Date::Manip::Lang::${mod}";
+   if ($@) {
+      die "ERROR: failed to load Date::Manip::Lang::${mod}: $@\n";
+   }
 
    no warnings 'once';
    $$self{'data'}{'lang'} = ${ "Date::Manip::Lang::${mod}::Language" };
@@ -1743,10 +1746,10 @@ sub split {
       }
 
    } elsif ($op eq 'offset') {
-      if ($string =~ /^([-+]?)(\d\d)(\d\d)(\d\d)$/     ||
-          $string =~ /^([-+]?)(\d\d)(\d\d)()$/         ||
-          $string =~ /^([-+]?)(\d\d?):(\d\d):(\d\d)$/  ||
-          $string =~ /^([-+]?)(\d\d?):(\d\d)()$/       ||
+      if ($string =~ /^([-+]?)(\d\d)(\d\d)(\d\d)$/       ||
+          $string =~ /^([-+]?)(\d\d)(\d\d)()$/           ||
+          $string =~ /^([-+]?)(\d\d?):(\d\d?):(\d\d?)$/  ||
+          $string =~ /^([-+]?)(\d\d?):(\d\d?)()$/        ||
           $string =~ /^([-+]?)(\d\d?)()()$/) {
          my($err,$h,$mn,$s) = $self->_normalize_offset('split',$1,$2,$3,$4);
          return undef  if ($err);

@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 ########################################################################
@@ -81,7 +81,7 @@ sub _init {
    if ($os eq 'Unix') {
       $$self{'data'}{'methods'} = [
                                    qw(main TZ
-                                      env  TZ
+                                      env  zone TZ
                                       file /etc/TIMEZONE
                                       file /etc/timezone
                                       file /etc/sysconfig/clock
@@ -103,7 +103,7 @@ sub _init {
    } elsif ($os eq 'Windows') {
       $$self{'data'}{'methods'} = [
                                    qw(main TZ
-                                      env  TZ
+                                      env  zone TZ
                                       registry
                                       gmtoff),
                                   ];
@@ -111,13 +111,12 @@ sub _init {
    } elsif ($os eq 'VMS') {
       $$self{'data'}{'methods'} = [
                                    qw(main TZ
-                                      env  TZ
-                                      env  SYS$TIMEZONE_RULE
-                                      env  SYS$TIMEZONE_NAME
-                                      env  UCX$TZ
-                                      env  TCPIP$TZ
-                                      env  MULTINET_TIMEZONE
-                                      env  SYS$TIMEZONE_DIFFERENTIAL
+                                      env  zone TZ
+                                      env  zone SYS$TIMEZONE_NAME
+                                      env  zone UCX$TZ
+                                      env  zone TCPIP$TZ
+                                      env  zone MULTINET_TIMEZONE
+                                      env  offset SYS$TIMEZONE_DIFFERENTIAL
                                       gmtoff
                                     ),
                                   ];
@@ -125,7 +124,7 @@ sub _init {
    } else {
       $$self{'data'}{'methods'} = [
                                    qw(main TZ
-                                      env  TZ
+                                      env  zone TZ
                                       gmtoff
                                     ),
                                   ];
@@ -398,12 +397,27 @@ sub _get_curr_zone {
          push(@zone,$$::var)  if (defined $$::var);
 
       } elsif ($method eq 'env') {
-         if (! @methods) {
-            warn "ERROR: [_set_curr_zone] env requires argument\n";
+         if (@methods < 2) {
+            warn "ERROR: [_set_curr_zone] env requires 2 argument\n";
             return;
          }
-         my $var = shift(@methods);
-         push(@zone,$ENV{$var})  if (exists $ENV{$var});
+         my $type = lc( shift(@methods) );
+         if ($type ne 'zone'  &&
+             $type ne 'offset') {
+            warn "ERROR: [_set_curr_zone] env requires 'offset' or 'zone' as the first argument\n";
+            return;
+         }
+         my $var  = shift(@methods);
+         if (exists $ENV{$var}) {
+            if ($type eq 'zone') {
+               push(@zone,$ENV{$var});
+            } else {
+               my $off = $ENV{$var};
+               $off    = $dmb->_delta_convert('time',"0:0:$off");
+               $off    = $dmb->_delta_convert('offset',$off);
+               push(@zone,$off);
+            }
+         }
 
       } elsif ($method eq 'file') {
          if (! @methods) {

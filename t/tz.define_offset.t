@@ -85,8 +85,8 @@ Asia/Rangoon
    Asia/Rangoon
    1
    Asia/Colombo
-   Asia/Kolkata
    Asia/Karachi
+   Asia/Kolkata
 ";
 
 $t->tests(func  => \&test,

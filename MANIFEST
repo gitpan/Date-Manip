@@ -4,7 +4,6 @@ examples/dm_zdump
 examples/README.examples
 HISTORY
 INSTALL
-internal/.NOTES.swp
 internal/benchmarks/parse-1.date_parse.pl
 internal/benchmarks/parse-1.date_time.pl
 internal/benchmarks/parse-1.dm5.pl
@@ -39,6 +38,7 @@ lib/Date/Manip/Changes5.pod
 lib/Date/Manip/Changes5to6.pod
 lib/Date/Manip/Changes6.pod
 lib/Date/Manip/Config.pod
+lib/Date/Manip/ConfigFile.pod
 lib/Date/Manip/Date.pm
 lib/Date/Manip/Date.pod
 lib/Date/Manip/Delta.pm
@@ -553,6 +553,7 @@ lib/Date/Manip/Offset/off477.pm
 lib/Date/Manip/Offset/off478.pm
 lib/Date/Manip/Offset/off479.pm
 lib/Date/Manip/Offset/off480.pm
+lib/Date/Manip/Offset/off481.pm
 lib/Date/Manip/Problems.pod
 lib/Date/Manip/Recur.pm
 lib/Date/Manip/Recur.pod
@@ -623,6 +624,7 @@ lib/Date/Manip/TZ/ambahi01.pm
 lib/Date/Manip/TZ/ambarb00.pm
 lib/Date/Manip/TZ/ambele00.pm
 lib/Date/Manip/TZ/ambeli00.pm
+lib/Date/Manip/TZ/ambeul00.pm
 lib/Date/Manip/TZ/amblan00.pm
 lib/Date/Manip/TZ/amboa_00.pm
 lib/Date/Manip/TZ/ambogo00.pm

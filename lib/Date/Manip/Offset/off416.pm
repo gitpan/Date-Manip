@@ -5,9 +5,9 @@ package Date::Manip::Offset::off416;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:35 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:56 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -46,69 +46,71 @@ $Offset        = '-06:00:00';
 %Offset        = (
    0 => [
       'america/chicago',
-      'america/indiana/tell_city',
       'america/indiana/knox',
+      'america/indiana/tell_city',
       'america/menominee',
       'america/winnipeg',
       'america/rainy_river',
-      'america/north_dakota/new_salem',
-      'america/north_dakota/center',
-      'america/monterrey',
-      'america/merida',
+      'america/belize',
+      'america/guatemala',
+      'america/costa_rica',
+      'america/el_salvador',
+      'america/tegucigalpa',
       'america/cancun',
       'america/matamoros',
-      'america/mazatlan',
+      'america/merida',
+      'america/monterrey',
       'america/bahia_banderas',
       'america/mexico_city',
-      'america/ojinaga',
-      'america/chihuahua',
-      'pacific/easter',
-      'america/cambridge_bay',
+      'america/managua',
       'america/rankin_inlet',
+      'america/regina',
+      'america/swift_current',
+      'pacific/easter',
       'pacific/galapagos',
+      'america/north_dakota/center',
+      'america/north_dakota/new_salem',
+      'america/north_dakota/beulah',
       'etc/gmt-6',
+      'f',
+      'america/indiana/petersburg',
       'america/indiana/vincennes',
       'america/indiana/winamac',
-      'america/indiana/petersburg',
-      'america/guatemala',
-      'america/tegucigalpa',
-      'america/managua',
       'america/resolute',
+      'america/cambridge_bay',
       'america/kentucky/monticello',
       'america/iqaluit',
       'america/pangnirtung',
-      'america/hermosillo',
-      'america/costa_rica',
-      'america/el_salvador',
-      'america/belize',
-      'america/swift_current',
+      'america/chihuahua',
+      'america/ojinaga',
       'america/indiana/marengo',
       'america/kentucky/louisville',
-      'america/regina',
       'america/indiana/indianapolis',
       'america/indiana/vevay',
+      'america/hermosillo',
+      'america/mazatlan',
       'america/atikokan',
       'america/detroit',
       'america/thunder_bay',
-      'f',
       ],
    1 => [
       'america/denver',
       'america/edmonton',
-      'america/north_dakota/new_salem',
-      'america/north_dakota/center',
-      'america/mazatlan',
-      'america/bahia_banderas',
-      'america/ojinaga',
-      'america/chihuahua',
-      'pacific/easter',
       'america/boise',
-      'america/yellowknife',
       'america/cambridge_bay',
+      'america/yellowknife',
       'america/inuvik',
+      'america/mazatlan',
+      'america/chihuahua',
+      'america/ojinaga',
+      'america/north_dakota/beulah',
+      'america/bahia_banderas',
+      'america/north_dakota/new_salem',
       'america/hermosillo',
-      'america/swift_current',
+      'america/north_dakota/center',
+      'pacific/easter',
       'america/phoenix',
+      'america/swift_current',
       'america/regina',
       ],
 );

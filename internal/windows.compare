@@ -43,7 +43,7 @@ foreach my $key (keys %new) {
 }
 
 if (@new) {
-   print "The following zones need to be added:\n";
+   print "The following zones need to be added (check that the zones are in tzdata):\n";
    foreach my $key (sort @new) {
       my $val = $new{$key};
       print "   \"$key\"" . " "x(32-length($key)) . "=> \"$val\",\n";
@@ -61,7 +61,7 @@ foreach my $key (keys %old) {
 }
 
 if (@chg) {
-   print "The following zones need to be changed:\n";
+   print "The following zones need to be changed (verify in tzdata first):\n";
    foreach my $key (sort @chg) {
       my $val = $new{$key};
       print "   \"$key\"" . " "x(32-length($key)) . "=> \"$val\",\n";

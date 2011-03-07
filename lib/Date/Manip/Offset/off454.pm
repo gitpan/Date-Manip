@@ -5,9 +5,9 @@ package Date::Manip::Offset::off454;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:35 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:56 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off454;
 
 =head1 NAME
 
-Date::Manip::Offset::off454 - Support for the -09:18:55 offset
+Date::Manip::Offset::off454 - Support for the -09:18:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +41,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-09:18:55';
+$Offset        = '-09:18:00';
 
 %Offset        = (
    0 => [
-      'america/yakutat',
+      'pacific/marquesas',
       ],
 );
 

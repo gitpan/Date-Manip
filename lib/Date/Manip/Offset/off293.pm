@@ -5,9 +5,9 @@ package Date::Manip::Offset::off293;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:33 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:54 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -56,28 +56,28 @@ $Offset        = '-02:00:00';
    1 => [
       'america/sao_paulo',
       'america/montevideo',
-      'america/argentina/cordoba',
-      'america/argentina/tucuman',
-      'america/argentina/buenos_aires',
       'america/godthab',
       'america/miquelon',
-      'america/argentina/mendoza',
-      'america/argentina/la_rioja',
-      'america/argentina/ushuaia',
+      'america/argentina/buenos_aires',
+      'america/argentina/cordoba',
+      'america/argentina/tucuman',
       'america/argentina/catamarca',
+      'america/argentina/jujuy',
+      'america/argentina/la_rioja',
+      'america/argentina/mendoza',
+      'america/argentina/rio_gallegos',
       'america/argentina/salta',
       'america/argentina/san_juan',
-      'america/argentina/rio_gallegos',
       'america/argentina/san_luis',
-      'america/argentina/jujuy',
-      'america/bahia',
+      'america/argentina/ushuaia',
       'america/araguaina',
-      'america/recife',
+      'america/bahia',
       'america/fortaleza',
       'america/maceio',
+      'america/recife',
       'america/danmarkshavn',
-      'america/goose_bay',
       'america/belem',
+      'america/goose_bay',
       'atlantic/stanley',
       'america/pangnirtung',
       'antarctica/palmer',

@@ -27,7 +27,41 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.22
+=head1 VERSION 6.23
+
+=over 4
+
+=back
+
+=head1 VERSION 6.22 (2011-03-07)
+
+=over 4
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2011b)
+
+Fixed a bug where the gmtoff method of getting the local timezone was broken.
+Martin Zinser.
+
+Fixed the 'env' method of determining the local time zone to allow the
+value to be an offset of seconds since UTC.  This allows the VMS
+SYS$TIMEZONE_DIFFERENTIAL variable to work correctly.  Martin Zinser.
+
+Removed the SYS$TIMEZONE_RULE method from VMS since the value stored there
+is not the name of a timezone (it's a rule in a non-standard format).  Based
+on discussion with Martin Zinser.
+
+=item Language fixes
+
+The module will now die if a language module cannot be loaded (most
+likely due to a YAML::Syck issue).  Based on discussion with Martin Zinser.
+
+=item Documentation fixes
+
+Added a sample config file document.  Based on discussion with Rich Duzenbury.
+
+=back
 
 =head1 VERSION 6.21 (2011-01-10)
 
@@ -62,7 +96,7 @@ Added Norwegian.  Glenn Sogn
 
 Recurrences were reworked in a (slightly) backward incompatible way to
 improve their usefulness (and to make them conform to the expected
-results). Most recurrences will work the same, but a few will
+results). Most recurrences will work the same as previously, but a few will
 differ. Most of this was suggested by Jay Jacobs.
 
 A recurring event is now calculated relative to the base date, NOT relative
@@ -77,9 +111,9 @@ been (in a non-leap year):
 
 The new behavior is:
 
-   D(0)                   = Jan 31
-   D(1)  = D(0) + 1 month = Feb 28
-   D(2)  = D(0) + 2 month = Mar 31
+   D(0)                       = Jan 31
+   D(1)  = D(0) + 1*(1 month) = Feb 28
+   D(2)  = D(0) + 2*(1 month) = Mar 31
    ...
 
 Previously, if a base date were not specified, it was not determined
@@ -91,7 +125,7 @@ meaningful and useful now.
 
 Added iterator functions.  Daniel LaLiberte
 
-The RecurNumFudgeDays variable is now deprecated.
+The RecurNumFudgeDays variable is no longer used and is deprecated.
 
 =item Time zone fixes
 

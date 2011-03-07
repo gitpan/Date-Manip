@@ -18,7 +18,7 @@ use Date::Manip::Zones;
 use Date::Manip::TZ;
 
 our($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 
 our($DEBUG);
 $DEBUG = 0;
@@ -101,7 +101,7 @@ use strict;
 use warnings;
 
 our(\$VERSION);
-\$VERSION='6.21';
+\$VERSION='6.22';
 
 \$Date::Manip::DM5::Abbrevs = join(' ',qw(
 ";

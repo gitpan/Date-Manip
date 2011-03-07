@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 
 $Date::Manip::DM5::Abbrevs = join(' ',qw(
       idlw   -1200
@@ -233,9 +233,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       hkt    +0800
       hovst  +0800
       hovt   +0700
-      hpt    -0930
       hst    -1000
-      hwt    -0930
       i      -0900
       ict    +0700
       iddt   +0400
@@ -633,9 +631,7 @@ The following timezones are defined:
       HKT    +0800
       HOVST  +0800
       HOVT   +0700
-      HPT    -0930
       HST    -1000
-      HWT    -0930
       I      -0900
       ICT    +0700
       IDDT   +0400

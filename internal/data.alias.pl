@@ -60,6 +60,7 @@
    "Jordan Standard Time"            => "Asia/Amman",
    "Kamchatka Standard Time"         => "Asia/Kamchatka",
    "Korea Standard Time"             => "Asia/Seoul",
+   "Magadan Standard Time"           => "Asia/Magadan",
    "Mauritius Standard Time"         => "Indian/Mauritius",
    "Mexico Standard Time 2"          => "America/Chihuahua",
    "Mexico Standard Time"            => "America/Mexico_City",
@@ -97,7 +98,7 @@
    "Tasmania Standard Time"          => "Australia/Hobart",
    "Tokyo Standard Time"             => "Asia/Tokyo",
    "Tonga Standard Time"             => "Pacific/Tongatapu",
-   "US Eastern Standard Time"        => "Etc/GMT+5",
+   "US Eastern Standard Time"        => "America/Indiana/Indianapolis",
    "US Mountain Standard Time"       => "America/Phoenix",
    "UTC"                             => "Etc/GMT",
    "UTC+12"                          => "Etc/GMT-12",
@@ -239,6 +240,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Indiana/Indianapolis'            ,1918,1954,
                        'America/Indiana/Vevay'                   ,1918,1919,
                        'America/Atikokan'                        ,1918,1918,
+                       'America/North_Dakota/Beulah'             ,2011,9999,
                       ],
    'EST5EDT'       => [
                        'America/New_York'                        ,1918,9999,
@@ -281,6 +283,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Phoenix'                         ,1918,1967,
                        'America/Swift_Current'                   ,1918,1961,
                        'America/Regina'                          ,1918,1959,
+                       'America/North_Dakota/Beulah'             ,1918,2009,
                       ],
    'PST8PDT'       => [
                        'America/Los_Angeles'                     ,1918,9999,
@@ -360,7 +363,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Argentina/San_Luis'              ,1974,1989,
                        'Antarctica/Palmer'                       ,1974,1974,
                       ],
-   "ART4ARST"      => [
+   'ART4ARST'      => [
                        'America/Argentina/Buenos_Aires'          ,1931,1968,
                        'America/Argentina/Catamarca'             ,1931,1968,
                        'America/Argentina/Cordoba'               ,1931,1968,
@@ -425,9 +428,9 @@ foreach my $winz (keys %windows_zones) {
                        'America/Recife'                          ,1932,1989,
                        'America/Belem'                           ,1932,1987,
                       ],
-   "BST11BDT"      => [
-                       "America/Adak",                           ,1969,1982,
-                       "America/Nome",                           ,1969,1982,
+   'BST11BDT'      => [
+                       'America/Adak'                            ,1969,1982,
+                       'America/Nome'                            ,1969,1982,
                       ],
    'CAT-2CAST'     => [
                        'Africa/Khartoum'                         ,1970,1985,
@@ -475,13 +478,13 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Riga'                             ,1943,1943,
                        'Europe/Simferopol'                       ,1943,1943,
                       ],
-   "CET-1WEMT"     => [
-                       "Europe/Madrid",                          ,1946,1946,
-                       "Europe/Monaco",                          ,1945,1945,
-                       "Europe/Paris",                           ,1945,1945,
+   'CET-1WEMT'     => [
+                       'Europe/Madrid'                           ,1946,1946,
+                       'Europe/Monaco'                           ,1945,1945,
+                       'Europe/Paris'                            ,1945,1945,
                       ],
-   "CET-1WEST"     => [
-                       "Europe/Luxembourg",                      ,1944,1944,
+   'CET-1WEST'     => [
+                       'Europe/Luxembourg'                       ,1944,1944,
                       ],
    'CGT2CGST'      => [
                        'America/Scoresbysund'                    ,1980,1980,
@@ -507,21 +510,21 @@ foreach my $winz (keys %windows_zones) {
    'CST5CDT'       => [
                        'America/Havana'                          ,1928,9999,
                       ],
-   "CST6CPT"       => [
-                       "America/Chicago",                        ,1945,1945,
-                       "America/Indiana/Indianapolis",           ,1945,1945,
-                       "America/Indiana/Knox",                   ,1945,1945,
-                       "America/Indiana/Marengo",                ,1945,1945,
-                       "America/Indiana/Petersburg",             ,1945,1945,
-                       "America/Indiana/Tell_City",              ,1945,1945,
-                       "America/Indiana/Vevay",                  ,1945,1945,
-                       "America/Indiana/Vincennes",              ,1945,1945,
-                       "America/Indiana/Winamac",                ,1945,1945,
-                       "America/Kentucky/Louisville",            ,1945,1945,
-                       "America/Kentucky/Monticello",            ,1945,1945,
-                       "America/Menominee",                      ,1945,1945,
-                       "America/Rainy_River",                    ,1945,1945,
-                       "America/Winnipeg",                       ,1945,1945,
+   'CST6CPT'       => [
+                       'America/Chicago'                         ,1945,1945,
+                       'America/Indiana/Indianapolis'            ,1945,1945,
+                       'America/Indiana/Knox'                    ,1945,1945,
+                       'America/Indiana/Marengo'                 ,1945,1945,
+                       'America/Indiana/Petersburg'              ,1945,1945,
+                       'America/Indiana/Tell_City'               ,1945,1945,
+                       'America/Indiana/Vevay'                   ,1945,1945,
+                       'America/Indiana/Vincennes'               ,1945,1945,
+                       'America/Indiana/Winamac'                 ,1945,1945,
+                       'America/Kentucky/Louisville'             ,1945,1945,
+                       'America/Kentucky/Monticello'             ,1945,1945,
+                       'America/Menominee'                       ,1945,1945,
+                       'America/Rainy_River'                     ,1945,1945,
+                       'America/Winnipeg'                        ,1945,1945,
                       ],
    'DUST-6DUSST'   => [
                        'Asia/Dushanbe'                           ,1981,1990,
@@ -568,22 +571,22 @@ foreach my $winz (keys %windows_zones) {
                        'America/Scoresbysund'                    ,1981,9999,
                       ],
    'EST-10EST'     => [
+                       'Australia/Melbourne'                     ,1942,9999,
                        'Australia/Currie'                        ,1942,9999,
                        'Australia/Hobart'                        ,1942,9999,
-                       'Australia/Melbourne'                     ,1942,9999,
                        'Australia/Sydney'                        ,1942,9999,
                        'Antarctica/Macquarie'                    ,1942,2009,
                        'Australia/Lindeman'                      ,1942,1993,
                        'Australia/Brisbane'                      ,1942,1991,
                       ],
-   "EST5EPT"       => [
-                       "America/Detroit",                        ,1945,1945,
-                       "America/Iqaluit",                        ,1945,1945,
-                       "America/Montreal",                       ,1945,1945,
-                       "America/New_York",                       ,1945,1945,
-                       "America/Nipigon",                        ,1945,1945,
-                       "America/Thunder_Bay",                    ,1945,1945,
-                       "America/Toronto",                        ,1945,1945,
+   'EST5EPT'       => [
+                       'America/New_York'                        ,1945,1945,
+                       'America/Detroit'                         ,1945,1945,
+                       'America/Iqaluit'                         ,1945,1945,
+                       'America/Montreal'                        ,1945,1945,
+                       'America/Nipigon'                         ,1945,1945,
+                       'America/Thunder_Bay'                     ,1945,1945,
+                       'America/Toronto'                         ,1945,1945,
                       ],
    'FJT-12FJST'    => [
                        'Pacific/Fiji'                            ,1999,2010,
@@ -654,9 +657,9 @@ foreach my $winz (keys %windows_zones) {
    'KIZT-5KIZST'   => [
                        'Asia/Qyzylorda'                          ,1982,1990,
                       ],
-   "KRAT-6KRAST"   => [
-                       "Asia/Krasnoyarsk",                       ,1991,1991,
-                       "Asia/Novokuznetsk",                      ,1991,1991,
+   'KRAT-6KRAST'   => [
+                       'Asia/Krasnoyarsk'                        ,1991,1991,
+                       'Asia/Novokuznetsk'                       ,1991,1991,
                       ],
    'KRAT-7KRAST'   => [
                        'Asia/Krasnoyarsk'                        ,1981,9999,
@@ -689,12 +692,12 @@ foreach my $winz (keys %windows_zones) {
    'MOT-8MOST'     => [
                        'Asia/Macau'                              ,1961,1980,
                       ],
-   "MSK-3CEST"     => [
-                       "Europe/Minsk",                           ,1944,1944,
-                       "Europe/Chisinau",                        ,1944,1944,
-                       "Europe/Simferopol",                      ,1944,1944,
-                       "Europe/Tallinn",                         ,1944,1944,
-                       "Europe/Vilnius",                         ,1944,1944,
+   'MSK-3CEST'     => [
+                       'Europe/Minsk'                            ,1944,1944,
+                       'Europe/Chisinau'                         ,1944,1944,
+                       'Europe/Simferopol'                       ,1944,1944,
+                       'Europe/Tallinn'                          ,1944,1944,
+                       'Europe/Vilnius'                          ,1944,1944,
                       ],
    'MSK-3MSD'      => [
                        'Europe/Moscow'                           ,1981,9999,
@@ -709,16 +712,17 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Riga'                             ,1981,1988,
                        'Europe/Tallinn'                          ,1981,1988,
                       ],
-   "MST7MPT"       => [
-                       "America/Denver",                         ,1945,1945,
-                       "America/Boise",                          ,1945,1945,
-                       "America/Cambridge_Bay",                  ,1945,1945,
-                       "America/Edmonton",                       ,1945,1945,
-                       "America/North_Dakota/Center",            ,1945,1945,
-                       "America/North_Dakota/New_Salem",         ,1945,1945,
-                       "America/Regina",                         ,1945,1945,
-                       "America/Swift_Current",                  ,1945,1945,
-                       "America/Yellowknife",                    ,1945,1945,
+   'MST7MPT'       => [
+                       'America/Denver'                          ,1945,1945,
+                       'America/Boise'                           ,1945,1945,
+                       'America/Cambridge_Bay'                   ,1945,1945,
+                       'America/Edmonton'                        ,1945,1945,
+                       'America/North_Dakota/Center'             ,1945,1945,
+                       'America/North_Dakota/New_Salem'          ,1945,1945,
+                       'America/Regina'                          ,1945,1945,
+                       'America/Swift_Current'                   ,1945,1945,
+                       'America/Yellowknife'                     ,1945,1945,
+                       'America/North_Dakota/Beulah'             ,1945,1945,
                       ],
    'NCT-11NCST'    => [
                        'Pacific/Noumea'                          ,1978,1978,
@@ -733,9 +737,9 @@ foreach my $winz (keys %windows_zones) {
    'NST11NDT'      => [
                        'Pacific/Midway'                          ,1956,1956,
                       ],
-   "NST11NPT"      => [
-                       "America/Adak",                           ,1945,1945,
-                       "America/Nome",                           ,1945,1945,
+   'NST11NPT'      => [
+                       'America/Adak'                            ,1945,1945,
+                       'America/Nome'                            ,1945,1945,
                       ],
    'NZST-12NZDT'   => [
                        'Pacific/Auckland'                        ,1975,9999,
@@ -768,13 +772,13 @@ foreach my $winz (keys %windows_zones) {
    'PMST3PMDT'     => [
                        'America/Miquelon'                        ,1987,9999,
                       ],
-   "PST8PPT"       => [
-                       "America/Los_Angeles",                    ,1945,1945,
-                       "America/Dawson_Creek",                   ,1945,1945,
-                       "America/Juneau",                         ,1945,1945,
-                       "America/Santa_Isabel",                   ,1945,1945,
-                       "America/Tijuana",                        ,1945,1945,
-                       "America/Vancouver",                      ,1945,1945,
+   'PST8PPT'       => [
+                       'America/Los_Angeles'                     ,1945,1945,
+                       'America/Dawson_Creek'                    ,1945,1945,
+                       'America/Juneau'                          ,1945,1945,
+                       'America/Santa_Isabel'                    ,1945,1945,
+                       'America/Tijuana'                         ,1945,1945,
+                       'America/Vancouver'                       ,1945,1945,
                       ],
    'PYT4PYST'      => [
                        'America/Asuncion'                        ,1976,9999,
@@ -859,28 +863,13 @@ foreach my $winz (keys %windows_zones) {
    'WAT-1WAST'     => [
                        'Africa/Windhoek'                         ,1994,9999,
                       ],
-   "WET0WEST"      => [
-                       "WET",                                    ,1977,2047,
-                       "Africa/Algiers",                         ,1916,1980,
-                       "Africa/Casablanca",                      ,1939,2008,
-                       "Africa/Ceuta",                           ,1918,1978,
-                       "Atlantic/Canary",                        ,1980,2047,
-                       "Atlantic/Faroe",                         ,1981,2047,
-                       "Atlantic/Madeira",                       ,1977,2047,
-                       "Europe/Brussels",                        ,1919,1939,
-                       "Europe/Lisbon",                          ,1916,2047,
-                       "Europe/Luxembourg",                      ,1919,1939,
-                       "Europe/Madrid",                          ,1917,1939,
-                       "Europe/Monaco",                          ,1916,1939,
-                       "Europe/Paris",                           ,1916,1939,
-                      ],
    'WET-1WEST'     => [
                        'Europe/Luxembourg'                       ,1943,1943,
                       ],
    'WET0WEST'      => [
+                       'WET'                                     ,1977,9999,
                        'Europe/Lisbon'                           ,1916,9999,
                        'Atlantic/Madeira'                        ,1977,9999,
-                       'WET'                                     ,1977,9999,
                        'Atlantic/Canary'                         ,1980,9999,
                        'Atlantic/Faroe'                          ,1981,9999,
                        'Africa/Casablanca'                       ,1939,2010,
@@ -911,15 +900,15 @@ foreach my $winz (keys %windows_zones) {
    'YERT-4YERST'   => [
                        'Asia/Yerevan'                            ,1981,1990,
                       ],
-   "YST9YDT"       => [
-                       "America/Yakutat",                        ,1969,1982,
-                       "America/Dawson",                         ,1918,1919,
-                       "America/Whitehorse",                     ,1918,1919,
+   'YST9YDT'       => [
+                       'America/Yakutat'                         ,1969,1982,
+                       'America/Dawson'                          ,1918,1919,
+                       'America/Whitehorse'                      ,1918,1919,
                       ],
-   "YST9YPT"       => [
-                       "America/Yakutat",                        ,1945,1945,
-                       "America/Dawson",                         ,1945,1945,
-                       "America/Whitehorse",                     ,1945,1945,
+   'YST9YPT'       => [
+                       'America/Yakutat'                         ,1945,1945,
+                       'America/Dawson'                          ,1945,1945,
+                       'America/Whitehorse'                      ,1945,1945,
                       ],
   );
 

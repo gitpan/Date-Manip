@@ -5,9 +5,9 @@ package Date::Manip::Offset::off475;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:35 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:57 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off475;
 
 =head1 NAME
 
-Date::Manip::Offset::off475 - Support for the -12:00:00 offset
+Date::Manip::Offset::off475 - Support for the -11:49:28 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,14 +41,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-12:00:00';
+$Offset        = '-11:49:28';
 
 %Offset        = (
    0 => [
-      'etc/gmt-12',
-      'pacific/kwajalein',
-      'pacific/enderbury',
-      'm',
+      'pacific/midway',
       ],
 );
 

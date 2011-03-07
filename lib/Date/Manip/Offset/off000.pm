@@ -5,9 +5,9 @@ package Date::Manip::Offset::off000;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:29 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:50 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -49,29 +49,34 @@ $Offset        = '+00:00:00';
       'europe/london',
       'africa/lome',
       'atlantic/faroe',
-      'europe/lisbon',
-      'africa/ouagadougou',
       'africa/abidjan',
+      'africa/bamako',
+      'africa/conakry',
+      'africa/nouakchott',
+      'africa/ouagadougou',
       'africa/sao_tome',
+      'europe/lisbon',
+      'africa/casablanca',
       'europe/dublin',
-      'atlantic/madeira',
+      'africa/accra',
       'africa/dakar',
-      'atlantic/azores',
       'atlantic/canary',
       'atlantic/st_helena',
+      'africa/freetown',
       'africa/banjul',
+      'atlantic/madeira',
+      'atlantic/reykjavik',
       'africa/monrovia',
       'africa/bissau',
       'africa/el_aaiun',
       'america/danmarkshavn',
-      'ut',
       'etc/gmt',
-      'africa/casablanca',
+      'ut',
+      'z',
+      'atlantic/azores',
       'africa/ceuta',
       'africa/algiers',
-      'atlantic/reykjavik',
       'africa/malabo',
-      'africa/freetown',
       'africa/niamey',
       'america/rankin_inlet',
       'europe/gibraltar',
@@ -80,7 +85,6 @@ $Offset        = '+00:00:00';
       'america/resolute',
       'europe/andorra',
       'america/iqaluit',
-      'africa/accra',
       'europe/brussels',
       'europe/madrid',
       'europe/monaco',
@@ -88,28 +92,24 @@ $Offset        = '+00:00:00';
       'europe/luxembourg',
       'america/yellowknife',
       'africa/porto-novo',
-      'africa/conakry',
-      'africa/bamako',
-      'africa/nouakchott',
       'america/pangnirtung',
       'america/cambridge_bay',
-      'antarctica/rothera',
       'antarctica/casey',
       'antarctica/davis',
+      'antarctica/dumontdurville',
+      'antarctica/macquarie',
+      'antarctica/mawson',
+      'antarctica/mcmurdo',
       'antarctica/palmer',
+      'antarctica/rothera',
       'antarctica/syowa',
       'antarctica/vostok',
-      'antarctica/dumontdurville',
-      'antarctica/mcmurdo',
-      'antarctica/mawson',
-      'antarctica/macquarie',
-      'z',
       ],
    1 => [
       'atlantic/azores',
-      'atlantic/madeira',
       'america/scoresbysund',
       'atlantic/reykjavik',
+      'atlantic/madeira',
       ],
 );
 

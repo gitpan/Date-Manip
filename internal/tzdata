@@ -20,10 +20,12 @@ use strict;
 use warnings;
 
 our $VERSION;
-$VERSION='6.21';
+$VERSION='6.22';
 
 our ($dmb);
 $dmb = new Date::Manip::Base;
+
+our $curry = ( localtime(time) )[5] + 1900;
 
 ##############################################################################
 # GLOBAL VARIABLES
@@ -509,8 +511,8 @@ sub do_mods {
    _yaml_write($abbrev,'tzdata/_abbrev_un',0);
    _yaml_write($alias2,'tzdata/_alias2_un',0);
 
-   $abbrev = _order_elements($abbrev,\%def_abbrev,\&_sort_by_years);
-   $alias2 = _order_elements($alias2,\%def_alias2,\&_sort_by_years);
+   $abbrev = _order_elements($abbrev,\%def_abbrev);
+   $alias2 = _order_elements($alias2,\%def_alias2);
 
    _yaml_write($abbrev,'tzdata/_abbrev_or',0);
    _yaml_write($alias2,'tzdata/_alias2_or',0);
@@ -1062,7 +1064,7 @@ END {
 }
 
 our (\$VERSION);
-\$VERSION='6.21';
+\$VERSION='6.22';
 END { undef \$VERSION; }
 
 \%Dates         = (
@@ -1203,8 +1205,8 @@ sub do_off {
    # Convert %offest to a couple other formats that will be useful.
 
    my %offset_or;
-   $offset_or{0} = _order_elements($offset_un{0},$def_off{0},\&_sort_offsets);
-   $offset_or{1} = _order_elements($offset_un{1},$def_off{1},\&_sort_offsets);
+   $offset_or{0} = _order_elements($offset_un{0},$def_off{0});
+   $offset_or{1} = _order_elements($offset_un{1},$def_off{1});
 
    my %offset2_or;
    foreach my $isdst (keys %offset_un) {
@@ -1301,7 +1303,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.21';
+\$VERSION='6.22';
 END { undef \$VERSION; }
 
 our (\$Offset,\%Offset);
@@ -1381,7 +1383,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.21';
+\$VERSION='6.22';
 END { undef \$VERSION; }
 
 our (\$TzdataVersion,\$TzcodeVersion,
@@ -1971,7 +1973,7 @@ sub _order {
 # function passed in as $sort_func (which is a function name.
 #
 sub _order_elements {
-   my($in,$def,$sort_func) = @_;
+   my($in,$def) = @_;
    my $out;
 
    my $def_un = _unorder_elements($def);
@@ -1990,7 +1992,7 @@ sub _order_elements {
       # Add any new elements to the end, but in the
       # proper sorted order.
 
-      my @in = &$sort_func($$in{$ele});
+      my @in = _sort_by_years($$in{$ele});
 
       foreach my $subele (@in) {
          next  if (exists $$def_un{$ele}{$subele});
@@ -2019,63 +2021,95 @@ sub _order_elements {
 #   $hash = { ELE => [YEAR1,YEAR2] }
 # by years.
 #
+# o  An element that is active now always comes before one that isn't
+#    active now.
+#       i.e. [2000-2020] < [1900-2000]  (now = 2010)
+#
+# o  An Antarctica element comes after one that is not Antarctica
+#
+# o  A military timezone (A-Z) comes after one that is not
+#
+# o  A UT/UTC/*GMT* timezone comes after one that is not
+#
+# o  An element that is active later comes before one that is active
+#    earlier.
+#       i.e. [X-1970] < [X-1960]; [X-2040] < [X-2020]
+#
+# o  An element that is active further in the past comes before one
+#    that is active later.
+#       i.e. [1930-X] < [1940-X]
+#
+# o  Alphabetize the rest.
+#
 sub _sort_by_years {
    my($hash) = @_;
 
-   return sort { $$hash{$b}[1] <=> $$hash{$a}[1]  ||
-                 $$hash{$a}[0] <=> $$hash{$b}[0]  ||
-                 $a cmp $b } keys %$hash;
+   return sort { __sort_by_years($$hash{$a},$$hash{$b},$a,$b) } keys %$hash;
 }
+sub __sort_by_years {
+   my($a,$b,$namea,$nameb) = @_;
 
-sub _sort_offsets {
-   my($hash) = @_;
+   my $curra = ($$a[0] <= $curry  &&  $$a[1] >= $curry ? 1 : 0);
+   my $currb = ($$b[0] <= $curry  &&  $$b[1] >= $curry ? 1 : 0);
 
-   return sort { _cmp_offsets($hash,$a,$b) } keys %$hash;
-}
-
-# This sorts
-#    later end time always before earlier end time
-#    earlier start time before later start time
-sub _cmp_offsets {
-   my($hash,$zone1,$zone2) = @_;
-
-   # One-character military time zones always come last.
-
-   if      ($zone1 =~ /^[a-z]$/i) {
+   # An element that is active now always comes before one that isn't
+   # active now.
+   if ($curra != $currb) {
+      return -1  if ($curra);
       return 1;
-   } elsif ($zone2 =~ /^[a-z]$/i) {
+   }
+
+   # An Antarctica element comes after one that is not Antarctica
+   if ($namea =~ /Antarctica/) {
+      if ($nameb =~ /Antarctica/) {
+         return $namea cmp $nameb;
+      } else {
+         return 1;
+      }
+   } elsif ($nameb =~ /Antarctica/) {
       return -1;
    }
 
-   # Antartica time zones always come after non-antarctica time zones
+   # A military timezone (A-Z) comes after one that is not
 
-   if      ($zone1 =~ /^Antarctica/i  &&  $zone2 !~ /^Antarctica/i) {
-      return 1;
-   } elsif ($zone1 !~ /^Antarctica/i  &&  $zone2 =~ /^Antarctica/i) {
+   if ($namea =~ /^[A-Z]$/) {
+      if ($nameb =~ /^[A-Z]$/) {
+         return $namea cmp $nameb;
+      } else {
+         return 1;
+      }
+   } elsif ($nameb =~ /^[A-Z]$/) {
       return -1;
    }
 
-   # A later end time always comes before an earlier end time
+   # A UT/UTC/*GMT* timezone comes after one that is not
 
-   if ($$hash{$zone1}[1] != $$hash{$zone2}[1]) {
-      return $$hash{$zone2}[1] <=> $$hash{$zone1}[1];
-   }
-
-   # An Etc/GMT time zone always comes after other time zones
-
-   if      ($zone1 =~ /^Etc/i) {
-      return 1;
-   } elsif ($zone2 =~ /^Etc/i) {
+   if ($namea =~ /UT/  ||  $namea =~ /GMT/) {
+      if ($nameb =~ /UT/  ||  $nameb =~ /GMT/) {
+         return $namea cmp $nameb;
+      } else {
+         return 1;
+      }
+   } elsif ($nameb =~ /UT/  ||  $nameb =~ /GMT/) {
       return -1;
    }
 
-   # An earlier start time always comes before a later start time
-
-   if ($$hash{$zone1}[0] != $$hash{$zone2}[0]) {
-      return $$hash{$zone1}[0] <=> $$hash{$zone2}[0];
+   # An element that is active later comes before one that is active
+   # earlier.
+   if ($$a[1] != $$b[1]) {
+      return -1  if ($$a[1] > $$b[1]);
+      return 1;
    }
 
-   return 0;
+   # An element that is active further in the past comes before one
+   # that is active later.
+   if ($$a[0] != $$b[0]) {
+      return -1  if ($$a[0] < $$b[0]);
+      return 1;
+   }
+
+   # Alphabetize the rest
+   return $namea cmp $nameb;
 }
 
 # This will warn if %curr is different than %old. They are both passed in

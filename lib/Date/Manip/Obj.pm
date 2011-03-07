@@ -16,7 +16,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 ########################################################################

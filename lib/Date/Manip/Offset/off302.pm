@@ -5,9 +5,9 @@ package Date::Manip::Offset::off302;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:33 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:54 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -46,75 +46,75 @@ $Offset        = '-03:00:00';
 %Offset        = (
    0 => [
       'america/sao_paulo',
-      'america/godthab',
-      'america/montevideo',
-      'america/argentina/buenos_aires',
-      'america/argentina/cordoba',
-      'america/argentina/tucuman',
-      'america/argentina/san_luis',
-      'atlantic/stanley',
-      'america/cayenne',
-      'america/asuncion',
-      'america/miquelon',
-      'america/paramaribo',
-      'etc/gmt-3',
-      'america/argentina/jujuy',
-      'america/argentina/mendoza',
-      'america/argentina/la_rioja',
-      'america/argentina/ushuaia',
-      'america/argentina/catamarca',
-      'america/argentina/salta',
-      'america/argentina/san_juan',
-      'america/argentina/rio_gallegos',
       'america/araguaina',
       'america/bahia',
+      'america/belem',
       'america/fortaleza',
-      'america/recife',
       'america/maceio',
+      'america/recife',
+      'america/godthab',
+      'america/montevideo',
+      'america/cayenne',
+      'america/argentina/buenos_aires',
+      'america/argentina/catamarca',
+      'america/argentina/cordoba',
+      'america/argentina/jujuy',
+      'america/argentina/la_rioja',
+      'america/argentina/mendoza',
+      'america/argentina/rio_gallegos',
+      'america/argentina/salta',
+      'america/argentina/san_juan',
+      'america/argentina/tucuman',
+      'america/argentina/ushuaia',
+      'america/miquelon',
+      'america/paramaribo',
+      'america/santarem',
+      'etc/gmt-3',
+      'c',
+      'antarctica/rothera',
+      'america/argentina/san_luis',
       'america/danmarkshavn',
       'america/guyana',
-      'america/belem',
-      'america/santarem',
+      'atlantic/stanley',
+      'america/asuncion',
       'antarctica/palmer',
-      'antarctica/rothera',
-      'c',
       ],
    1 => [
       'america/halifax',
       'america/glace_bay',
       'america/moncton',
-      'america/montevideo',
-      'america/argentina/buenos_aires',
-      'america/argentina/cordoba',
-      'america/argentina/tucuman',
       'america/argentina/san_luis',
       'america/campo_grande',
       'america/cuiaba',
       'atlantic/stanley',
       'america/goose_bay',
       'america/santiago',
-      'america/asuncion',
       'atlantic/bermuda',
-      'america/martinique',
+      'america/asuncion',
       'america/thule',
-      'america/argentina/jujuy',
-      'america/argentina/mendoza',
-      'america/argentina/la_rioja',
-      'america/argentina/ushuaia',
+      'antarctica/palmer',
+      'america/argentina/buenos_aires',
       'america/argentina/catamarca',
+      'america/argentina/cordoba',
+      'america/argentina/jujuy',
+      'america/argentina/la_rioja',
+      'america/argentina/mendoza',
+      'america/argentina/rio_gallegos',
       'america/argentina/salta',
       'america/argentina/san_juan',
-      'america/argentina/rio_gallegos',
+      'america/argentina/tucuman',
+      'america/argentina/ushuaia',
       'america/boa_vista',
-      'america/pangnirtung',
       'america/manaus',
-      'america/santarem',
+      'america/pangnirtung',
       'america/porto_velho',
-      'america/iqaluit',
+      'america/santarem',
       'america/barbados',
+      'america/martinique',
+      'america/iqaluit',
       'america/blanc-sablon',
       'america/puerto_rico',
-      'antarctica/palmer',
+      'america/montevideo',
       ],
 );
 

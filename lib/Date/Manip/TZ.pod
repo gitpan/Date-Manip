@@ -579,8 +579,12 @@ The following methods are available:
                              checked. E.g. "main TZ" checks
                              the variable $::TZ .
 
-   env        VAR            The named environment variable
-                             is checked.
+   env        TYPE VAR       The named environment variable
+                             is checked and the type of
+                             data stored there (TYPE can
+                             be 'zone' or 'offset' which
+                             is the number of seconds from
+                             UTC).
 
    file       FILE           Look in the given file for any
                              one of the following case
@@ -623,7 +627,7 @@ By default, the following methods are checked (in the order given) on
 Unix systems:
 
    main     TZ
-   env      TZ
+   env      zone TZ
    file     /etc/TIMEZONE
    file     /etc/timezone
    file     /etc/sysconfig/clock
@@ -639,26 +643,25 @@ Unix systems:
 The default methods for Windows systems are:
 
    main     TZ
-   env      TZ
+   env      zone TZ
    registry
    gmtoff
 
 The default methods for VMS systems are:
 
    main     TZ
-   env      TZ
-   env      SYS$TIMEZONE_RULE
-   env      SYS$TIMEZONE_NAME
-   env      UCX$TZ
-   env      TCPIP$TZ
-   env      MULTINET_TIMEZONE
-   env      SYS$TIMEZONE_DIFFERENTIAL
+   env      zone TZ
+   env      zone SYS$TIMEZONE_NAME
+   env      zone UCX$TZ
+   env      zone TCPIP$TZ
+   env      zone MULTINET_TIMEZONE
+   env      offset SYS$TIMEZONE_DIFFERENTIAL
    gmtoff
 
 The default methods for all other systems are:
 
    main     TZ
-   env      TZ
+   env      zone TZ
    gmtoff
 
 If anyone wants better support for a specific OS, please contact me and

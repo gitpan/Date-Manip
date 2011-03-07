@@ -136,10 +136,11 @@ Set the release version
 Update the copyright
 
    y=`date '+%Y'`
-   for i in `find . -type f | xargs egrep -l 'Copyright \(c\) ....\-.... Sullivan Beck'` ;do
+   for i in `find . -type f | egrep -v '.svn' | xargs egrep -l 'Copyright \(c\) ....\-.... Sullivan Beck'` ;do
      sed -e "s,\(Copyright (c) ....\)\-.... \(Sullivan Beck\),\1-$y \2," $i > z
      mv z $i
    done
+   chmod +x internal/tzdata internal/gen_dm5abbrevs
 
 #########################################################################
 Switch the system timezone to America/Central and run the tests.

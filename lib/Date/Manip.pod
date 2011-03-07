@@ -308,6 +308,7 @@ Miscellaneous information:
   Date::Manip::Calc    	  - date calculations
   Date::Manip::Holidays   - information on defining and using
                             holidays and events
+  Date::Manip::ConfigFile - sample config file
 
 Information about the module and administrative things:
 

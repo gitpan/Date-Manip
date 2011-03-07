@@ -449,10 +449,10 @@ When filing a bug report, please include the following information:
 
 =over 4
 
-=item B<*>
+=item B<Date::Manip version>
 
-The version of Date::Manip you are using.  You can get this by using
-the script:
+Please include the version of Date::Manip you are using.  You can get
+this by using the script:
 
    use Date::Manip;
    print DateManipVersion(1),"\n";
@@ -463,9 +463,9 @@ or
    $obj = new Date::Manip::Date;
    print $obj->version(1),"\n";
 
-=item B<*>
+=item B<Perl information>
 
-The output from "perl -V"
+Please include the output from "perl -V"
 
 =back
 

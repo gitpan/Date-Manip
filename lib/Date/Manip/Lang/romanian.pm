@@ -27,7 +27,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 
 our($Language,@Encodings);
 @Encodings = qw(utf-8 iso-8859-16 perl);

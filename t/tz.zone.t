@@ -58,8 +58,8 @@ ywt =>
 
 +06:30:00 dstonly =>
    Asia/Colombo
-   Asia/Kolkata
    Asia/Karachi
+   Asia/Kolkata
 
 +06:30:00 std =>
    Indian/Cocos
@@ -71,8 +71,8 @@ ywt =>
 
 +06:30:00 dst =>
    Asia/Colombo
-   Asia/Kolkata
    Asia/Karachi
+   Asia/Kolkata
    Indian/Cocos
    Asia/Dhaka
    Asia/Rangoon

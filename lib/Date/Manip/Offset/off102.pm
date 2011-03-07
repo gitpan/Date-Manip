@@ -5,9 +5,9 @@ package Date::Manip::Offset::off102;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:30 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:52 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -86,30 +86,30 @@ $Offset        = '+03:00:00';
    1 => [
       'eet',
       'europe/istanbul',
-      'europe/moscow',
-      'asia/damascus',
       'asia/beirut',
-      'europe/kiev',
-      'europe/zaporozhye',
-      'europe/simferopol',
-      'europe/minsk',
+      'asia/damascus',
       'europe/athens',
-      'europe/chisinau',
       'europe/bucharest',
-      'asia/gaza',
+      'europe/chisinau',
       'africa/cairo',
+      'asia/gaza',
       'asia/jerusalem',
-      'europe/tallinn',
-      'europe/riga',
-      'europe/vilnius',
       'europe/helsinki',
-      'europe/uzhgorod',
       'europe/kaliningrad',
       'asia/amman',
       'asia/nicosia',
       'europe/sofia',
-      'africa/khartoum',
+      'europe/riga',
+      'europe/tallinn',
+      'europe/minsk',
+      'europe/vilnius',
+      'europe/zaporozhye',
+      'europe/kiev',
+      'europe/simferopol',
+      'europe/uzhgorod',
+      'europe/moscow',
       'europe/samara',
+      'africa/khartoum',
       'europe/berlin',
       'africa/johannesburg',
       'africa/gaborone',

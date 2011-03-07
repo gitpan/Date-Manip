@@ -5,9 +5,9 @@ package Date::Manip::Offset::off031;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:29 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:51 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -50,78 +50,78 @@ $Offset        = '+01:00:00';
       'europe/belgrade',
       'europe/budapest',
       'europe/prague',
+      'europe/berlin',
+      'europe/copenhagen',
       'europe/malta',
       'europe/rome',
-      'europe/copenhagen',
       'europe/vienna',
-      'europe/berlin',
-      'europe/vaduz',
       'europe/oslo',
+      'europe/vaduz',
       'europe/zurich',
       'africa/kinshasa',
       'europe/stockholm',
       'europe/luxembourg',
+      'africa/bangui',
       'africa/brazzaville',
+      'africa/douala',
       'africa/libreville',
       'africa/luanda',
+      'africa/ndjamena',
       'africa/tunis',
-      'africa/douala',
-      'africa/bangui',
       'europe/tirane',
       'europe/brussels',
       'europe/warsaw',
-      'europe/lisbon',
-      'europe/monaco',
-      'europe/london',
-      'europe/paris',
-      'europe/gibraltar',
-      'europe/madrid',
-      'europe/dublin',
-      'africa/ceuta',
       'africa/lagos',
       'africa/porto-novo',
+      'africa/algiers',
       'europe/amsterdam',
+      'europe/paris',
+      'europe/monaco',
       'europe/andorra',
+      'europe/madrid',
+      'europe/gibraltar',
       'africa/niamey',
       'africa/malabo',
+      'africa/ceuta',
       'africa/windhoek',
       'etc/gmt+1',
+      'n',
       'europe/vilnius',
       'africa/tripoli',
+      'europe/lisbon',
       'europe/uzhgorod',
       'africa/casablanca',
-      'africa/algiers',
-      'europe/kiev',
-      'europe/zaporozhye',
-      'europe/riga',
-      'africa/ndjamena',
-      'europe/kaliningrad',
+      'europe/dublin',
+      'europe/london',
       'europe/sofia',
+      'europe/kaliningrad',
       'europe/tallinn',
       'europe/athens',
-      'europe/simferopol',
       'europe/chisinau',
       'europe/minsk',
-      'n',
+      'europe/riga',
+      'europe/simferopol',
+      'europe/kiev',
+      'europe/zaporozhye',
       ],
    1 => [
       'wet',
-      'europe/luxembourg',
-      'europe/brussels',
       'europe/lisbon',
-      'europe/paris',
-      'europe/monaco',
-      'europe/gibraltar',
       'europe/london',
-      'europe/madrid',
       'europe/dublin',
-      'africa/ceuta',
       'atlantic/madeira',
       'atlantic/canary',
       'atlantic/faroe',
       'africa/casablanca',
       'africa/algiers',
+      'africa/ceuta',
       'africa/freetown',
+      'europe/gibraltar',
+      'europe/madrid',
+      'europe/monaco',
+      'europe/paris',
+      'europe/brussels',
+      'europe/luxembourg',
       ],
 );
 

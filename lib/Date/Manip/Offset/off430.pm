@@ -5,9 +5,9 @@ package Date::Manip::Offset::off430;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jan 10 15:39:35 EST 2011
-#    Data version: tzdata2010o
-#    Code version: tzcode2010n
+#    Generated on: Mon Mar  7 10:31:56 EST 2011
+#    Data version: tzdata2011b
+#    Code version: tzcode2011b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off430;
 
 =head1 NAME
 
-Date::Manip::Offset::off430 - Support for the -07:01:00 offset
+Date::Manip::Offset::off430 - Support for the -07:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.21';
+$VERSION='6.22';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +41,45 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-07:01:00';
+$Offset        = '-07:00:00';
 
 %Offset        = (
    0 => [
+      'america/denver',
+      'america/phoenix',
+      'america/edmonton',
+      'america/cambridge_bay',
+      'america/chihuahua',
+      'america/hermosillo',
+      'america/mazatlan',
+      'america/ojinaga',
+      'america/boise',
+      'america/yellowknife',
+      'america/dawson_creek',
+      'america/inuvik',
+      'etc/gmt-7',
+      'g',
+      'america/north_dakota/beulah',
       'america/bahia_banderas',
+      'america/north_dakota/new_salem',
+      'america/north_dakota/center',
+      'pacific/easter',
+      'america/swift_current',
+      'america/regina',
+      'america/mexico_city',
+      'america/santa_isabel',
+      'america/tijuana',
+      ],
+   1 => [
+      'america/los_angeles',
+      'america/vancouver',
+      'america/santa_isabel',
+      'america/tijuana',
+      'america/dawson',
+      'america/whitehorse',
+      'america/juneau',
+      'america/dawson_creek',
+      'america/boise',
       ],
 );
 
