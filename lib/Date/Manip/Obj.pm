@@ -16,7 +16,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our ($VERSION);
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 ########################################################################
@@ -121,7 +121,12 @@ sub new {
          if (@opts) {
             $new = $base;
          } else {
+            # dclone doesn't handle regexps
+            my $tmp = $$base{'data'}{'rx'};
+            delete $$base{'data'}{'rx'};
             $new  = dclone($base);
+            $$base{'data'}{'rx'} = $tmp;
+            $$new{'data'}{'rx'}  = $tmp;
          }
          $init = 0;
       }

@@ -11,16 +11,12 @@ Date::Manip::Examples - examples of how to use Date::Manip
 =head1 DESCRIPTION
 
 This document includes a number of examples on how to do common
-Date::Manip operations.
-
-I will be happy to add new examples over time, and welcome suggestions
-and examples to include.
+Date::Manip operations.  I will be happy to add new examples over
+time, and welcome suggestions and examples to include.
 
 In most cases, an example will include two different ways of getting
-the answer.
-
-The first way will be using the new (as of 6.00) OO modules. The
-second will be using the old-style functional interface.
+the answer.  The first way will be using the new (as of 6.00) OO
+modules. The second will be using the old-style functional interface.
 
 It should be noted that any time you want to work with alternate
 time zones, the OO interface is STRONGLY recommended since the functional

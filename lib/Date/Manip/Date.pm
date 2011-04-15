@@ -25,7 +25,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 ########################################################################
@@ -913,6 +913,8 @@ sub _parse_check {
    # Store the date
 
    $self->set('zdate',$zonename,[$y,$m,$d,$h,$mn,$s]);
+   return 1  if ($$self{'err'});
+
    $$self{'data'}{'in'}    = $instring;
    $$self{'data'}{'zin'}   = $zone  if (defined($zone));
 
@@ -3237,7 +3239,7 @@ sub is_business_day {
 }
 
 sub __is_business_day {
-   my($self,$date,$checktime,$noupdate) = @_;
+   my($self,$date,$checktime) = @_;
    my($y,$m,$d,$h,$mn,$s) = @$date;
 
    my $dmt = $$self{'tz'};
@@ -3262,11 +3264,10 @@ sub __is_business_day {
 
    # Check for holidays
 
-   $self->_holidays($y,2) unless ($noupdate);
+   $self->_holidays($y,2)  unless ($$dmb{'data'}{'init_holidays'});
 
-   return 1  if (! exists $$dmb{'data'}{'holidays'}{'dates'});
-
-   return 0  if (exists $$dmb{'data'}{'holidays'}{'dates'}{$y+0}  &&
+   return 0  if (exists $$dmb{'data'}{'holidays'}{'dates'}  &&
+                 exists $$dmb{'data'}{'holidays'}{'dates'}{$y+0}  &&
                  exists $$dmb{'data'}{'holidays'}{'dates'}{$y+0}{$m+0}  &&
                  exists $$dmb{'data'}{'holidays'}{'dates'}{$y+0}{$m+0}{$d+0});
 
@@ -3444,10 +3445,7 @@ sub _holiday_objs {
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
 
-   # We need a new date object so that we can work with other forced dates,
-   # but we don't want to create it over and over.
-   my $date       = new Date::Manip::Date;
-   $$dmb{'data'}{'holidays'}{'date'} = $date;
+   $$dmb{'data'}{'holidays'}{'init'} = 1;
 
    # Go through all of the strings from the config file.
    #
@@ -3462,8 +3460,8 @@ sub _holiday_objs {
       # store the date as a holiday, but not store the holiday description
       # so it never needs to be re-parsed.
 
-      $date->_init();
-      my $err = $date->parse_date($string);
+      my $date  = $self->new_date();
+      my $err   = $date->parse_date($string);
       if (! $err) {
          if ($$date{'data'}{'def'}[0] eq '') {
             push(@{ $$dmb{'data'}{'holidays'}{'hols'} },$string,$name);
@@ -3479,12 +3477,14 @@ sub _holiday_objs {
       # If $string is a recurrence, we'll create a Recur object (which we
       # only have to do once) and store it.
 
-      my $recur = $date->new_recur();
+      my $recur = $self->new_recur();
+      $recur->_holiday();
       $err      = $recur->parse($string);
       if (! $err) {
          push(@{ $$dmb{'data'}{'holidays'}{'hols'} },$recur,$name);
          next;
       }
+      $recur->err(1);
 
       warn "WARNING: invalid holiday description: $string\n";
    }
@@ -3492,21 +3492,27 @@ sub _holiday_objs {
 
 # Make sure that holidays are set for a given year.
 #
+#   $$dmb{'data'}{'holidays'}{'years'}{$year} = 0   nothing done
+#                                               1   this year done
+#                                               2   both adjacent years done
+#
 sub _holidays {
    my($self,$year,$level) = @_;
+
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
-   $self->_holiday_objs($year)  if (! exists $$dmb{'data'}{'holidays'}{'date'});
+   $self->_holiday_objs($year)  if (! $$dmb{'data'}{'holidays'}{'init'});
 
-   $$dmb{'data'}{'holidays'}{$year} = 0
-     if (! exists $$dmb{'data'}{'holidays'}{$year});
+   $$dmb{'data'}{'holidays'}{'years'}{$year} = 0
+     if (! exists $$dmb{'data'}{'holidays'}{'years'}{$year});
 
-   return  if ($$dmb{'data'}{'holidays'}{$year} >= $level);
+   my $curr_level = $$dmb{'data'}{'holidays'}{'years'}{$year};
+   return  if ($curr_level >= $level);
+   $$dmb{'data'}{'holidays'}{'years'}{$year} = $level;
 
    # Parse the year
 
-   if ($$dmb{'data'}{'holidays'}{$year} == 0) {
-      $$dmb{'data'}{'holidays'}{$year} = 1;
+   if ($curr_level == 0) {
       $self->_holidays_year($year);
 
       return  if ($level == 1);
@@ -3514,13 +3520,13 @@ sub _holidays {
 
    # Parse the years around it.
 
-   $$dmb{'data'}{'holidays'}{$year} = 2;
    $self->_holidays($year-1,1);
    $self->_holidays($year+1,1);
 }
 
 sub _holidays_year {
    my($self,$y) = @_;
+
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
 
@@ -3528,8 +3534,6 @@ sub _holidays_year {
    # range for recurrences.
 
    my @hol      = @{ $$dmb{'data'}{'holidays'}{'hols'} };
-   my $date     = $$dmb{'data'}{'holidays'}{'date'};
-   $date->config('forcedate',"${y}-01-01-00:00:00");
 
    my $beg      = $self->new_date();
    $beg->set('date',[$y-1,12,1,0,0,0]);
@@ -3538,35 +3542,44 @@ sub _holidays_year {
 
    # Get the date for each holiday.
 
+   $$dmb{'data'}{'init_holidays'} = 1;
+
    while (@hol) {
 
       my($obj)  = shift(@hol);
       my($name) = shift(@hol);
 
+      $$dmb{'data'}{'tmpnow'} = [$y,1,1,0,0,0];
       if (ref($obj)) {
          # It's a recurrence
 
          # If the recurrence has a date range built in, we won't override it.
          # Otherwise, we'll only look for dates in this year.
 
-         my @d;
          if ($obj->start()  &&  $obj->end()) {
-            @d     = $obj->dates();
+            $obj->dates();
          } else {
-            @d     = $obj->dates($beg,$end);
+            $obj->dates($beg,$end);
          }
 
-         foreach my $d (@d) {
-            my($y,$m,$d) = @{ $$d{'data'}{'date'} };
+         foreach my $i (keys %{ $$obj{'data'}{'dates'} }) {
+            next  if ($$obj{'data'}{'saved'}{$i});
+            my $date     = $$obj{'data'}{'dates'}{$i};
+            my($y,$m,$d) = @{ $$date{'data'}{'date'} };
             $$dmb{'data'}{'holidays'}{'dates'}{$y+0}{$m+0}{$d+0} = $name;
+            $$obj{'data'}{'saved'}{$i} = 1;
          }
 
       } else {
+         my $date = $self->new_date();
          $date->parse_date($obj);
          my($y,$m,$d) = @{ $$date{'data'}{'date'} };
          $$dmb{'data'}{'holidays'}{'dates'}{$y+0}{$m+0}{$d+0} = $name;
       }
+      $$dmb{'data'}{'tmpnow'} = [];
    }
+
+   $$dmb{'data'}{'init_holidays'} = 0;
 }
 
 ########################################################################
@@ -3835,7 +3848,7 @@ BEGIN {
                $val = $f;
             }
 
-            if ($val) {
+            if ($val ne '') {
                $$self{'data'}{'f'}{$f} = $val;
                $out .= $val;
             }

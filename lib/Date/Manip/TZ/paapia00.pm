@@ -5,9 +5,9 @@ package Date::Manip::TZ::paapia00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Mar  7 10:30:43 EST 2011
-#    Data version: tzdata2011b
-#    Code version: tzcode2011b
+#    Generated on: Fri Apr 15 08:12:17 EDT 2011
+#    Data version: tzdata2011f
+#    Code version: tzcode2011e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -69,14 +69,14 @@ END { undef $VERSION; }
    2010 =>
      [
         [ [2010,9,26,11,0,0],[2010,9,26,1,0,0],'-10:00:00',[-10,0,0],
-          'WSDT',1,[2011,4,3,10,59,59],[2011,4,3,0,59,59],
-          '2010092611:00:00','2010092601:00:00','2011040310:59:59','2011040300:59:59' ],
+          'WSDT',1,[2011,4,2,13,59,59],[2011,4,2,3,59,59],
+          '2010092611:00:00','2010092601:00:00','2011040213:59:59','2011040203:59:59' ],
      ],
    2011 =>
      [
-        [ [2011,4,3,11,0,0],[2011,4,3,0,0,0],'-11:00:00',[-11,0,0],
+        [ [2011,4,2,14,0,0],[2011,4,2,3,0,0],'-11:00:00',[-11,0,0],
           'WST',0,[9999,12,31,0,0,0],[9999,12,30,13,0,0],
-          '2011040311:00:00','2011040300:00:00','9999123100:00:00','9999123013:00:00' ],
+          '2011040214:00:00','2011040203:00:00','9999123100:00:00','9999123013:00:00' ],
      ],
 );
 

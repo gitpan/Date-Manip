@@ -14,9 +14,15 @@ $t->skip_all('Date::Manip 6.xx required','DM6');
 
 
 sub test {
-  ($type,$delta,$op)=@_;
-  $obj->set($type,$delta);
-  return $obj->type($op);
+  (@args) = @_;
+  if (@args == 1) {
+    ($type) = @args;
+    return $obj->type($type);
+  } else {
+    ($op,$val) = @args;
+    $obj->set($op,$val);
+    return 0
+  }
 }
 
 $obj = new Date::Manip::Delta;
@@ -24,31 +30,39 @@ $obj->config("forcedate","now,America/New_York");
 
 $tests="
 
-delta [ 0 0 0 0 10 20 30 ] business => 0
+normal [ 0 0 0 0 1 2 3 ]   => 0
 
-delta [ 0 0 0 0 10 20 30 ] exact => 1
+business                   => 0
 
-business [ 0 0 0 0 10 20 30 ] business => 1
+exact                      => 1
 
-business [ 0 0 0 0 10 20 30 ] exact => 1
+delta [ 1 0 0 0 1 2 3 ]    => 0
 
+business                   => 0
 
-delta [ 0 0 1 0 10 20 30 ] business => 0
+exact                      => 0
 
-delta [ 0 0 1 0 10 20 30 ] exact => 1
+###
 
-business [ 0 0 1 0 10 20 30 ] business => 1
+business [ 0 0 0 0 1 2 3 ] => 0
 
-business [ 0 0 1 0 10 20 30 ] exact => 0
+business                   => 1
 
+exact                      => 1
 
-delta [ 0 1 1 0 10 20 30 ] business => 0
+delta [ 1 0 0 0 10 20 30 ] => 0
 
-delta [ 0 1 1 0 10 20 30 ] exact => 0
+business                   => 1
 
-business [ 0 1 1 0 10 20 30 ] business => 1
+exact                      => 0
 
-business [ 0 1 1 0 10 20 30 ] exact => 0
+mode normal                => 0
+
+business                   => 0
+
+exact                      => 0
+
+###
 
 ";
 

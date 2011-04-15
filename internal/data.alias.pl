@@ -10,7 +10,7 @@
 %windows_zones =
   (
    # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/zone_tzid.html
-   # CLDR 1.9beta
+   # CLDR 2.0alpha
 
    "AUS Central Standard Time"       => "Australia/Darwin",
    "AUS Eastern Standard Time"       => "Australia/Sydney",
@@ -295,6 +295,8 @@ foreach my $winz (keys %windows_zones) {
                        'America/Juneau'                          ,1969,1982,
                        'America/Dawson_Creek'                    ,1918,1971,
                        'America/Boise'                           ,1918,1919,
+                       'America/Metlakatla'                      ,1969,1982,
+                       'America/Sitka'                           ,1969,1982,
                       ],
 
    # Open to discussion
@@ -311,6 +313,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Juneau'                          ,1984,9999,
                        'America/Nome'                            ,1984,9999,
                        'America/Yakutat'                         ,1984,9999,
+                       'America/Sitka'                           ,1984,9999,
                       ],
    'AKTT-5AKTST'   => [
                        'Asia/Aqtobe'                             ,1982,1990,
@@ -686,6 +689,12 @@ foreach my $winz (keys %windows_zones) {
    'MAGT-11MAGST'  => [
                        'Asia/Magadan'                            ,1981,9999,
                       ],
+   'MeST8MeST'     => [
+                       'America/Metlakatla'                      ,1984,9999,
+                      ],
+   'MeST8PDT'      => [
+                       'America/Metlakatla'                      ,1983,1983,
+                      ],
    'MET-1MEST'     => [
                        'MET'                                     ,1916,9999,
                       ],
@@ -779,6 +788,8 @@ foreach my $winz (keys %windows_zones) {
                        'America/Santa_Isabel'                    ,1945,1945,
                        'America/Tijuana'                         ,1945,1945,
                        'America/Vancouver'                       ,1945,1945,
+                       'America/Metlakatla'                      ,1945,1945,
+                       'America/Sitka'                           ,1945,1945,
                       ],
    'PYT4PYST'      => [
                        'America/Asuncion'                        ,1976,9999,
@@ -872,7 +883,7 @@ foreach my $winz (keys %windows_zones) {
                        'Atlantic/Madeira'                        ,1977,9999,
                        'Atlantic/Canary'                         ,1980,9999,
                        'Atlantic/Faroe'                          ,1981,9999,
-                       'Africa/Casablanca'                       ,1939,2010,
+                       'Africa/Casablanca'                       ,1939,2011,
                        'Africa/Algiers'                          ,1916,1980,
                        'Africa/Ceuta'                            ,1918,1978,
                        'Europe/Monaco'                           ,1916,1939,

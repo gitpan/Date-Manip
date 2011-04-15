@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Mar  7 10:32:01 EST 2011
-#    Data version: tzdata2011b
-#    Code version: tzcode2011b
+#    Generated on: Fri Apr 15 08:21:51 EDT 2011
+#    Data version: tzdata2011f
+#    Code version: tzcode2011e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -187,6 +187,7 @@ database:
      America/Mazatlan                     ammaza00
      America/Menominee                    ammeno00
      America/Merida                       ammeri00
+     America/Metlakatla                   ammetl00
      America/Mexico_City                  ammexi00
      America/Miquelon                     ammiqu00
      America/Moncton                      ammonc00
@@ -223,6 +224,7 @@ database:
      America/Santo_Domingo                amsant03
      America/Sao_Paulo                    amsao_00
      America/Scoresbysund                 amscor00
+     America/Sitka                        amsitk00
      America/St_Johns                     amst_j00
      America/St_Kitts                     amst_k00
      America/St_Lucia                     amst_l00
@@ -661,6 +663,7 @@ default alias can be overridden as described above.
                                           America/Juneau
                                           America/Nome
                                           America/Yakutat
+                                          America/Sitka
      AKTT-5AKTST                          Asia/Aqtobe
      ALMT-6ALMST                          Asia/Almaty
      AMT-3AMST                            Asia/Yerevan
@@ -985,6 +988,8 @@ default alias can be overridden as described above.
                                           America/Swift_Current
                                           America/Yellowknife
                                           America/North_Dakota/Beulah
+     MeST8MeST                            America/Metlakatla
+     MeST8PDT                             America/Metlakatla
      NCT-11NCST                           Pacific/Noumea
      NOVT-6NOVST                          Asia/Novosibirsk
                                           Asia/Novokuznetsk
@@ -1012,12 +1017,16 @@ default alias can be overridden as described above.
                                           America/Juneau
                                           America/Dawson_Creek
                                           America/Boise
+                                          America/Metlakatla
+                                          America/Sitka
      PST8PPT                              America/Los_Angeles
                                           America/Dawson_Creek
                                           America/Juneau
                                           America/Santa_Isabel
                                           America/Tijuana
                                           America/Vancouver
+                                          America/Metlakatla
+                                          America/Sitka
      PYT4PYST                             America/Asuncion
      QYZT-6QYZST                          Asia/Qyzylorda
      SAKT-10SAKST                         Asia/Sakhalin
@@ -1204,6 +1213,7 @@ Date::Manip::TZ module.
      ISDST  OFFSET      TIME ZONE                
      -----  ----------  -------------------------
      0      -15:56:00   Asia/Manila
+     0      -14:58:47   America/Sitka
      0      -14:21:00   Pacific/Guam
      0      -14:17:00   Pacific/Saipan
      0      -14:00:00   Etc/GMT-14
@@ -1254,6 +1264,7 @@ Date::Manip::TZ module.
      0      -09:18:55   America/Yakutat
      0      -09:18:00   Pacific/Marquesas
      0      -09:17:40   America/Dawson
+     0      -09:01:13   America/Sitka
      0      -09:00:12   America/Whitehorse
      0      -09:00:00   America/Yakutat
                         Pacific/Gambier
@@ -1264,8 +1275,10 @@ Date::Manip::TZ module.
                         I
                         America/Dawson
                         America/Whitehorse
+                        America/Sitka
      0      -08:59:48   Pacific/Gambier
      0      -08:57:41   America/Juneau
+     0      -08:46:18   America/Metlakatla
      0      -08:40:20   Pacific/Pitcairn
      0      -08:30:00   Pacific/Pitcairn
      0      -08:12:28   America/Vancouver
@@ -1286,6 +1299,8 @@ Date::Manip::TZ module.
                         America/Hermosillo
                         America/Mazatlan
                         America/Boise
+                        America/Metlakatla
+                        America/Sitka
      0      -07:52:58   America/Los_Angeles
      0      -07:48:04   America/Tijuana
      0      -07:44:49   America/Boise
@@ -2382,6 +2397,7 @@ Date::Manip::TZ module.
      0      +14:00:24   America/Anchorage
      0      +14:41:05   America/Yakutat
      0      +15:02:19   America/Juneau
+     0      +15:13:42   America/Metlakatla
 
      1      -10:00:00   Pacific/Apia
                         America/Adak
@@ -2397,6 +2413,7 @@ Date::Manip::TZ module.
                         America/Nome
                         America/Dawson
                         America/Whitehorse
+                        America/Sitka
      1      -07:00:00   America/Los_Angeles
                         America/Vancouver
                         America/Santa_Isabel
@@ -2406,6 +2423,8 @@ Date::Manip::TZ module.
                         America/Juneau
                         America/Dawson_Creek
                         America/Boise
+                        America/Metlakatla
+                        America/Sitka
      1      -06:00:00   America/Denver
                         America/Edmonton
                         America/Boise
@@ -2851,10 +2870,12 @@ altering the order.
                       America/Juneau
                       America/Nome
                       America/Yakutat
+                      America/Sitka
      AKST             America/Anchorage
                       America/Juneau
                       America/Nome
                       America/Yakutat
+                      America/Sitka
      AKTST            Asia/Aqtobe
      AKTT             Asia/Aqtobe
      ALMST            Asia/Almaty
@@ -3750,6 +3771,7 @@ altering the order.
                       America/North_Dakota/Beulah
      MYT              Asia/Kuala_Lumpur
                       Asia/Kuching
+     MeST             America/Metlakatla
      N                N
      NCST             Pacific/Noumea
      NCT              Pacific/Noumea
@@ -3806,6 +3828,8 @@ altering the order.
                       America/Juneau
                       America/Dawson_Creek
                       America/Boise
+                      America/Metlakatla
+                      America/Sitka
      PEST             America/Lima
      PET              America/Lima
      PETST            Asia/Kamchatka
@@ -3836,6 +3860,8 @@ altering the order.
                       America/Santa_Isabel
                       America/Tijuana
                       America/Vancouver
+                      America/Metlakatla
+                      America/Sitka
      PST              America/Los_Angeles
                       America/Vancouver
                       America/Santa_Isabel
@@ -3850,6 +3876,8 @@ altering the order.
                       America/Hermosillo
                       America/Mazatlan
                       America/Boise
+                      America/Metlakatla
+                      America/Sitka
      PWT              Pacific/Palau
                       America/Los_Angeles
                       America/Dawson_Creek
@@ -3857,6 +3885,8 @@ altering the order.
                       America/Santa_Isabel
                       America/Tijuana
                       America/Vancouver
+                      America/Metlakatla
+                      America/Sitka
      PYST             America/Asuncion
      PYT              America/Asuncion
      Q                Q
@@ -4047,6 +4077,7 @@ altering the order.
      YDT              America/Yakutat
                       America/Dawson
                       America/Whitehorse
+                      America/Juneau
      YEKST            Asia/Yekaterinburg
      YEKT             Asia/Yekaterinburg
      YERST            Asia/Yerevan
@@ -4060,6 +4091,7 @@ altering the order.
                       America/Nome
                       America/Dawson
                       America/Whitehorse
+                      America/Sitka
      YWT              America/Whitehorse
                       America/Dawson
                       America/Yakutat

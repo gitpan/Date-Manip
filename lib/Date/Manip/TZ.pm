@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 ########################################################################
@@ -1594,7 +1594,7 @@ sub _config_var_setdate {
 
       $zone = $self->zone(@args);
       if (! $zone) {
-         warn "ERROR: [config_var] invalid zone in SetDate\n";
+         warn "ERROR: [config_var] invalid zone in SetDate: @args\n";
          return 1;
       }
 
@@ -1629,7 +1629,7 @@ sub _config_var_setdate {
       }
 
       if (! $per) {
-         warn "ERROR: [config_var] invalid date: SetDate\n";
+         warn "ERROR: [config_var] invalid date: SetDate: $date, $zone\n";
          return 1;
       }
       $isdst  = $$per[5];
@@ -1642,7 +1642,7 @@ sub _config_var_setdate {
       my($err);
       ($err,$date,$offset,$isdst,$abb) = $self->convert_from_gmt($date,$zone);
       if ($err) {
-         warn "ERROR: [config_var] invalid SetDate date/offset values\n";
+         warn "ERROR: [config_var] invalid SetDate date/offset values: $date, $zone\n";
          return 1;
       }
    }

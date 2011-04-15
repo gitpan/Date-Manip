@@ -27,9 +27,55 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.23
+=head1 VERSION 6.24
 
 =over 4
+
+=back
+
+=head1 VERSION 6.23 (2011-04-15)
+
+=over 4
+
+=item B<(!) Renamed one Date::Manip::Recur method>
+
+The Date::Manip::Recur::base method has been renamed to basedate .  The
+Date::Manip::Recur::base method should return the Date::Manip::Base object
+like all the other Date::Manip modules.
+
+=item B<(*) Reworked holidays defined as recurrences>
+
+Improved dealing with the bootstrap problem of defining holidays, especially
+those that contain business day flags.  Mike Tonks
+
+=item Bug fixes
+
+Fixed a bug where GlobalCnf wasn't working.  Peter Edwards
+
+Improved error messages in a few cases.
+
+Fixed a bug where one invalid date/timezone check was ignored.  Morten Bjornsvik
+
+Fixed a bug where '$base2 = new Date::Manip::Base $base1' wasn't working.  RT 67143
+
+Fixed a bug where passing dates in to the Recur->dates method failed.  RT 67144
+
+Fixed a bug where the mode wasn't being preserved correctly for a delta.  RT 67150
+
+Fixed a bug in recurrences where a base date outside of a date range with a very
+uncommon recurrence format would not work correctly.
+
+Fixed a problem where the '%s' printf option didn't work in GMT.
+Jean-Michel Hiver
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2011f)
+
+=item Documentation fixes
+
+Fixed two bad recurrence examples in the documentation.  Peter Edwards
+and Mike Tonks
 
 =back
 
@@ -51,6 +97,10 @@ SYS$TIMEZONE_DIFFERENTIAL variable to work correctly.  Martin Zinser.
 Removed the SYS$TIMEZONE_RULE method from VMS since the value stored there
 is not the name of a timezone (it's a rule in a non-standard format).  Based
 on discussion with Martin Zinser.
+
+Improved the order in which aliases, abbreviations, etc., are tested
+to test current usage before non-current usage (there were a few cases
+where old usages were getting tested before current usage.
 
 =item Language fixes
 

@@ -43,7 +43,9 @@ perl -I../lib date.holiday.t 1
 perl -I../lib date.is_business_day.t 1
 perl -I../lib date.list_events.0.t 1
 perl -I../lib date.list_events.1.t 1
-perl -I../lib date.list_holidays.t 1
+perl -I../lib date.list_holidays.0.t 1
+perl -I../lib date.list_holidays.1.t 1
+perl -I../lib date.list_holidays.2.t 1
 perl -I../lib date.nearest_business_day.t 1
 perl -I../lib date.next.t 1
 perl -I../lib date.next_business_day.t 1

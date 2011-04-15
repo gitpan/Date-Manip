@@ -11,7 +11,7 @@ use warnings;
 use strict;
 
 our ($VERSION);
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 ########################################################################
@@ -135,16 +135,19 @@ sub _now {
       my $op = join(" ",@op);
       $noupdate = 0  if ($op =~ /\b(?:now|time)\b/);
    }
-
    $noupdate = 0  if (! exists $$base{'data'}{'now'}{'date'});
+
    $self->_update_now()  unless ($noupdate);
+
+   my @tmpnow   = @{ $$base{'data'}{'tmpnow'} };
+   my @now      = (@tmpnow ? @tmpnow : @{ $$base{'data'}{'now'}{'date'} });
 
    # Get the appropriate values.
 
    foreach my $op (@op) {
 
       if ($op eq 'now') {
-         push (@ret,@{ $$base{'data'}{'now'}{'date'} });
+         push (@ret,@now);
 
       } elsif ($op eq 'tz') {
          if (exists $$base{'data'}{'now'}{'tz'}) {
@@ -154,28 +157,28 @@ sub _now {
          }
 
       } elsif ($op eq 'y') {
-         push (@ret,$$base{'data'}{'now'}{'date'}[0]);
+         push (@ret,$now[0]);
 
       } elsif ($op eq 'systz') {
          push (@ret,$$base{'data'}{'now'}{'systz'});
 
       } elsif ($op eq 'time') {
-         push (@ret,@{ $$base{'data'}{'now'}{'date'} }[3..5]);
+         push (@ret,@now[3..5]);
 
       } elsif ($op eq 'm') {
-         push (@ret,$$base{'data'}{'now'}{'date'}[1]);
+         push (@ret,$now[1]);
 
       } elsif ($op eq 'd') {
-         push (@ret,$$base{'data'}{'now'}{'date'}[2]);
+         push (@ret,$now[2]);
 
       } elsif ($op eq 'h') {
-         push (@ret,$$base{'data'}{'now'}{'date'}[3]);
+         push (@ret,$now[3]);
 
       } elsif ($op eq 'mn') {
-         push (@ret,$$base{'data'}{'now'}{'date'}[4]);
+         push (@ret,$now[4]);
 
       } elsif ($op eq 's') {
-         push (@ret,$$base{'data'}{'now'}{'date'}[5]);
+         push (@ret,$now[5]);
 
       } elsif ($op eq 'isdst') {
          push (@ret,$$base{'data'}{'now'}{'isdst'});

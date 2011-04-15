@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.22';
+$VERSION='6.23';
 
 $Date::Manip::DM5::Abbrevs = join(' ',qw(
       idlw   -1200
@@ -281,7 +281,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       mawt   +0500
       mddt   -0500
       mdt    -0600
-      mest   +0200
+      mest   -0800
       met    +0100
       mht    +1200
       mist   +1100
@@ -682,7 +682,7 @@ The following timezones are defined:
       MAWT   +0500
       MDDT   -0500
       MDT    -0600
-      MEST   +0200
+      MEST   -0800
       MESZ   +0200
       MET    +0100
       METDST +0200

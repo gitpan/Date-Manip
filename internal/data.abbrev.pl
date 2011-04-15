@@ -52,12 +52,14 @@
                      'America/Juneau'                            ,1984,9999,
                      'America/Nome'                              ,1984,9999,
                      'America/Yakutat'                           ,1984,9999,
+                     'America/Sitka'                             ,1984,9999,
                     ],
    'AKST'        => [
                      'America/Anchorage'                         ,1983,9999,
                      'America/Juneau'                            ,1983,9999,
                      'America/Nome'                              ,1983,9999,
                      'America/Yakutat'                           ,1983,9999,
+                     'America/Sitka'                             ,1983,9999,
                     ],
    'AKTST'       => [
                      'Asia/Aqtobe'                               ,1981,1990,
@@ -1303,6 +1305,9 @@
                      'America/Regina'                            ,1918,1959,
                      'America/North_Dakota/Beulah'               ,1918,2010,
                     ],
+   'MeST'        => [
+                     'America/Metlakatla'                        ,1983,9999,
+                    ],
    'MEST'        => [
                      'MET'                                       ,1916,9999,
                     ],
@@ -1533,6 +1538,8 @@
                      'America/Juneau'                            ,1969,1983,
                      'America/Dawson_Creek'                      ,1918,1972,
                      'America/Boise'                             ,1918,1919,
+                     'America/Metlakatla'                        ,1969,1983,
+                     'America/Sitka'                             ,1969,1983,
                     ],
    'PEST'        => [
                      'America/Lima'                              ,1938,1994,
@@ -1599,6 +1606,8 @@
                      'America/Santa_Isabel'                      ,1945,1945,
                      'America/Tijuana'                           ,1945,1945,
                      'America/Vancouver'                         ,1945,1945,
+                     'America/Metlakatla'                        ,1945,1945,
+                     'America/Sitka'                             ,1945,1945,
                     ],
    'PST'         => [
                      'America/Los_Angeles'                       ,1883,9999,
@@ -1615,6 +1624,8 @@
                      'America/Hermosillo'                        ,1949,1970,
                      'America/Mazatlan'                          ,1949,1970,
                      'America/Boise'                             ,1883,1923,
+                     'America/Metlakatla'                        ,1900,1983,
+                     'America/Sitka'                             ,1900,1983,
                     ],
    'PWT'         => [
                      'Pacific/Palau'                             ,1900,9999,
@@ -1624,6 +1635,8 @@
                      'America/Santa_Isabel'                      ,1942,1945,
                      'America/Tijuana'                           ,1942,1945,
                      'America/Vancouver'                         ,1942,1945,
+                     'America/Metlakatla'                        ,1942,1945,
+                     'America/Sitka'                             ,1942,1945,
                     ],
    'PYST'        => [
                      'America/Asuncion'                          ,1975,9999,
@@ -1930,7 +1943,7 @@
                      'Atlantic/Madeira'                          ,1977,9999,
                      'Atlantic/Canary'                           ,1980,9999,
                      'Atlantic/Faroe'                            ,1981,9999,
-                     'Africa/Casablanca'                         ,1939,2010,
+                     'Africa/Casablanca'                         ,1939,2011,
                      'Africa/Algiers'                            ,1916,1980,
                      'Africa/Ceuta'                              ,1918,1978,
                      'Europe/Madrid'                             ,1917,1946,
@@ -2004,6 +2017,7 @@
                      'America/Yakutat'                           ,1969,1983,
                      'America/Dawson'                            ,1918,1919,
                      'America/Whitehorse'                        ,1918,1919,
+                     'America/Juneau'                            ,1980,1980,
                     ],
    'YEKST'       => [
                      'Asia/Yekaterinburg'                        ,1992,9999,
@@ -2029,6 +2043,7 @@
                      'America/Nome'                              ,1983,1983,
                      'America/Dawson'                            ,1900,1973,
                      'America/Whitehorse'                        ,1900,1966,
+                     'America/Sitka'                             ,1983,1983,
                     ],
    'YWT'         => [
                      'America/Whitehorse'                        ,1942,1945,

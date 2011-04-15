@@ -62,7 +62,7 @@ Any format parseable by Date::Manip::Date::parse_date can be used.
 The dates can be specified using recurrences:
 
    1*0:0:0:0:0:0*EASTER            = Easter
-   1*11:0:11:0:0:0*CWD             = Veteran's Day
+   1*11:0:11:0:0:0*DWD             = Veteran's Day
 
 In cases where you are interested in business type calculations, you'll
 want to define most holidays using recurrences, since they can define
@@ -110,41 +110,25 @@ given in the config file) are correctly handled.
 
 As an example, if you wanted to define both Christmas and Boxing days
 (Boxing is the day after Christmas, and is celebrated in some parts of
-the world), you could do it in one of the following ways:
+the world), and you wanted to celebrate Christmas on a business day on
+or after Dec 25, and Boxing day as the following work day, you could do
+it in one of the following ways:
 
-   1*12:0:24:0:0:0*FW1  = Christmas
-   1*12:0:25:0:0:0*FW1  = Boxing
+   1*12:0:25:0:0:0*NWD  = Christmas
+   1*12:0:26:0:0:0*NWD  = Boxing
 
-   1*12:0:24:0:0:0*FW1   = Christmas
-   1*12:0:25:0:0:0*FW1,a = Boxing
+or
 
-   1*12:0:24:0:0:0*FW1  = Christmas
-   1*12:0:24:0:0:0*FW1  = Boxing
+   1*12:0:25:0:0:0*NWD  = Christmas
+   1*12:0:25:0:0:0*NWD  = Boxing
 
-The following examples will NOT work:
-
-   1*12:0:24:0:0:0*FW1  = Christmas
-   1*12:0:24:0:0:0*FW2  = Boxing
-
-The reasoning behind all this is as follows:
-
-Holidays go into affect the minute they are parsed.  So, in the case of:
-
-   1*12:0:24:0:0:0*FW1  = Christmas
-   1*12:0:24:0:0:0*FW2  = Boxing
-
-the minute the first line is parsed, Christmas is defined as a holiday.
-The second line then steps forward 2 work days (skipping Christmas since
-that's no longer a work day) and define the work day two week days after
-Christmas, NOT the day after Christmas.
-
-NOTE that since the definitions are stored in a list, NOT a hash (as
-they were in Date::Manip 5.xx), you can use the definition:
-
-   1*12:0:24:0:0:0*FW1  = Christmas
-   1*12:0:24:0:0:0*FW1  = Boxing
-
-to defined the days even though both recurrences are identical.
+Holidays go into affect the minute they are parsed which is why the
+second example works (though for clarity, the first one is
+preferable).  The first recurrence defined the first business day on
+or after Dec 25 as Christmas.  The second one then defines the
+business day after that as Boxing day.  Since the definitions are
+stored as a list (NOT a hash as they were in Date::Manip 5.xx), using
+the same recurrence twice does not cause a problem.
 
 =back
 

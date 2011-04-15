@@ -5,9 +5,9 @@ package Date::Manip::Offset::off345;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Mar  7 10:31:55 EST 2011
-#    Data version: tzdata2011b
-#    Code version: tzcode2011b
+#    Generated on: Fri Apr 15 08:17:08 EDT 2011
+#    Data version: tzdata2011f
+#    Code version: tzcode2011e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off345;
 
 =head1 NAME
 
-Date::Manip::Offset::off345 - Support for the -04:18:28 offset
+Date::Manip::Offset::off345 - Support for the -04:16:48 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +41,22 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-04:18:28';
+$Offset        = '-04:16:48';
 
 %Offset        = (
    0 => [
-      'america/tortola',
+      'america/argentina/cordoba',
+      'america/argentina/buenos_aires',
+      'america/argentina/catamarca',
+      'america/argentina/jujuy',
+      'america/argentina/la_rioja',
+      'america/argentina/mendoza',
+      'america/argentina/rio_gallegos',
+      'america/argentina/salta',
+      'america/argentina/san_juan',
+      'america/argentina/san_luis',
+      'america/argentina/tucuman',
+      'america/argentina/ushuaia',
       ],
 );
 

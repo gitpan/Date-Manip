@@ -5,9 +5,9 @@ package Date::Manip::TZ::amjune00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Mar  7 10:30:18 EST 2011
-#    Data version: tzdata2011b
-#    Code version: tzcode2011b
+#    Generated on: Fri Apr 15 08:11:52 EDT 2011
+#    Data version: tzdata2011f
+#    Code version: tzcode2011e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -176,12 +176,12 @@ END { undef $VERSION; }
      ],
    1980 =>
      [
-        [ [1980,4,27,10,0,0],[1980,4,27,3,0,0],'-07:00:00',[-7,0,0],
-          'PDT',1,[1980,10,26,8,59,59],[1980,10,26,1,59,59],
-          '1980042710:00:00','1980042703:00:00','1980102608:59:59','1980102601:59:59' ],
-        [ [1980,10,26,9,0,0],[1980,10,26,1,0,0],'-08:00:00',[-8,0,0],
+        [ [1980,4,27,10,0,0],[1980,4,27,2,0,0],'-08:00:00',[-8,0,0],
+          'YDT',1,[1980,10,26,9,59,59],[1980,10,26,1,59,59],
+          '1980042710:00:00','1980042702:00:00','1980102609:59:59','1980102601:59:59' ],
+        [ [1980,10,26,10,0,0],[1980,10,26,2,0,0],'-08:00:00',[-8,0,0],
           'PST',0,[1981,4,26,9,59,59],[1981,4,26,1,59,59],
-          '1980102609:00:00','1980102601:00:00','1981042609:59:59','1981042601:59:59' ],
+          '1980102610:00:00','1980102602:00:00','1981042609:59:59','1981042601:59:59' ],
      ],
    1981 =>
      [

@@ -1203,6 +1203,9 @@ $def_off{0} = {
                '+15:02:19' => [
                                'America/Juneau'                 ,0001,1867,
                               ],
+               '+15:13:42' => [
+                               'America/Metlakatla'             ,0001,1867,
+                              ],
                '-00:00:52' => [
                                'Africa/Accra'                   ,0001,1918,
                               ],
@@ -2005,6 +2008,8 @@ $def_off{0} = {
                                'America/Hermosillo'             ,1949,1970,
                                'America/Mazatlan'               ,1949,1970,
                                'America/Boise'                  ,1883,1923,
+                               'America/Metlakatla'             ,1900,9999,
+                               'America/Sitka'                  ,1900,1983,
                               ],
                '-08:00:56' => [
                                'America/Dawson_Creek'           ,0001,1884,
@@ -2017,6 +2022,9 @@ $def_off{0} = {
                               ],
                '-08:40:20' => [
                                'Pacific/Pitcairn'               ,0001,1901,
+                              ],
+               '-08:46:18' => [
+                               'America/Metlakatla'             ,1867,1900,
                               ],
                '-08:57:41' => [
                                'America/Juneau'                 ,1867,1900,
@@ -2034,9 +2042,13 @@ $def_off{0} = {
                                'I'                              ,0001,9999,
                                'America/Dawson'                 ,1900,1973,
                                'America/Whitehorse'             ,1900,1966,
+                               'America/Sitka'                  ,1983,9999,
                               ],
                '-09:00:12' => [
                                'America/Whitehorse'             ,0001,1900,
+                              ],
+               '-09:01:13' => [
+                               'America/Sitka'                  ,1867,1900,
                               ],
                '-09:17:40' => [
                                'America/Dawson'                 ,0001,1900,
@@ -2144,6 +2156,9 @@ $def_off{0} = {
                '-14:21:00' => [
                                'Pacific/Guam'                   ,0001,1844,
                               ],
+               '-14:58:47' => [
+                               'America/Sitka'                  ,0001,1867,
+                              ],
                '-15:56:00' => [
                                'Asia/Manila'                    ,0001,1844,
                               ],
@@ -2170,7 +2185,7 @@ $def_off{1} = {
                                'Atlantic/Madeira'               ,1942,9999,
                                'Atlantic/Canary'                ,1980,9999,
                                'Atlantic/Faroe'                 ,1981,9999,
-                               'Africa/Casablanca'              ,1939,2010,
+                               'Africa/Casablanca'              ,1939,2011,
                                'Africa/Algiers'                 ,1916,1980,
                                'Africa/Ceuta'                   ,1918,1978,
                                'Africa/Freetown'                ,1957,1962,
@@ -2634,14 +2649,17 @@ $def_off{1} = {
                                'America/Juneau'                 ,1942,1983,
                                'America/Dawson_Creek'           ,1918,1972,
                                'America/Boise'                  ,1918,1919,
+                               'America/Metlakatla'             ,1942,9999,
+                               'America/Sitka'                  ,1942,1983,
                               ],
                '-08:00:00' => [
-                               'America/Juneau'                 ,1984,9999,
+                               'America/Juneau'                 ,1980,9999,
                                'America/Yakutat'                ,1942,9999,
                                'America/Anchorage'              ,1984,9999,
                                'America/Nome'                   ,1984,9999,
                                'America/Dawson'                 ,1918,1945,
                                'America/Whitehorse'             ,1918,1945,
+                               'America/Sitka'                  ,1984,9999,
                               ],
                '-09:00:00' => [
                                'America/Adak'                   ,1984,9999,

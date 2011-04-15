@@ -979,7 +979,7 @@ are appended. See the modifiers method below for more information.
 
 =item B<end>
 
-=item B<base>
+=item B<basedate>
 
 =item B<modifiers>
 
@@ -991,7 +991,7 @@ recurrence) using the following:
    $err = $recur->start($start);
    $err = $recur->end($end);
 
-   $err = $recur->base($base);
+   $err = $recur->basedate($base);
 
    $err = $recur->modifiers($modifiers);
    $err = $recur->modifiers(@modifiers);
@@ -1026,9 +1026,9 @@ These functions can also be used to look up the values.
    $end   = $recur->end();
    @mods  = $recur->modifiers();
 
-   ($base,$actual) = $recur->base();
+   ($base,$actual) = $recur->basedate();
 
-The base function will return both the specified base and the actual
+The basedate function will return both the specified base and the actual
 base dates.
 
 If any of the values are not yet determined, nothing will be returned.

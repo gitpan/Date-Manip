@@ -27,7 +27,7 @@ in the Date::Manip::Holidays document.
 The sample config file below works for newer versions of Date::Manip.
 Some of the config variables may change, or be deprecated, and some
 may not work with earlier versions of Date::Manip, so it is strongly
-suggested that you check out the docuementation for the version of
+suggested that you check out the documentation for the version of
 Date::Manip you are using to confirm any of the config variables you
 want to include.
 
@@ -36,7 +36,7 @@ want to include.
   ################################
   # See Date::Manip::Config man page for a description of all
   # config variables.
-  
+
   # To include configuration information from additional
   # config files:
 
@@ -70,17 +70,17 @@ want to include.
   Printable               = 0
   DefaultTime             = midnight
   RecurRange              = none
-  
+
   ################################
   # HOLIDAYS
   ################################
   # See the Date::Manip::Holidays man page for a description of
   # this section.
   *HOLIDAYS
-  
+
   # FEDERAL HOLIDAYS
   ##################
-  
+
   # You can express New Year's Day as the actual day (Jan 1)
   # or the observed day (Jan 1 or the nearest week day).
   # You can't include BOTH because once a day is marked as
@@ -90,12 +90,12 @@ want to include.
 
   # Jan 1                         = New Year's Day
   1*1:0:1:0:0:0*DWD               = New Year's Day (observed)
-  
+
   # Two different ways to defined MLK day
 
   third Monday in Jan             = Martin Luther King Jr.'s Birthday
   # 1*1:3:1:0:0:0                 = Martin Luther King Jr.'s Birthday
-  
+
   # Observed by federal employees in Washington D.C.
 
   # Jan 20                        = Inauguration day
@@ -103,25 +103,25 @@ want to include.
   last Monday in May              = Memorial Day
   1st Monday in Sep               = Labor Day
   second Monday in Oct            = Columbus Day
-  
+
   # Jul 4                         = Independence Day
   1*7:0:4:0:0:0*DWD               = Independence Day
-  
+
   # 11/11                         = Veterans Day
   1*11:0:11:0:0:0*DWD             = Veteran's Day
-  
+
   # To define both Thanksgiving and the day after, use the
   # following two lines:
 
   fourth Thu in Nov               = Thanksgiving
   1*11:4:4:0:0:0*FD1              = Day after Thanksgiving
-  
+
   # Dec 25                        = Christmas
   1*12:0:25:0:0:0*DWD             = Christmas
-  
+
   # SAMPLE HOLIDAYS
   ##################
-  
+
   # You can define a one-time-only holiday by specifying
   # the day and year.
 

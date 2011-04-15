@@ -24,7 +24,7 @@ use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -258,24 +258,27 @@ sub _init_holidays {
    my($self,$force) = @_;
    return  if (exists $$self{'data'}{'holidays'}  &&  ! $force);
 
-   # {data}{sections}{holidays}    = [ STRING, HOLIDAY_NAME, ... ]
+   # {data}{sections}{holidays} = [ STRING, HOLIDAY_NAME, ... ]
    #
-   # {data}{holidays}{YEAR}  = 1  if this year has been parsed
-   #                           2  if YEAR-1 and YEAR+1 have been parsed
-   #                              (both must be done before holidays can
-   #                              be known so that New Years can be
-   #                              celebrated on Dec 31 if Jan 1 is weekend)
-   #                 {date}  = DATE_OBJ
-   #                              a Date::Manip::Date object to use for holidays
-   #                 {hols}  = [ RECUR_OBJ|DATE_STRING, HOLIDAY_NAME, ... ]
-   #                              DATE_STRING is suitable for parse_date
-   #                              using DATE_OBJ.  RECUR_OBJ is a Date::Manip::Recur
-   #                              object that can be used once the start and
-   #                              end date is set.
-   #                 {dates} = { Y => M => D => NAME }
+   # {data}{holidays}{YEAR}     = 1  if this year has been parsed
+   #                              2  if YEAR-1 and YEAR+1 have been parsed
+   #                                 (both must be done before holidays can
+   #                                 be known so that New Years can be
+   #                                 celebrated on Dec 31 if Jan 1 is weekend)
+   #                 {date}     = DATE_OBJ
+   #                                 a Date::Manip::Date object to use for holidays
+   #                 {hols}     = [ RECUR_OBJ|DATE_STRING, HOLIDAY_NAME, ... ]
+   #                                 DATE_STRING is suitable for parse_date
+   #                                 using DATE_OBJ.  RECUR_OBJ is a Date::Manip::Recur
+   #                                 object that can be used once the start and
+   #                                 end date is set.
+   #                 {dates}    = { Y => M => D => NAME }
+   #
+   # {data}{init_holidays}      = 1  if currently initializing holidays
 
    $$self{'data'}{'holidays'}             = {};
    $$self{'data'}{'sections'}{'holidays'} = [];
+   $$self{'data'}{'init_holidays'}        = 0;
 }
 
 sub _init_now {
@@ -302,6 +305,7 @@ sub _init_now {
    $$self{'data'}{'now'}          = {};
    $$self{'data'}{'now'}{'force'} = 0;
    $$self{'data'}{'now'}{'set'}   = 0;
+   $$self{'data'}{'tmpnow'}       = [];
 }
 
 # Language information only needs to be initialized if the language changes.

@@ -53,7 +53,7 @@ use integer;
 use warnings;
 
 our $VERSION;
-$VERSION='6.22';
+$VERSION='6.23';
 
 ###########################################################################
 
@@ -92,7 +92,7 @@ sub Date_Init {
          warn "ERROR: invalid Date_Init argument: $arg\n";
       }
    }
-   $date->config(@args2);
+   $date->config(@args2,"oldconfigfiles",1);
 }
 
 sub ParseDateString {

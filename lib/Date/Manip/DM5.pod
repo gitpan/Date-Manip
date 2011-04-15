@@ -1878,7 +1878,7 @@ A valid holiday section would be:
    fourth Thu in Nov + 1 day       =
 
    1*0:0:0:0:0:0*EASTER            = Easter
-   1*11:0:11:0:0:0*CWD             = Veteran's Day (observed)
+   1*11:0:11:0:0:0*DWD             = Veteran's Day (observed)
    1*0:0:0:0:0:0*EASTER,PD5        = Good Friday
 
 In a Date + Delta or Date - Delta string, you can use business mode by

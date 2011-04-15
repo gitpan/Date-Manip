@@ -21,7 +21,7 @@ use IO::File;
 #use re 'debug';
 
 our $VERSION;
-$VERSION='6.22';
+$VERSION='6.23';
 END { undef $VERSION; }
 
 ########################################################################
@@ -120,6 +120,9 @@ BEGIN {
          } elsif ($field eq 'normal') {
             $business = 0;
             $gotmode  = 1;
+         } elsif ($field eq 'delta') {
+            $business = $$self{'data'}{'business'};
+            $gotmode  = $$self{'data'}{'gotmode'};
          }
          my $type = ($business ? 'business' : 'delta');
          if ($business) {
