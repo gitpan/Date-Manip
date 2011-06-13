@@ -195,7 +195,17 @@ SELECTING AN INTERFACE
 
     If you use a functional interface, it will default to the version 6
     interface, but you can choose to run the version 5 interface in one of
-    two ways:
+    three ways:
+
+    Use the default functional interface
+        By including:
+
+           use Date::Manip;
+
+        in your script, one of the functional interfaces will be loaded. If
+        you are running a version of perl older than 5.10, it will
+        automatically be the version 5 interface. If you are running a newer
+        version of perl, it will automatically load the version 6 interface.
 
     DATE_MANIP ENVIRONMENT VARIABLE
         By setting the DATE_MANIP environment variable to 'DM5' before

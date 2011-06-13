@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.23';
+$VERSION='6.24';
 END { undef $VERSION; }
 
 ########################################################################
@@ -1496,8 +1496,8 @@ sub _config_var_setdate {
    my($self,$val,$force) = @_;
    my $base = $$self{'base'};
 
-   my $dstrx = qr/(?:,(stdonly|dstonly|std|dst))?/i;
-   my $zonrx = qr/,(.+)/;
+   my $dstrx = qr/(?:,\s*(stdonly|dstonly|std|dst))?/i;
+   my $zonrx = qr/,\s*(.+)/;
    my $da1rx = qr/(\d\d\d\d)(\d\d)(\d\d)(\d\d):(\d\d):(\d\d)/;
    my $da2rx = qr/(\d\d\d\d)\-(\d\d)\-(\d\d)\-(\d\d):(\d\d):(\d\d)/;
    my $time  = time;

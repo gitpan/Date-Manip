@@ -10,7 +10,7 @@
 %windows_zones =
   (
    # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/zone_tzid.html
-   # CLDR 2.0alpha
+   # CLDR 2.0
 
    "AUS Central Standard Time"       => "Australia/Darwin",
    "AUS Eastern Standard Time"       => "Australia/Sydney",
@@ -549,7 +549,7 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Athens'                           ,1932,9999,
                        'Europe/Bucharest'                        ,1932,9999,
                        'Europe/Chisinau'                         ,1932,9999,
-                       'Africa/Cairo'                            ,1940,9999,
+                       'Africa/Cairo'                            ,1940,2009,
                        'Europe/Helsinki'                         ,1942,9999,
                        'Asia/Gaza'                               ,1957,9999,
                        'Asia/Amman'                              ,1973,9999,

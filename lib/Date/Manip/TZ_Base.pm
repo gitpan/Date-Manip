@@ -11,7 +11,7 @@ use warnings;
 use strict;
 
 our ($VERSION);
-$VERSION='6.23';
+$VERSION='6.24';
 END { undef $VERSION; }
 
 ########################################################################

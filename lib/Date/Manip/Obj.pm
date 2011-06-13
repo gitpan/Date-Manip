@@ -16,7 +16,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our ($VERSION);
-$VERSION='6.23';
+$VERSION='6.24';
 END { undef $VERSION; }
 
 ########################################################################
@@ -93,6 +93,10 @@ sub new {
          $base = $old;
       } elsif (ref($old) eq 'Date::Manip::TZ') {
          $tz   = $old;
+         $base = $$tz{'base'};
+      } elsif (ref($old) eq 'ARRAY') {
+         my %old = @$old;
+         $tz   = $old{'tz'};
          $base = $$tz{'base'};
       } else {
          $tz   = $$old{'tz'};

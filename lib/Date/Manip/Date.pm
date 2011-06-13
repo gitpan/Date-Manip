@@ -25,7 +25,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.23';
+$VERSION='6.24';
 END { undef $VERSION; }
 
 ########################################################################
@@ -183,6 +183,8 @@ sub parse {
             }
          }
          $dow = 0  if (! $dow);
+
+         # Other formats
 
          (@tmp) = $self->_parse_date($string,$dow,\$noupdate,%opts);
          if (@tmp) {
@@ -1833,6 +1835,9 @@ sub _parse_date_other {
          }
 
       } elsif ($nth  &&  ! $got_y) {
+         # 'in one week' makes it here too so return nothing in that case so it
+         # drops through to the deltas.
+         return ()  if ($field_d  ||  $field_w  ||  $field_m  ||  $field_y);
          ($y,$m,$d)    = $dmt->_now('now',$$noupdate);
          $$noupdate    = 1;
          $d            = $nth;

@@ -32,7 +32,7 @@ sub test {
 }
 
 $obj = new Date::Manip::Date;
-$obj->config("forcedate","2000-01-21-01:02:03,America/New_York");
+$obj->config("forcedate","2000-01-21-01:02:03, America/New_York");
 
 $tests="
 

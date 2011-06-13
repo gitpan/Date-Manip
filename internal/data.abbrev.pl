@@ -753,7 +753,7 @@
                      'Europe/Athens'                             ,1932,9999,
                      'Europe/Bucharest'                          ,1932,9999,
                      'Europe/Chisinau'                           ,1932,9999,
-                     'Africa/Cairo'                              ,1940,9999,
+                     'Africa/Cairo'                              ,1940,2010,
                      'Europe/Helsinki'                           ,1942,9999,
                      'Asia/Gaza'                                 ,1957,9999,
                      'Asia/Amman'                                ,1973,9999,

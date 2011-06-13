@@ -27,9 +27,30 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.24
+=head1 VERSION 6.25
 
 =over 4
+
+=back
+
+=head1 VERSION 6.24 (2011-06-13)
+
+=over 4
+
+=item New features
+
+Spaces are ignored in the SetDate/ForceDate config values.  Zsban Ambrus
+
+=item Bug fixes
+
+Fixed a bug where 'in one week' wasn't correctly parsed.  E. M. Shtern
+
+Fixed a bug where options passed in to the 'new' as a listref weren't handled
+properly.  Zsban Ambrus
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2011g)
 
 =back
 
@@ -47,6 +68,11 @@ like all the other Date::Manip modules.
 
 Improved dealing with the bootstrap problem of defining holidays, especially
 those that contain business day flags.  Mike Tonks
+
+=item New features
+
+The printf function will now take multiple format strings and return a list
+of values.  Zsban Ambrus
 
 =item Bug fixes
 

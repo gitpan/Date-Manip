@@ -2259,7 +2259,7 @@ $def_off{1} = {
                                'Europe/Athens'                  ,1932,9999,
                                'Europe/Bucharest'               ,1932,9999,
                                'Europe/Chisinau'                ,1932,9999,
-                               'Africa/Cairo'                   ,1940,9999,
+                               'Africa/Cairo'                   ,1940,2010,
                                'Asia/Gaza'                      ,1940,9999,
                                'Asia/Jerusalem'                 ,1940,9999,
                                'Europe/Helsinki'                ,1942,9999,

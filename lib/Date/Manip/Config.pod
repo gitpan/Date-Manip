@@ -614,7 +614,8 @@ the SetDate or ForceDate variables are set to some other value).
    $date->config("forcedate","DATE,DSTFLAG,ZONE");
    $date->config("forcedate","now");
 
-all set "now" in the same way as the SetDate variable.
+all set "now" in the same way as the SetDate variable.  Spaces after commas are
+ignored.
 
 =back
 

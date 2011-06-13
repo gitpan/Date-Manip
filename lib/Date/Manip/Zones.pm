@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Apr 15 08:21:51 EDT 2011
-#    Data version: tzdata2011f
-#    Code version: tzcode2011e
+#    Generated on: Mon Jun 13 13:59:10 EDT 2011
+#    Data version: tzdata2011g
+#    Code version: tzcode2011g
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.23';
+$VERSION='6.24';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,8 +37,8 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2011f';
-$TzcodeVersion = 'tzcode2011e';
+$TzdataVersion = 'tzdata2011g';
+$TzcodeVersion = 'tzcode2011g';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
 $LastYear      = '2031';
