@@ -5,9 +5,9 @@ package Date::Manip::Offset::off476;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun 13 13:57:33 EDT 2011
-#    Data version: tzdata2011g
-#    Code version: tzcode2011g
+#    Generated on: Wed Aug 31 12:08:30 EDT 2011
+#    Data version: tzdata2011i
+#    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off476;
 
 =head1 NAME
 
-Date::Manip::Offset::off476 - Support for the -11:30:00 offset
+Date::Manip::Offset::off476 - Support for the -11:26:56 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.24';
+$VERSION='6.25';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,13 +41,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-11:30:00';
+$Offset        = '-11:26:56';
 
 %Offset        = (
    0 => [
-      'pacific/niue',
       'pacific/apia',
-      'pacific/pago_pago',
       ],
 );
 

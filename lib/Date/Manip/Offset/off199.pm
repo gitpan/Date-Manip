@@ -5,9 +5,9 @@ package Date::Manip::Offset::off199;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun 13 13:57:30 EDT 2011
-#    Data version: tzdata2011g
-#    Code version: tzcode2011g
+#    Generated on: Wed Aug 31 12:08:26 EDT 2011
+#    Data version: tzdata2011i
+#    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off199;
 
 =head1 NAME
 
-Date::Manip::Offset::off199 - Support for the +09:00:00 offset
+Date::Manip::Offset::off199 - Support for the +08:57:56 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.24';
+$VERSION='6.25';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,53 +41,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '+09:00:00';
+$Offset        = '+08:57:56';
 
 %Offset        = (
    0 => [
       'pacific/palau',
-      'asia/yakutsk',
-      'etc/gmt+9',
-      'asia/choibalsan',
-      'asia/vladivostok',
-      'asia/harbin',
-      'asia/seoul',
-      'asia/hong_kong',
-      'asia/manila',
-      'asia/dili',
-      'pacific/saipan',
-      'asia/pyongyang',
-      'asia/tokyo',
-      'asia/sakhalin',
-      'asia/kuching',
-      'asia/rangoon',
-      'asia/jakarta',
-      'asia/kuala_lumpur',
-      'asia/singapore',
-      'asia/makassar',
-      'asia/pontianak',
-      'asia/jayapura',
-      'pacific/nauru',
-      'australia/darwin',
-      'australia/adelaide',
-      'australia/broken_hill',
-      'v',
-      ],
-   1 => [
-      'asia/irkutsk',
-      'australia/perth',
-      'asia/ulaanbaatar',
-      'asia/shanghai',
-      'asia/chongqing',
-      'asia/harbin',
-      'asia/kashgar',
-      'asia/urumqi',
-      'asia/yakutsk',
-      'asia/macau',
-      'asia/hong_kong',
-      'asia/taipei',
-      'asia/manila',
-      'asia/seoul',
       ],
 );
 

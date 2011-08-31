@@ -674,6 +674,8 @@ file will be removed, and there will be no searching across a path
 of directories. Instead, full paths will be specified using the ConfigFile
 variable.
 
+Scheduled for removal 2011-12-01 .
+
 =item B<Internal>
 
 This is an alias for Printable. Internal was used previously because
@@ -682,24 +684,34 @@ based on this value. Now, the internal form will never change... just
 the printable version of it. The variable name has been changed to reflect
 that change.
 
+Scheduled for removal 2011-12-01 .
+
 =item B<DeltaSigns>
 
 This is ignored. Use the Date::Manip::Delta::printf format to format
 deltas as desired.
+
+Scheduled for removal 2011-12-01 .
 
 =item B<UpdateCurrTZ>
 
 This is ignored. With real time zone support, daylight saving time changes
 are handled automatically and correctly.
 
+Scheduled for removal 2011-12-01 .
+
 =item B<ConvTZ>
 
 This is ignored. Calculations automatically handle multiple time zones,
 so this is no longer necessary.
 
+Scheduled for removal 2011-12-01 .
+
 =item B<TZ>
 
 This is discussed above. Use SetDate or ForceDate instead.
+
+Scheduled for removal 2013-12-01 .
 
 =item B<IntCharSet>
 
@@ -708,9 +720,13 @@ as the month name.  If set to 1, use the appropriate international character
 set.  For example, If you want your French representation of December to
 have the accent over the first "e", you'll want to set this to 1.
 
+Scheduled for removal 2012-10-01 .
+
 =item B<RecurNumFudgeDays>
 
 This is no longer used since recurrences were reworked in 6.20.
+
+Scheduled for removal 2012-12-01 .
 
 =back
 

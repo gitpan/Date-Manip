@@ -5,9 +5,9 @@ package Date::Manip::Offset::off167;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun 13 13:57:29 EDT 2011
-#    Data version: tzdata2011g
-#    Code version: tzcode2011g
+#    Generated on: Wed Aug 31 12:08:26 EDT 2011
+#    Data version: tzdata2011i
+#    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off167;
 
 =head1 NAME
 
-Date::Manip::Offset::off167 - Support for the +07:00:00 offset
+Date::Manip::Offset::off167 - Support for the +06:59:40 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.24';
+$VERSION='6.25';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,42 +41,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '+07:00:00';
+$Offset        = '+06:59:40';
 
 %Offset        = (
    0 => [
-      'indian/christmas',
-      'asia/bangkok',
-      'asia/krasnoyarsk',
-      'asia/novosibirsk',
-      'asia/novokuznetsk',
-      'asia/jakarta',
-      'asia/pontianak',
-      'etc/gmt+7',
-      'asia/hovd',
-      'asia/irkutsk',
-      'asia/chongqing',
-      'asia/choibalsan',
-      'asia/ulaanbaatar',
-      'asia/kuala_lumpur',
-      'asia/singapore',
-      'asia/vientiane',
       'asia/phnom_penh',
-      'asia/ho_chi_minh',
-      'antarctica/davis',
-      't',
-      ],
-   1 => [
-      'asia/omsk',
-      'asia/novokuznetsk',
-      'asia/novosibirsk',
-      'asia/dhaka',
-      'asia/almaty',
-      'asia/qyzylorda',
-      'asia/krasnoyarsk',
-      'asia/bishkek',
-      'asia/dushanbe',
-      'asia/tashkent',
       ],
 );
 

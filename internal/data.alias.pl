@@ -10,7 +10,7 @@
 %windows_zones =
   (
    # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/zone_tzid.html
-   # CLDR 2.0
+   # CLDR 2.0 (2011-05-25)
 
    "AUS Central Standard Time"       => "Australia/Darwin",
    "AUS Eastern Standard Time"       => "Australia/Sydney",
@@ -229,7 +229,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Indiana/Petersburg'              ,1918,2006,
                        'America/Indiana/Vincennes'               ,1918,2006,
                        'America/Indiana/Winamac'                 ,1918,2006,
-                       'America/Resolute'                        ,1980,2005,
+                       'America/Resolute'                        ,1980,9999,
                        'America/Kentucky/Monticello'             ,1918,1999,
                        'America/Chihuahua'                       ,1996,1997,
                        'America/Ojinaga'                         ,1996,1997,
@@ -336,7 +336,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Santarem'                        ,1932,1987,
                       ],
    'ANAT-11ANAST'  => [
-                       'Asia/Anadyr'                             ,1991,9999,
+                       'Asia/Anadyr'                             ,1991,2010,
                       ],
    'ANAT-12ANAST'  => [
                        'Asia/Anadyr'                             ,1982,2009,
@@ -437,6 +437,7 @@ foreach my $winz (keys %windows_zones) {
                       ],
    'CAT-2CAST'     => [
                        'Africa/Khartoum'                         ,1970,1985,
+                       'Africa/Juba'                             ,1970,1985,
                       ],
    'CAT10CAPT'     => [
                        'America/Anchorage'                       ,1945,1945,
@@ -557,7 +558,7 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Sofia'                            ,1979,9999,
                        'Europe/Riga'                             ,1989,9999,
                        'Europe/Tallinn'                          ,1989,9999,
-                       'Europe/Kaliningrad'                      ,1991,9999,
+                       'Europe/Kaliningrad'                      ,1991,2010,
                        'Europe/Minsk'                            ,1991,9999,
                        'Europe/Vilnius'                          ,1991,9999,
                        'Europe/Zaporozhye'                       ,1991,9999,
@@ -636,7 +637,7 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Irkutsk'                            ,1991,1991,
                       ],
    'IRKT-8IRKST'   => [
-                       'Asia/Irkutsk'                            ,1981,9999,
+                       'Asia/Irkutsk'                            ,1981,2010,
                       ],
    'IST-2EEST'     => [
                        'Asia/Gaza'                               ,1967,1967,
@@ -665,7 +666,7 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Novokuznetsk'                       ,1991,1991,
                       ],
    'KRAT-7KRAST'   => [
-                       'Asia/Krasnoyarsk'                        ,1981,9999,
+                       'Asia/Krasnoyarsk'                        ,1981,2010,
                        'Asia/Novokuznetsk'                       ,1981,2009,
                       ],
    'KST-8KDT'      => [
@@ -687,10 +688,7 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Magadan'                            ,1991,1991,
                       ],
    'MAGT-11MAGST'  => [
-                       'Asia/Magadan'                            ,1981,9999,
-                      ],
-   'MeST8MeST'     => [
-                       'America/Metlakatla'                      ,1984,9999,
+                       'Asia/Magadan'                            ,1981,2010,
                       ],
    'MeST8PDT'      => [
                        'America/Metlakatla'                      ,1983,1983,
@@ -709,7 +707,7 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Vilnius'                          ,1944,1944,
                       ],
    'MSK-3MSD'      => [
-                       'Europe/Moscow'                           ,1981,9999,
+                       'Europe/Moscow'                           ,1981,2010,
                        'Europe/Simferopol'                       ,1981,1996,
                        'Europe/Kaliningrad'                      ,1981,1990,
                        'Europe/Vilnius'                          ,1981,1990,
@@ -737,8 +735,8 @@ foreach my $winz (keys %windows_zones) {
                        'Pacific/Noumea'                          ,1978,1978,
                       ],
    'NOVT-6NOVST'   => [
-                       'Asia/Novosibirsk'                        ,1991,9999,
-                       'Asia/Novokuznetsk'                       ,2010,9999,
+                       'Asia/Novosibirsk'                        ,1991,2010,
+                       'Asia/Novokuznetsk'                       ,2010,2010,
                       ],
    'NOVT-7NOVST'   => [
                        'Asia/Novosibirsk'                        ,1981,1990,
@@ -758,7 +756,7 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Omsk'                               ,1991,1991,
                       ],
    'OMST-6OMSST'   => [
-                       'Asia/Omsk'                               ,1981,9999,
+                       'Asia/Omsk'                               ,1981,2010,
                       ],
    'ORAT-4ORAST'   => [
                        'Asia/Oral'                               ,1992,2004,
@@ -767,7 +765,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Lima'                            ,1939,1994,
                       ],
    'PETT-11PETST'  => [
-                       'Asia/Kamchatka'                          ,1991,9999,
+                       'Asia/Kamchatka'                          ,1991,2010,
                       ],
    'PETT-12PETST'  => [
                        'Asia/Kamchatka'                          ,1981,2009,
@@ -798,13 +796,13 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Qyzylorda'                          ,1993,2004,
                       ],
    'SAKT-10SAKST'  => [
-                       'Asia/Sakhalin'                           ,1991,9999,
+                       'Asia/Sakhalin'                           ,1991,2010,
                       ],
    'SAKT-11SAKST'  => [
                        'Asia/Sakhalin'                           ,1981,1996,
                       ],
    'SAMT-3SAMST'   => [
-                       'Europe/Samara'                           ,2010,9999,
+                       'Europe/Samara'                           ,2010,2010,
                       ],
    'SAMT-4SAMST'   => [
                        'Europe/Samara'                           ,1992,2009,
@@ -855,10 +853,10 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Vladivostok'                        ,1991,1991,
                       ],
    'VLAT-10VLAST'  => [
-                       'Asia/Vladivostok'                        ,1981,9999,
+                       'Asia/Vladivostok'                        ,1981,2010,
                       ],
    'VOLT-3VOLST'   => [
-                       'Europe/Volgograd'                        ,1989,9999,
+                       'Europe/Volgograd'                        ,1989,2010,
                       ],
    'VOLT-4VOLST'   => [
                        'Europe/Volgograd'                        ,1981,1988,
@@ -903,10 +901,10 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Yakutsk'                            ,1991,1991,
                       ],
    'YAKT-9YAKST'   => [
-                       'Asia/Yakutsk'                            ,1981,9999,
+                       'Asia/Yakutsk'                            ,1981,2010,
                       ],
    'YEKT-5YEKST'   => [
-                       'Asia/Yekaterinburg'                      ,1993,9999,
+                       'Asia/Yekaterinburg'                      ,1993,2010,
                       ],
    'YERT-4YERST'   => [
                        'Asia/Yerevan'                            ,1981,1990,

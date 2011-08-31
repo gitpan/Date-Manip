@@ -5,9 +5,9 @@ package Date::Manip::Offset::off227;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun 13 13:57:30 EDT 2011
-#    Data version: tzdata2011g
-#    Code version: tzcode2011g
+#    Generated on: Wed Aug 31 12:08:26 EDT 2011
+#    Data version: tzdata2011i
+#    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off227;
 
 =head1 NAME
 
-Date::Manip::Offset::off227 - Support for the +11:05:48 offset
+Date::Manip::Offset::off227 - Support for the +11:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.24';
+$VERSION='6.25';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +41,39 @@ END {
    undef %Offset;
 }
 
-$Offset        = '+11:05:48';
+$Offset        = '+11:00:00';
 
 %Offset        = (
    0 => [
+      'pacific/pohnpei',
+      'pacific/kosrae',
+      'pacific/efate',
+      'pacific/guadalcanal',
       'pacific/noumea',
+      'asia/sakhalin',
+      'asia/vladivostok',
+      'asia/kamchatka',
+      'asia/magadan',
+      'asia/anadyr',
+      'etc/gmt+11',
+      'x',
+      'antarctica/macquarie',
+      'pacific/kwajalein',
+      'pacific/majuro',
+      'antarctica/casey',
+      ],
+   1 => [
+      'australia/melbourne',
+      'australia/currie',
+      'australia/hobart',
+      'australia/sydney',
+      'asia/vladivostok',
+      'asia/sakhalin',
+      'australia/lord_howe',
+      'australia/lindeman',
+      'australia/brisbane',
+      'asia/magadan',
+      'antarctica/macquarie',
       ],
 );
 

@@ -98,7 +98,7 @@
                      'Africa/Asmara'                             ,1869,1889,
                     ],
    'ANAST'       => [
-                     'Asia/Anadyr'                               ,1981,9999,
+                     'Asia/Anadyr'                               ,1981,2010,
                     ],
    'ANAT'        => [
                      'Asia/Anadyr'                               ,1924,9999,
@@ -323,6 +323,7 @@
    'CAST'        => [
                      'Antarctica/Casey'                          ,2009,2010,
                      'Africa/Khartoum'                           ,1970,1985,
+                     'Africa/Juba'                               ,1970,1985,
                      'Africa/Gaborone'                           ,1943,1944,
                     ],
    'CAT'         => [
@@ -335,6 +336,7 @@
                      'Africa/Maputo'                             ,1903,9999,
                      'Africa/Kigali'                             ,1935,9999,
                      'Africa/Khartoum'                           ,1930,2000,
+                     'Africa/Juba'                               ,1930,2000,
                      'Africa/Windhoek'                           ,1990,1994,
                      'America/Anchorage'                         ,1900,1967,
                     ],
@@ -613,7 +615,7 @@
                      'America/Indiana/Petersburg'                ,1883,2007,
                      'America/Indiana/Vincennes'                 ,1883,2007,
                      'America/Indiana/Winamac'                   ,1883,2007,
-                     'America/Resolute'                          ,1947,2006,
+                     'America/Resolute'                          ,1947,9999,
                      'America/Cambridge_Bay'                     ,1999,2001,
                      'America/Kentucky/Monticello'               ,1883,2000,
                      'America/Iqaluit'                           ,1999,2000,
@@ -712,6 +714,7 @@
                      'Africa/Addis_Ababa'                        ,1936,9999,
                      'Africa/Asmara'                             ,1936,9999,
                      'Africa/Khartoum'                           ,2000,9999,
+                     'Africa/Juba'                               ,2000,9999,
                     ],
    'ECT'         => [
                      'America/Guayaquil'                         ,1931,9999,
@@ -761,7 +764,7 @@
                      'Europe/Sofia'                              ,1979,9999,
                      'Europe/Riga'                               ,1989,9999,
                      'Europe/Tallinn'                            ,1989,9999,
-                     'Europe/Kaliningrad'                        ,1991,9999,
+                     'Europe/Kaliningrad'                        ,1991,2010,
                      'Europe/Minsk'                              ,1991,9999,
                      'Europe/Vilnius'                            ,1991,9999,
                      'Europe/Zaporozhye'                         ,1991,9999,
@@ -793,7 +796,7 @@
                      'Europe/Bucharest'                          ,1931,9999,
                      'Europe/Chisinau'                           ,1931,9999,
                      'Africa/Tripoli'                            ,1958,9999,
-                     'Europe/Kaliningrad'                        ,1991,9999,
+                     'Europe/Kaliningrad'                        ,1991,2011,
                      'Europe/Uzhgorod'                           ,1991,9999,
                      'Europe/Moscow'                             ,1922,1992,
                      'Europe/Warsaw'                             ,1918,1922,
@@ -852,7 +855,7 @@
                      'America/Indiana/Petersburg'                ,1965,9999,
                      'America/Pangnirtung'                       ,1995,9999,
                      'America/Kentucky/Monticello'               ,2000,9999,
-                     'America/Resolute'                          ,2000,9999,
+                     'America/Resolute'                          ,2000,2007,
                      'Antarctica/Macquarie'                      ,1911,2010,
                      'America/Indiana/Knox'                      ,1962,2006,
                      'America/Indiana/Tell_City'                 ,1964,2006,
@@ -1121,7 +1124,7 @@
                      'Asia/Tehran'                               ,1978,2037,
                     ],
    'IRKST'       => [
-                     'Asia/Irkutsk'                              ,1981,9999,
+                     'Asia/Irkutsk'                              ,1981,2010,
                     ],
    'IRKT'        => [
                      'Asia/Irkutsk'                              ,1920,9999,
@@ -1173,6 +1176,9 @@
    'K'           => [
                      'K'                                         ,0001,9999,
                     ],
+   'KALT'        => [
+                     'Europe/Kaliningrad'                        ,2011,9999,
+                    ],
    'KART'        => [
                      'Asia/Karachi'                              ,1951,1971,
                     ],
@@ -1206,7 +1212,7 @@
                      'Pacific/Kosrae'                            ,1900,9999,
                     ],
    'KRAST'       => [
-                     'Asia/Krasnoyarsk'                          ,1981,9999,
+                     'Asia/Krasnoyarsk'                          ,1981,2010,
                      'Asia/Novokuznetsk'                         ,1981,2009,
                     ],
    'KRAT'        => [
@@ -1260,7 +1266,7 @@
                      'Atlantic/Madeira'                          ,1911,1966,
                     ],
    'MAGST'       => [
-                     'Asia/Magadan'                              ,1981,9999,
+                     'Asia/Magadan'                              ,1981,2010,
                     ],
    'MAGT'        => [
                      'Asia/Magadan'                              ,1924,9999,
@@ -1352,7 +1358,7 @@
                      'America/North_Dakota/Beulah'               ,1945,1945,
                     ],
    'MSD'         => [
-                     'Europe/Moscow'                             ,1919,9999,
+                     'Europe/Moscow'                             ,1919,2010,
                      'Europe/Simferopol'                         ,1981,1996,
                      'Europe/Kaliningrad'                        ,1981,1990,
                      'Europe/Vilnius'                            ,1981,1990,
@@ -1461,8 +1467,8 @@
                      'Asia/Novokuznetsk'                         ,0001,1920,
                     ],
    'NOVST'       => [
-                     'Asia/Novosibirsk'                          ,1981,9999,
-                     'Asia/Novokuznetsk'                         ,2010,9999,
+                     'Asia/Novosibirsk'                          ,1981,2010,
+                     'Asia/Novokuznetsk'                         ,2010,2010,
                     ],
    'NOVT'        => [
                      'Asia/Novosibirsk'                          ,1919,9999,
@@ -1511,7 +1517,7 @@
                      'O'                                         ,0001,9999,
                     ],
    'OMSST'       => [
-                     'Asia/Omsk'                                 ,1981,9999,
+                     'Asia/Omsk'                                 ,1981,2010,
                     ],
    'OMST'        => [
                      'Asia/Omsk'                                 ,1919,9999,
@@ -1548,7 +1554,7 @@
                      'America/Lima'                              ,1908,9999,
                     ],
    'PETST'       => [
-                     'Asia/Kamchatka'                            ,1981,9999,
+                     'Asia/Kamchatka'                            ,1981,2010,
                     ],
    'PETT'        => [
                      'Asia/Kamchatka'                            ,1922,9999,
@@ -1675,13 +1681,13 @@
                      'S'                                         ,0001,9999,
                     ],
    'SAKST'       => [
-                     'Asia/Sakhalin'                             ,1981,9999,
+                     'Asia/Sakhalin'                             ,1981,2010,
                     ],
    'SAKT'        => [
                      'Asia/Sakhalin'                             ,1945,9999,
                     ],
    'SAMST'       => [
-                     'Europe/Samara'                             ,1992,9999,
+                     'Europe/Samara'                             ,1992,2010,
                      'Asia/Samarkand'                            ,1981,1991,
                     ],
    'SAMT'        => [
@@ -1861,13 +1867,13 @@
                      'Asia/Vladivostok'                          ,1991,1991,
                     ],
    'VLAST'       => [
-                     'Asia/Vladivostok'                          ,1981,9999,
+                     'Asia/Vladivostok'                          ,1981,2010,
                     ],
    'VLAT'        => [
                      'Asia/Vladivostok'                          ,1922,9999,
                     ],
    'VOLST'       => [
-                     'Europe/Volgograd'                          ,1981,9999,
+                     'Europe/Volgograd'                          ,1981,2010,
                     ],
    'VOLT'        => [
                      'Europe/Volgograd'                          ,1961,9999,
@@ -2004,7 +2010,7 @@
                      'Y'                                         ,0001,9999,
                     ],
    'YAKST'       => [
-                     'Asia/Yakutsk'                              ,1981,9999,
+                     'Asia/Yakutsk'                              ,1981,2010,
                     ],
    'YAKT'        => [
                      'Asia/Yakutsk'                              ,1919,9999,
@@ -2020,7 +2026,7 @@
                      'America/Juneau'                            ,1980,1980,
                     ],
    'YEKST'       => [
-                     'Asia/Yekaterinburg'                        ,1992,9999,
+                     'Asia/Yekaterinburg'                        ,1992,2010,
                     ],
    'YEKT'        => [
                      'Asia/Yekaterinburg'                        ,1992,9999,

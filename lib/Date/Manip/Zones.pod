@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun 13 13:59:10 EDT 2011
-#    Data version: tzdata2011g
-#    Code version: tzcode2011g
+#    Generated on: Wed Aug 31 12:21:34 EDT 2011
+#    Data version: tzdata2011i
+#    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -74,6 +74,7 @@ database:
      Africa/Gaborone                      afgabo00
      Africa/Harare                        afhara00
      Africa/Johannesburg                  afjoha00
+     Africa/Juba                          afjuba00
      Africa/Kampala                       afkamp00
      Africa/Khartoum                      afkhar00
      Africa/Kigali                        afkiga00
@@ -533,7 +534,9 @@ The zoneinfo database provides several standard aliases, including:
      America/Indianapolis                 America/Indiana/Indianapolis
      America/Jujuy                        America/Argentina/Jujuy
      America/Knox_IN                      America/Indiana/Knox
+     America/Kralendijk                   America/Curacao
      America/Louisville                   America/Kentucky/Louisville
+     America/Lower_Princes                America/Curacao
      America/Marigot                      America/Guadeloupe
      America/Mendoza                      America/Argentina/Mendoza
      America/Porto_Acre                   America/Rio_Branco
@@ -739,6 +742,7 @@ default alias can be overridden as described above.
      BST11BDT                             America/Adak
                                           America/Nome
      CAT-2CAST                            Africa/Khartoum
+                                          Africa/Juba
      CAT10CAPT                            America/Anchorage
      CET-1CEST                            CET
                                           Europe/Berlin
@@ -988,7 +992,6 @@ default alias can be overridden as described above.
                                           America/Swift_Current
                                           America/Yellowknife
                                           America/North_Dakota/Beulah
-     MeST8MeST                            America/Metlakatla
      MeST8PDT                             America/Metlakatla
      NCT-11NCST                           Pacific/Noumea
      NOVT-6NOVST                          Asia/Novosibirsk
@@ -1271,11 +1274,11 @@ Date::Manip::TZ module.
                         America/Anchorage
                         America/Juneau
                         America/Nome
+                        America/Sitka
                         Etc/GMT-9
                         I
                         America/Dawson
                         America/Whitehorse
-                        America/Sitka
      0      -08:59:48   Pacific/Gambier
      0      -08:57:41   America/Juneau
      0      -08:46:18   America/Metlakatla
@@ -1285,6 +1288,7 @@ Date::Manip::TZ module.
      0      -08:00:56   America/Dawson_Creek
      0      -08:00:00   America/Los_Angeles
                         America/Vancouver
+                        America/Metlakatla
                         America/Santa_Isabel
                         America/Tijuana
                         America/Whitehorse
@@ -1293,14 +1297,13 @@ Date::Manip::TZ module.
                         Etc/GMT-8
                         H
                         America/Juneau
+                        America/Sitka
                         America/Inuvik
                         America/Dawson_Creek
                         America/Bahia_Banderas
                         America/Hermosillo
                         America/Mazatlan
                         America/Boise
-                        America/Metlakatla
-                        America/Sitka
      0      -07:52:58   America/Los_Angeles
      0      -07:48:04   America/Tijuana
      0      -07:44:49   America/Boise
@@ -1689,22 +1692,22 @@ Date::Manip::TZ module.
      0      -01:02:20   Africa/Bissau
      0      -01:01:36   Atlantic/Canary
      0      -01:00:00   Atlantic/Azores
+                        Atlantic/Cape_Verde
                         America/Scoresbysund
                         Etc/GMT-1
+                        A
                         Africa/El_Aaiun
                         Africa/Bissau
                         Atlantic/Reykjavik
                         Atlantic/Madeira
                         Africa/Banjul
+                        Africa/Bamako
                         Africa/Conakry
                         Africa/Nouakchott
-                        Africa/Bamako
                         Africa/Freetown
                         Atlantic/Canary
-                        Atlantic/Cape_Verde
                         Africa/Dakar
                         Africa/Niamey
-                        A
      0      -00:54:52   Africa/Conakry
      0      -00:53:00   Africa/Freetown
      0      -00:52:48   Africa/El_Aaiun
@@ -1945,12 +1948,13 @@ Date::Manip::TZ module.
                         Europe/Bucharest
                         Europe/Chisinau
                         Africa/Kigali
-                        Europe/Kaliningrad
                         Africa/Tripoli
                         Europe/Uzhgorod
+                        Europe/Kaliningrad
                         Etc/GMT+2
                         O
                         Africa/Khartoum
+                        Africa/Juba
                         Africa/Windhoek
                         Europe/Moscow
                         Europe/Warsaw
@@ -1959,6 +1963,7 @@ Date::Manip::TZ module.
      0      +02:04:12   Africa/Harare
      0      +02:04:24   Africa/Mbabane
      0      +02:05:00   Africa/Cairo
+     0      +02:06:24   Africa/Juba
      0      +02:09:40   Africa/Kampala
      0      +02:10:08   Africa/Khartoum
      0      +02:10:20   Africa/Maputo
@@ -1996,43 +2001,44 @@ Date::Manip::TZ module.
                         Asia/Baghdad
      0      +02:58:00   Asia/Yerevan
      0      +02:59:16   Asia/Tbilisi
-     0      +03:00:00   Indian/Comoro
-                        Indian/Mayotte
+     0      +03:00:00   Africa/Mogadishu
                         Africa/Djibouti
-                        Europe/Istanbul
-                        Europe/Moscow
-                        Europe/Volgograd
-                        Europe/Kiev
-                        Europe/Zaporozhye
-                        Europe/Simferopol
-                        Europe/Minsk
-                        Europe/Chisinau
-                        Africa/Addis_Ababa
-                        Africa/Asmara
-                        Europe/Tallinn
-                        Europe/Riga
-                        Europe/Vilnius
-                        Europe/Uzhgorod
-                        Europe/Kaliningrad
-                        Asia/Riyadh
-                        Asia/Kuwait
-                        Asia/Aden
-                        Asia/Qatar
-                        Asia/Bahrain
-                        Etc/GMT+3
-                        Asia/Baghdad
-                        Asia/Tbilisi
-                        Africa/Khartoum
-                        Asia/Yerevan
-                        Europe/Samara
-                        Asia/Baku
                         Indian/Antananarivo
-                        Africa/Dar_es_Salaam
-                        Africa/Mogadishu
+                        Indian/Comoro
+                        Indian/Mayotte
+                        Asia/Baghdad
                         Africa/Kampala
                         Africa/Nairobi
-                        Antarctica/Syowa
+                        Africa/Dar_es_Salaam
+                        Africa/Addis_Ababa
+                        Africa/Asmara
+                        Europe/Kaliningrad
+                        Asia/Aden
+                        Asia/Kuwait
+                        Asia/Riyadh
+                        Asia/Bahrain
+                        Asia/Qatar
+                        Africa/Juba
+                        Africa/Khartoum
+                        Europe/Moscow
+                        Europe/Samara
+                        Europe/Volgograd
+                        Etc/GMT+3
                         P
+                        Antarctica/Syowa
+                        Asia/Tbilisi
+                        Europe/Simferopol
+                        Asia/Yerevan
+                        Asia/Baku
+                        Europe/Minsk
+                        Europe/Zaporozhye
+                        Europe/Vilnius
+                        Europe/Kiev
+                        Europe/Chisinau
+                        Europe/Uzhgorod
+                        Europe/Riga
+                        Europe/Tallinn
+                        Europe/Istanbul
      0      +03:00:48   Asia/Aden
      0      +03:00:56   Indian/Mayotte
      0      +03:01:28   Africa/Mogadishu
@@ -2077,6 +2083,7 @@ Date::Manip::TZ module.
                         Asia/Samarkand
                         Asia/Aqtobe
                         Q
+                        Europe/Moscow
      0      +04:02:24   Asia/Yekaterinburg
      0      +04:21:52   Asia/Qyzylorda
      0      +04:27:12   Asia/Samarkand
@@ -2089,27 +2096,27 @@ Date::Manip::TZ module.
      0      +04:53:36   Asia/Omsk
      0      +04:54:00   Indian/Maldives
      0      +04:58:24   Asia/Bishkek
-     0      +05:00:00   Asia/Yekaterinburg
+     0      +05:00:00   Asia/Dushanbe
+                        Asia/Tashkent
+                        Asia/Aqtau
+                        Asia/Aqtobe
+                        Asia/Ashgabat
+                        Asia/Oral
+                        Asia/Samarkand
                         Indian/Kerguelen
                         Asia/Karachi
                         Indian/Maldives
+                        Asia/Yekaterinburg
                         Etc/GMT+5
+                        R
+                        Antarctica/Mawson
                         Asia/Bishkek
-                        Asia/Aqtau
-                        Asia/Oral
-                        Asia/Aqtobe
                         Indian/Chagos
                         Asia/Omsk
                         Asia/Qyzylorda
-                        Asia/Ashgabat
-                        Asia/Samarkand
                         Asia/Kashgar
                         Asia/Almaty
-                        Asia/Dushanbe
-                        Asia/Tashkent
-                        Antarctica/Mawson
                         Antarctica/Davis
-                        R
      0      +05:03:56   Asia/Kashgar
      0      +05:07:48   Asia/Almaty
      0      +05:19:24   Asia/Colombo
@@ -2130,29 +2137,30 @@ Date::Manip::TZ module.
                         Asia/Dhaka
      0      +05:53:28   Asia/Kolkata
      0      +05:58:36   Asia/Thimphu
-     0      +06:00:00   Asia/Novosibirsk
-                        Asia/Novokuznetsk
-                        Asia/Omsk
+     0      +06:00:00   Asia/Almaty
+                        Asia/Bishkek
+                        Asia/Dhaka
+                        Asia/Qyzylorda
                         Asia/Thimphu
                         Indian/Chagos
+                        Asia/Yekaterinburg
+                        Asia/Novosibirsk
+                        Asia/Novokuznetsk
+                        Asia/Omsk
                         Etc/GMT+6
-                        Asia/Dhaka
+                        S
+                        Antarctica/Vostok
                         Asia/Colombo
-                        Asia/Bishkek
-                        Asia/Almaty
-                        Asia/Qyzylorda
-                        Asia/Aqtobe
-                        Asia/Aqtau
                         Asia/Krasnoyarsk
                         Asia/Dushanbe
                         Asia/Tashkent
-                        Asia/Samarkand
+                        Asia/Aqtau
+                        Asia/Aqtobe
                         Asia/Oral
+                        Asia/Samarkand
                         Asia/Urumqi
                         Asia/Hovd
                         Antarctica/Mawson
-                        Antarctica/Vostok
-                        S
      0      +06:01:40   Asia/Dhaka
      0      +06:06:36   Asia/Hovd
      0      +06:11:20   Asia/Krasnoyarsk
@@ -2172,25 +2180,26 @@ Date::Manip::TZ module.
      0      +06:57:20   Asia/Irkutsk
      0      +06:59:40   Asia/Phnom_Penh
      0      +07:00:00   Indian/Christmas
+                        Asia/Ho_Chi_Minh
+                        Asia/Phnom_Penh
+                        Asia/Vientiane
                         Asia/Bangkok
-                        Asia/Krasnoyarsk
-                        Asia/Novosibirsk
                         Asia/Novokuznetsk
+                        Asia/Novosibirsk
                         Asia/Jakarta
-                        Asia/Pontianak
-                        Etc/GMT+7
                         Asia/Hovd
+                        Asia/Pontianak
+                        Asia/Omsk
+                        Asia/Krasnoyarsk
+                        Etc/GMT+7
+                        T
+                        Antarctica/Davis
                         Asia/Irkutsk
                         Asia/Chongqing
                         Asia/Choibalsan
                         Asia/Ulaanbaatar
                         Asia/Kuala_Lumpur
                         Asia/Singapore
-                        Asia/Vientiane
-                        Asia/Phnom_Penh
-                        Asia/Ho_Chi_Minh
-                        Antarctica/Davis
-                        T
      0      +07:02:52   Indian/Christmas
      0      +07:06:20   Asia/Chongqing
                         Asia/Vientiane
@@ -2217,35 +2226,36 @@ Date::Manip::TZ module.
      0      +07:43:24   Australia/Perth
      0      +07:57:36   Asia/Makassar
      0      +08:00:00   Australia/Perth
-                        Asia/Irkutsk
+                        Asia/Taipei
+                        Asia/Manila
+                        Asia/Hong_Kong
+                        Asia/Macau
+                        Asia/Shanghai
                         Asia/Brunei
+                        Asia/Harbin
+                        Asia/Kuching
+                        Asia/Makassar
+                        Asia/Choibalsan
+                        Asia/Ulaanbaatar
+                        Asia/Chongqing
+                        Asia/Kashgar
+                        Asia/Urumqi
                         Asia/Kuala_Lumpur
                         Asia/Singapore
+                        Asia/Krasnoyarsk
+                        Asia/Irkutsk
                         Etc/GMT+8
-                        Asia/Ulaanbaatar
-                        Asia/Dili
-                        Asia/Macau
-                        Asia/Yakutsk
-                        Asia/Shanghai
-                        Asia/Harbin
-                        Asia/Kashgar
-                        Asia/Chongqing
-                        Asia/Urumqi
-                        Asia/Pontianak
-                        Asia/Choibalsan
-                        Asia/Kuching
-                        Asia/Taipei
-                        Asia/Hong_Kong
-                        Asia/Manila
-                        Asia/Seoul
-                        Asia/Pyongyang
-                        Asia/Jakarta
-                        Asia/Makassar
-                        Asia/Vientiane
-                        Asia/Phnom_Penh
-                        Asia/Ho_Chi_Minh
-                        Antarctica/Casey
                         U
+                        Antarctica/Casey
+                        Asia/Dili
+                        Asia/Yakutsk
+                        Asia/Pontianak
+                        Asia/Pyongyang
+                        Asia/Seoul
+                        Asia/Jakarta
+                        Asia/Ho_Chi_Minh
+                        Asia/Phnom_Penh
+                        Asia/Vientiane
      0      +08:04:00   Asia/Manila
      0      +08:05:52   Asia/Shanghai
      0      +08:06:00   Asia/Taipei
@@ -2262,33 +2272,34 @@ Date::Manip::TZ module.
      0      +08:45:00   Australia/Eucla
      0      +08:47:44   Asia/Vladivostok
      0      +08:57:56   Pacific/Palau
-     0      +09:00:00   Pacific/Palau
+     0      +09:00:00   Asia/Tokyo
+                        Pacific/Palau
+                        Asia/Pyongyang
+                        Asia/Seoul
+                        Asia/Jayapura
+                        Asia/Dili
+                        Asia/Irkutsk
                         Asia/Yakutsk
                         Etc/GMT+9
+                        V
                         Asia/Choibalsan
                         Asia/Vladivostok
-                        Asia/Harbin
-                        Asia/Seoul
-                        Asia/Hong_Kong
-                        Asia/Manila
-                        Asia/Dili
                         Pacific/Saipan
-                        Asia/Pyongyang
-                        Asia/Tokyo
+                        Asia/Harbin
                         Asia/Sakhalin
-                        Asia/Kuching
-                        Asia/Rangoon
+                        Asia/Hong_Kong
                         Asia/Jakarta
                         Asia/Kuala_Lumpur
-                        Asia/Singapore
+                        Asia/Kuching
                         Asia/Makassar
                         Asia/Pontianak
-                        Asia/Jayapura
+                        Asia/Rangoon
+                        Asia/Singapore
+                        Asia/Manila
                         Pacific/Nauru
-                        Australia/Darwin
                         Australia/Adelaide
+                        Australia/Darwin
                         Australia/Broken_Hill
-                        V
      0      +09:14:20   Australia/Adelaide
      0      +09:18:59   Asia/Tokyo
      0      +09:22:48   Asia/Jayapura
@@ -2306,25 +2317,26 @@ Date::Manip::TZ module.
      0      +09:48:40   Pacific/Port_Moresby
      0      +09:49:16   Australia/Hobart
      0      +09:55:56   Australia/Lindeman
-     0      +10:00:00   Pacific/Port_Moresby
-                        Australia/Melbourne
+     0      +10:00:00   Australia/Melbourne
+                        Australia/Brisbane
+                        Australia/Lindeman
+                        Pacific/Port_Moresby
+                        Australia/Currie
                         Australia/Hobart
                         Australia/Sydney
-                        Australia/Currie
                         Pacific/Chuuk
+                        Pacific/Guam
+                        Pacific/Saipan
+                        Asia/Yakutsk
                         Asia/Vladivostok
                         Asia/Sakhalin
                         Etc/GMT+10
-                        Pacific/Guam
-                        Pacific/Saipan
-                        Australia/Lindeman
-                        Australia/Brisbane
+                        W
+                        Antarctica/DumontDUrville
                         Asia/Magadan
                         Australia/Lord_Howe
                         Australia/Broken_Hill
                         Antarctica/Macquarie
-                        Antarctica/DumontDUrville
-                        W
      0      +10:03:12   Asia/Magadan
      0      +10:04:52   Australia/Sydney
      0      +10:07:08   Pacific/Chuuk
@@ -2336,20 +2348,21 @@ Date::Manip::TZ module.
      0      +10:39:48   Pacific/Guadalcanal
      0      +10:51:56   Pacific/Kosrae
      0      +11:00:00   Pacific/Pohnpei
+                        Pacific/Kosrae
+                        Pacific/Efate
                         Pacific/Guadalcanal
+                        Pacific/Noumea
+                        Asia/Sakhalin
+                        Asia/Vladivostok
                         Asia/Kamchatka
                         Asia/Magadan
-                        Asia/Sakhalin
                         Asia/Anadyr
                         Etc/GMT+11
-                        Pacific/Noumea
-                        Pacific/Efate
-                        Pacific/Kwajalein
-                        Pacific/Kosrae
-                        Pacific/Majuro
-                        Antarctica/Macquarie
-                        Antarctica/Casey
                         X
+                        Antarctica/Macquarie
+                        Pacific/Kwajalein
+                        Pacific/Majuro
+                        Antarctica/Casey
      0      +11:05:48   Pacific/Noumea
      0      +11:06:28   Pacific/Wake
      0      +11:07:40   Pacific/Nauru
@@ -2367,20 +2380,21 @@ Date::Manip::TZ module.
      0      +11:53:40   Pacific/Fiji
      0      +11:56:52   Pacific/Funafuti
      0      +12:00:00   Pacific/Wake
-                        Pacific/Tarawa
                         Pacific/Funafuti
+                        Pacific/Tarawa
                         Pacific/Wallis
+                        Pacific/Fiji
                         Asia/Anadyr
-                        Pacific/Auckland
                         Asia/Kamchatka
+                        Pacific/Auckland
                         Pacific/Majuro
                         Pacific/Nauru
                         Pacific/Kwajalein
+                        Asia/Magadan
                         Etc/GMT+12
-                        Pacific/Fiji
-                        Pacific/Kosrae
-                        Antarctica/McMurdo
                         Y
+                        Antarctica/McMurdo
+                        Pacific/Kosrae
      0      +12:13:21   America/Adak
      0      +12:13:48   Pacific/Chatham
      0      +12:15:20   Pacific/Wallis
@@ -2393,6 +2407,7 @@ Date::Manip::TZ module.
      0      +13:00:00   Asia/Anadyr
                         Pacific/Enderbury
                         Pacific/Tongatapu
+                        Pacific/Apia
      0      +14:00:00   Pacific/Kiritimati
      0      +14:00:24   America/Anchorage
      0      +14:41:05   America/Yakutat
@@ -2685,6 +2700,7 @@ Date::Manip::TZ module.
                         Europe/Moscow
                         Europe/Samara
                         Africa/Khartoum
+                        Africa/Juba
                         Europe/Berlin
                         Africa/Johannesburg
                         Africa/Gaborone
@@ -3048,6 +3064,7 @@ altering the order.
      CAST             Antarctica/Casey
                       Africa/Khartoum
                       Africa/Gaborone
+                      Africa/Juba
      CAT              Africa/Gaborone
                       Africa/Bujumbura
                       Africa/Lubumbashi
@@ -3059,6 +3076,7 @@ altering the order.
                       Africa/Khartoum
                       Africa/Windhoek
                       America/Anchorage
+                      Africa/Juba
      CAWT             America/Anchorage
      CCT              Indian/Cocos
      CDDT             America/Resolute
@@ -3344,6 +3362,7 @@ altering the order.
                       Africa/Addis_Ababa
                       Africa/Asmara
                       Africa/Khartoum
+                      Africa/Juba
      ECT              America/Guayaquil
                       Pacific/Galapagos
      EDDT             America/Iqaluit
@@ -3622,6 +3641,7 @@ altering the order.
                       Asia/Manila
                       Pacific/Nauru
      K                K
+     KALT             Europe/Kaliningrad
      KART             Asia/Karachi
      KAST             Asia/Kashgar
      KDT              Asia/Seoul

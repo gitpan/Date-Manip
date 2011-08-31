@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.24';
+$VERSION='6.25';
 
 $Date::Manip::DM5::Abbrevs = join(' ',qw(
       idlw   -1200
@@ -250,6 +250,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       jdt    +1000
       jst    +0900
       k      -1000
+      kalt   +0300
       kart   +0500
       kast   +0500
       kdt    +1000
@@ -651,6 +652,7 @@ The following timezones are defined:
       JDT    +1000
       JST    +0900
       K      -1000
+      KALT   +0300
       KART   +0500
       KAST   +0500
       KDT    +1000

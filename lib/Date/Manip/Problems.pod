@@ -19,17 +19,26 @@ problems.
 
 There is a known memory leak in perl related to named regexp captures
 that directly affects Date::Manip . The leak is in all versions of
-perl that I have tested starting at 5.10. I have submitted a bug
-report (perlbug #78266). Until perl is fixed, if you need to use
-Date::Manip in a persistent environment, you should be aware of this.
+perl that I have tested starting at 5.10.  It has been tested on:
 
-Date::Manip 5.xx is not susceptible, so using it may be a feasible workaround,
-but if you need accurate timezone handling, this isn't possible.
+   5.10.1
+   5.12.4
+   5.14.1
+   5.15.0
 
-The leak is fairly small. A crude estimate is 3 MB per 10,000 dates parsed,
-so unless you're parsing hundreds of thousands, or millions of dates,
-the leak probably won't be a problem. And if you're parsing that many dates,
-the relatively slow Date::Manip may not be the correct module for you to
+I have submitted a bug report (perlbug #78266). Until perl is fixed,
+if you need to use Date::Manip in a persistent environment, you should
+be aware of this.
+
+Date::Manip 5.xx is not susceptible, so using it may be a feasible
+workaround, but if you need accurate timezone handling, this isn't
+possible.
+
+Simple tests estimate the leak to be about 3 MB per 10,000 dates
+parsed, so unless you're parsing hundreds of thousands, or millions of
+dates, the leak probably won't be a problem on systems with moderate
+amounts of memory. And if you're parsing that many dates, the
+relatively slow Date::Manip may not be the correct module for you to
 use anyway.
 
 =item B<Unable to determine Time Zone>
@@ -294,7 +303,7 @@ But the next complaint is relevant.
 
 =item B<Automatic installs break>
 
-A more important problem is that versions 6.01 through 6.07 broke
+A much more important problem is that versions 6.01 through 6.07 broke
 automatic installs for older perl installations. If you try to install
 Date::Manip using the automatic tools (cpan/cpanp), they will look for
 the most recent version. If you are using a version of perl older than
@@ -324,10 +333,11 @@ regardless of which version of perl you are running.
 
 One minor complaint is that there are too many files. One person
 specifically objects to the fact that there are over 470 modules
-covering non-minute offsets. This complaint is (IMO)
-absurd. Date::Manip supports ALL historical time zones, including those
-with non-minute offsets, and so there will be information for those
-time zones, even though they are not currently in use.
+covering non-minute offsets. This complaint is (IMO) silly.
+
+Date::Manip supports ALL historical time zones, including those with
+non-minute offsets, and so there will be information for those time
+zones, even though they are not currently in use.
 
 I could of course store all of the information in one big module, but
 that means that you have to load all of that data every time you use
@@ -357,25 +367,32 @@ could probably be stored in 100 bytes or less.
 
 Date::Manip is very configurable, and contains a great deal of
 information which could theoretically be calculated on the fly, but
-which would greatly reduce it's performance. Instead, the data is
-cached, and since the data is virtually all potentially object
-specific, it has to be somehow linked to the object.
+which would greatly reduce it's performance. Instead, in the interest
+of improving performance, the data is cached, and since the data is
+virtually all potentially object specific, it has to be somehow linked
+to the object.
 
 For example, Date::Manip allows you to parse dates in several
 languages.  Each language has a large number of regular expressions
 which are used to to the actual parsing. Instead of recreating these
 regular expressions each time they are needed, they are created once
 and stored in an object (specifically, a Date::Manip::Base object).
+The size of the Date::Manip::Base object is almost 15K (due primarily
+to the regular expressions used in parsing dates in the selected
+language).
 
 Similarly, a description of the time zones are stored in a second
-object (a Date::Manip::TZ object).
+object (a Date::Manip::TZ object).  The size of the Date::Manip::TZ
+object starts at 100K. That may seem excessive, but you have to
+remember that there are almost 500 time zones, and they have to be
+indexed by name, alias, abbreviation, and offset, and by the time you
+do this, it does take a fair bit of space.  It should also be noted
+that the full description of each timezone is only stored in the
+object when the timezone is actually used, so if you use a lot of
+timezones, this object will grow slowly as new timezones are used.
 
-The size of the Date::Manip::Base object is almost 15K. The size of
-the Date::Manip::TZ object is 100K. That may seem excessive, but you
-have to remember that there are almost 500 time zones, and they have to
-be indexed by name, alias, abbreviation, and offset, and by the time
-you do this, it does take a fair bit of space.  The size of the actual
-Date::Manip::Date object is a little over 300 bytes.
+The size of the actual Date::Manip::Date object is a little over 300
+bytes.
 
 Both the Date::Manip::Base and Date::Manip::TZ objects are reused by
 any number of Date::Manip::Date objects. They can almost be thought of

@@ -27,9 +27,25 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.25
+=head1 VERSION 6.26
+
+=head1 VERSION 6.25 (2011-08-31)
 
 =over 4
+
+=item Relaxed one constraint in ISO 8601 dates
+
+A time separated by whitespace from the date can use a single digit hour.
+Yuming Philip Xiang
+
+=item B<(*) Set official removal dates for old config variables>
+
+Config variables will be removed 2 years after they are deprecated (except
+for the TZ variable which, due to it's wide use, will be kept for 4 years).
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2011i)
 
 =back
 
@@ -213,7 +229,7 @@ Newest zoneinfo data (tzdata 2010o)
 
 =over 4
 
-=item B<Date::Manip 5.xx fully integrated with 6.xx>
+=item B<(*) Date::Manip 5.xx fully integrated with 6.xx>
 
 Date::Manip 5.xx and 6.xx are both installed automatically, and the
 correct one will be chosen.

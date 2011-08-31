@@ -5,9 +5,9 @@ package Date::Manip::Offset::off280;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun 13 13:57:31 EDT 2011
-#    Data version: tzdata2011g
-#    Code version: tzcode2011g
+#    Generated on: Wed Aug 31 12:08:27 EDT 2011
+#    Data version: tzdata2011i
+#    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off280;
 
 =head1 NAME
 
-Date::Manip::Offset::off280 - Support for the -01:01:36 offset
+Date::Manip::Offset::off280 - Support for the -01:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.24';
+$VERSION='6.25';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +41,33 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-01:01:36';
+$Offset        = '-01:00:00';
 
 %Offset        = (
    0 => [
+      'atlantic/azores',
+      'atlantic/cape_verde',
+      'america/scoresbysund',
+      'etc/gmt-1',
+      'a',
+      'africa/el_aaiun',
+      'africa/bissau',
+      'atlantic/reykjavik',
+      'atlantic/madeira',
+      'africa/banjul',
+      'africa/bamako',
+      'africa/conakry',
+      'africa/nouakchott',
+      'africa/freetown',
       'atlantic/canary',
+      'africa/dakar',
+      'africa/niamey',
+      ],
+   1 => [
+      'america/noronha',
+      'america/scoresbysund',
+      'atlantic/azores',
+      'atlantic/cape_verde',
       ],
 );
 

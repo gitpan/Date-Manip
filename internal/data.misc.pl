@@ -40,8 +40,8 @@ $off_dir    = "lib/Date/Manip/Offset";
 
 %last_zone_offsets =
   (
-   "America/Resolute" => { "dst" => 0,
-                           "st"  => 2, },
+#  "America/Resolute" => { "dst" => 0,
+#                          "st"  => 2, },
   );
 
 # The following zone(s) will not use a LAST RULE to calculate time zone

@@ -5,9 +5,9 @@ package Date::Manip::Offset::off153;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun 13 13:57:29 EDT 2011
-#    Data version: tzdata2011g
-#    Code version: tzcode2011g
+#    Generated on: Wed Aug 31 12:08:25 EDT 2011
+#    Data version: tzdata2011i
+#    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off153;
 
 =head1 NAME
 
-Date::Manip::Offset::off153 - Support for the +06:00:00 offset
+Date::Manip::Offset::off153 - Support for the +05:58:36 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.24';
+$VERSION='6.25';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,48 +41,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '+06:00:00';
+$Offset        = '+05:58:36';
 
 %Offset        = (
    0 => [
-      'asia/novosibirsk',
-      'asia/novokuznetsk',
-      'asia/omsk',
       'asia/thimphu',
-      'indian/chagos',
-      'etc/gmt+6',
-      'asia/dhaka',
-      'asia/colombo',
-      'asia/bishkek',
-      'asia/almaty',
-      'asia/qyzylorda',
-      'asia/aqtobe',
-      'asia/aqtau',
-      'asia/krasnoyarsk',
-      'asia/dushanbe',
-      'asia/tashkent',
-      'asia/samarkand',
-      'asia/oral',
-      'asia/urumqi',
-      'asia/hovd',
-      'antarctica/mawson',
-      'antarctica/vostok',
-      's',
-      ],
-   1 => [
-      'asia/yekaterinburg',
-      'asia/karachi',
-      'asia/bishkek',
-      'asia/aqtobe',
-      'asia/aqtau',
-      'asia/samarkand',
-      'asia/dushanbe',
-      'asia/omsk',
-      'asia/tashkent',
-      'asia/ashgabat',
-      'asia/qyzylorda',
-      'asia/oral',
-      'asia/colombo',
       ],
 );
 

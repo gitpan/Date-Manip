@@ -25,7 +25,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.24';
+$VERSION='6.25';
 END { undef $VERSION; }
 
 ########################################################################
@@ -950,11 +950,11 @@ sub _iso8601_rx {
 
       my $y4  = '(?<y>\d\d\d\d)';
       my $y2  = '(?<y>\d\d)';
-      my $m   = '(?<m>\d\d)';
-      my $d   = '(?<d>\d\d)';
-      my $doy = '(?<doy>\d\d\d)';
-      my $w   = '(?<w>\d\d)';
-      my $dow = '(?<dow>\d)';
+      my $m   = '(?<m>0[1-9]|1[0-2])';
+      my $d   = '(?<d>0[1-9]|[12][0-9]|3[01])';
+      my $doy = '(?<doy>00[1-9]|0[1-9][0-9]|[1-2][0-9][0-9]|3[0-5][0-9]|36[0-6])';
+      my $w   = '(?<w>0[1-9]|[1-4][0-9]|5[0-3])';
+      my $dow = '(?<dow>[1-7])';
       my $yod = '(?<yod>\d)';
       my $cc  = '(?<c>\d\d)';
 
@@ -1010,6 +1010,7 @@ sub _iso8601_rx {
       my $ss     = '(?<s>[0-5][0-9])';
       my $h24a   = '(?<h24>24(?::00){0,2})';
       my $h24b   = '(?<h24>24(?:00){0,2})';
+      my $h      = '(?<h>[0-9])';
 
       my $fh     = '(?:[\.,](?<fh>\d*))'; # fractional hours (keep)
       my $fm     = '(?:[\.,](?<fm>\d*))'; # fractional seconds (keep)
@@ -1027,7 +1028,9 @@ sub _iso8601_rx {
         "\\-\\-${ss}${fs}?|" .             # --SS[,S+]
         "${hh}:?${mn}|" .                  # HH:MN          HHMN
         "${h24a}|" .                       # 24:00:00       24:00       24
-        "${h24b}";                         # 240000         2400
+        "${h24b}|" .                       # 240000         2400
+        "${h}:${mn}:${ss}${fs}?|" .        # H:MN:SS[,S+]
+        "${h}:${mn}${fm}";                 # H:MN,M+
       $ctimerx = qr/(?:$ctimerx)(?:\s*$zrx)?/;
 
       my $ttimerx =
@@ -1283,7 +1286,7 @@ sub _other_rx {
 
       # These are of the format M/D/Y
 
-      # Do NOT replace <m> and <y> with a regular expression to
+      # Do NOT replace <m> and <d> with a regular expression to
       # match 1-12 since the DateFormat config may reverse the two.
       my $y4  = '(?<y>\d\d\d\d)';
       my $y2  = '(?<y>\d\d)';
