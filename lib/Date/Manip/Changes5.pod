@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -17,7 +17,22 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 5.62
+=head1 VERSION 5.64
+
+=head1 VERSION 5.63 (Released with 6.26)
+
+=over 4
+
+=item Fixed business mode calculation
+
+Applied a patch that I received some time ago to fix a business
+mode calculation.  Steve Tempest
+
+=back
+
+=head1 VERSION 5.62 (Released with 6.21)
+
+No changes
 
 =head1 VERSION 5.61 (Released with 6.20)
 
@@ -1695,6 +1710,7 @@ Patch supplied by Peter Bray:
    renamed to Date::Manip
    changed version number to 2 decimal places
    added POD documentation
+
 Thanks to Peter Bray, Randal Schwartz, Andreas Koenig for suggestions
 
 =item Bug fixes

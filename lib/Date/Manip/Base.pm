@@ -1,5 +1,5 @@
 package Date::Manip::Base;
-# Copyright (c) 1995-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -13,18 +13,19 @@ package Date::Manip::Base;
 
 use Date::Manip::Obj;
 use Date::Manip::TZ_Base;
-@ISA = qw(Date::Manip::Obj Date::Manip::TZ_Base);
+our @ISA = qw(Date::Manip::Obj Date::Manip::TZ_Base);
 
 require 5.010000;
 use strict;
 use warnings;
 use integer;
 use IO::File;
+#use re 'debug';
 use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -75,101 +76,92 @@ sub _init_config {
    $$self{'data'}{'sections'}{'conf'} =
      {
       # Reset config, holiday lists, or events lists
+
       'defaults'         => '',
       'eraseholidays'    => '',
       'eraseevents'      => '',
 
       # Which language to use when parsing dates.
+
       'language'         => '',
 
       # 12/10 = Dec 10 (US) or Oct 12 (anything else)
+
       'dateformat'       => '',
 
       # Define the work week (1=monday, 7=sunday)
       #
-      # These have to be predefined to avoid a bootstrap
-      # issue, but the true defaults are defined below.
+      # These have to be predefined to avoid a bootstrap issue, but
+      # the true defaults are defined below.
+
       'workweekbeg'      => 1,
       'workweekend'      => 5,
 
-      # If non-nil, a work day is treated as 24 hours
-      # long (WorkDayBeg/WorkDayEnd ignored)
+      # If non-nil, a work day is treated as 24 hours long
+      # (WorkDayBeg/WorkDayEnd ignored)
+
       'workday24hr'      => '',
 
-      # Start and end time of the work day (any time
-      # format allowed, seconds ignored). If the
-      # defaults change, be sure to change the starting
-      # value of bdlength above.
+      # Start and end time of the work day (any time format allowed,
+      # seconds ignored). If the defaults change, be sure to change
+      # the starting value of bdlength above.
+
       'workdaybeg'       => '',
       'workdayend'       => '',
 
-      # 2 digit years fall into the 100
-      # year period given by [ CURR-N,
-      # CURR+(99-N) ] where N is 0-99.
-      # Default behavior is 89, but
-      # other useful numbers might be 0
-      # (forced to be this year or
-      # later) and 99 (forced to be this
-      # year or earlier).  It can also
-      # be set to 'c' (current century)
-      # or 'cNN' (i.e.  c18 forces the
-      # year to bet 1800-1899).  Also
-      # accepts the form cNNNN to give
-      # the 100 year period NNNN to
-      # NNNN+99.
+      # 2 digit years fall into the 100 year period given by [ CURR-N,
+      # CURR+(99-N) ] where N is 0-99.  Default behavior is 89, but
+      # other useful numbers might be 0 (forced to be this year or
+      # later) and 99 (forced to be this year or earlier).  It can
+      # also be set to 'c' (current century) or 'cNN' (i.e.  c18
+      # forces the year to bet 1800-1899).  Also accepts the form
+      # cNNNN to give the 100 year period NNNN to NNNN+99.
+
       'yytoyyyy'         => '',
 
-      # First day of the week (1=monday,
-      # 7=sunday).  ISO 8601 says
+      # First day of the week (1=monday, 7=sunday).  ISO 8601 says
       # monday.
+
       'firstday'         => '',
 
-      # If this is 0, use the ISO 8601
-      # standard that Jan 4 is in week
-      # 1.  If 1, make week 1 contain
-      # Jan 1.
+      # If this is 0, use the ISO 8601 standard that Jan 4 is in week
+      # 1.  If 1, make week 1 contain Jan 1.
+
       'jan1week1'        => '',
 
       # Date::Manip printable format
       #   0 = YYYYMMDDHH:MN:SS
       #   1 = YYYYHHMMDDHHMNSS
       #   2 = YYYY-MM-DD-HH:MN:SS
+
       'printable'        => '',
 
-      # If 'today' is a holiday, we look either to
-      # 'tomorrow' or 'yesterday' for the nearest
-      # business day.  By default, we'll always look
-      # 'tomorrow' first.
+      # If 'today' is a holiday, we look either to 'tomorrow' or
+      # 'yesterday' for the nearest business day.  By default, we'll
+      # always look 'tomorrow' first.
+
       'tomorrowfirst'    => 1,
 
       # Use an international character set.
       'intcharset'       => 0,
 
       # Used to set the current date/time/timezone.
+
       'forcedate'        => 0,
       'setdate'          => 0,
 
-      # Use this to set the default range of the
-      # recurrence.
+      # Use this to set the default range of the recurrence.
+
       'recurrange'       => '',
 
       # Use this to set the default time.
+
       'defaulttime'      => 'midnight',
 
       # *** DEPRECATED ***
+
       'recurnumfudgedays'=> '',
       'tz'               => '',
-      'convtz'           => '',
-      'globalcnf'        => '',
-      'ignoreglobalcnf'  => '',
-      'personalcnf'      => '',
-      'personalcnfpath'  => '',
-      'pathsep'          => '',
-      'oldconfigfiles'   => '',
-      'internal'         => '',
-      'resetworkday'     => 0,
-      'deltasigns'       => 0,
-      'updatecurrtz'     => 0,
      };
 
    # Set config defaults
@@ -194,30 +186,6 @@ sub _init_config {
    # Set OS specific defaults
 
    my $os = $self->_os();
-
-   # *** DEPRECATED ***
-   if ($os eq 'Windows') {
-      $self->_config_var('pathsep',';');
-      $self->_config_var('personalcnf','Manip.cnf');
-      $self->_config_var('personalcnfpath','.');
-
-   } elsif ($os eq 'Other') {
-      $self->_config_var('pathsep',':');
-      $self->_config_var('personalcnf','Manip.cnf');
-      $self->_config_var('personalcnfpath','.');
-
-   } elsif ($os eq 'VMS') {
-      # VMS doesn't like files starting with '.'
-      $self->_config_var('pathsep',',');
-      $self->_config_var('personalcnf','Manip.cnf');
-      $self->_config_var('personalcnfpath','/sys$login');
-
-   } else {
-      # Unix
-      $self->_config_var('pathsep',':');
-      $self->_config_var('personalcnf','.DateManip.cnf');
-      $self->_config_var('personalcnfpath','.:~');
-   }
 }
 
 # Events and holidays are reset only when they are read in.
@@ -269,9 +237,9 @@ sub _init_holidays {
    #                                 a Date::Manip::Date object to use for holidays
    #                 {hols}     = [ RECUR_OBJ|DATE_STRING, HOLIDAY_NAME, ... ]
    #                                 DATE_STRING is suitable for parse_date
-   #                                 using DATE_OBJ.  RECUR_OBJ is a Date::Manip::Recur
-   #                                 object that can be used once the start and
-   #                                 end date is set.
+   #                                 using DATE_OBJ.  RECUR_OBJ is a
+   #                                 Date::Manip::Recur object that can be used
+   #                                 once the start and end date is set.
    #                 {dates}    = { Y => M => D => NAME }
    #
    # {data}{init_holidays}      = 1  if currently initializing holidays
@@ -426,7 +394,7 @@ sub days_since_1BC {
 
             my $yyyy  = "0000$y";
 
-            $yyyy     =~ /(\d\d)(\d\d)$/;
+            $yyyy     =~ /(\d\d)(\d\d)$/o;
             ($cc,$yy) = ($1,$2);
 
             # Number of full years since Dec 31, 1BC (starting at 0001)
@@ -436,6 +404,7 @@ sub days_since_1BC {
             $N4       = int($Ny/4);
 
             # Number of full 100th years (0100, 0200, etc.)
+
             $N100     = $cc + 0;
             $N100--   if ($yy==0);
 
@@ -601,9 +570,8 @@ sub check_time {
    my($self,$hms) = @_;
    my($h,$mn,$s) = @$hms;
 
-   return 0  if ($h  !~ /^[0-2]?[0-9]$/  ||  $h > 24  ||
-                 $mn !~ /^[0-5]?[0-9]$/ ||
-                 $s  !~ /^[0-5]?[0-9]$/ ||
+   return 0  if ("$h:$mn:$s" !~ /^\d\d?:\d\d?:\d\d?$/o  ||
+                 $h > 24  ||  $mn > 59  ||  $s > 59  ||
                  ($h == 24  &&  ($mn  ||  $s)));
    return 1;
 }
@@ -966,20 +934,20 @@ sub _os {
 
    my $os = '';
 
-   if ($^O =~ /MSWin32/i    ||
-       $^O =~ /Windows_95/i ||
-       $^O =~ /Windows_NT/i
+   if ($^O =~ /MSWin32/io    ||
+       $^O =~ /Windows_95/io ||
+       $^O =~ /Windows_NT/io
       ) {
       $os = 'Windows';
 
-   } elsif ($^O =~ /MacOS/i  ||
-            $^O =~ /MPE/i    ||
-            $^O =~ /OS2/i    ||
-            $^O =~ /NetWare/i
+   } elsif ($^O =~ /MacOS/io  ||
+            $^O =~ /MPE/io    ||
+            $^O =~ /OS2/io    ||
+            $^O =~ /NetWare/io
            ) {
       $os = 'Other';
 
-   } elsif ($^O =~ /VMS/i) {
+   } elsif ($^O =~ /VMS/io) {
       $os = 'VMS';
 
    } else {
@@ -1019,11 +987,11 @@ sub _config_file {
    my $sect = 'conf';
    chomp(@in);
    foreach my $line (@in) {
-      $line =~ s/^\s+//;
-      $line =~ s/\s+$//;
-      next  if (! $line  or  $line =~ /^\043/);
+      $line =~ s/^\s+//o;
+      $line =~ s/\s+$//o;
+      next  if (! $line  or  $line =~ /^\043/o);
 
-      if ($line =~ /^\*/) {
+      if ($line =~ /^\*/o) {
          # New section
          $sect = $self->_config_file_section($line);
       } else {
@@ -1035,8 +1003,8 @@ sub _config_file {
 sub _config_file_section {
    my($self,$line) = @_;
 
-   $line    =~ s/^\*//;
-   $line    =~ s/\s*$//;
+   $line    =~ s/^\*//o;
+   $line    =~ s/\s*$//o;
    my $sect = lc($line);
    if (! exists $$self{'data'}{'sections'}{$sect}) {
       warn "WARNING: [config_file] unknown section created: $sect\n";
@@ -1049,7 +1017,7 @@ sub _config_file_var {
    my($self,$sect,$line) = @_;
 
    my($var,$val);
-   if ($line =~ /^\s*(.*?)\s*=\s*(.*?)\s*$/) {
+   if ($line =~ /^\s*(.*?)\s*=\s*(.*?)\s*$/o) {
       ($var,$val) = ($1,$2);
    } else {
       die "ERROR: invalid Date::Manip config file line:\n  $line\n";
@@ -1168,9 +1136,9 @@ sub _config_var_base {
    } elsif ($var eq 'yytoyyyy') {
       $val = lc($val);
       if ($val ne 'c'  &&
-          $val !~ /^c\d\d$/  &&
-          $val !~ /^c\d\d\d\d$/  &&
-          $val !~ /^\d+$/) {
+          $val !~ /^c\d\d$/o  &&
+          $val !~ /^c\d\d\d\d$/o  &&
+          $val !~ /^\d+$/o) {
          warn "ERROR: [config_var] invalid: YYtoYYYY: $val\n";
          return;
       }
@@ -1224,49 +1192,13 @@ sub _config_var_base {
       # Deprecated ones
       #
 
-   } elsif ($var eq 'convtz'  ||
-            $var eq 'globalcnf'  ||
-            $var eq 'ignoreglobalcnf' ||
-            $var eq 'personalcnf' ||
-            $var eq 'personalcnfpath' ||
-            $var eq 'pathsep' ||
-            $var eq 'resetworkday' ||
-            $var eq 'deltasigns' ||
-            $var eq 'internal' ||
-            $var eq 'udpatecurrtz' ||
-            $var eq 'recurnumfudgedays'  ||
+   } elsif ($var eq 'recurnumfudgedays'  ||
             $var eq 'intcharset') {
          # do nothing
-
-   } elsif ($var eq 'oldconfigfiles') {
-      # This actually reads in the old-style config files
-      if ($self->_config('globalcnf')  &&
-          ! $self->_config('ignoreglobalcnf')) {
-         my $file = $self->_config('globalcnf');
-         $file    = $self->_ExpandTilde($file);
-         $self->_config_file($file);
-      }
-
-      if ($self->_config('personalcnf')) {
-         my $file = $self->_config('personalcnf');
-         my $path = $self->_config('personalcnfpath');
-         my $sep  = $self->_config('pathsep');
-         $file    = $self->_SearchPath($file,$path,$sep);
-         $self->_config_file($file)  if ($file);
-      }
-      return;
 
    } else {
       warn "ERROR: [config_var] invalid config variable: $var\n";
       return '';
-   }
-
-   #
-   # Deprecated
-   #
-
-   if ($var eq 'internal') {
-      $var = 'printable';
    }
 
    $$self{'data'}{'sections'}{'conf'}{$var} = $val;
@@ -1283,7 +1215,7 @@ sub _config_var_encoding {
       $$self{'data'}{'calc'}{'enc_in'}  = [ @{ $$self{'data'}{'enc'} } ];
       $$self{'data'}{'calc'}{'enc_out'} = 'UTF-8';
 
-   } elsif ($val =~ /^(.*),(.*)$/) {
+   } elsif ($val =~ /^(.*),(.*)$/o) {
       my($in,$out) = ($1,$2);
       if ($in) {
          my $o = find_encoding($in);
@@ -1338,7 +1270,7 @@ sub _config_var_recurrange {
    my($self,$val) = @_;
 
    $val = lc($val);
-   if ($val =~ /^(none|year|month|week|day|all)$/) {
+   if ($val =~ /^(none|year|month|week|day|all)$/o) {
       return 0;
    }
 
@@ -1726,7 +1658,7 @@ sub _mod_add {
 sub _is_int {
    my($self,$N,$low,$high)=@_;
    return 0  if (! defined $N  or
-                 $N !~ /^\s*[-+]?\d+\s*$/  or
+                 $N !~ /^\s*[-+]?\d+\s*$/o  or
                  defined $low   &&  $N<$low  or
                  defined $high  &&  $N>$high);
    return 1;
@@ -1736,13 +1668,14 @@ sub _is_int {
 # Split/Join functions
 
 sub split {
-   my($self,$op,$string) = @_;
+   my($self,$op,$string,$no_normalize) = @_;
+   $no_normalize = 0  if (! $no_normalize);
 
    if ($op eq 'date') {
 
-      if ($string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d):(\d\d):(\d\d)$/  ||
-          $string =~ /^(\d\d\d\d)\-(\d\d)\-(\d\d)\-(\d\d):(\d\d):(\d\d)$/  ||
-          $string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/) {
+      if ($string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d):(\d\d):(\d\d)$/o  ||
+          $string =~ /^(\d\d\d\d)\-(\d\d)\-(\d\d)\-(\d\d):(\d\d):(\d\d)$/o  ||
+          $string =~ /^(\d\d\d\d)(\d\d)(\d\d)(\d\d)(\d\d)(\d\d)$/o) {
          my($y,$m,$d,$h,$mn,$s) = ($1+0,$2+0,$3+0,$4+0,$5+0,$6+0);
          return [$y,$m,$d,$h,$mn,$s];
       } else {
@@ -1750,12 +1683,14 @@ sub split {
       }
 
    } elsif ($op eq 'offset') {
-      if ($string =~ /^([-+]?)(\d\d)(\d\d)(\d\d)$/       ||
-          $string =~ /^([-+]?)(\d\d)(\d\d)()$/           ||
-          $string =~ /^([-+]?)(\d\d?):(\d\d?):(\d\d?)$/  ||
-          $string =~ /^([-+]?)(\d\d?):(\d\d?)()$/        ||
-          $string =~ /^([-+]?)(\d\d?)()()$/) {
-         my($err,$h,$mn,$s) = $self->_normalize_offset('split',$1,$2,$3,$4);
+      if ($string =~ /^([-+]?\d\d)(\d\d)(\d\d)$/o       ||
+          $string =~ /^([-+]?\d\d)(\d\d)()$/o           ||
+          $string =~ /^([-+]?\d\d?):(\d\d?):(\d\d?)$/o  ||
+          $string =~ /^([-+]?\d\d?):(\d\d?)()$/o        ||
+          $string =~ /^([-+]?\d\d?)()()$/o) {
+         my($err,$h,$mn,$s) = $self->_offset_fields( { 'source' => 'string',
+                                                       'out'    => 'list'},
+                                                     [$1,$2,$3]);
          return undef  if ($err);
          return [$h,$mn,$s];
       } else {
@@ -1763,12 +1698,12 @@ sub split {
       }
 
    } elsif ($op eq 'hms') {
-      if ($string =~ /^(\d\d)(\d\d)(\d\d)$/     ||
-          $string =~ /^(\d\d)(\d\d)()$/         ||
-          $string =~ /^(\d\d?):(\d\d):(\d\d)$/  ||
-          $string =~ /^(\d\d?):(\d\d)()$/       ||
-          $string =~ /^(\d\d?)()()$/) {
-         my($err,$h,$mn,$s) = $self->_normalize_hms('split',$1,$2,$3);
+      if ($string =~ /^(\d\d)(\d\d)(\d\d)$/o     ||
+          $string =~ /^(\d\d)(\d\d)()$/o         ||
+          $string =~ /^(\d\d?):(\d\d):(\d\d)$/o  ||
+          $string =~ /^(\d\d?):(\d\d)()$/o       ||
+          $string =~ /^(\d\d?)()()$/o) {
+         my($err,$h,$mn,$s) = $self->_hms_fields( { 'out' => 'list' },[$1,$2,$3]);
          return undef  if ($err);
          return [$h,$mn,$s];
       } else {
@@ -1776,61 +1711,40 @@ sub split {
       }
 
    } elsif ($op eq 'time') {
-      if ($string =~ /^[-+]?\d+(:[-+]?\d+){0,2}$/) {
-         my($err,$dh,$dmn,$ds) = $self->_normalize_time('split',split(/:/,$string));
+      if ($string =~ /^[-+]?\d+(:[-+]?\d+){0,2}$/o) {
+         my($err,$dh,$dmn,$ds) = $self->_time_fields( { 'nonorm'   => $no_normalize,
+                                                        'source'   => 'string',
+                                                        'sign'     => -1,
+                                                      }, [split(/:/,$string)]);
          return undef  if ($err);
          return [$dh,$dmn,$ds];
       } else {
          return undef;
       }
 
-   } elsif ($op eq 'delta') {
-      if ($string =~ /^[-+]?\d*(:[-+]?\d*){0,6}$/) {
-         $string =~ s/::/:0:/g;
-         $string =~ s/^:/0:/;
-         $string =~ s/:$/:0/;
-         my($err,@delta) = $self->_normalize_delta('split',split(/:/,$string));
-         return undef  if ($err);
-         return [@delta];
-      } else {
-         return undef;
-      }
+   } elsif ($op eq 'delta'  ||  $op eq 'business') {
+      my($err,@delta) = $self->_split_delta($string);
+      return undef  if ($err);
 
-   } elsif ($op eq 'business') {
-      if ($string =~ /^[-+]?\d*(:[-+]?\d*){0,6}$/) {
-         $string =~ s/::/:0:/g;
-         $string =~ s/^:/0:/;
-         $string =~ s/:$/:0/;
-         my($err,@delta) = $self->_normalize_business('split',split(/:/,$string));
-         return undef  if ($err);
-         return [@delta];
-      } else {
-         return undef;
-      }
-   }
-}
+      ($err,@delta) = $self->_delta_fields( { 'business' =>
+                                              ($op eq 'business' ? 1 : 0),
+                                              'nonorm'   => $no_normalize,
+                                              'source'   => 'string',
+                                              'sign'     => -1,
+                                            }, [@delta]);
 
-sub _join_date {
-   my($self,$data) = @_;
-   my($y,$m,$d,$h,$mn,$s) = @$data;
-   while (length($y) < 4) {
-      $y = "0$y";
+      return undef  if ($err);
+      return [@delta];
    }
-   $m  = "0$m"    if (length($m)==1);
-   $d  = "0$d"    if (length($d)==1);
-   $h  = "0$h"    if (length($h)==1);
-   $mn = "0$mn"   if (length($mn)==1);
-   $s  = "0$s"    if (length($s)==1);
-   return "$y$m$d$h:$mn:$s";
 }
 
 sub join{
-   my($self,$op,$data) = @_;
+   my($self,$op,$data,$no_normalize) = @_;
    my @data = @$data;
 
    if ($op eq 'date') {
 
-      my($err,$y,$m,$d,$h,$mn,$s) = $self->_normalize_date(@data);
+      my($err,$y,$m,$d,$h,$mn,$s) = $self->_date_fields(@data);
       return undef  if ($err);
       my $form = $self->_config('printable');
       if ($form == 1) {
@@ -1842,336 +1756,540 @@ sub join{
       }
 
    } elsif ($op eq 'offset') {
-      my($err,$h,$mn,$s) = $self->_normalize_offset('join','',@data);
+      my($err,$h,$mn,$s) = $self->_offset_fields( { 'source' => 'list',
+                                                    'out'    => 'string'},
+                                                  [@data]);
       return undef  if ($err);
       return "$h:$mn:$s";
 
    } elsif ($op eq 'hms') {
-      my($err,$h,$mn,$s) = $self->_normalize_hms('join',@data);
+      my($err,$h,$mn,$s) = $self->_hms_fields( { 'out' => 'string' },[@data]);
       return undef  if ($err);
       return "$h:$mn:$s";
 
    } elsif ($op eq 'time') {
-      my($err,$dh,$dmn,$ds) = $self->_normalize_time('join',@data);
+      my($err,$dh,$dmn,$ds) = $self->_time_fields( { 'nonorm'   => $no_normalize,
+                                                     'source'   => 'list',
+                                                     'sign'     => 0,
+                                                   }, [@data]);
       return undef  if ($err);
       return "$dh:$dmn:$ds";
 
-   } elsif ($op eq 'delta') {
-      my($err,@delta) = $self->_normalize_delta('join',@data);
-      return undef  if ($err);
-      return join(':',@delta);
-
-   } elsif ($op eq 'business') {
-      my($err,@delta) = $self->_normalize_business('join',@data);
+   } elsif ($op eq 'delta'  ||  $op eq 'business') {
+      my ($err,@delta) = $self->_delta_fields( { 'business' =>
+                                                 ($op eq 'business' ? 1 : 0),
+                                                 'nonorm'   => $no_normalize,
+                                                 'source'   => 'list',
+                                                 'sign'     => 0,
+                                               }, [@data]);
       return undef  if ($err);
       return join(':',@delta);
    }
 }
 
-sub _normalize_date {
+sub _split_delta {
+   my($self,$string) = @_;
+
+   my($f) = '(?:[-+]\d+|\d*)';
+   if ($string =~ /^$f(:$f){0,6}$/o) {
+      $string =~ s/::/:0:/go;
+      $string =~ s/^:/0:/o;
+      $string =~ s/:$/:0/o;
+      my(@delta) = split(/:/,$string);
+      return(0,@delta);
+   } else {
+      return(1);
+   }
+}
+
+# $opts = { business => 0/1,
+#           nonorm   => 0/1,
+#           source   => string, list
+#           sign     => 0/1/-1
+#         }
+# $fields = [Y,M,W,D,H,Mn,S]
+#
+# This function formats the fields in a delta.
+#
+# If the business option is 1, treat it as a business delta.
+#
+# If the nonorm option is 1, fields are NOT normalized.  By
+# default, they are normalized.
+#
+# If source is 'string', then the source of the fields is splitting
+# a delta (so we need to handle carrying the signs).  If it's 'list',
+# then the source is a valid delta, so each field is correctly signed
+# already.
+#
+# If the sign option is 1, a sign is added to every field.  If the
+# sign option is -1, all negative fields are signed.  If the sign
+# option is 0, the minimum number of signs (for fields who's sign is
+# different from the next higher field) will be added.
+#
+# It returns ($err,@fields)
+#
+sub _delta_fields {
+   my($self,$opts,$fields) = @_;
+   my @fields = @$fields;
+
+   #
+   # Make sure that all fields are defined, numerical, and that there
+   # are 7 of them.
+   #
+
+   foreach my $f (@fields) {
+      $f=0  if (! defined($f));
+      return (1)  if ($f !~ /^[+-]?\d+$/o);
+   }
+   return (1)  if (@fields > 7);
+   while (@fields < 7) {
+      unshift(@fields,0);
+   }
+
+   #
+   # Make sure each field is the correct sign so that the math will
+   # work correctly.  Get rid of all positive signs and leading 0's.
+   #
+
+   if ($$opts{'source'} eq 'string') {
+
+      # if the source is splitting a delta, not all fields are signed,
+      # so we need to carry the negative signs.
+
+      my $sign = '+';
+      foreach my $f (@fields) {
+         if ($f =~ /^([-+])/o) {
+            $sign = $1;
+         } else {
+            $f = "$sign$f";
+         }
+         $f *= 1;
+      }
+
+   } else {
+      foreach my $f (@fields) {
+         $f *= 1;
+      }
+   }
+
+   #
+   # Normalize them.  Values will be signed only if they are
+   # negative.
+   #
+
+   my($y,$m,$w,$d,$h,$mn,$s) = @fields;
+   unless ($$opts{'nonorm'}) {
+      ($y,$m)           = $self->_normalize_ym($y,$m);
+      if ($$opts{'business'}) {
+         ($d,$h,$mn,$s) = $self->_normalize_bus_dhms($d,$h,$mn,$s);
+      } else {
+         ($w,$d)        = $self->_normalize_wd($w,$d);
+         ($h,$mn,$s)    = $self->_normalize_hms($h,$mn,$s);
+      }
+   }
+
+   #
+   # Now make sure that the signs are included as appropriate.
+   #
+
+   if (! $$opts{'sign'}) {
+      # Minimum number of signs
+      my $sign;
+      if ($y >= 0) {
+         $sign = '+';
+      } else {
+         $sign = '-';
+      }
+      foreach my $f ($m,$w,$d,$h,$mn,$s) {
+         if ($f > 0) {
+            if ($sign eq '-') {
+               $f    = "+$f";
+               $sign = '+';
+            }
+
+         } elsif ($f < 0) {
+            if ($sign eq '-') {
+               $f *= -1;
+            } else {
+               $sign = '-';
+            }
+         }
+      }
+
+   } elsif ($$opts{'sign'} == 1) {
+      # All fields signed
+      foreach my $f ($y,$m,$w,$d,$h,$mn,$s) {
+         $f = "+$f"  if ($f > 0);
+      }
+   }
+
+   return (0,$y,$m,$w,$d,$h,$mn,$s);
+}
+
+# $opts = { out   => string, list
+#         }
+# $fields = [H,M,S]
+#
+# This function formats the fields in an HMS.
+#
+# If the out options is string, it prepares the fields to be joined (i.e.
+# they are all 2 digits long).  Otherwise, they are just numerical values
+# (not necessarily 2 digits long).
+#
+# HH:MN:SS is always between 00:00:00 and 24:00:00.
+#
+# It returns ($err,@fields)
+#
+sub _hms_fields {
+   my($self,$opts,$fields) = @_;
+   my @fields = @$fields;
+
+   #
+   # Make sure that all fields are defined, numerical (with no sign),
+   # and that there are 3 of them.
+   #
+
+   foreach my $f (@fields) {
+      $f=0  if (! $f);
+      return (1)  if ($f !~ /^\d+$/o);
+   }
+   return (1)  if (@fields > 3);
+   while (@fields < 3) {
+      push(@fields,0);
+   }
+
+   #
+   # Check validity.
+   #
+
+   my ($h,$m,$s) = @fields;
+   return (1)  if ($h > 24  ||  $m > 59  ||  $s > 59  ||
+                   ($h==24  &&  ($m  ||  $s)));
+
+   #
+   # Format
+   #
+
+   if ($$opts{'out'} eq 'list') {
+      foreach my $f ($h,$m,$s) {
+         $f *= 1;
+      }
+
+   } else {
+      foreach my $f ($h,$m,$s) {
+         $f = "0$f"  if (length($f)<2);
+      }
+   }
+
+   return (0,$h,$m,$s);
+}
+
+# $opts = { nonorm   => 0/1,
+#           source   => string, list
+#           sign     => 0/1/-1
+#         }
+# $fields = [H,M,S]
+#
+# This function formats the fields in an amount of time measured in
+# hours, minutes, and seconds.
+#
+# It is similar to how _delta_fields (above) works.
+#
+sub _time_fields {
+   my($self,$opts,$fields) = @_;
+   my @fields = @$fields;
+
+   #
+   # Make sure that all fields are defined, numerical, and that there
+   # are 3 of them.
+   #
+
+   foreach my $f (@fields) {
+      $f=0  if (! defined($f));
+      return (1)  if ($f !~ /^[+-]?\d+$/o);
+   }
+   return (1)  if (@fields > 3);
+   while (@fields < 3) {
+      unshift(@fields,0);
+   }
+
+   #
+   # Make sure each field is the correct sign so that the math will
+   # work correctly.  Get rid of all positive signs and leading 0's.
+   #
+
+   if ($$opts{'source'} eq 'string') {
+
+      # If the source is splitting a string, not all fields are signed,
+      # so we need to carry the negative signs.
+
+      my $sign = '+';
+      foreach my $f (@fields) {
+         if ($f =~ /^([-+])/o) {
+            $sign = $1;
+         } else {
+            $f = "$sign$f";
+         }
+         $f *= 1;
+      }
+
+   } else {
+      foreach my $f (@fields) {
+         $f *= 1;
+      }
+   }
+
+   #
+   # Normalize them.  Values will be signed only if they are
+   # negative.
+   #
+
+   my($h,$mn,$s) = @fields;
+   unless ($$opts{'nonorm'}) {
+      ($h,$mn,$s)       = $self->_normalize_hms($h,$mn,$s);
+   }
+
+   #
+   # Now make sure that the signs are included as appropriate.
+   #
+
+   if (! $$opts{'sign'}) {
+      # Minimum number of signs
+      my $sign;
+      if ($h >= 0) {
+         $sign = '+';
+      } else {
+         $sign = '-';
+      }
+      foreach my $f ($mn,$s) {
+         if ($f > 0) {
+            if ($sign eq '-') {
+               $f    = "+$f";
+               $sign = '+';
+            }
+
+         } elsif ($f < 0) {
+            if ($sign eq '-') {
+               $f *= -1;
+            } else {
+               $sign = '-';
+            }
+         }
+      }
+
+   } elsif ($$opts{'sign'} == 1) {
+      # All fields signed
+      foreach my $f ($h,$mn,$s) {
+         $f = "+$f"  if ($f > 0);
+      }
+   }
+
+   return (0,$h,$mn,$s);
+}
+
+# $opts = { source     => string, list
+#           out        => string, list
+#         }
+# $fields = [H,M,S]
+#
+# This function formats the fields in a timezone offset measured in
+# hours, minutes, and seconds.
+#
+# All offsets must be -23:59:59 <= offset <= 23:59:59 .
+#
+# The data comes from an offset in string or list format, and is
+# formatted so that it can be used to create a string or list format
+# output.
+#
+sub _offset_fields {
+   my($self,$opts,$fields) = @_;
+   my @fields = @$fields;
+
+   #
+   # Make sure that all fields are defined, numerical, and that there
+   # are 3 of them.
+   #
+
+   foreach my $f (@fields) {
+      $f=0  if (! defined $f  ||  $f eq '');
+      return (1)  if ($f !~ /^[+-]?\d+$/o);
+   }
+   return (1)  if (@fields > 3);
+   while (@fields < 3) {
+      push(@fields,0);
+   }
+
+   #
+   # Check validity.
+   #
+
+   my ($h,$m,$s) = @fields;
+   if ($$opts{'source'} eq 'string') {
+      # Values = -23 59 59 to +23 59 59
+      return (1)  if ($h < -23  ||  $h > 23  ||
+                      $m < 0    ||  $m > 59  ||
+                      $s < 0    ||  $s > 59);
+   } else {
+      # Values (-23,-59,-59) to (23,59,59)
+      # Non-zero values must have the same sign
+      if ($h >0) {
+         return (1)  if (              $h > 23  ||
+                         $m < 0    ||  $m > 59  ||
+                         $s < 0    ||  $s > 59);
+      } elsif ($h < 0) {
+         return (1)  if ($h < -23  ||
+                         $m < -59  ||  $m > 0   ||
+                         $s < -59  ||  $s > 0);
+      } elsif ($m > 0) {
+         return (1)  if (              $m > 59  ||
+                         $s < 0    ||  $s > 59);
+      } elsif ($m < 0) {
+         return (1)  if ($m < -59  ||
+                         $s < -59  ||  $s > 0);
+      } else {
+         return (1)  if ($s < -59  ||  $s > 59);
+      }
+   }
+
+   #
+   # Make sure each field is the correct sign so that the math will
+   # work correctly.  Get rid of all positive signs and leading 0's.
+   #
+
+   if ($$opts{'source'} eq 'string') {
+
+      # In a string offset, only the first field is signed, so we need
+      # to carry negative signs.
+
+      if ($h =~ /^\-/) {
+         $h *= 1;
+         $m *= -1;
+         $s *= -1;
+      } elsif ($m =~ /^\-/) {
+         $h *= 1;
+         $m *= 1;
+         $s *= -1;
+      } else {
+         $h *= 1;
+         $m *= 1;
+         $s *= 1;
+      }
+
+   } else {
+      foreach my $f (@fields) {
+         $f *= 1;
+      }
+   }
+
+   #
+   # Format them.  They're already done for 'list' output.
+   #
+
+   if ($$opts{'out'} eq 'string') {
+      my $sign;
+      if ($h<0 || $m<0 || $s<0) {
+         $h = abs($h);
+         $m = abs($m);
+         $s = abs($s);
+         $sign = '-';
+      } else {
+         $sign = '+';
+      }
+
+      $h = "0$h"  if (length($h) < 2);
+      $m = "0$m"  if (length($m) < 2);
+      $s = "0$s"  if (length($s) < 2);
+      $h = "$sign$h";
+   }
+
+   return (0,$h,$m,$s);
+}
+
+# ($err,$y,$m,$d,$h,$mn,$s) = $self->_date_fields($y,$m,$d,$h,$mn,$s);
+#
+# Makes sure the fields are the right length.
+#
+sub _date_fields {
    my($self,@fields) = @_;
-   return (1)  if ($#fields != 5);
+   return (1)  if (@fields != 6);
 
    my($y,$m,$d,$h,$mn,$s) = @fields;
 
-   while (length($y) < 4) {
-      $y = "0$y";
-   }
+   $y = "0$y"     while (length($y) < 4);
    $m  = "0$m"    if (length($m)==1);
    $d  = "0$d"    if (length($d)==1);
    $h  = "0$h"    if (length($h)==1);
    $mn = "0$mn"   if (length($mn)==1);
    $s  = "0$s"    if (length($s)==1);
 
-   return (0,$y,$m,$d,$h,$mn,$s);
-}
-
-sub _normalize_offset {
-   my($self,$op,$sign,@fields) = @_;
-   while ($#fields < 2) {
-      push(@fields,0);
+   if (wantarray) {
+      return (0,$y,$m,$d,$h,$mn,$s);
+   } else {
+      return "$y$m$d$h:$mn:$s";
    }
-   return (1)  if ($#fields != 2);
-
-   my($h,$mn,$s) = @fields;
-   $mn   = 0  if (! $mn);
-   $s    = 0  if (! $s);
-   return (1)  if ($h  !~ /^[+-]?[0-2]?[0-9]$/  ||  $h < -23  ||  $h > 23  ||
-                   $mn !~ /^[+-]?[0-5]?[0-9]$/  ||
-                   $s  !~ /^[+-]?[0-5]?[0-9]$/);
-
-   $h   *= 1;
-   $mn  *= 1;
-   $s   *= 1;
-
-   if ($op eq 'join') {
-      if ($h >= 0  &&  $mn >= 0  &&  $s >= 0) {
-         $sign  = '+';
-      } elsif ($h <= 0  &&  $mn <= 0  &&  $s <= 0) {
-         $sign  = '-';
-         $h    *= -1;
-         $mn   *= -1;
-         $s    *= -1;
-      } else {
-         return (1);
-      }
-
-      $h  = "0$h"   if ($h  < 10);
-      $mn = "0$mn"  if ($mn < 10);
-      $s  = "0$s"   if ($s  < 10);
-      $h  = "$sign$h";
-
-   } elsif ($sign eq '-') {
-      $h    *= -1;
-      $mn   *= -1;
-      $s    *= -1;
-   }
-
-   return (0,$h,$mn,$s);
-}
-
-sub _normalize_hms {
-   my($self,$op,@fields) = @_;
-   while ($#fields < 2) {
-      push(@fields,0);
-   }
-   return (1)  if ($#fields != 2);
-
-   my($h,$mn,$s) = @fields;
-   $h   *= 1;
-   $mn   = 0  if (! $mn);
-   $mn  *= 1;
-   $s    = 0  if (! $s);
-   $s   *= 1;
-
-   return (1)  if (! $self->_is_int($h,0,24)  ||
-                   ! $self->_is_int($mn,0,59) ||
-                   ! $self->_is_int($s,0,59));
-
-   if ($op eq 'join') {
-      $h  = "0$h"   if ($h  < 10);
-      $mn = "0$mn"  if ($mn < 10);
-      $s  = "0$s"   if ($s  < 10);
-   }
-
-   return (0,$h,$mn,$s)  if ($h==24  &&  ! $mn  &&  ! $s);
-   return (1)            if ($h==24);
-   return (0,$h,$mn,$s);
-}
-
-sub _normalize_time {
-   my($self,$op,@fields) = @_;
-   while ($#fields < 2) {
-      unshift(@fields,0);
-   }
-   return (1)  if ($#fields != 2);
-
-   # If we're splitting, the sign needs to be carried.
-
-   if ($op eq 'split') {
-      my ($sign) = '+';
-      foreach my $f (@fields) {
-         if ($f =~ /^([-+])/) {
-            $sign = $1;
-         } else {
-            $f = "$sign$f";
-         }
-      }
-   }
-
-   my($h,$mn,$s) = @fields;
-
-   # Normalize
-
-   my $sign = '+';
-
-   $s += $h*3600 + $mn*60;       # convert h/m to s
-   if ($op eq 'join'  &&  $s < 0) {
-      $sign = '-';
-      $s    = abs($s);
-   }
-
-   $mn = int($s/60);             # convert s to m
-   $s -= $mn*60;
-
-   $h   = int($mn/60);           # convert m to h
-   $mn -= $h*60;
-
-   $h  = "$sign$h"  if ($op eq 'join'  &&  $sign eq '-');
-
-   return (0,$h,$mn,$s);
-}
-
-sub _normalize_delta {
-   my($self,$op,@fields) = @_;
-   foreach my $f (@fields) {
-      $f=0  if (! defined($f));
-   }
-   while ($#fields < 6) {
-      unshift(@fields,0);
-   }
-   return (1)  if ($#fields != 6);
-
-   # If we're splitting, the sign needs to be carried.
-
-   if ($op eq 'split') {
-      my ($sign) = '+';
-      foreach my $f (@fields) {
-         if ($f =~ /^([-+])/) {
-            $sign = $1;
-         } else {
-            $f = "$sign$f";
-         }
-         $f *= 1;
-      }
-
-   } elsif ($op eq 'norm') {
-      foreach my $f (@fields) {
-         $f *= 1;
-      }
-   }
-
-   my($y,$m,$w,$d,$h,$mn,$s) = @fields;
-
-   ($y,$m)           = $self->_normalize_ym($op,$y,$m);
-   ($w,$d,$h,$mn,$s) = $self->_normalize_wdhms($op,$w,$d,$h,$mn,$s);
-
-   return (0,$y,$m,$w,$d,$h,$mn,$s);
-}
-
-sub _normalize_business {
-   my($self,$op,@fields) = @_;
-   foreach my $f (@fields) {
-      $f=0  if (! defined($f));
-   }
-   while ($#fields < 6) {
-      unshift(@fields,0);
-   }
-   return (1)  if ($#fields != 6);
-
-   # If we're splitting, the sign needs to be carried.
-
-   if ($op eq 'split') {
-      my ($sign) = '+';
-      foreach my $f (@fields) {
-         if ($f =~ /^([-+])/) {
-            $sign = $1;
-         } else {
-            $f = "$sign$f";
-         }
-         $f *= 1;
-      }
-
-   } elsif ($op eq 'norm') {
-      foreach my $f (@fields) {
-         $f *= 1;
-      }
-   }
-
-   my($y,$m,$w,$d,$h,$mn,$s) = @fields;
-
-   ($y,$m)        = $self->_normalize_ym($op,$y,$m);
-   $w             = $self->_normalize_w($op,$w);
-   ($d,$h,$mn,$s) = $self->_normalize_dhms($op,$d,$h,$mn,$s);
-
-   return (0,$y,$m,$w,$d,$h,$mn,$s);
 }
 
 sub _normalize_ym {
-   my($self,$op,$y,$m) = @_;
-
-   my $sign = '+';
+   my($self,$y,$m) = @_;
 
    $m += $y*12;
-   if ($op eq 'join'  &&  $m < 0) {
-      $sign = '-';
-      $m    = abs($m);
-   }
-
    $y  = int($m/12);
    $m -= $y*12;
 
-   $y  = "$sign$y"  if ($op eq 'join');
    return ($y,$m);
 }
 
-sub _normalize_wdhms {
-   my($self,$op,$w,$d,$h,$mn,$s) = @_;
-
-   my($len) = 86400;            # 24*3600
-   my $sign = '+';
+sub _normalize_bus_dhms {
+   my($self,$d,$h,$mn,$s) = @_;
 
    {
       # Unfortunately, $s overflows for dates more than ~70 years
       # apart. Do the minimum amount of work here.
       no integer;
 
-      $s += ($d+7*$w)*$len + $h*3600 + $mn*60; # convert w/d/h/m to s
-      if ($op eq 'join'  &&  $s < 0) {
-         $sign = '-';
-         $s    = abs($s);
-      }
+      my $daylen = $$self{'data'}{'calc'}{'bdlength'};
 
-      $d  = int($s/$len);        # convert s to d
-      $s -= $d*$len;
+      $s  += $d*$daylen + $h*3600 + $mn*60;
+      $d   = int($s/$daylen);
+      $s  -= $d*$daylen;
    }
 
-   $mn  = int($s/60);             # convert s to m
+   $mn  = int($s/60);
    $s  -= $mn*60;
 
-   $h   = int($mn/60);            # convert m to h
+   $h   = int($mn/60);
    $mn -= $h*60;
-
-   $w   = int($d/7);              # convert d to w
-   $d  -= $w*7;
-
-   # Attach the sign
-
-   $w   = "$sign$w"  if ($op eq 'join');
-
-   return ($w,$d,$h,$mn,$s);
-}
-
-sub _normalize_w {
-   my($self,$op,$w) = @_;
-
-   $w = "+$w"  if ($op eq 'join'  &&  $w >= 0);
-
-   return $w;
-}
-
-sub _normalize_dhms {
-   my($self,$op,$d,$h,$mn,$s) = @_;
-
-   my($sign) = '+';
-   my($len)  = $$self{'data'}{'calc'}{'bdlength'};
-
-   {
-      # Unfortunately, $s overflows for dates more than ~70 years
-      # apart. Do the minimum amount of work here.
-      no integer;
-
-      $s += $d*$len + $h*3600 + $mn*60; # convert d/h/m to s
-      if ($op eq 'join'  &&  $s < 0) {
-         $sign = '-';
-         $s    = abs($s);
-      }
-
-      $d  = int($s/$len);        # convert s to d
-      $s -= $d*$len;
-   }
-
-   $mn  = int($s/60);            # convert s to m
-   $s  -= $mn*60;
-
-   $h   = int($mn/60);           # convert m to h
-   $mn -= $h*60;
-
-   # Attach the sign
-
-   $d   = "$sign$d"  if ($op eq 'join');
 
    return ($d,$h,$mn,$s);
+}
+
+sub _normalize_hms {
+   my($self,$h,$mn,$s) = @_;
+
+   {
+      # Unfortunately, $s overflows for dates more than ~70 years
+      # apart. Do the minimum amount of work here.
+      no integer;
+
+      $s  += $h*3600 + $mn*60;
+      $mn  = int($s/60);
+      $s  -= $mn*60;
+   }
+
+   $h   = int($mn/60);
+   $mn -= $h*60;
+
+   return ($h,$mn,$s);
+}
+
+sub _normalize_wd {
+   my($self,$w,$d) = @_;
+
+   $d += $w*7;
+   $w  = int($d/7);
+   $d -= $w*7;
+
+   return ($w,$d);
 }
 
 # $self->_delta_convert(FORMAT,DELTA)
@@ -2305,62 +2423,6 @@ sub _encoding {
    return @ret;
 }
 
-###############################################################################
-#### **** DEPRECATED FUNCTIONS ****
-
-# $File=_ExpandTilde($file);
-#   This checks to see if a '~' appears as the first character in a path.
-#   If it does, the "~" expansion is interpreted (if possible) and the full
-#   path is returned.  If a "~" expansion is used but cannot be
-#   interpreted, an empty string is returned.
-#
-#   This is Windows/Mac friendly.
-#   This is efficient.
-sub _ExpandTilde {
-   my($self,$file) = @_;
-   my($user,$home);
-
-   # ~aaa/bbb=      ~  aaa      /bbb
-   if ($file =~ s|^~([^/]*)||) {
-      $user=$1;
-      # Single user operating systems (Mac, MSWindows) don't have the getpwnam
-      # and getpwuid routines defined.  Try to catch various different ways
-      # of knowing we are on one of these systems:
-      my $os = $self->_os();
-      return ''  if ($os eq 'Windows'  or
-                     $os eq 'Other');
-      $user=''  if (! defined $user);
-
-      if ($user) {
-         $home= (getpwnam($user))[7];
-      } else {
-         $home= (getpwuid($<))[7];
-      }
-      $home = VMS::Filespec::unixpath($home)  if ($os eq 'VMS');
-      return ''  if (! $home);
-      $file="$home/$file";
-   }
-   $file;
-}
-
-# $File=_SearchPath($file,$path,$sep);
-#   Searches through directories in $path for a file named $file.  The
-#   full path is returned if one is found, or an empty string otherwise.
-#   $sep is the path separator.
-#
-sub _SearchPath {
-   my($self,$file,$path,$sep) = @_;
-   my @dir  = split(/\Q$sep\E/,$path);
-
-   foreach my $d (@dir) {
-      my $f = "$d/$file";
-      $f    =~ s|//|/|g;
-      $f    = $self->_ExpandTilde($f);
-      return $f if (-r $f);
-   }
-   return '';
-}
-
 1;
 # Local Variables:
 # mode: cperl
@@ -2370,5 +2432,5 @@ sub _SearchPath {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

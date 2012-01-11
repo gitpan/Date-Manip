@@ -49,5 +49,5 @@ date [ 1996 13 1 12 0 0 ] => '[set] Invalid date argument'
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -29,8 +29,8 @@ Date::Manip::DM6 - Date manipulation routines
    $delta = ParseDateDelta($string);
    $delta = ParseDateDelta(\$string);
 
-   @str = Delta_Format($delta,$dec,@format);
-   $str = Delta_Format($delta,$dec,@format);
+   @str = Delta_Format($delta, [$mode,] $dec,@format);
+   $str = Delta_Format($delta, [$mode,] $dec,@format);
 
    $recur = ParseRecur($string,$base,$date0,$date1,$flags);
    @dates = ParseRecur($string,$base,$date0,$date1,$flags);
@@ -209,17 +209,23 @@ format the information.
 $dec is an integer, and is required, It tells the number of decimal
 places to use.
 
-$mode is either "exact" or "approx" and defaults to "exact" if
-it is not included.
+$mode is either "exact", "semi", or "approx" and defaults to "exact"
+if it is not included.
 
 In "exact" mode, only exact relationships are used.  This means that
-there can be no mixing of the Y/M and W/D/H/MN/S segments (for
+there can be no mixing of the Y/M, W/D, and H/MN/S segments (for
 non-business deltas, or Y/M, W, and D/H/MN/S segments for business
 deltas) because there is no exact relation between the fields of each
 set.
 
-In "approx" mode, approximate relationships are used. These are
-described in the Date::Manip::Delta manual.
+In "semi" mode, the semi-approximate relationships are used so
+there is no mixing between Y/M and W/D/H/MN/S.
+
+In "approx" mode, approximate relationships are used so all fields
+can mix.
+
+The semi-approximate and approximate relationships are described in
+the Date::Manip::Delta manual.
 
 So, in "exact" mode, with a non-business delta, and $dec = 2, the
 following are equivalent:

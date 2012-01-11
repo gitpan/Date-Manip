@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 
 our ($dmb);
 $dmb = new Date::Manip::Base;
@@ -45,8 +45,8 @@ $last_date  = "9999123100:00:00";
 
 # The source for the tzdata/tzcode files:
 
-$tzdata_src = "elsie.nci.nih.gov";
-$tzdata_dir = "/pub";
+$tzdata_src = "ftp.iana.org";
+$tzdata_dir = "tz";
 
 require "data.offset.pl";
 require "data.abbrev.pl";
@@ -141,32 +141,29 @@ sub do_ftp {
    system("rm -rf tzdata");
 
    #
-   # Get the files
+   # Get the tz*latest.tar.gz links to determine the versions
    #
 
-   system("wget -q 'ftp://$tzdata_src/$tzdata_dir/tz*.tar.gz'");
-   opendir(DIR,".");
-   my @dir = readdir(DIR);
-   closedir(DIR);
-
-   my @tzdata = grep(/^tzdata(.*)\.tar.gz/,@dir);
-   if (! @tzdata) {
-      die "No tzdata file found";
+   system("wget -q 'ftp://$tzdata_src/$tzdata_dir/tz*latest.tar.gz'");
+   if (! -l 'tzdata-latest.tar.gz') {
+      die "ERROR: unable to ftp data.  Try again later.";
    }
-   @tzdata = sort(@tzdata);
 
-   my @tzcode = sort grep(/^tzcode(.*)\.tar.gz/,@dir);
-   if (! @tzcode) {
-      die "No tzcode file found";
-   }
-   @tzcode = sort(@tzcode);
+   my $tzdata = readlink("tzdata-latest.tar.gz");
+   my $tzcode = readlink("tzcode-latest.tar.gz");
 
-   my $tzdata = pop(@tzdata);
-   my $tzcode = pop(@tzcode);
-   $tzdata =~ /^tzdata(.*)\.tar.gz/;
+   $tzdata    =~ /tzdata(.....)/;
    my $tzdata_vers = $1;
-   $tzcode =~ /^tzcode(.*)\.tar.gz/;
+   $tzcode    =~ /tzcode(.....)/;
    my $tzcode_vers = $1;
+
+   unlink("tzdata-latest.tar.gz","tzcode-latest.tar.gz");
+
+   #
+   # Get the actual tz*latest.tar.gz files
+   #
+
+   system("wget --retr-symlinks -q 'ftp://$tzdata_src/$tzdata_dir/tz*latest.tar.gz'");
 
    print "  TZdata : $tzdata_vers\n";
    print "  Tzcode : $tzcode_vers\n";
@@ -178,12 +175,12 @@ sub do_ftp {
    system("rm -rf tzdata; " .
           "mkdir -p tzdata; " .
           "cd tzdata; " .
-          "tar xzf ../$tzdata; " .
-          "tar xzf ../$tzcode; " .
+          "tar xzf ../tzdata-latest.tar.gz; " .
+          "tar xzf ../tzcode-latest.tar.gz; " .
           "echo $tzdata_vers > _version; " .
           "echo $tzcode_vers >> _version; ");
 
-   unlink(@tzcode,@tzdata);
+   unlink("tzdata-latest.tar.gz","tzcode-latest.tar.gz");
 }
 
 # Build the package
@@ -633,7 +630,8 @@ sub _do_mods_tzdata_mod {
 
    my @begUT    = @{ $dmb->split("date",$first_date) };
    my @begLT    = @{ $dmb->calc_date_time(\@begUT,\@offset) };
-   @dates       = ("0001",[@begUT],[@begLT],$offset,[@offset],$abb,$isdst,[@endUT],[@endLT]);
+   @dates       = ("0001",[@begUT],[@begLT],$offset,[@offset],
+                   $abb,$isdst,[@endUT],[@endLT]);
 
    $year2       = $endUT[0];
    _do_mods_years($abbrev,$zone,$abb,"0001",$year2);
@@ -1047,9 +1045,11 @@ Date::Manip::TZ::$module - Support for the $zone time zone
 
 $hdstr SYNPOSIS
 
-This module contains data from the Olsen database for the time zone. It
-is not intended to be used directly (other Date::Manip modules will
-load it as needed).
+This module contains data describing a time zone.  Most of the time zone
+data comes from the Olsen database, but there are a few exceptions.
+
+This module is not intended to be used directly.  Other Date::Manip modules
+will load it as needed.
 
 =cut
 
@@ -1064,7 +1064,7 @@ END {
 }
 
 our (\$VERSION);
-\$VERSION='6.25';
+\$VERSION='6.30';
 END { undef \$VERSION; }
 
 \%Dates         = (
@@ -1303,7 +1303,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.25';
+\$VERSION='6.30';
 END { undef \$VERSION; }
 
 our (\$Offset,\%Offset);
@@ -1383,7 +1383,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.25';
+\$VERSION='6.30';
 END { undef \$VERSION; }
 
 our (\$TzdataVersion,\$TzcodeVersion,
@@ -1437,7 +1437,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://$tzdata_src$tzdata_dir
+   ftp://$tzdata_src$tzdata_dir/$tzdata_vers.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -2219,5 +2219,5 @@ sub _yaml_write {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

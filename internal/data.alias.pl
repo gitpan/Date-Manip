@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -100,7 +100,6 @@
    "Tonga Standard Time"             => "Pacific/Tongatapu",
    "US Eastern Standard Time"        => "America/Indiana/Indianapolis",
    "US Mountain Standard Time"       => "America/Phoenix",
-   "UTC"                             => "Etc/GMT",
    "UTC+12"                          => "Etc/GMT-12",
    "UTC-02"                          => "Etc/GMT+2",
    "UTC-11"                          => "Etc/GMT+11",
@@ -153,11 +152,11 @@
    # could probably be handled by a more intelligent
    # handling of the tzdata files, but this is simpler.
 
-   "Etc/UCT"          => [ qw(alias    Etc/GMT) ],
-   "Etc/UTC"          => [ qw(alias    Etc/GMT) ],
    "GMT"              => [ qw(alias    Etc/GMT) ],
-   "UCT"              => [ qw(alias    Etc/GMT) ],
-   "UTC"              => [ qw(alias    Etc/GMT) ],
+   "UTC"              => [ qw(offset   0:00:00) ],
+   "UCT"              => [ qw(alias    UTC) ],
+   "Etc/UCT"          => [ qw(alias    UTC) ],
+   "Etc/UTC"          => [ qw(alias    UTC) ],
    "Pacific/Johnston" => [ qw(alias    Pacific/Honolulu) ],
    "HST"              => [ qw(ignore) ],
    "EST"              => [ qw(ignore) ],
@@ -309,11 +308,11 @@ foreach my $winz (keys %windows_zones) {
                        'America/Anchorage'                       ,1969,1982,
                       ],
    'AKST9AKDT'     => [
-                       'America/Anchorage'                       ,1984,9999,
                        'America/Juneau'                          ,1984,9999,
                        'America/Nome'                            ,1984,9999,
                        'America/Yakutat'                         ,1984,9999,
                        'America/Sitka'                           ,1984,9999,
+                       'America/Anchorage'                       ,1984,2037,
                       ],
    'AKTT-5AKTST'   => [
                        'Asia/Aqtobe'                             ,1982,1990,
@@ -425,7 +424,7 @@ foreach my $winz (keys %windows_zones) {
    'BRT3BRST'      => [
                        'America/Sao_Paulo'                       ,1932,9999,
                        'America/Araguaina'                       ,1932,2002,
-                       'America/Bahia'                           ,1932,2002,
+                       'America/Bahia'                           ,1932,9999,
                        'America/Fortaleza'                       ,1932,1989,
                        'America/Maceio'                          ,1932,1989,
                        'America/Recife'                          ,1932,1989,
@@ -552,14 +551,14 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Chisinau'                         ,1932,9999,
                        'Africa/Cairo'                            ,1940,2009,
                        'Europe/Helsinki'                         ,1942,9999,
-                       'Asia/Gaza'                               ,1957,9999,
+                       'Asia/Gaza'                               ,1957,2011,
                        'Asia/Amman'                              ,1973,9999,
                        'Asia/Nicosia'                            ,1975,9999,
                        'Europe/Sofia'                            ,1979,9999,
                        'Europe/Riga'                             ,1989,9999,
                        'Europe/Tallinn'                          ,1989,9999,
                        'Europe/Kaliningrad'                      ,1991,2010,
-                       'Europe/Minsk'                            ,1991,9999,
+                       'Europe/Minsk'                            ,1991,2010,
                        'Europe/Vilnius'                          ,1991,9999,
                        'Europe/Zaporozhye'                       ,1991,9999,
                        'Europe/Kiev'                             ,1992,9999,
@@ -567,9 +566,11 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Uzhgorod'                         ,1992,9999,
                        'Europe/Moscow'                           ,1991,1991,
                        'Europe/Warsaw'                           ,1919,1919,
+                       'Asia/Hebron'                             ,1957,2010,
                       ],
    'EET-2EET'      => [
                        'Asia/Gaza'                               ,1943,1946,
+                       'Asia/Hebron'                             ,1943,1946,
                       ],
    'EGT1EGST'      => [
                        'America/Scoresbysund'                    ,1981,9999,
@@ -593,7 +594,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Toronto'                         ,1945,1945,
                       ],
    'FJT-12FJST'    => [
-                       'Pacific/Fiji'                            ,1999,2010,
+                       'Pacific/Fiji'                            ,1999,2011,
                       ],
    'FKT3FKST'      => [
                        'Atlantic/Stanley'                        ,1983,1984,
@@ -641,10 +642,12 @@ foreach my $winz (keys %windows_zones) {
                       ],
    'IST-2EEST'     => [
                        'Asia/Gaza'                               ,1967,1967,
+                       'Asia/Hebron'                             ,1967,1967,
                       ],
    'IST-2IDT'      => [
-                       'Asia/Jerusalem'                          ,1943,9999,
+                       'Asia/Jerusalem'                          ,1943,2037,
                        'Asia/Gaza'                               ,1974,1994,
+                       'Asia/Hebron'                             ,1974,1994,
                       ],
    'IST1ISST'      => [
                        'Atlantic/Reykjavik'                      ,1917,1967,
@@ -931,5 +934,5 @@ foreach my $winz (keys %windows_zones) {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

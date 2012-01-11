@@ -1,23 +1,23 @@
 package Date::Manip::Offset::off454;
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed Aug 31 12:08:29 EDT 2011
-#    Data version: tzdata2011i
+#    Generated on: Tue Jan 10 15:48:33 EST 2012
+#    Data version: tzdata2011n
 #    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://elsie.nci.nih.gov/pub
+#    ftp://ftp.iana.orgtz
 
 =pod
 
 =head1 NAME
 
-Date::Manip::Offset::off454 - Support for the -09:00:00 offset
+Date::Manip::Offset::off454 - Support for the -08:57:41 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,24 +41,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-09:00:00';
+$Offset        = '-08:57:41';
 
 %Offset        = (
    0 => [
-      'america/yakutat',
-      'pacific/gambier',
-      'america/anchorage',
       'america/juneau',
-      'america/nome',
-      'america/sitka',
-      'etc/gmt-9',
-      'i',
-      'america/dawson',
-      'america/whitehorse',
-      ],
-   1 => [
-      'america/adak',
-      'america/anchorage',
       ],
 );
 

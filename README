@@ -4,7 +4,7 @@ NAME
 DESCRIPTION
     Date::Manip is a series of modules designed to make any common date/time
     operation easy to do. Operations such as comparing two times,
-    calculating a time a given amount of time from another, or parsing
+    determining a data a given amount of time from another, or parsing
     international times are all easily done. It deals with time as it is
     used in the Gregorian calendar (the one currently in use) with full
     support for time changes due to daylight saving time.
@@ -36,7 +36,10 @@ DESCRIPTION
     delta
         A delta is an amount of time (i.e. the amount of time between two
         different dates). A delta refers only to an amount of time. It
-        includes no information about a starting or ending date/time.
+        includes no information about a starting or ending date/time. Most
+        people will think of a delta as an amount of time, but the term
+        'time' is already used so much in this module that I didn't want to
+        use it here in order to avoid confusion.
 
     recurrence
         A recurring event is something which occurs on a regular recurring
@@ -265,7 +268,8 @@ SEE ALSO
 
     Miscellaneous information:
 
-      Date::Manip::Calc       - date calculations
+      Date::Manip::Calc       - detailed informaion on how date
+                                calculations are done
       Date::Manip::Holidays   - information on defining and using
                                 holidays and events
       Date::Manip::ConfigFile - sample config file
@@ -279,7 +283,9 @@ SEE ALSO
       Date::Manip::Changes5   - change log for Date::Manip 5.xx
       Date::Manip::Changes5to6- differences between version 5.xx
                                 and 6.00 (including information
-                                on upgrading)
+                                on upgrading); this contains more
+                                details than the Migration5to6
+                                document
       Date::Manip::Changes6   - change log for Date::Manip 6.xx
 
       Date::Manip::Misc       - miscellaneous information about

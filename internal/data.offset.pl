@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -63,6 +63,7 @@ $def_off{0} = {
                                'America/Danmarkshavn'           ,1996,9999,
                                'Etc/GMT'                        ,0001,9999,
                                'UT'                             ,0001,9999,
+                               'UTC'                            ,0001,9999,
                                'Z'                              ,0001,9999,
                                'Atlantic/Azores'                ,1992,1993,
                                'Africa/Ceuta'                   ,1901,1984,
@@ -376,7 +377,7 @@ $def_off{0} = {
                                'Europe/Helsinki'                ,1921,9999,
                                'Europe/Tallinn'                 ,1921,9999,
                                'Europe/Kiev'                    ,1924,9999,
-                               'Europe/Minsk'                   ,1924,9999,
+                               'Europe/Minsk'                   ,1924,2011,
                                'Europe/Simferopol'              ,1924,9999,
                                'Europe/Zaporozhye'              ,1924,9999,
                                'Europe/Riga'                    ,1926,9999,
@@ -394,6 +395,7 @@ $def_off{0} = {
                                'Africa/Windhoek'                ,1903,1994,
                                'Europe/Moscow'                  ,1922,1992,
                                'Europe/Warsaw'                  ,1918,1922,
+                               'Asia/Hebron'                    ,1900,9999,
                               ],
                '+02:00:16' => [
                                'Africa/Kigali'                  ,0001,1935,
@@ -437,6 +439,9 @@ $def_off{0} = {
                '+02:20:00' => [
                                'Europe/Zaporozhye',             ,1879,1924,
                                'Africa/Blantyre',               ,0001,1903,
+                              ],
+               '+02:20:23' => [
+                               'Asia/Hebron'                    ,0001,1900,
                               ],
                '+02:20:40' => [
                                'Asia/Jerusalem',                ,1879,1917,
@@ -482,10 +487,10 @@ $def_off{0} = {
                '+02:37:08' => [
                                'Africa/Dar_es_Salaam'           ,0001,1930,
                               ],
-               '+02:44:45' => [
-                               'Africa/Dar_es_Salaam',          ,1947,1960,
-                               'Africa/Nairobi',                ,1939,1959,
-                               'Africa/Kampala',                ,1947,1956,
+               '+02:45:00' => [
+                               'Africa/Dar_es_Salaam'           ,1947,1960,
+                               'Africa/Nairobi'                 ,1939,1959,
+                               'Africa/Kampala'                 ,1947,1956,
                               ],
                '+02:52:36' => [
                                'Africa/Djibouti'                ,0001,1911,
@@ -536,7 +541,7 @@ $def_off{0} = {
                                'Europe/Simferopol'              ,1930,1997,
                                'Asia/Yerevan'                   ,1924,1995,
                                'Asia/Baku'                      ,1924,1992,
-                               'Europe/Minsk'                   ,1930,1991,
+                               'Europe/Minsk'                   ,1930,9999,
                                'Europe/Zaporozhye'              ,1930,1991,
                                'Europe/Vilnius'                 ,1940,1991,
                                'Europe/Kiev'                    ,1930,1990,
@@ -1203,7 +1208,7 @@ $def_off{0} = {
                                'Asia/Anadyr'                    ,1930,1982,
                                'Pacific/Enderbury'              ,1995,9999,
                                'Pacific/Tongatapu'              ,1940,9999,
-                               'Pacific/Apia'                   ,2011,9999,
+                               'Pacific/Apia'                   ,2012,9999,
                               ],
                '+14:00:00' => [
                                'Pacific/Kiritimati'             ,1995,9999,
@@ -1213,6 +1218,9 @@ $def_off{0} = {
                               ],
                '+14:41:05' => [
                                'America/Yakutat'                ,0001,1867,
+                              ],
+               '+14:58:47' => [
+                               'America/Sitka'                  ,0001,1867,
                               ],
                '+15:02:19' => [
                                'America/Juneau'                 ,0001,1867,
@@ -1414,7 +1422,7 @@ $def_off{0} = {
                                'America/Cayenne'                ,0001,1911,
                               ],
                '-03:30:00' => [
-                               'America/St_Johns'               ,1935,2050,
+                               'America/St_Johns'               ,1935,2051,
                                'America/Paramaribo'             ,1945,1984,
                                'America/Goose_Bay'              ,1935,1966,
                                'America/Montevideo'             ,1920,1942,
@@ -2170,9 +2178,6 @@ $def_off{0} = {
                '-14:21:00' => [
                                'Pacific/Guam'                   ,0001,1844,
                               ],
-               '-14:58:47' => [
-                               'America/Sitka'                  ,0001,1867,
-                              ],
                '-15:56:00' => [
                                'Asia/Manila'                    ,0001,1844,
                               ],
@@ -2274,8 +2279,8 @@ $def_off{1} = {
                                'Europe/Bucharest'               ,1932,9999,
                                'Europe/Chisinau'                ,1932,9999,
                                'Africa/Cairo'                   ,1940,2010,
-                               'Asia/Gaza'                      ,1940,9999,
-                               'Asia/Jerusalem'                 ,1940,9999,
+                               'Asia/Gaza'                      ,1940,2011,
+                               'Asia/Jerusalem'                 ,1940,2037,
                                'Europe/Helsinki'                ,1942,9999,
                                'Europe/Kaliningrad'             ,1945,2010,
                                'Asia/Amman'                     ,1973,9999,
@@ -2283,7 +2288,7 @@ $def_off{1} = {
                                'Europe/Sofia'                   ,1979,9999,
                                'Europe/Riga'                    ,1989,9999,
                                'Europe/Tallinn'                 ,1989,9999,
-                               'Europe/Minsk'                   ,1991,9999,
+                               'Europe/Minsk'                   ,1991,2010,
                                'Europe/Vilnius'                 ,1991,9999,
                                'Europe/Zaporozhye'              ,1991,9999,
                                'Europe/Kiev'                    ,1992,9999,
@@ -2299,6 +2304,7 @@ $def_off{1} = {
                                'Africa/Maseru'                  ,1943,1944,
                                'Africa/Windhoek'                ,1942,1943,
                                'Europe/Warsaw'                  ,1919,1919,
+                               'Asia/Hebron'                    ,1940,2011,
                               ],
                '+03:30:48' => [
                                'Europe/Moscow'                  ,1917,1919,
@@ -2418,8 +2424,8 @@ $def_off{1} = {
                                'Asia/Tokyo'                     ,1948,1951,
                               ],
                '+10:30:00' => [
-                               'Australia/Adelaide'             ,1916,2050,
-                               'Australia/Broken_Hill'          ,1916,2050,
+                               'Australia/Adelaide'             ,1916,2051,
+                               'Australia/Broken_Hill'          ,1916,2051,
                                'Australia/Darwin'               ,1916,1944,
                               ],
                '+11:00:00' => [
@@ -2429,7 +2435,7 @@ $def_off{1} = {
                                'Australia/Sydney'               ,1916,9999,
                                'Asia/Vladivostok'               ,1981,2010,
                                'Asia/Sakhalin'                  ,1991,2010,
-                               'Australia/Lord_Howe'            ,1985,2050,
+                               'Australia/Lord_Howe'            ,1985,2051,
                                'Australia/Lindeman'             ,1916,1994,
                                'Australia/Brisbane'             ,1916,1992,
                                'Asia/Magadan'                   ,1991,1991,
@@ -2452,18 +2458,19 @@ $def_off{1} = {
                               ],
                '+13:00:00' => [
                                'Pacific/Auckland'               ,1974,9999,
-                               'Pacific/Fiji'                   ,1998,2011,
+                               'Pacific/Fiji'                   ,1998,2012,
                                'Antarctica/McMurdo'             ,1974,9999,
                                'Asia/Kamchatka'                 ,1981,2009,
                                'Asia/Anadyr'                    ,1982,2009,
                               ],
                '+13:45:00' => [
-                               'Pacific/Chatham'                ,1974,2050,
+                               'Pacific/Chatham'                ,1974,2051,
                               ],
                '+14:00:00' => [
                                'Pacific/Tongatapu'              ,1999,2002,
                                'Asia/Anadyr'                    ,1981,1981,
-                              ],
+                               'Pacific/Apia'                   ,2011,2012, 
+                             ],
                '-00:20:00' => [
                                'Africa/Freetown'                ,1935,1942,
                               ],
@@ -2494,7 +2501,7 @@ $def_off{1} = {
                                'America/Argentina/San_Luis'     ,1974,2008,
                                'America/Argentina/Ushuaia'      ,1974,2008,
                                'America/Araguaina'              ,1931,2003,
-                               'America/Bahia'                  ,1931,2003,
+                               'America/Bahia'                  ,1931,9999,
                                'America/Fortaleza'              ,1931,2002,
                                'America/Maceio'                 ,1931,2002,
                                'America/Recife'                 ,1931,2002,
@@ -2670,7 +2677,7 @@ $def_off{1} = {
                '-08:00:00' => [
                                'America/Juneau'                 ,1980,9999,
                                'America/Yakutat'                ,1942,9999,
-                               'America/Anchorage'              ,1984,9999,
+                               'America/Anchorage'              ,1984,2037,
                                'America/Nome'                   ,1984,9999,
                                'America/Dawson'                 ,1918,1945,
                                'America/Whitehorse'             ,1918,1945,
@@ -2701,5 +2708,5 @@ $def_off{1} = {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

@@ -86,19 +86,19 @@ $tests ="
 
 2000-03-15 2000-04-10 1 =>
    Event3
-   +0:0:+0:0:1:0:0
+   0:0:0:0:1:0:0
    Spring
-   +0:0:+2:4:23:0:0
+   0:0:0:0:455:0:0
    Winter
-   +0:0:+1:0:0:0:0
+   0:0:0:0:168:0:0
 
 2000-03-15 2000-04-10 2 =>
    Event3+Spring
-   +0:0:+0:0:1:0:0
+   0:0:0:0:1:0:0
    Spring
-   +0:0:+2:4:22:0:0
+   0:0:0:0:454:0:0
    Winter
-   +0:0:+1:0:0:0:0
+   0:0:0:0:168:0:0
 
 ";
 
@@ -114,5 +114,5 @@ $t->done_testing();
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

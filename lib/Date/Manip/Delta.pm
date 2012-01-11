@@ -1,5 +1,5 @@
 package Date::Manip::Delta;
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -21,7 +21,7 @@ use IO::File;
 #use re 'debug';
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 ########################################################################
@@ -52,12 +52,14 @@ sub _init {
    my $dmb = $$dmt{'base'};
 
    $$self{'err'}              = '';
-   $$self{'data'}{'delta'}    = $def;   # the delta
-   $$self{'data'}{'business'} = 0;      # 1 for a business delta
-   $$self{'data'}{'gotmode'}  = 0;      # if exact/business set explicitly
-   $$self{'data'}{'in'}       = '';     # the string that was parsed (if any)
-   $$self{'data'}{'f'}        = {};     # format fields
-   $$self{'data'}{'flen'}     = {};     # field lengths
+   $$self{'data'}{'delta'}    = $def;    # the delta (all negative fields signed)
+   $$self{'data'}{'in'}       = '';      # the string that was parsed (if any)
+
+   $$self{'data'}{'gotmode'}  = 0;       # if mode set explicitly
+   $$self{'data'}{'business'} = 0;       # 1 for a business delta
+
+   $$self{'data'}{'f'}        = {};      # format fields
+   $$self{'data'}{'flen'}     = {};      # field lengths
 }
 
 sub _init_args {
@@ -81,10 +83,15 @@ sub value {
    return undef  if ($$self{'err'});
    if (wantarray) {
       return @{ $$self{'data'}{'delta'} };
-   } elsif ($$self{'data'}{'business'}) {
-      return $dmb->join('business',$$self{'data'}{'delta'});
    } else {
-      return $dmb->join('delta',$$self{'data'}{'delta'});
+      my @delta = @{ $$self{'data'}{'delta'} };
+      my $err;
+      ($err,@delta) = $dmb->_delta_fields( { 'nonorm'  => 1,
+                                             'source'  => 'delta',
+                                             'sign'    => 0 },
+                                           [@delta]);
+      return undef  if ($err);
+      return join(':',@delta);
    }
 }
 
@@ -98,38 +105,38 @@ sub input {
 ########################################################################
 
 BEGIN {
-   my %ops = map { $_,1 } qw( delta business normal );
-   my %f   = map { $_,1 } qw( y M w d h m s );
+   my %ops = map { $_,1 } qw( delta business normal standard );
+   my %f   = qw( y 0  M 1  w 2  d 3  h 4  m 5  s 6 );
 
    sub set {
-      my($self,$field,$val) = @_;
+      my($self,$field,$val,$no_normalize) = @_;
 
-      $field       = lc($field);
-      my $business = 0;
       my $dmt      = $$self{'tz'};
       my $dmb      = $$dmt{'base'};
       my $zone     = $$self{'data'}{'tz'};
       my $gotmode  = $$self{'data'}{'gotmode'};
+      my $business = 0;
       my (@delta,$err);
 
-      if (exists $ops{$field}) {
+      if (exists $ops{lc($field)}) {
+         $field       = lc($field);
 
          if ($field eq 'business') {
             $business = 1;
             $gotmode  = 1;
-         } elsif ($field eq 'normal') {
+         } elsif ($field eq 'normal'  ||  $field eq 'standard') {
             $business = 0;
             $gotmode  = 1;
          } elsif ($field eq 'delta') {
             $business = $$self{'data'}{'business'};
             $gotmode  = $$self{'data'}{'gotmode'};
          }
-         my $type = ($business ? 'business' : 'delta');
-         if ($business) {
-            ($err,@delta) = $dmb->_normalize_business('norm',@$val);
-         } else {
-            ($err,@delta) = $dmb->_normalize_delta('norm',@$val);
-         }
+
+         ($err,@delta) = $dmb->_delta_fields( { 'nonorm'   => $no_normalize,
+                                                'business' => $business,
+                                                'source'   => 'delta',
+                                                'sign'     => -1 },
+                                              $val);
 
       } elsif (exists $f{$field}) {
 
@@ -140,22 +147,21 @@ BEGIN {
 
          @delta             = @{ $$self{'data'}{'delta'} };
          $business          = $$self{'data'}{'business'};
-         my %f              = qw(y 0 M 1 w 2 d 3 h 4 m 5 s 6);
          $delta[$f{$field}] = $val;
 
-         if ($business) {
-            ($err,@delta) = $dmb->_normalize_business(0,@delta);
-         } else {
-            ($err,@delta) = $dmb->_normalize_delta(0,@delta);
-         }
+         ($err,@delta) = $dmb->_delta_fields( { 'nonorm'   => $no_normalize,
+                                                'business' => $business,
+                                                'source'   => 'delta',
+                                                'sign'     => -1 },
+                                              [@delta]);
 
-      } elsif ($field eq 'mode') {
+      } elsif (lc($field) eq 'mode') {
 
          @delta             = @{ $$self{'data'}{'delta'} };
-         $val = lc($val);
-         if ($val eq "business"  ||  $val eq "normal") {
-            $gotmode = 1;
-            $business = ($val eq "business" ? 1 : 0);
+         $val               = lc($val);
+         if ($val eq 'business'  ||  $val eq 'normal'  ||  $val eq 'standard') {
+            $gotmode        = 1;
+            $business       = ($val eq 'business' ? 1 : 0);
 
          } else {
             $$self{'err'} = "[set] Invalid mode: $val";
@@ -178,6 +184,7 @@ BEGIN {
       $$self{'data'}{'delta'}    = [ @delta ];
       $$self{'data'}{'business'} = $business;
       $$self{'data'}{'gotmode'}  = $gotmode;
+
       return 0;
    }
 }
@@ -230,10 +237,61 @@ sub _rx {
 }
 
 sub parse {
-   my($self,$instring,$business) = @_;
+   my($self,$instring,@args) = @_;
+   my($business,$no_normalize,$gotmode,$err,@delta);
+
+   if (@args == 2) {
+      ($business,$no_normalize) = (lc($args[0]),lc($args[1]));
+      if      ($business eq 'standard') {
+         $business = 0;
+      } elsif ($business eq 'business') {
+         $business = 1;
+      } elsif ($business) {
+         $business = 1;
+      } else {
+         $business = 0;
+      }
+      if ($no_normalize) {
+         $no_normalize = 1;
+      } else {
+         $no_normalize = 0;
+      }
+      $gotmode = 1;
+
+   } elsif (@args == 1) {
+      my $arg = lc($args[0]);
+      if      ($arg eq 'standard') {
+         $business     = 0;
+         $no_normalize = 0;
+         $gotmode      = 1;
+      } elsif ($arg eq 'business') {
+         $business     = 1;
+         $no_normalize = 0;
+         $gotmode      = 1;
+      } elsif ($arg eq 'nonormalize') {
+         $business     = 0;
+         $no_normalize = 1;
+         $gotmode      = 0;
+      } elsif ($arg) {
+         $business     = 1;
+         $no_normalize = 0;
+         $gotmode      = 1;
+      } else {
+         $business     = 0;
+         $no_normalize = 0;
+         $gotmode      = 0;
+      }
+   } elsif (@args == 0) {
+      $business     = 0;
+      $no_normalize = 0;
+      $gotmode      = 0;
+   } else {
+      $$self{'err'} = "[parse] Unknown arguments";
+      return 1;
+   }
+
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
-   my($gotmode,$type,@delta);
    $self->_init();
 
    if (! $instring) {
@@ -241,55 +299,67 @@ sub parse {
       return 1;
    }
 
-   my $mode  = $self->_rx('mode');
+   #
+   # Parse the string
+   #
 
- ENCODING: foreach my $string ($dmb->_encoding($instring)) {
+   $$self{'err'} = '';
+   $instring     =~ s/^\s*//;
+   $instring     =~ s/\s*$//;
 
-      $type      = 'delta';
+ PARSE: {
 
-      # Get the mode
+      # First, we'll try the standard format (without a mode string)
 
-      $gotmode  = 0;
-      $gotmode  = 1  if (defined($business));
-      $business = 0  if (! $business);
+      ($err,@delta) = $dmb->_split_delta($instring);
+      last PARSE  if (! $err);
 
-      if ($string =~ s/$mode//i) {
-         my $m = ($1);
-         if ($$dmb{'data'}{'wordmatch'}{'mode'}{lc($m)} == 1) {
-            $business = 0;
-         } else {
-            $business = 1;
+      # Next, we'll need to get a list of all the encodings and look
+      # for (and remove) the mode string from each.  We'll also recheck
+      # the standard format for each.
+
+      my @strings = $dmb->_encoding($instring);
+      my $moderx  = $self->_rx('mode');
+      my %mode    = ();
+
+      foreach my $string (@strings) {
+         if ($string =~ s/\s*$moderx\s*//i) {
+            my $b = $1;
+            if ($$dmb{'data'}{'wordmatch'}{'mode'}{lc($b)} == 1) {
+               $b = 0;
+            } else {
+               $b = 1;
+            }
+
+            ($err,@delta) = $dmb->_split_delta($string);
+            if (! $err) {
+               $business = $b;
+               $gotmode  = 1;
+               last PARSE;
+            }
+
+            $mode{$string} = $b;
          }
-         $gotmode = 1;
       }
 
-      $type         = 'business'  if ($business);
+      # Now we'll check each string for an expanded form delta.
 
-      # Parse the delta
-
-    PARSE: {
-
-         $$self{'err'} = '';
-         $string    =~ s/^\s*//;
-         $string    =~ s/\s*$//;
-
-         # Colon format
-
-         if ($string) {
-            my $tmp = $dmb->split($type,$string);
-            if (defined $tmp) {
-               @delta = @$tmp;
-               last ENCODING;
-            }
+      foreach my $string (@strings) {
+         my($b,$g);
+         if (exists $mode{$string}) {
+            $b = $mode{$string};
+            $g = 1;
+         } else {
+            $b = $business;
+            $g = 0;
          }
 
-         # Expanded format
+         my $past    = 0;
 
-         my $when      = $self->_rx('when');
-         my $past      = 0;
+         my $whenrx  = $self->_rx('when');
          if ($string  &&
-             $string =~ s/$when//i) {
-            my $when = ($1);
+             $string =~ s/$whenrx//i) {
+            my $when = $1;
             if ($$dmb{'data'}{'wordmatch'}{'when'}{lc($when)} == 1) {
                $past   = 1;
             }
@@ -298,6 +368,8 @@ sub parse {
          my $rx        = $self->_rx('expanded');
          if ($string  &&
              $string   =~ $rx) {
+            $business  = $b;
+            $gotmode   = $g;
             @delta     = @+{qw(y m w d h mn s)};
             foreach my $f (@delta) {
                if (! defined $f) {
@@ -308,35 +380,34 @@ sub parse {
                   $f =~ s/\s//g;
                }
             }
-            my $err;
-            if ($type eq 'business') {
-               ($err,@delta)  = $dmb->_normalize_business('split',@delta);
-            } else {
-               ($err,@delta)  = $dmb->_normalize_delta('split',@delta);
-            }
-
-            if ($err) {
-               next ENCODING;
-            }
 
             # if $past, reverse the signs
             if ($past) {
                foreach my $v (@delta) {
-                  if (defined $v) {
-                     $v *= -1;
-                  }
+                  $v *= -1;
                }
             }
 
-            last ENCODING;
+            last PARSE;
          }
       }
-
-      $$self{'err'} = "[parse] Invalid delta string";
-      last ENCODING;
    }
 
-   return 1  if ($$self{'err'});
+   if (! @delta) {
+      $$self{'err'} = "[parse] Invalid delta string";
+      return 1;
+   }
+
+   ($err,@delta) = $dmb->_delta_fields( { 'nonorm'   => $no_normalize,
+                                          'business' => $business,
+                                          'source'   => 'string',
+                                          'sign'     => -1 },
+                                        [@delta]);
+
+   if ($err) {
+      $$self{'err'} = "[parse] Invalid delta string";
+      return 1;
+   }
 
    $$self{'data'}{'in'}       = $instring;
    $$self{'data'}{'delta'}    = [@delta];
@@ -435,7 +506,8 @@ sub printf {
             if (! @field) {
                $out .= $match;
             } else {
-               $out .= $self->_printf_delta($sign,$pad,$width,$field[0],$field[$#field]);
+               $out .= $self->_printf_delta($sign,$pad,$width,$field[0],
+                                            $field[$#field]);
             }
 
          } else {
@@ -702,24 +774,37 @@ sub _printf_field_val {
 
 sub type {
    my($self,$op) = @_;
+   $op = lc($op);
 
-   if ($op eq 'business') {
+   if      ($op eq 'business') {
       return $$self{'data'}{'business'};
+   } elsif ($op eq 'standard') {
+      return 1-$$self{'data'}{'business'};
+   }
 
-   } elsif ($op eq 'exact') {
-      my $exact = 1;
-      $exact    = 0  if ($$self{'data'}{'delta'}[0] != 0  ||
-                         $$self{'data'}{'delta'}[1] != 0  ||
-                         ($$self{'data'}{'delta'}[2] != 0  &&
-                          $$self{'data'}{'business'}));
+   my($exact,$semi,$approx) = (0,0,0);
+   my($y,$m,$w,$d,$h,$mn,$s) = @{ $$self{'data'}{'delta'} };
+   if ($y  ||  $m) {
+      $approx = 1;
+   } elsif ($w  ||  (! $$self{'data'}{'business'}  &&  $d)) {
+      $semi = 1;
+   } else {
+      $exact = 1;
+   }
+
+   if      ($op eq 'exact') {
       return $exact;
+   } elsif ($op eq 'semi') {
+      return $semi;
+   } elsif ($op eq 'approx') {
+      return $approx;
    }
 
    return undef;
 }
 
 sub calc {
-   my($self,$obj,$subtract) = @_;
+   my($self,$obj,$subtract,$no_normalize) = @_;
    if ($$self{'err'}) {
       $$self{'err'} = "[calc] First object invalid (delta)";
       return undef;
@@ -737,7 +822,7 @@ sub calc {
          $$self{'err'} = "[calc] Second object invalid (delta)";
          return undef;
       }
-      return $self->_calc_delta_delta($obj,$subtract);
+      return $self->_calc_delta_delta($obj,$subtract,$no_normalize);
 
    } else {
       $$self{'err'} = "[calc] Second object must be a Date/Delta object";
@@ -746,17 +831,28 @@ sub calc {
 }
 
 sub _calc_delta_delta {
-   my($self,$delta,$subtract) = @_;
+   my($self,$delta,@args) = @_;
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
    my $ret = $self->new_delta;
 
    if ($self->err()) {
-      $$ret{'err'} = "[calc] Invalid delta/delta calculation object: delta1";
+      $$ret{'err'} = "[calc] First delta object invalid";
       return $ret;
    } elsif ($delta->err()) {
-      $$ret{'err'} = "[calc] Invalid delta/delta calculation object: delta2";
+      $$ret{'err'} = "[calc] Second delta object invalid";
       return $ret;
+   }
+
+   my($subtract,$no_normalize);
+   if (@args == 2) {
+      ($subtract,$no_normalize) = @args;
+   } elsif ($args[0] eq 'nonormalize') {
+      $subtract     = 0;
+      $no_normalize = 1;
+   } else {
+      $subtract     = 0;
+      $no_normalize = 0;
    }
 
    my $business = 0;
@@ -768,18 +864,22 @@ sub _calc_delta_delta {
       $business = $$self{'data'}{'business'};
    }
 
-   my @delta;
+   my ($err,@delta);
    for (my $i=0; $i<7; $i++) {
       if ($subtract) {
          $delta[$i] = $$self{'data'}{'delta'}[$i] - $$delta{'data'}{'delta'}[$i];
       } else {
          $delta[$i] = $$self{'data'}{'delta'}[$i] + $$delta{'data'}{'delta'}[$i];
       }
-      $delta[$i] = "+" . $delta[$i]  if ($delta[$i] > 0);
    }
 
-   my $type  = ($business ? 'business' : 'delta');
-   $ret->set($type,\@delta);
+   ($err,@delta) = $dmb->_delta_fields( { 'nonorm'  => 0,
+                                          'source'  => 'delta',
+                                          'sign'    => -1 },
+                                        [@delta])  if (! $no_normalize);
+
+   $$ret{'data'}{'delta'}    = [@delta];
+   $$ret{'data'}{'business'} = $business;
 
    return $ret;
 }
@@ -793,5 +893,5 @@ sub _calc_delta_delta {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -19,16 +19,20 @@ problems.
 
 There is a known memory leak in perl related to named regexp captures
 that directly affects Date::Manip . The leak is in all versions of
-perl that I have tested starting at 5.10.  It has been tested on:
+perl up to the following versions:
 
    5.10.1
    5.12.4
-   5.14.1
-   5.15.0
+   5.14.2
+   5.15.5
 
-I have submitted a bug report (perlbug #78266). Until perl is fixed,
-if you need to use Date::Manip in a persistent environment, you should
-be aware of this.
+The bug has been fixed in:
+
+   5.15.6
+
+If a maintenance release is done for any of the other releases (5.10,
+5.12, 5.14), that includes the patch, I'll update this section to
+include that information.
 
 Date::Manip 5.xx is not susceptible, so using it may be a feasible
 workaround, but if you need accurate timezone handling, this isn't
@@ -48,28 +52,10 @@ of this problem.
 
 =item B<Calculations appear to be off by an hour>
 
-Within days of releasing 6.00, I got the following report:
-
-   print DateCalc(ParseDate("2009/10/31"), "+1 day"), "\n";
-   print DateCalc(ParseDate("2009/11/01"), "+1 day"), "\n";
-   print DateCalc(ParseDate("2009/11/02"), "+1 day"), "\n";
-
-produced:
-
-   2009110100:00:00
-   2009110123:00:00
-   2009110300:00:00
-
-In other words, the second calculation appears to be off by one hour.
-In actuality, the result is correct. In the user's time zone, daylight
-saving time ended on Nov 1, and since "+ 1 day" is equivalent to "+ 24
-hours", the results are correct. In America/New_York time (which has
-the same result), the calculation means that:
-
-   2009-11-01 00:00:00 EDT + 24 hours =
-   2009-11-01 23:00:00 EST
-
-which is correct.
+Due to daylight saving time (specifically, the spring change where
+the time typically moves forward from 02:00 to 03:00, any date
+calculation which would intuitively report a time in that range
+will also move forward (or backward as the case may be).
 
 =item B<Missing date formats>
 
@@ -81,12 +67,12 @@ With the much improved parsing of 6.00, many formats can be added
 easily, though unless they are of general use, I'll probably suggest
 that you use parse_format instead.
 
-There is a class of formats that I will not add however.
+There is a class of formats that I do not plan to add however.
 
 I have frequently been asked to add formats such as "the 15th of last
-month", or "Monday of next week". I will NOT add these date formats to
-Date::Manip. Since I have received the request several times, I
-decided to include my reasoning here.
+month", or "Monday of next week". I do not intend to add these date
+formats to Date::Manip, but since I have received the request several
+times, I decided to include my reasoning here.
 
 Date::Manip can parse pretty much any static date format that I could
 think of or find reference to. Dates such as "today", "Jan 12", or
@@ -111,10 +97,11 @@ expressed as a date plus TWO modifications. In other words, today
 modified to last month modified to the 15th day of the month.
 
 As bad as date plus modification formats are, a date plus TWO
-modifications would be exponentially worse. On realizing that, I made
-a firm decision that Date::Manip will NOT support this type of format
-now, or at any time in the future. Although I apologize for the
-inconvenience, I do not intend to change my position on this.
+modifications would be exponentially worse. On realizing that, I
+decided that Date::Manip will not support this type of format.
+
+Although I apologize for the inconvenience, I do not intend to change
+my position on this.
 
 =item B<Date::Manip is slow>
 
@@ -222,9 +209,9 @@ One of the aspects of Date::Manip that has received the most positive
 response is the ability to parse almost every conceivable date format.
 Unfortunately, as I've added formats, the parsing routine became more
 and more complicated, and maintaining it was one of the least
-enjoyable aspect in maintaining Date::Manip . For several years, I've
-been extremely reluctant to add new formats due to the fact that too
-often, adding a new format broke other formats.
+enjoyable aspect in maintaining Date::Manip . In fact, for several
+years I've been extremely reluctant to add new formats due to the fact
+that too often, adding a new format broke other formats.
 
 As I was rewriting Date::Manip, I was looking for ways to improve the
 parsing and to make maintaining it easier. Perl 5.10 provides the
@@ -303,7 +290,7 @@ But the next complaint is relevant.
 
 =item B<Automatic installs break>
 
-A much more important problem is that versions 6.01 through 6.07 broke
+A much more important problem is that versions 6.00 through 6.07 broke
 automatic installs for older perl installations. If you try to install
 Date::Manip using the automatic tools (cpan/cpanp), they will look for
 the most recent version. If you are using a version of perl older than
@@ -354,7 +341,7 @@ the standard zoneinfo database, and at this point, there are over 1700
 files included in /usr/share/zoneinfo (though it does appear that
 there is some duplication of information). Current versions of RedHat
 also use over 1700 files, so Date::Manip isn't treating the time zone
-problem in a new or unreasonable way.
+data in a new or unreasonable way.
 
 =item B<Objects are large>
 
@@ -392,7 +379,10 @@ object when the timezone is actually used, so if you use a lot of
 timezones, this object will grow slowly as new timezones are used.
 
 The size of the actual Date::Manip::Date object is a little over 300
-bytes.
+bytes.  However, each includes a pointer to a Date::Manip::Base and
+a Date::Manip::TZ object (and due to how the object was being looked
+at in the complaint, they were getting the size of all three objects),
+NOT just the Date::Manip::Date object.
 
 Both the Date::Manip::Base and Date::Manip::TZ objects are reused by
 any number of Date::Manip::Date objects. They can almost be thought of
@@ -439,10 +429,10 @@ As it became more and more widely used, I too wished for a more
 consistent interface, but I did not want to break backward compatibility
 for everyone using it.
 
-When 6.xx was written, I spent a good deal of time trying to make a very
-standard interface, so I do not believe that this complaint can be
-applied to the OO interface (though I'm interested in suggestions for
-improving it of course).
+When 6.xx was written, I spent a good deal of time trying to make a
+very standard OO interface, so I do not believe that this complaint
+can be applied to the OO interface (though I'm interested in
+suggestions for improving it of course).
 
 As far as the functional interface goes, I'll continue to support it
 in a backward compatible (and therefore inconsistent) form. I'd

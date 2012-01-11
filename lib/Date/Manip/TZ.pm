@@ -1,5 +1,5 @@
 package Date::Manip::TZ;
-# Copyright (c) 2008-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -24,8 +24,22 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
+
+# To get rid of a 'used only once' warnings.
+END {
+   my $tmp = \%Date::Manip::Zones::Module;
+   $tmp    = \%Date::Manip::Zones::ZoneNames;
+   $tmp    = \%Date::Manip::Zones::Alias;
+   $tmp    = \%Date::Manip::Zones::Abbrev;
+   $tmp    = \%Date::Manip::Zones::Offmod;
+   $tmp    = $Date::Manip::Zones::FirstDate;
+   $tmp    = $Date::Manip::Zones::LastDate;
+   $tmp    = $Date::Manip::Zones::LastYear;
+   $tmp    = $Date::Manip::Zones::TzcodeVersion;
+   $tmp    = $Date::Manip::Zones::TzdataVersion;
+}
 
 ########################################################################
 # BASE METHODS
@@ -383,7 +397,9 @@ sub _get_curr_zone {
    my $dstflag = ($isdst ? 'dstonly' : 'stdonly');
 
    my (@methods) = @{ $$self{'data'}{'methods'} };
- METHOD: while (@methods) {
+
+   METHOD:
+   while (@methods) {
       my $method = shift(@methods);
       my @zone   = ();
 
@@ -787,7 +803,9 @@ sub zone {
          my $isdst = '';
          $isdst    = 0  if ($dstflag eq 'stdonly');
          $isdst    = 1  if ($dstflag eq 'dstonly');
-       ZONE: foreach my $z (@zone) {
+
+         ZONE:
+         foreach my $z (@zone) {
             $self->_module($z);
             my $y       = $$date[0];
             my @periods = $self->_all_periods($z,$y);
@@ -832,7 +850,8 @@ sub _check_abbrev_isdst {
    my($self,$abbrev,$isdst,@zones) = @_;
 
    my @ret;
- ZONE: foreach my $zone (@zones) {
+   ZONE:
+   foreach my $zone (@zones) {
       $self->_module($zone);
 
       foreach my $y (sort keys %{ $$self{'data'}{'Zones'}{$zone}{'Dates'} }) {
@@ -1067,7 +1086,7 @@ sub date_period {
    my $dmb  = $$self{'base'};
    my @date = @$date;
    my $year = $date[0];
-   my $dates= $dmb->_join_date($date);
+   my $dates= $dmb->_date_fields(@$date);
 
    if ($wallclock) {
       # A wallclock date
@@ -1222,7 +1241,7 @@ sub convert_to_gmt {
    my $dmb = $$self{'base'};
 
    if (! $from) {
-      ($from) = $self->_now('tz',1);
+      $from = $self->_now('tz',1);
    }
    $self->_convert('convert_to_gmt',$date,$from,'GMT',$isdst);
 }
@@ -1235,7 +1254,7 @@ sub convert_from_gmt {
    my $dmb = $$self{'base'};
 
    if (! $to) {
-      ($to) = $self->_now('tz',1);
+      $to = $self->_now('tz',1);
    }
    $self->_convert('convert_from_gmt',$date,'GMT',$to,$isdst);
 }
@@ -1445,7 +1464,7 @@ sub _zrx {
    my $zoneabbrx = $self->_abbrx();           # (?<abb>edt|est|...)
    my $zoneoffrx = $self->_offrx();           # (?<off>07:00) (?<abb>GMT)
 
-   my $zrx       = qr/(?<tzstring>$zonerx|$zoneabbrx|$zoneoffrx)/;
+   my $zrx       = qr/(?<tzstring>$zoneabbrx|$zoneoffrx|$zonerx)/;
    $$self{'data'}{'zrx'} = $zrx;
    return $zrx;
 }
@@ -1543,7 +1562,7 @@ sub _config_var_setdate {
       $op = 'date';
       my($y,$m,$d,$h,$mn,$s) = ($1,$2,$3,$4,$5,$6);
       $date   = [$y,$m,$d,$h,$mn,$s];
-      ($zone) = $self->_now('systz',1);
+      $zone   = $self->_now('systz',1);
 
    } elsif (lc($val) eq 'now') {
       # now
@@ -1684,5 +1703,5 @@ sub _config_var_setdate {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

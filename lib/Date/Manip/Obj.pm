@@ -1,5 +1,5 @@
 package Date::Manip::Obj;
-# Copyright (c) 2008-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -12,11 +12,8 @@ use strict;
 use IO::File;
 use Storable qw(dclone);
 
-use Date::Manip::Base;
-use Date::Manip::TZ;
-
 our ($VERSION);
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 ########################################################################
@@ -284,7 +281,7 @@ sub version {
       } else {
          $dmt  = $$self{'tz'};
       }
-      my ($tz) = $dmt->_now("systz");
+      my $tz = $dmt->_now('systz');
       return "$VERSION [$tz]";
    } else {
       return $VERSION;
@@ -300,5 +297,5 @@ sub version {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

@@ -19,8 +19,8 @@ sub test {
   if ($err) {
      return $obj->err();
   } else {
-     $val = $obj->value();
-     return $val;
+     @val = $obj->value();
+     return @val;
   }
 }
 
@@ -29,31 +29,47 @@ $obj->config("forcedate","now,America/New_York");
 
 $tests="
 
-delta    [ 0 0 0 0 10 20 30 ]           => +0:0:+0:0:10:20:30
+delta    [ 0 0 0 0 10 20 30 ]                   => 0 0 0 0 10 20 30
 
-delta    [ 10 20 30 ]                   => +0:0:+0:0:10:20:30
+delta    [ 0 0 0 0 10 20 30 ]      nonormalize  => 0 0 0 0 10 20 30
 
-delta    [ 10 ]                         => +0:0:+0:0:0:0:10
+delta    [ 10 20 30 ]                           => 0 0 0 0 10 20 30
 
-delta    [ -10 ]                        => +0:0:-0:0:0:0:10
+delta    [ 10 20 30 ]              nonormalize  => 0 0 0 0 10 20 30
 
-delta    [ 10 70 ]                      => +0:0:+0:0:0:11:10
+delta    [ -10 20 30 ]                          => 0 0 0 0 -9 -39 -30
 
-delta    [ 10 -70 -130 +90 ]            => +0:0:+0:6:23:51:30
+delta    [ -10 20 30 ]             nonormalize  => 0 0 0 0 -10 20 30
 
-delta    [ 1 13 2 10 -70 -130 90 ]      => +2:1:+2:6:23:51:30
+delta    [ 10 -70 -130 +90 ]                    => 0 0 1 3 -72 -8 -30
 
-delta    [ -1 -13 -2 -10 70 -130 -90 ]  => -2:1:-3:0:4:11:30
+delta    [ 10 -70 -130 +90 ]       nonormalize  => 0 0 0 10 -70 -130 90
 
-business [ 10 ]                         => +0:0:+0:+0:0:0:10
+delta    [ 1 13 2 10 -70 -130 90 ]              => 2 1 3 3 -72 -8 -30
 
-business [ 10 70 ]                      => +0:0:+0:+0:0:11:10
+#
 
-business [ 10 -25 -130 +90 ]            => +0:0:+0:+6:8:51:30
+business [ 0 0 0 0 6 20 30 ]                    => 0 0 0 0 6 20 30
 
-business [ 1 13 2 10 -25 -130 +90 ]     => +2:1:+2:+6:8:51:30
+business [ 0 0 0 0 10 20 30 ]      nonormalize  => 0 0 0 0 10 20 30
 
-business [ -1 -13 -2 -10 +25 -130 -90 ] => -2:1:-2:-7:4:11:30
+business [ 0 0 0 3 10 20 30 ]                   => 0 0 0 4 1 20 30
+
+business [ 1 13 2 10 -70 -130 90 ]              => 2 1 2 1 8 51 30
+
+#
+
+standard [ 1 13 2 10 -70 -130 90 ] nonormalize  => 1 13 2 10 -70 -130 90
+
+m        25                        nonormalize  => 1 13 2 10 -70 25 90
+
+m        -135                                   => 2 1 3 3 -72 -13 -30
+
+#
+
+standard [ 1 13 2 10 -70 -130 90 ] nonormalize  => 1 13 2 10 -70 -130 90
+
+M        14                                     => 2 2 3 3 -72 -8 -30
 
 ";
 
@@ -69,5 +85,5 @@ $t->done_testing();
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

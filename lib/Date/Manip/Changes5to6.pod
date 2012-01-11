@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -301,9 +301,7 @@ config variables:
    PersonalCnfPath
    PathSep
 
-All of these are now deprecated. They will continue to work for a
-while, but they will be removed at some point. Instead, the single
-config variable:
+All of these have been removed. Instead, the single config variable:
 
    ConfigFile
 
@@ -314,10 +312,21 @@ of config files can be used. So the following is valid:
 
    Date_Init("ConfigFile=./Manip.cnf","ConfigFile=/tmp/Manip.cnf")
 
-=item B<TodayIsMidnight removed>
+=item B<Other config variables removed>
 
-The TodayIsMidnight variable is no longer supported. The DefaultTime
-variable can be used instead.
+The following config variables have been removed.
+
+   TodayIsMidnight  Use DefaultTime instead.
+
+   ConvTZ           Use SetDate or ForceDate instead.
+
+   Internal         Use Printable instead.
+
+   DeltaSigns       Use the Date::Manip::Delta::printf
+                    method to print deltas
+
+   UpdateCurrTZ     With real time zone handling in
+                    place, this is no longer necessary
 
 =item B<Other config variables deprecated>
 
@@ -325,19 +334,6 @@ The following config variables are deprecated and will be removed
 in some future version:
 
    TZ              Use SetDate or ForceDate instead.
-
-   ConvTZ          Ignored.  Time zone handling is done
-                   automatically, so this is no longer
-                   necessary.
-
-   Internal        Renamed to Printable (Internal still
-                   works for a while)
-
-   DeltaSigns      Ignored. Use the Date::Manip::Delta::printf
-                   method to print deltas
-
-   UpdateCurrTZ    Ignored. With real time zone handling in
-                   place, this is no longer necessary
 
    IntCharSet      This has been replaced with better support for
                    international character sets. The Encoding config

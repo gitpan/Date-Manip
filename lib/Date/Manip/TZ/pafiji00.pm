@@ -1,17 +1,17 @@
 package Date::Manip::TZ::pafiji00;
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed Aug 31 11:04:48 EDT 2011
-#    Data version: tzdata2011i
+#    Generated on: Tue Jan 10 15:46:23 EST 2012
+#    Data version: tzdata2011n
 #    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://elsie.nci.nih.gov/pub
+#    ftp://ftp.iana.orgtz
 
 =pod
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -93,8 +93,17 @@ END { undef $VERSION; }
    2011 =>
      [
         [ [2011,3,5,14,0,0],[2011,3,6,2,0,0],'+12:00:00',[12,0,0],
+          'FJT',0,[2011,10,22,13,59,59],[2011,10,23,1,59,59],
+          '2011030514:00:00','2011030602:00:00','2011102213:59:59','2011102301:59:59' ],
+        [ [2011,10,22,14,0,0],[2011,10,23,3,0,0],'+13:00:00',[13,0,0],
+          'FJST',1,[2012,1,21,13,59,59],[2012,1,22,2,59,59],
+          '2011102214:00:00','2011102303:00:00','2012012113:59:59','2012012202:59:59' ],
+     ],
+   2012 =>
+     [
+        [ [2012,1,21,14,0,0],[2012,1,22,2,0,0],'+12:00:00',[12,0,0],
           'FJT',0,[9999,12,31,0,0,0],[9999,12,31,12,0,0],
-          '2011030514:00:00','2011030602:00:00','9999123100:00:00','9999123112:00:00' ],
+          '2012012114:00:00','2012012202:00:00','9999123100:00:00','9999123112:00:00' ],
      ],
 );
 

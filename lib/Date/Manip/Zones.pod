@@ -1,17 +1,17 @@
 
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed Aug 31 12:21:34 EDT 2011
-#    Data version: tzdata2011i
+#    Generated on: Tue Jan 10 15:49:24 EST 2012
+#    Data version: tzdata2011n
 #    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://elsie.nci.nih.gov/pub
+#    ftp://ftp.iana.orgtz
 
 =pod
 
@@ -25,7 +25,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://elsie.nci.nih.gov/pub
+   ftp://ftp.iana.orgtz/tzdata2011n.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -277,6 +277,7 @@ database:
      Asia/Dushanbe                        asdush00
      Asia/Gaza                            asgaza00
      Asia/Harbin                          asharb00
+     Asia/Hebron                          ashebr00
      Asia/Ho_Chi_Minh                     asho_c00
      Asia/Hong_Kong                       ashong00
      Asia/Hovd                            ashovd00
@@ -501,6 +502,7 @@ RFC 822):
      T                                    t00
      U                                    u00
      UT                                   ut00
+     UTC                                  utc00
      V                                    v00
      W                                    w00
      X                                    x00
@@ -662,11 +664,11 @@ default alias can be overridden as described above.
      ACT5ACST                             America/Rio_Branco
                                           America/Eirunepe
      AHST10AHDT                           America/Anchorage
-     AKST9AKDT                            America/Anchorage
-                                          America/Juneau
+     AKST9AKDT                            America/Juneau
                                           America/Nome
                                           America/Yakutat
                                           America/Sitka
+                                          America/Anchorage
      AKTT-5AKTST                          Asia/Aqtobe
      ALMT-6ALMST                          Asia/Almaty
      AMT-3AMST                            Asia/Yerevan
@@ -873,7 +875,9 @@ default alias can be overridden as described above.
                                           Europe/Uzhgorod
                                           Europe/Moscow
                                           Europe/Warsaw
+                                          Asia/Hebron
      EET-2EET                             Asia/Gaza
+                                          Asia/Hebron
      EGT1EGST                             America/Scoresbysund
      EST-10EST                            Australia/Melbourne
                                           Australia/Currie
@@ -929,8 +933,10 @@ default alias can be overridden as described above.
      IRKT-7IRKST                          Asia/Irkutsk
      IRKT-8IRKST                          Asia/Irkutsk
      IST-2EEST                            Asia/Gaza
+                                          Asia/Hebron
      IST-2IDT                             Asia/Jerusalem
                                           Asia/Gaza
+                                          Asia/Hebron
      IST1ISST                             Atlantic/Reykjavik
      JST-9JDT                             Asia/Tokyo
      KGT-5FRUST                           Asia/Bishkek
@@ -1130,8 +1136,8 @@ Aliases include:
      Eastern Standard Time                America/New_York
      Egypt Standard Time                  Africa/Cairo
      Ekaterinburg Standard Time           Asia/Yekaterinburg
-     Etc/UCT                              Etc/GMT
-     Etc/UTC                              Etc/GMT
+     Etc/UCT                              UTC
+     Etc/UTC                              UTC
      FLE Standard Time                    Europe/Kiev
      Fiji Standard Time                   Pacific/Fiji
      GMT                                  Etc/GMT
@@ -1186,10 +1192,9 @@ Aliases include:
      Tasmania Standard Time               Australia/Hobart
      Tokyo Standard Time                  Asia/Tokyo
      Tonga Standard Time                  Pacific/Tongatapu
-     UCT                                  Etc/GMT
+     UCT                                  UTC
      US Eastern Standard Time             America/Indiana/Indianapolis
      US Mountain Standard Time            America/Phoenix
-     UTC                                  Etc/GMT
      UTC+12                               Etc/GMT-12
      UTC-02                               Etc/GMT+2
      UTC-11                               Etc/GMT+11
@@ -1216,7 +1221,6 @@ Date::Manip::TZ module.
      ISDST  OFFSET      TIME ZONE                
      -----  ----------  -------------------------
      0      -15:56:00   Asia/Manila
-     0      -14:58:47   America/Sitka
      0      -14:21:00   Pacific/Guam
      0      -14:17:00   Pacific/Saipan
      0      -14:00:00   Etc/GMT-14
@@ -1755,6 +1759,7 @@ Date::Manip::TZ module.
                         America/Danmarkshavn
                         Etc/GMT
                         UT
+                        UTC
                         Z
                         Atlantic/Azores
                         Africa/Ceuta
@@ -1958,6 +1963,7 @@ Date::Manip::TZ module.
                         Africa/Windhoek
                         Europe/Moscow
                         Europe/Warsaw
+                        Asia/Hebron
      0      +02:00:16   Africa/Kigali
      0      +02:02:04   Europe/Kiev
      0      +02:04:12   Africa/Harare
@@ -1973,6 +1979,7 @@ Date::Manip::TZ module.
      0      +02:17:52   Asia/Gaza
      0      +02:20:00   Europe/Zaporozhye
                         Africa/Blantyre
+     0      +02:20:23   Asia/Hebron
      0      +02:20:40   Asia/Jerusalem
                         Europe/Zaporozhye
      0      +02:20:56   Asia/Jerusalem
@@ -1991,7 +1998,7 @@ Date::Manip::TZ module.
                         Africa/Asmara
      0      +02:35:32   Africa/Asmara
      0      +02:37:08   Africa/Dar_es_Salaam
-     0      +02:44:45   Africa/Dar_es_Salaam
+     0      +02:45:00   Africa/Dar_es_Salaam
                         Africa/Nairobi
                         Africa/Kampala
      0      +02:52:36   Africa/Djibouti
@@ -2411,6 +2418,7 @@ Date::Manip::TZ module.
      0      +14:00:00   Pacific/Kiritimati
      0      +14:00:24   America/Anchorage
      0      +14:41:05   America/Yakutat
+     0      +14:58:47   America/Sitka
      0      +15:02:19   America/Juneau
      0      +15:13:42   America/Metlakatla
 
@@ -2707,6 +2715,7 @@ Date::Manip::TZ module.
                         Africa/Maseru
                         Africa/Windhoek
                         Europe/Warsaw
+                        Asia/Hebron
      1      +03:30:48   Europe/Moscow
      1      +04:00:00   Europe/Moscow
                         Europe/Samara
@@ -2827,6 +2836,7 @@ Date::Manip::TZ module.
      1      +13:45:00   Pacific/Chatham
      1      +14:00:00   Pacific/Tongatapu
                         Asia/Anadyr
+                        Pacific/Apia
 
 
 In the time zone definitions, abbreviations are used to specify the
@@ -2882,11 +2892,11 @@ altering the order.
      AHDT             America/Anchorage
      AHST             America/Anchorage
                       America/Adak
-     AKDT             America/Anchorage
-                      America/Juneau
+     AKDT             America/Juneau
                       America/Nome
                       America/Yakutat
                       America/Sitka
+                      America/Anchorage
      AKST             America/Anchorage
                       America/Juneau
                       America/Nome
@@ -3063,8 +3073,8 @@ altering the order.
      CAPT             America/Anchorage
      CAST             Antarctica/Casey
                       Africa/Khartoum
-                      Africa/Gaborone
                       Africa/Juba
+                      Africa/Gaborone
      CAT              Africa/Gaborone
                       Africa/Bujumbura
                       Africa/Lubumbashi
@@ -3074,9 +3084,9 @@ altering the order.
                       Africa/Maputo
                       Africa/Kigali
                       Africa/Khartoum
+                      Africa/Juba
                       Africa/Windhoek
                       America/Anchorage
-                      Africa/Juba
      CAWT             America/Anchorage
      CCT              Indian/Cocos
      CDDT             America/Resolute
@@ -3413,6 +3423,7 @@ altering the order.
                       Europe/Uzhgorod
                       Europe/Moscow
                       Europe/Warsaw
+                      Asia/Hebron
      EET              EET
                       Asia/Beirut
                       Europe/Sofia
@@ -3438,6 +3449,7 @@ altering the order.
                       Europe/Uzhgorod
                       Europe/Moscow
                       Europe/Warsaw
+                      Asia/Hebron
      EGST             America/Scoresbysund
      EGT              America/Scoresbysund
      EHDT             America/Santo_Domingo
@@ -3503,6 +3515,8 @@ altering the order.
                       America/Thunder_Bay
                       America/Toronto
      F                F
+     FET              Europe/Kaliningrad
+                      Europe/Minsk
      FFMT             America/Martinique
      FJST             Pacific/Fiji
      FJT              Pacific/Fiji
@@ -3602,6 +3616,7 @@ altering the order.
      IDDT             Asia/Jerusalem
      IDT              Asia/Jerusalem
                       Asia/Gaza
+                      Asia/Hebron
      IHST             Asia/Colombo
      IMT              Asia/Irkutsk
                       Europe/Istanbul
@@ -3622,6 +3637,7 @@ altering the order.
                       Atlantic/Reykjavik
                       Asia/Karachi
                       Asia/Dhaka
+                      Asia/Hebron
      JAVT             Asia/Jakarta
      JDT              Asia/Tokyo
      JMT              Atlantic/St_Helena
@@ -3641,7 +3657,6 @@ altering the order.
                       Asia/Manila
                       Pacific/Nauru
      K                K
-     KALT             Europe/Kaliningrad
      KART             Asia/Karachi
      KAST             Asia/Kashgar
      KDT              Asia/Seoul
@@ -3987,6 +4002,7 @@ altering the order.
      URAT             Asia/Oral
      URUT             Asia/Urumqi
      UT               UT
+     UTC              UTC
      UYHST            America/Montevideo
      UYST             America/Montevideo
      UYT              America/Montevideo

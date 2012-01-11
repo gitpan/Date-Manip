@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2009-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -27,7 +27,93 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.26
+=head1 VERSION 6.31
+
+
+=head1 VERSION 6.30  (2012-01-11)
+
+=over 4
+
+=item B<(*) (!) Reworked deltas>
+
+Much of the delta code was reworked.
+
+The constraint that a day is treated as 24 hours was removed (by
+adding the concept of semi-exact deltas) to better handle daylight
+saving time calculations.
+
+Made cosmetic changes to which signs will be included in a delta to
+make the deltas more readable.  Signs which are the same as the next
+higher field will be omitted, even if they cross set boundaries.
+
+Added support for non-normalized deltas.  See the $no_normalize
+option for the parse and set methods.
+
+Removed limitations on subtract=2 not working with business
+calculations.
+
+Thanks to discussion on perlmonks, and RT 65774 that prompted me to do
+this.  I'd been wanting to do it for some time, but the discussion on
+perlmonks made me realize that this needed to be much higher priority.
+
+=item B<(!) Modified Delta_Format>
+
+In conjuction with the above work, added the 'semi' mode to
+Delta_Format.
+
+=item B<(!) Removed some deprecated config variables>
+
+The following config variables have been removed.
+
+   GlobalCnf
+   IgnoreGlobalCnf
+   PersonalCnf
+   PersonalCnfPath
+   PathSep
+
+   Internal
+   DeltaSigns
+   UpdateCurrTZ
+   ConvTZ
+   OldConfigFiles
+   ResetWorkDay
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2011n).  RT 71595
+
+Corrects a bug where +0000 and -0000 offsets were not parsed correctly.
+Aaron Hall
+
+The zoneinfo data includes rules more than 20 years in the future, so we
+now store 30 years of future dates instead of 20 to catch these rules.
+
+When parsing the timezone portion of the date, timezone abbreviations
+now take higher precedence than zone names (since that is how timezone
+information is typically specified).  That only impacts dates where
+the a timezone name is the same as an abbreviation, such as 'CET'.
+
+Previously, a date with CET in it was interpreted as in the CET timezone.
+Now it is interpreted as in a timezone with the CET abbreviation.
+
+=item Better handling of undef in DM6
+
+The date/delta parsing routines in DM6 will now handle an undef argument
+without issuing a warning.  Earl C. Ruby III
+
+=item Bug fixes
+
+Fixed a bug with the parse_format %f and %i formats.  Tommi Rintala
+
+Fixed a bug where the Date::Manip::Delta::set function didn't work
+to set the month value.
+
+Fixed a bug where parsing some dates near during a DST change failed.
+
+Minor bug fix when using Delta_Format.  Prompted while investigating
+RT 41095.
+
+=back
 
 =head1 VERSION 6.25 (2011-08-31)
 
@@ -650,6 +736,9 @@ better support for localization. First suggested by Alex Kapranoff.
 
 Parsing a date ('today', 'Monday') gives a time of '00:00:00'. Suggested
 by Mark Aitchison.
+
+Working with fractional days was suggested by Peter van Hardenberg.
+This is implemented in Date::Manip::Base::day_of_year method.
 
 =back
 

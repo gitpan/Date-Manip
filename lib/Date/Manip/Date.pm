@@ -1,5 +1,5 @@
 package Date::Manip::Date;
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -25,7 +25,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 ########################################################################
@@ -110,12 +110,14 @@ sub parse {
    my($done,$y,$m,$d,$h,$mn,$s,$tzstring,$zone,$abb,$off,$dow,$got_time,
       $default_time,$firsterr);
 
- ENCODING: foreach my $string ($dmb->_encoding($instring)) {
+   ENCODING:
+   foreach my $string ($dmb->_encoding($instring)) {
       $got_time     = 0;
       $default_time = 0;
 
-   # Put parse in a simple loop for an easy exit.
-    PARSE: {
+      # Put parse in a simple loop for an easy exit.
+      PARSE:
+      {
          my(@tmp,$tmp);
          $$self{'err'} = '';
 
@@ -195,14 +197,16 @@ sub parse {
 
          # Parse deltas
          #
-         # Occasionally, a delta is entered for a date (which is interpreted
-         # as the date relative to now). There can be some confusion between
-         # a date and a delta, but the most important conflicts are the
-         # ISO 8601 dates (many of which could be interpreted as a delta),
-         # but those have already been taken care of.
+         # Occasionally, a delta is entered for a date (which is
+         # interpreted as the date relative to now). There can be some
+         # confusion between a date and a delta, but the most
+         # important conflicts are the ISO 8601 dates (many of which
+         # could be interpreted as a delta), but those have already
+         # been taken care of.
 
          unless (exists $opts{'nodelta'}) {
-            ($done,@tmp) = $self->_parse_delta($string,$dow,$got_time,$h,$mn,$s,\$noupdate);
+            ($done,@tmp) =
+              $self->_parse_delta($string,$dow,$got_time,$h,$mn,$s,\$noupdate);
             if (@tmp) {
                ($y,$m,$d,$h,$mn,$s) = @tmp;
                $got_time = 1;
@@ -215,9 +219,10 @@ sub parse {
          last PARSE;
       }
 
-      # We got an error parsing this encoding of the string. It could be that
-      # it is a genuine error, or it may be that we simply need to try a different
-      # encoding. If ALL encodings fail, we'll return the error from the first one.
+      # We got an error parsing this encoding of the string. It could
+      # be that it is a genuine error, or it may be that we simply
+      # need to try a different encoding. If ALL encodings fail, we'll
+      # return the error from the first one.
 
       if ($$self{'err'}) {
          if (! $firsterr) {
@@ -315,7 +320,8 @@ sub parse_date {
 
    # Put parse in a simple loop for an easy exit.
    my($done,@tmp,$dow);
- PARSE: {
+   PARSE:
+   {
 
       # Parse ISO 8601 dates now
 
@@ -369,7 +375,8 @@ sub _parse_date {
    my($done,$y,$m,$d,@tmp);
 
    # Put parse in a simple loop for an easy exit.
- PARSE: {
+   PARSE:
+   {
 
       # Parse (and remove) the day of week. Also, handle the simple DoW
       # formats.
@@ -455,7 +462,7 @@ sub parse_format {
             $z = $dmt->zone($off,$abb);
             return 'Invalid zone'  if (! $z);
          } else {
-            ($z) = $dmt->_now('tz',$noupdate);
+            $z = $dmt->_now('tz',$noupdate);
             $noupdate = 1;
          }
          ($y,$m,$d,$h,$mn,$s) =
@@ -485,18 +492,18 @@ sub parse_format {
       }
 
       if ($doy) {
-         ($y) = $dmt->_now('y',$noupdate)  if (! $y);
-         $noupdate = 1;
+         $y         = $dmt->_now('y',$noupdate)  if (! $y);
+         $noupdate  = 1;
          ($y,$m,$d) = @{ $dmb->day_of_year($y,$doy) };
 
       } elsif ($g) {
-         ($y) = $dmt->_now('y',$noupdate)  if (! $y);
-         $noupdate = 1;
+         $y         = $dmt->_now('y',$noupdate)  if (! $y);
+         $noupdate  = 1;
          ($y,$m,$d) = @{ $dmb->_week_of_year($g,$w,1) };
 
       } elsif ($l) {
-         ($y) = $dmt->_now('y',$noupdate)  if (! $y);
-         $noupdate = 1;
+         $y         = $dmt->_now('y',$noupdate)  if (! $y);
+         $noupdate  = 1;
          ($y,$m,$d) = @{ $dmb->_week_of_year($l,$u,7) };
 
       } elsif ($m) {
@@ -700,7 +707,7 @@ BEGIN {
             $re .= '(?<m>\d\d)';
 
          } elsif ($f eq 'f') {
-            $re .= '(?:(?<m>\d\d)| (?<m>\d))';
+            $re .= '(?:(?<m>\d\d)| ?(?<m>\d))';
 
          } elsif (exists $mon_form{$f}) {
             my $abb = $$dmb{'data'}{'rx'}{'month_abb'}[0];
@@ -733,7 +740,7 @@ BEGIN {
             $re .= '(?<h>\d\d)';
 
          } elsif ($f eq 'k'  ||  $f eq 'i') {
-            $re .= '(?:(?<h>\d\d)| (?<h>\d))';
+            $re .= '(?:(?<h>\d\d)| ?(?<h>\d))';
 
          } elsif ($f eq 'p') {
             my $ampm = $$dmb{data}{rx}{ampm}[0];
@@ -887,7 +894,7 @@ sub _parse_check {
    # Interpret timezone information and check that date is valid
    # in the timezone.
 
-   my $zonename;
+   my ($zonename,$isdst);
    if (defined($zone)) {
       $zonename = $dmt->_zone($zone);
 
@@ -908,13 +915,45 @@ sub _parse_check {
          return 1;
       }
 
+      # Figure out $isdst from $abb/$off (for everything else, we'll
+      # try both values).
+
+      if (defined $off  ||  defined $abb) {
+         my @off    = @{ $dmb->split('offset',$off) }  if (defined($off));
+         my $err    = 1;
+         foreach my $i (0,1) {
+            my $per = $dmt->date_period([$y,$m,$d,$h,$mn,$s],$zonename,1,$i);
+            next    if (! $per);
+            my $a   = $$per[4];
+            my $o   = $$per[3];
+            if (defined $abb  &&  $a eq $abb) {
+               $err = 0;
+               $isdst = $i;
+               last;
+            }
+            if (defined ($off)) {
+               if ($off[0] == $$o[0]  &&
+                   $off[1] == $$o[1]  &&
+                   $off[2] == $$o[2]) {
+                  $err = 0;
+                  $isdst = $i;
+                  last;
+               }
+            }
+         }
+         if ($err) {
+            $$self{'err'} = 'Invalid timezone';
+            return 1;
+         }
+      }
+
    } else {
-      ($zonename) = $dmt->_now('tz',1);
+      $zonename = $dmt->_now('tz');
    }
 
    # Store the date
 
-   $self->set('zdate',$zonename,[$y,$m,$d,$h,$mn,$s]);
+   $self->set('zdate',$zonename,[$y,$m,$d,$h,$mn,$s],$isdst);
    return 1  if ($$self{'err'});
 
    $$self{'data'}{'in'}    = $instring;
@@ -1191,10 +1230,10 @@ sub _other_rx {
 
    if ($rx eq 'time') {
 
-      my $h24    = '(2[0-3]|1[0-9]|0?[0-9])'; # 0-23      00-23
-      my $h12    = '(1[0-2]|0?[1-9])';        # 1-12      01-12
-      my $mn     = '([0-5][0-9])';            # 00-59
-      my $ss     = '([0-5][0-9])';            # 00-59
+      my $h24    = '(?<h>2[0-3]|1[0-9]|0?[0-9])'; # 0-23      00-23
+      my $h12    = '(?<h>1[0-2]|0?[1-9])';        # 1-12      01-12
+      my $mn     = '(?<mn>[0-5][0-9])';           # 00-59
+      my $ss     = '(?<s>[0-5][0-9])';            # 00-59
 
       # how to express fractions
 
@@ -1213,15 +1252,15 @@ sub _other_rx {
          $f1 = "[.,]";
          $f2 = "[.,:]";
       }
-      my $fh     = "(?:$f1(\\d*))";  # fractional hours (keep)
-      my $fm     = "(?:$f1(\\d*))";  # fractional minutes (keep)
-      my $fs     = "(?:$f2\\d*)";    # fractional seconds
+      my $fh     = "(?:$f1(?<fh>\\d*))";  # fractional hours (keep)
+      my $fm     = "(?:$f1(?<fm>\\d*))";  # fractional minutes (keep)
+      my $fs     = "(?:$f2\\d*)";         # fractional seconds
 
       # AM/PM
 
       my($ampm);
       if (exists $$dmb{'data'}{'rx'}{'ampm'}) {
-         $ampm   = "(?:\\s*($$dmb{data}{rx}{ampm}[0]))";
+         $ampm   = "(?:\\s*(?<ampm>$$dmb{data}{rx}{ampm}[0]))";
       }
 
       # H:MN and MN:S separators
@@ -1239,46 +1278,41 @@ sub _other_rx {
       # How to express the time
       #  matches = (H, FH, MN, FMN, S, AM, TZSTRING, ZONE, ABB, OFF, ABB)
 
-      my @time   = ();
+      my $timerx;
+
       for (my $i=0; $i<=$#hm; $i++) {
-         push(@time,
-              "${h12}()$hm[$i]${mn}()$ms[$i]${ss}${fs}?${ampm}?" # H:MN:SS[,S+] [AM]
-             )  if ($ampm);
-         push(@time,
-              "${h24}()$hm[$i]${mn}()$ms[$i]${ss}${fs}?()",      # H:MN:SS[,S+]
-              "(24)()$hm[$i](00)()$ms[$i](00)()"                 # 24:00:00
-             );
+         my $hm = $hm[$i];
+         my $ms = $ms[$i];
+         $timerx .= "${h12}$hm${mn}$ms${ss}${fs}?${ampm}?|" # H:MN:SS[,S+] [AM]
+           if ($ampm);
+         $timerx .= "${h24}$hm${mn}$ms${ss}${fs}?|" .       # H:MN:SS[,S+]
+                    "(?<h>24)$hm(?<mn>00)$ms(?<s>00)|";     # 24:00:00
       }
       for (my $i=0; $i<=$#hm; $i++) {
-         push(@time,
-              "${h12}()$hm[$i]${mn}${fm}()${ampm}?"              # H:MN,M+ [AM]
-             ) if ($ampm);
-         push(@time,
-              "${h24}()$hm[$i]${mn}${fm}()()"                    # H:MN,M+
-             );
+         my $hm = $hm[$i];
+         my $ms = $ms[$i];
+         $timerx .= "${h12}$hm${mn}${fm}${ampm}?|"          # H:MN,M+ [AM]
+           if ($ampm);
+         $timerx .= "${h24}$hm${mn}${fm}|";                 # H:MN,M+
       }
-      push(@time,
-           "${h12}${fh}()()()${ampm}?"                           # H,H+ [AM]
-          )  if ($ampm);
-      push(@time,
-           "${h24}${fh}()()()()"                                 # H,H+
-          );
+      $timerx .= "${h12}${fh}${ampm}?|"                     # H,H+ [AM]
+        if ($ampm);
+      $timerx .= "${h24}${fh}|";                            # H,H+
       for (my $i=0; $i<=$#hm; $i++) {
-         push(@time,
-              "${h12}()$hm[$i]${mn}()()${ampm}?"                 # H:MN [AM]
-             ) if ($ampm);
-         push(@time,
-              "${h24}()$hm[$i]${mn}()()()",                      # H:MN
-              "(24)()$hm[$i](00)()()()"                          # 24:00
-             );
+         my $hm = $hm[$i];
+         my $ms = $ms[$i];
+         $timerx .= "${h12}$hm${mn}${ampm}?|"               # H:MN [AM]
+           if ($ampm);
+         $timerx .= "${h24}$hm${mn}|" .                     # H:MN
+                    "(?<h>24)$hm(?<mn>00)|";                # 24:00
       }
-      push(@time,"${h12}()()()()${ampm}") if ($ampm);            # H AM
+      $timerx .= "${h12}${ampm}|"  if ($ampm);              # H AM
+      chop($timerx);                                        # remove trailing pipe
 
       my $zrx    = $dmt->_zrx();
-      my $timerx = join('|',@time);
       my $at     = $$dmb{'data'}{'rx'}{'at'};
       my $atrx   = qr/(?:^|\s+)(?:$at)\s+/;
-      $timerx    = qr/(?:$atrx|^|\s+)(?|$timerx)(?:\s*$zrx)?(?:\s+|$)/i;
+      $timerx    = qr/(?:$atrx|^|\s+)(?:$timerx)(?:\s*$zrx)?(?:\s+|$)/i;
 
       $$dmb{'data'}{'rx'}{'other'}{$rx} = $timerx;
 
@@ -1473,13 +1507,12 @@ sub _parse_time {
                  $self->_other_rx('time'));
    my $got_time = 0;
 
-   my($h,$mn,$s,$fh,$fm,$h24,$ampm,$tzstring,$zone,$abb,$off,$tmp);
+   my($h,$mn,$s,$fh,$fm,$h24,$ampm,$tzstring,$zone,$abb,$off);
 
    if ($string =~ s/$timerx/ /) {
-      ($h,$fh,$mn,$fm,$s,$ampm,$tzstring,$zone,$abb,$off,$tmp) =
-        ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12);
+      ($h,$fh,$mn,$fm,$s,$ampm,$tzstring,$zone,$abb,$off) =
+        @+{qw(h fh mn fm s ampm tzstring zone abb off)};
 
-      $off      = $tmp  if (! defined($off));
       $h24      = 1  if ($h == 24  &&  $mn == 0  &&  $s == 0);
       $string   =~ s/\s*$//;
       $got_time = 1;
@@ -1605,6 +1638,8 @@ sub _parse_delta {
 
    my $delta = $self->new_delta();
    my $err   = $delta->parse($string);
+   my $tz    = $dmt->_now('tz');
+   my $isdst = $dmt->_now('isdst');
 
    if (! $err) {
       my($dy,$dm,$dw,$dd,$dh,$dmn,$ds) = @{ $$delta{'data'}{'delta'} };
@@ -1623,9 +1658,13 @@ sub _parse_delta {
       }
 
       my $business = $$delta{'data'}{'business'};
-      ($y,$m,$d,$h,$mn,$s) =
-        @{ $self->__calc_date_delta($business,[$y,$m,$d,$h,$mn,$s],
-                                    [$dy,$dm,$dw,$dd,$dh,$dmn,$ds],0) };
+
+      my($date2,$offset,$abbrev);
+      ($err,$date2,$offset,$isdst,$abbrev) =
+        $self->__calc_date_delta([$y,$m,$d,$h,$mn,$s],
+                                    [$dy,$dm,$dw,$dd,$dh,$dmn,$ds],
+                                    0,$business,$tz,$isdst);
+      ($y,$m,$d,$h,$mn,$s) = @$date2;
 
       if ($dow) {
          if ($dd != 0  ||  $dh != 0  || $dmn != 0  ||  $ds != 0) {
@@ -1664,8 +1703,15 @@ sub _parse_datetime_other {
          my $delta  = $$dmb{'data'}{'wordmatch'}{'offset_time'}{lc($special)};
          my @delta  = @{ $dmb->split('delta',$delta) };
          my @date   = $dmt->_now('now',$$noupdate);
+         my $tz     = $dmt->_now('tz');
+         my $isdst  = $dmt->_now('isdst');
          $$noupdate = 1;
-         @date      = @{ $self->__calc_date_delta(0,[@date],[@delta]) };
+
+         my($err,$date2,$offset,$abbrev);
+         ($err,$date2,$offset,$isdst,$abbrev) =
+           $self->__calc_date_delta([@date],[@delta],0,0,$tz,$isdst);
+         @date = @$date2;
+
          return (1,@date);
 
       } elsif (defined($epoch)) {
@@ -1696,16 +1742,17 @@ sub _parse_date_other {
    if ($string =~ $rx) {
       ($y,$mmm,$month,$nextprev,$last,$field_y,$field_m,$field_w,$field_d,$nth,
        $special,$n) =
-         @+{qw(y mmm month next last field_y field_m field_w field_d nth special n)};
+         @+{qw(y mmm month next last field_y field_m field_w field_d
+               nth special n)};
 
       if (defined($y)) {
          $y     = $dmt->_fix_year($y);
          $got_y = 1;
          return ()  if (! $y);
       } else {
-         ($y)  = $dmt->_now('y',$$noupdate);
+         $y         = $dmt->_now('y',$$noupdate);
          $$noupdate = 1;
-         $got_y = 0;
+         $got_y     = 0;
          $$self{'data'}{'def'}[0] = '';
       }
 
@@ -1750,9 +1797,15 @@ sub _parse_date_other {
                @delta = (0,0,$sign*1,0,0,0,0);
             }
 
-            my @now = $dmt->_now('now',$$noupdate);
+            my @now   = $dmt->_now('now',$$noupdate);
+            my $tz    = $dmt->_now('tz');
+            my $isdst = $dmt->_now('isdst');
             $$noupdate = 1;
-            ($y,$m,$d,$h,$mn,$s) = @{ $self->__calc_date_delta(0,[@now],[@delta],0) };
+
+            my($err,$offset,$abbrev,$date2);
+            ($err,$date2,$offset,$isdst,$abbrev) =
+              $self->__calc_date_delta([@now],[@delta],0,0,$tz,$isdst);
+            ($y,$m,$d,$h,$mn,$s) = @$date2;
 
          } elsif ($dow) {
             # next/prev friday
@@ -1799,9 +1852,11 @@ sub _parse_date_other {
                return ()  if ($nth > 5);
 
                $d = 1;
-               ($y,$m,$d,$h,$mn,$s) = @{ $self->__next_prev([$y,$m,1,0,0,0],1,$dow,1) };
+               ($y,$m,$d,$h,$mn,$s) =
+                 @{ $self->__next_prev([$y,$m,1,0,0,0],1,$dow,1) };
                my $m2 = $m;
-               ($y,$m2,$d) = @{ $dmb->calc_date_days([$y,$m,$d],7*($nth-1)) }  if ($nth > 1);
+               ($y,$m2,$d) = @{ $dmb->calc_date_days([$y,$m,$d],7*($nth-1)) }
+                 if ($nth > 1);
                return ()  if (! $m2  ||  $m2 != $m);
 
             } else {
@@ -1813,7 +1868,8 @@ sub _parse_date_other {
             # nth DoW [in YYYY]
 
             ($y,$m,$d,$h,$mn,$s) = @{ $self->__next_prev([$y,1,1,0,0,0],1,$dow,1) };
-            ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],7*($nth-1)) }  if ($nth > 1);
+            ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],7*($nth-1)) }
+              if ($nth > 1);
          }
 
       } elsif ($field_w  &&  $dow) {
@@ -1850,8 +1906,13 @@ sub _parse_date_other {
          my $delta  = $$dmb{'data'}{'wordmatch'}{'offset_date'}{lc($special)};
          my @delta  = @{ $dmb->split('delta',$delta) };
          ($y,$m,$d) = $dmt->_now('now',$$noupdate);
+         my $tz     = $dmt->_now('tz');
+         my $isdst  = $dmt->_now('isdst');
          $$noupdate = 1;
-         ($y,$m,$d) = @{ $self->__calc_date_delta(0,[$y,$m,$d,0,0,0],[@delta]) };
+         my($err,$offset,$abbrev,$date2);
+         ($err,$date2,$offset,$isdst,$abbrev) =
+           $self->__calc_date_delta([$y,$m,$d,0,0,0],[@delta],0,0,$tz,$isdst);
+         ($y,$m,$d) = @$date2;
 
          if ($field_w) {
             ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],7) };
@@ -1880,7 +1941,7 @@ sub _def_date {
    # We'll also fix the year (turn 2-digit into 4-digit).
 
    if ($y eq '') {
-      ($y)       = $dmt->_now('y',$$noupdate);
+      $y         = $dmt->_now('y',$$noupdate);
       $$noupdate = 1;
       $$self{'data'}{'def'}[0] = '';
    } else {
@@ -1899,7 +1960,7 @@ sub _def_date {
       $m = 1;
       $$self{'data'}{'def'}[1] = 1;
    } else {
-      ($m) = $dmt->_now('m',$$noupdate);
+      $m         = $dmt->_now('m',$$noupdate);
       $$noupdate = 1;
       $$self{'data'}{'def'}[1] = '';
    }
@@ -1915,7 +1976,7 @@ sub _def_date {
       $d = 1;
       $$self{'data'}{'def'}[2] = 1;
    } else {
-      ($d) = $dmt->_now('d',$$noupdate);
+      $d         = $dmt->_now('d',$$noupdate);
       $$noupdate = 1;
       $$self{'data'}{'def'}[2] = '';
    }
@@ -1935,7 +1996,7 @@ sub _def_date_doy {
    # We'll also fix the year (turn 2-digit into 4-digit).
 
    if ($y eq '') {
-      ($y) = $dmt->_now('y',$$noupdate);
+      $y         = $dmt->_now('y',$$noupdate);
       $$noupdate = 1;
       $$self{'data'}{'def'}[0] = '';
    } else {
@@ -1968,7 +2029,7 @@ sub _def_date_dow {
 
    if ($y ne '') {
       if (length($y) == 1) {
-         my ($tmp) = $dmt->_now('y',$$noupdate);
+         my $tmp   = $dmt->_now('y',$$noupdate);
          $tmp      =~ s/.$/$y/;
          $y        = $tmp;
          $$noupdate = 1;
@@ -1979,7 +2040,7 @@ sub _def_date_dow {
       }
 
    } else {
-      ($y) = $dmt->_now('y',$$noupdate);
+      $y         = $dmt->_now('y',$$noupdate);
       $$noupdate = 1;
       $$self{'data'}{'def'}[0] = '';
    }
@@ -2043,7 +2104,7 @@ sub _def_time {
    if ($h ne '') {
       $defined = 1;
    } else {
-      ($h) = $dmt->_now('h',$$noupdate);
+      $h         = $dmt->_now('h',$$noupdate);
       $$noupdate = 1;
       $$self{'data'}{'def'}[3] = '';
    }
@@ -2059,7 +2120,7 @@ sub _def_time {
       $m = 0;
       $$self{'data'}{'def'}[4] = 1;
    } else {
-      ($m) = $dmt->_now('mn',$$noupdate);
+      $m         = $dmt->_now('mn',$$noupdate);
       $$noupdate = 1;
       $$self{'data'}{'def'}[4] = '';
    }
@@ -2125,7 +2186,7 @@ sub value {
          if (! @{ $$self{'data'}{'loc'} }) {
             my $zone  = $$self{'data'}{'tz'};
             $date     = $$self{'data'}{'date'};
-            my ($local) = $dmt->_now('tz',1);
+            my $local = $dmt->_now('tz',1);
 
             if ($zone eq $local) {
                $$self{'data'}{'loc'}      = $date;
@@ -2222,7 +2283,7 @@ BEGIN {
          if ($$self{'data'}{'set'}  &&  ! $$self{'err'}) {
             $tz      = $$self{'data'}{'tz'};
          } else {
-            ($tz)    = $dmt->_now('tz',1);
+            $tz      = $dmt->_now('tz',1);
          }
          $self->_init();
          @def = @{ $$self{'data'}{'def'} };
@@ -2290,7 +2351,7 @@ BEGIN {
          for (my $i=0; $i<=5; $i++) {
             $def[$i] = 0  if ($def[$i]);
          }
-         ($tz) = $dmt->_now('tz',1)  if (! $new_tz);
+         $tz = $dmt->_now('tz',1)  if (! $new_tz);
 
       } elsif ($field eq 'zone') {
 
@@ -2308,7 +2369,7 @@ BEGIN {
          } else {
             $err = 1;
          }
-         ($tz) = $dmt->_now('tz',1)  if (! $new_tz);
+         $tz = $dmt->_now('tz',1)  if (! $new_tz);
 
       } elsif (exists $field{$field}) {
 
@@ -2465,7 +2526,7 @@ sub __next_prev {
    if (defined($time)) {
       if ($dow) {
          # $time will refer to a full [H,MN,S]
-         my($err,$h,$mn,$s) = $dmb->_normalize_hms('norm',@$time);
+         my($err,$h,$mn,$s) = $dmb->_hms_fields({ 'out' => 'list' },$time);
          if ($err) {
             $$self{'err'} = "[$caller] invalid time argument";
             return undef;
@@ -2622,27 +2683,14 @@ sub __next_prev {
 
 sub calc {
    my($self,$obj,@args) = @_;
-   if ($$self{'err'}  ||  ! $$self{'data'}{'set'}) {
-      $$self{'err'} = '[calc] First object invalid (date)';
-      return undef;
-   }
 
    if (ref($obj) eq 'Date::Manip::Date') {
-      if ($$obj{'err'}  ||  ! $$obj{'data'}{'set'}) {
-         $$self{'err'} = '[calc] Second object invalid (date)';
-         return undef;
-      }
       return $self->_calc_date_date($obj,@args);
 
    } elsif (ref($obj) eq 'Date::Manip::Delta') {
-      if ($$obj{'err'}) {
-         $$self{'err'} = '[calc] Second object invalid (delta)';
-         return undef;
-      }
       return $self->_calc_date_delta($obj,@args);
 
    } else {
-      $$self{'err'} = '[calc] Second object must be a Date/Delta object';
       return undef;
    }
 }
@@ -2650,6 +2698,16 @@ sub calc {
 sub _calc_date_date {
    my($self,$date,@args) = @_;
    my $ret               = $self->new_delta();
+
+   if ($$self{'err'}  ||  ! $$self{'data'}{'set'}) {
+      $$ret{'err'} = '[calc] First object invalid (date)';
+      return $ret;
+   }
+
+   if ($$date{'err'}  ||  ! $$date{'data'}{'set'}) {
+      $$ret{'err'} = '[calc] Second object invalid (date)';
+      return $ret;
+   }
 
    # Handle subtract/mode arguments
 
@@ -2672,7 +2730,7 @@ sub _calc_date_date {
    }
    $mode   = 'exact'  if (! $mode);
 
-   if ($mode !~ /^(business|bapprox|approx|exact)$/i) {
+   if ($mode !~ /^(business|bsemi|bapprox|approx|semi|exact)$/i) {
       $$ret{'err'} = '[calc] Invalid mode argument';
       return $ret;
    }
@@ -2681,32 +2739,44 @@ sub _calc_date_date {
    #    dates must be in the same timezone
    #    use dates in that zone
    #
-   # otherwise if both dates are in the same timezone  &&  approx mode
+   # otherwise if both dates are in the same timezone  &&  approx/semi mode
    #    use the dates in that zone
    #
    # otherwise
    #    convert to gmt
    #    use those dates
 
-   my($date1,$date2);
-   if ($mode eq 'business'  ||  $mode eq 'bapprox') {
+   my($date1,$date2,$tz1,$isdst1,$tz2,$isdst2);
+   if ($mode eq 'business'  ||  $mode eq 'bapprox'  ||  $mode eq 'bsemi') {
       if ($$self{'data'}{'tz'} eq $$date{'data'}{'tz'}) {
-         $date1 = [ $self->value() ];
-         $date2 = [ $date->value() ];
+         $date1  = [ $self->value() ];
+         $date2  = [ $date->value() ];
+         $tz1    = $$self{'data'}{'tz'};
+         $tz2    = $tz1;
+         $isdst1 = $$self{'data'}{'isdst'};
+         $isdst2 = $$date{'data'}{'isdst'};
       } else {
          $$ret{'err'} = '[calc] Dates must be in the same timezone for ' .
            'business mode calculations';
          return $ret;
       }
 
-   } elsif ($mode eq 'approx'  &&
+   } elsif (($mode eq 'approx'  ||  $mode eq 'semi')  &&
             $$self{'data'}{'tz'} eq $$date{'data'}{'tz'}) {
-      $date1 = [ $self->value() ];
-      $date2 = [ $date->value() ];
+      $date1  = [ $self->value() ];
+      $date2  = [ $date->value() ];
+      $tz1    = $$self{'data'}{'tz'};
+      $tz2    = $tz1;
+      $isdst1 = $$self{'data'}{'isdst'};
+      $isdst2 = $$date{'data'}{'isdst'};
 
    } else {
       $date1 = [ $self->value('gmt') ];
       $date2 = [ $date->value('gmt') ];
+      $tz1    = 'GMT';
+      $tz2    = $tz1;
+      $isdst1 = 0;
+      $isdst2 = 0;
    }
 
    # Do the calculation
@@ -2714,22 +2784,21 @@ sub _calc_date_date {
    my(@delta);
    if ($subtract) {
       if ($mode eq 'business'  ||  $mode eq 'exact'  ||  $subtract == 2) {
-         @delta = @{ $self->__calc_date_date($mode,$date2,$date1) };
+         @delta = @{ $self->__calc_date_date($mode,$date2,$tz2,$isdst2,
+                                             $date1,$tz1,$isdst1) };
       } else {
-         @delta = @{ $self->__calc_date_date($mode,$date1,$date2) };
+         @delta = @{ $self->__calc_date_date($mode,$date1,$tz1,$isdst1,
+                                             $date2,$tz2,$isdst2) };
          @delta = map { -1*$_ } @delta;
       }
    } else {
-      @delta = @{ $self->__calc_date_date($mode,$date1,$date2) };
+      @delta = @{ $self->__calc_date_date($mode,$date1,$tz1,$isdst1,
+                                          $date2,$tz2,$isdst2) };
    }
 
-   # Set the signs and save the delta
+   # Save the delta
 
-   for (my $i=0; $i<7; $i++) {
-      $delta[$i] = '+'.$delta[$i]  if ($delta[$i]>=0);
-   }
-
-   if ($mode eq 'business' || $mode eq 'bapprox') {
+   if ($mode eq 'business' || $mode eq 'bapprox' || $mode eq 'bsemi') {
       $ret->set('business',\@delta);
    } else {
       $ret->set('delta',\@delta);
@@ -2738,31 +2807,19 @@ sub _calc_date_date {
 }
 
 sub __calc_date_date {
-   my($self,$mode,$date1,$date2) = @_;
+   my($self,$mode,$date1,$tz1,$isdst1,$date2,$tz2,$isdst2) = @_;
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
 
-   my($y1,$m1,$d1,$h1,$mn1,$s1) = @$date1;
-   my($y2,$m2,$d2,$h2,$mn2,$s2) = @$date2;
-   my @delta;
+   my($dy,$dm,$dw,$dd,$dh,$dmn,$ds) = (0,0,0,0,0,0,0);
 
-   if ($mode eq 'exact'  ||
-       $mode eq 'approx') {
+   if ($mode eq 'approx'  ||  $mode eq 'bapprox') {
+      my($y1,$m1,$d1,$h1,$mn1,$s1) = @$date1;
+      my($y2,$m2,$d2,$h2,$mn2,$s2) = @$date2;
+      $dy       = $y2-$y1;
+      $dm       = $m2-$m1;
 
-      # form the delta for hour/min/sec
-      $delta[4] = $h2-$h1;
-      $delta[5] = $mn2-$mn1;
-      $delta[6] = $s2-$s1;
-
-      # form the delta for yr/mon/wk/day
-
-      if ($mode eq 'exact') {
-         $delta[0] = 0;
-         $delta[1] = 0;
-         $delta[2] = 0;
-         $delta[3] = $dmb->days_since_1BC($date2) -
-           $dmb->days_since_1BC($date1);
-      } else {
+      if ($dy  ||  $dm) {
          # If $d1 is greater than the number of days allowed in the
          # month $y2/$m2, set it equal to the number of days. In other
          # words:
@@ -2771,41 +2828,74 @@ sub __calc_date_date {
          my $dim   = $dmb->days_in_month($y2,$m2);
          $d1       = $dim  if ($d1 > $dim);
 
-         $delta[0] = $y2-$y1;
-         $delta[1] = $m2-$m1;
-         $delta[2] = 0;
-         $delta[3] = $d2-$d1;
+         $date1    = [$y2,$m2,$d1,$h1,$mn1,$s1];
       }
+   }
 
-   } else {
-      # Business mode (business or bapprox)
+   if ($mode eq 'semi'  ||  $mode eq 'approx') {
 
-      # do yr/mon/wk part
+      # Calculate the number of weeks/days apart (temporarily ignoring
+      # DST effects).
 
-      if ($mode eq 'business') {
-         $delta[0] = 0;
-         $delta[1] = 0;
-         $delta[2] = 0;
+      $dd      = $dmb->days_since_1BC($date2) -
+                 $dmb->days_since_1BC($date1);
+      $dw      = int($dd/7);
+      $dd     -= $dw*7;
 
-      } else {
-         $delta[0] = $y2-$y1;
-         $delta[1] = $m2-$m1;
-         $delta[2] = 0;
+      # Adding $dd to $date1 gives: ($y2,$m2,$d2, $h1,$mn1,$s1)
+      # Make sure this is valid (taking into account DST effects).
+      # If it isn't, make it valid.
 
-         $y1       = $y2;
-         $m1       = $m2;
-         my $dim   = $dmb->days_in_month($y2,$m2);
-         $d1       = $dim  if ($d1 > $dim);
+      if ($dw  ||  $dd) {
+         my($y1,$m1,$d1,$h1,$mn1,$s1) = @$date1;
+         my($y2,$m2,$d2,$h2,$mn2,$s2) = @$date2;
+         $date1                       = [$y2,$m2,$d2,$h1,$mn1,$s1];
       }
+      if ($dy  ||  $dm  ||  $dw  ||  $dd) {
+         my $force                    = ( ($dw > 0 || $dd > 0) ? 1 : -1 );
+         my($off,$isdst,$abb);
+         ($date1,$off,$isdst,$abb)    =
+           $self->_calc_date_check_dst($date1,$tz2,$isdst2,$force);
+      }
+   }
 
-      # make sure both are work days
+   if ($mode eq 'bsemi'  ||  $mode eq 'bapprox') {
+      # Calculate the number of weeks.  Ignore the days
+      # part.  Also, since there are no DST effects, we don't
+      # have to check for validity.
 
-      ($y1,$m1,$d1,$h1,$mn1,$s1) =
-        @{ $self->__nextprev_business_day(0,0,1,[$y1,$m1,$d1,$h1,$mn1,$s1]) };
-      ($y2,$m2,$d2,$h2,$mn2,$s2) =
-        @{ $self->__nextprev_business_day(0,0,1,[$y2,$m2,$d2,$h2,$mn2,$s2]) };
+      $dd      = $dmb->days_since_1BC($date2) -
+                 $dmb->days_since_1BC($date1);
+      $dw      = int($dd/7);
+      $dd      = 0;
+      $date1   = $dmb->calc_date_days($date1,$dw*7);
+   }
 
-      # find out which direction we need to move $date1 to get to $date2
+   if ($mode eq 'exact'  ||  $mode eq 'semi'  ||  $mode eq 'approx') {
+      my $sec1 = $dmb->secs_since_1970($date1);
+      my $sec2 = $dmb->secs_since_1970($date2);
+      $ds      = $sec2 - $sec1;
+
+      {
+         no integer;
+         $dh   = int($ds/3600);
+         $ds  -= $dh*3600;
+      }
+      $dmn     = int($ds/60);
+      $ds     -= $dmn*60;
+   }
+
+   if ($mode eq 'business'  ||  $mode eq 'bsemi'  ||  $mode eq 'bapprox') {
+
+      # Make sure both are work days
+
+      $date1 = $self->__nextprev_business_day(0,0,1,$date1);
+      $date2 = $self->__nextprev_business_day(0,0,1,$date2);
+
+      my($y1,$m1,$d1,$h1,$mn1,$s1) = @$date1;
+      my($y2,$m2,$d2,$h2,$mn2,$s2) = @$date2;
+
+      # Find out which direction we need to move $date1 to get to $date2
 
       my $dir = 0;
       if ($y1 < $y2) {
@@ -2822,123 +2912,373 @@ sub __calc_date_date {
          $dir = -1;
       }
 
-      # now do the day part (to get to the same day)
+      # Now do the day part (to get to the same day)
 
-      $delta[3] = 0;
+      $dd = 0;
       while ($dir) {
          ($y1,$m1,$d1) = @{ $dmb->calc_date_days([$y1,$m1,$d1],$dir) };
-         $delta[3] += $dir  if ($self->__is_business_day([$y1,$m1,$d1,0,0,0],0));
+         $dd += $dir  if ($self->__is_business_day([$y1,$m1,$d1,0,0,0],0));
          $dir = 0  if ($y1 == $y2  &&  $m1 == $m2  &&  $d1 == $d2);
       }
 
-      # both dates are now on a business day, and during business
+      # Both dates are now on a business day, and during business
       # hours, so do the hr/min/sec part trivially
 
-      $delta[4] = $h2-$h1;
-      $delta[5] = $mn2-$mn1;
-      $delta[6] = $s2-$s1;
+      $dh  = $h2-$h1;
+      $dmn = $mn2-$mn1;
+      $ds  = $s2-$s1;
    }
 
-   return [ @delta ];
+   return [ $dy,$dm,$dw,$dd,$dh,$dmn,$ds ];
 }
 
 sub _calc_date_delta {
    my($self,$delta,$subtract) = @_;
+   my $ret                    = $self->new_date();
+
+   if ($$self{'err'}  ||  ! $$self{'data'}{'set'}) {
+      $$ret{'err'} = '[calc] Date object invalid';
+      return $ret;
+   }
+
+   if ($$delta{'err'}) {
+      $$ret{'err'} = '[calc] Delta object invalid';
+      return $ret;
+   }
 
    # Get the date/delta fields
 
-   $subtract        = 0  if (! $subtract);
-   my @delta        = @{ $$delta{'data'}{'delta'} };
-   my $business     = $$delta{'data'}{'business'};
-   my $approx       = 0;
-   my ($dy,$dm,$dw) = (@delta);
-   $approx          = 1  if ($dy != 0  ||  $dm != 0  ||  ($business && $dw != 0));
+   $subtract     = 0  if (! $subtract);
+   my @delta     = @{ $$delta{'data'}{'delta'} };
+   my @date      = @{ $$self{'data'}{'date'} };
+   my $business  = $$delta{'data'}{'business'};
+   my $tz        = $$self{'data'}{'tz'};
+   my $isdst     = $$self{'data'}{'isdst'};
 
-   $subtract        = 1  if ($business  &&  $subtract == 2);
-   my @date;
-   if ($business  ||  $approx) {
-      @date = $self->value();
+   my($err,$date2,$offset,$abbrev);
+   ($err,$date2,$offset,$isdst,$abbrev) =
+     $self->__calc_date_delta([@date],[@delta],$subtract,$business,$tz,$isdst);
+
+   if ($err) {
+      $$ret{'err'} = '[calc] Unable to perform calculation';
    } else {
-      @date = $self->value('gmt');
-   }
-
-   my $ret = $self->new_date();
-
-   my $date2;
-   if ($approx  &&  $subtract == 2) {
-      $date2 = $self->__calc_date_delta_inverse([@date],[@delta]);
-      if (! defined($date2)) {
-         $$ret{'err'} = '[calc_date_delta] Impossible error (report this please)';
-         return $ret;
-      }
-
-   } else {
-      @delta = map { -1*$_ } @delta  if ($subtract);
-      $date2 = $self->__calc_date_delta($business,[@date],[@delta]);
-   }
-
-   if ($business || $approx) {
-      $ret->set('date',$date2);
-   } else {
-      $ret->set('zdate','gmt',$date2);
-      my $zone = $$self{'data'}{'tz'};
-      $ret->convert($zone);
+      $$ret{'data'}{'set'}   = 1;
+      $$ret{'data'}{'date'}  = $date2;
+      $$ret{'data'}{'tz'}    = $tz;
+      $$ret{'data'}{'isdst'} = $isdst;
+      $$ret{'data'}{'offset'}= $offset;
+      $$ret{'data'}{'abb'}   = $abbrev;
    }
    return $ret;
 }
 
-# Do a date+delta calculation on raw data instead of objects
-#
 sub __calc_date_delta {
-   my($self,$business,$date,$delta) = @_;
+   my($self,$date,$delta,$subtract,$business,$tz,$isdst) = @_;
 
+   my ($dy,$dm,$dw,$dd,$dh,$dmn,$ds) = @$delta;
+   my @date                          = @$date;
+
+   my ($err,$date2,$offset,$abbrev);
+
+   # In business mode, daylight saving time is ignored, so days are
+   # of a constant, known length, so they'll be done in the exact
+   # function.  Otherwise, they'll be done in the approximate function.
+
+   my($dd_exact,$dd_approx);
+   if ($business) {
+      $dd_exact  = $dd;
+      $dd_approx = 0;
+   } else {
+      $dd_exact  = 0;
+      $dd_approx = $dd;
+   }
+
+   if      ($subtract == 2  &&  ($dy || $dm || $dw || $dd_approx)) {
+      # For subtract=2:
+      #    DATE = RET + DELTA
+      #
+      # The delta consisists of an approximate part (which is added first)
+      # and an exact part (added second):
+      #    DATE = RET + DELTA(approx) + DELTA(exact)
+      #    DATE = RET' + DELTA(exact)
+      #        where RET' = RET + DELTA(approx)
+      #
+      # For an exact delta, subtract==2 and subtract==1 are equivalent,
+      # so this can be written:
+      #    DATE - DELTA(exact) = RET'
+      #
+      # So the inverse subtract only needs include the approximate
+      # portion of the delta.
+
+      ($err,$date2,$offset,$isdst,$abbrev) =
+        $self->__calc_date_delta_exact([@date],[-1*$dd_exact,-1*$dh,-1*$dmn,-1*$ds],
+                                       $business,$tz,$isdst);
+
+      ($err,$date2,$offset,$isdst,$abbrev) =
+        $self->__calc_date_delta_inverse($date2,[$dy,$dm,$dw,$dd_approx],
+                                         $business,$tz,$isdst)
+          if (! $err);
+
+   } else {
+      # We'll add the approximate part, followed by the exact part.
+      # After the approximate part, we need to make sure we're on
+      # a valid business day in business mode.
+
+      ($dy,$dm,$dw,$dd_exact,$dd_approx,$dh,$dmn,$ds) =
+        map { -1*$_ } ($dy,$dm,$dw,$dd_exact,$dd_approx,$dh,$dmn,$ds)
+          if ($subtract);
+      @$date2 = @date;
+
+      if ($dy ||  $dm  ||  $dw  ||  $dd) {
+         ($err,$date2,$offset,$isdst,$abbrev) =
+           $self->__calc_date_delta_approx($date2,[$dy,$dm,$dw,$dd_approx],
+                                           $business,$tz,$isdst);
+      } elsif ($business) {
+         $date2 = $self->__nextprev_business_day(0,0,1,$date2);
+      }
+
+      ($err,$date2,$offset,$isdst,$abbrev) =
+        $self->__calc_date_delta_exact($date2,[$dd_exact,$dh,$dmn,$ds],
+                                       $business,$tz,$isdst)
+          if (! $err  &&  ($dd_exact ||  $dh  ||  $dmn  ||  $ds));
+   }
+
+   return($err,$date2,$offset,$isdst,$abbrev);
+}
+
+# Do the inverse part of a calculation.
+#
+# $delta = [$dy,$dm,$dw,$dd]
+#
+sub __calc_date_delta_inverse {
+   my($self,$date,$delta,$business,$tz,$isdst) = @_;
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
-   my($y,$m,$d,$h,$mn,$s)           = @$date;
-   my($dy,$dm,$dw,$dd,$dh,$dmn,$ds) = @$delta;
+   my @date2;
+
+   # Given: DATE1, DELTA
+   # Find:  DATE2
+   #        where DATE2 + DELTA = DATE1
+   #
+   # Start with:
+   #    DATE2 = DATE1 - DELTA
+   #
+   # if (DATE2+DELTA < DATE1)
+   #    while (1)
+   #       DATE2 = DATE2 + 1 day
+   #       if DATE2+DELTA < DATE1
+   #          next
+   #       elsif DATE2+DELTA > DATE1
+   #          return ERROR
+   #       else
+   #          return DATE2
+   #    done
+   #
+   # elsif (DATE2+DELTA > DATE1)
+   #    while (1)
+   #       DATE2 = DATE2 - 1 day
+   #       if DATE2+DELTA > DATE1
+   #          next
+   #       elsif DATE2+DELTA < DATE1
+   #          return ERROR
+   #       else
+   #          return DATE2
+   #    done
+   #
+   # else
+   #    return DATE2
+
+   if ($business) {
+
+      my $date1 = $date;
+      my ($err,$date2,$off,$isd,$abb,@del,$tmp,$cmp);
+      @del = map { $_*-1 } @$delta;
+
+      ($err,$date2,$off,$isd,$abb) =
+        $self->__calc_date_delta_approx($date,[@del],$business,$tz,$isdst);
+
+      ($err,$tmp,$off,$isd,$abb) =
+        $self->__calc_date_delta_approx($date2,$delta,$business,$tz,$isdst);
+
+      $cmp      = $self->_cmp_date($tmp,$date1);
+
+      if ($cmp < 0) {
+         while (1) {
+            $date2 = $self->__nextprev_business_day(0,1,0,$date2);
+            ($err,$tmp,$off,$isd,$abb) =
+              $self->__calc_date_delta_approx($date2,$delta,$business,$tz,$isdst);
+            $cmp   = $self->_cmp_date($tmp,$date1);
+            if ($cmp < 0) {
+               next;
+            } elsif ($cmp > 0) {
+               return (1);
+            } else {
+               last;
+            }
+         }
+
+      } elsif ($cmp > 0) {
+         while (1) {
+            $date2 = $self->__nextprev_business_day(1,1,0,$date2);
+            ($err,$tmp,$off,$isd,$abb) =
+              $self->__calc_date_delta_approx($date2,$delta,$business,$tz,$isdst);
+            $cmp   = $self->_cmp_date($tmp,$date1);
+            if ($cmp > 0) {
+               next;
+            } elsif ($cmp < 0) {
+               return (1);
+            } else {
+               last;
+            }
+         }
+      }
+
+      @date2 = @$date2;
+
+   } else {
+
+      my @tmp      = @$date[0..2];   # [y,m,d]
+      my @hms      = @$date[3..5];   # [h,m,s]
+      my $date1    = [@tmp];
+
+      my $date2    = $dmb->_calc_date_ymwd($date1,$delta,1);
+      my $tmp      = $dmb->_calc_date_ymwd($date2,$delta);
+      my $cmp      = $self->_cmp_date($tmp,$date1);
+
+      if ($cmp < 0) {
+         while (1) {
+            $date2 = $dmb->calc_date_days($date2,1);
+            $tmp   = $dmb->_calc_date_ymwd($date2,$delta);
+            $cmp   = $self->_cmp_date($tmp,$date1);
+            if ($cmp < 0) {
+               next;
+            } elsif ($cmp > 0) {
+               return (1);
+            } else {
+               last;
+            }
+         }
+
+      } elsif ($cmp > 0) {
+         while (1) {
+            $date2 = $dmb->calc_date_days($date2,-1);
+            $tmp   = $dmb->_calc_date_ymwd($date2,$delta);
+            $cmp   = $self->_cmp_date($tmp,$date1);
+            if ($cmp > 0) {
+               next;
+            } elsif ($cmp < 0) {
+               return (1);
+            } else {
+               last;
+            }
+         }
+      }
+
+      @date2 = (@$date2,@hms);
+   }
+
+   # Make sure DATE2 is valid (within DST constraints) and
+   # return it.
+
+   my($date2,$abb,$off,$err);
+   ($date2,$off,$isdst,$abb) = $self->_calc_date_check_dst([@date2],$tz,$isdst,0);
+
+   return (1)  if (! defined($date2));
+   return (0,$date2,$off,$isdst,$abb);
+}
+
+sub _cmp_date {
+   my($self,$date0,$date1) = @_;
+   return ($$date0[0]  <=> $$date1[0]  ||
+           $$date0[1]  <=> $$date1[1]  ||
+           $$date0[2]  <=> $$date1[2]);
+}
+
+# Do the approximate part of a calculation.
+#
+sub __calc_date_delta_approx {
+   my($self,$date,$delta,$business,$tz,$isdst) = @_;
+
+   my $dmt                 = $$self{'tz'};
+   my $dmb                 = $$dmt{'base'};
+   my($y,$m,$d,$h,$mn,$s)  = @$date;
+   my($dy,$dm,$dw,$dd)     = @$delta;
 
    #
-   # Do the year/month/week part.
+   # Do the year/month part.
    #
-
-   $y += $dy;
-   $dmb->_mod_add(-12,$dm,\$m,\$y); # -12 means 1-12 instead of 0-11
-
    # If we are past the last day of a month, move the date back to
    # the last day of the month. i.e. Jan 31 + 1 month = Feb 28.
+   #
+
+   $y += $dy   if ($dy);
+   $dmb->_mod_add(-12,$dm,\$m,\$y)   # -12 means 1-12 instead of 0-11
+     if ($dm);
 
    my $dim = $dmb->days_in_month($y,$m);
    $d      = $dim  if ($d > $dim);
 
-   # Do the week part
+   #
+   # Do the week part.
+   #
+   # The week is treated as 7 days for both business and non-business
+   # calculations.
+   #
+   # In a business calculation, make sure we're on a business date.
+   #
 
    if ($business) {
-      # In business mode, add the number of weeks exactly ignoring any
-      # timezone affects).
       ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],$dw*7) }  if ($dw);
+      ($y,$m,$d,$h,$mn,$s) =
+        @{ $self->__nextprev_business_day(0,0,1,[$y,$m,$d,$h,$mn,$s]) };
    } else {
       $dd       += $dw*7;
    }
 
    #
-   # In business mode, set the day to a work day at this point so the d/h/mn/s
-   # stuff will work out
+   # Now do the day part.  $dd is always 0 in business calculations.
    #
 
-   if ($business) {
-      ($y,$m,$d,$h,$mn,$s) =
-        @{ $self->__nextprev_business_day(0,0,1,[$y,$m,$d,$h,$mn,$s]) };
+   if ($dd) {
+      ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],$dd) };
    }
 
    #
-   # Do the seconds, minutes, and hours part
+   # At this point, we need to make sure that we're a valid date
+   # (within the constraints of DST).
    #
+   # If it is not valid in this offset, try the other one.  If neither
+   # works, then we want the the date to be 24 hours later than the
+   # previous day at this time (if $dd > 0) or 24 hours earlier than
+   # the next day at this time (if $dd < 0).  We'll use the 24 hour
+   # definition even for business days, but then we'll double check
+   # that the resulting date is a business date.
+   #
+
+   my $force = ( ($dd > 0  ||  $dw > 0  ||  $dm > 0  ||  $dy > 0) ? 1 : -1 );
+   my($off,$abb);
+   ($date,$off,$isdst,$abb) =
+     $self->_calc_date_check_dst([$y,$m,$d,$h,$mn,$s],$tz,$isdst,$force);
+   return (0,$date,$off,$isdst,$abb);
+}
+
+# Do the exact part of a calculation.
+#
+sub __calc_date_delta_exact {
+   my($self,$date,$delta,$business,$tz,$isdst) = @_;
+   my $dmt = $$self{'tz'};
+   my $dmb = $$dmt{'base'};
 
    if ($business) {
 
+      # Simplify hours/minutes/seconds where the day length is defined
+      # by the start/end of the business day.
+
+      my ($dd,$dh,$dmn,$ds)  = @$delta;
+      my ($y,$m,$d,$h,$mn,$s)= @$date;
       my ($hbeg,$mbeg,$sbeg) = @{ $$dmb{'data'}{'calc'}{'workdaybeg'} };
       my ($hend,$mend,$send) = @{ $$dmb{'data'}{'calc'}{'workdayend'} };
-      my $bdlen = $$dmb{'data'}{'calc'}{'bdlength'};
+      my $bdlen              = $$dmb{'data'}{'calc'}{'bdlength'};
 
       no integer;
       my $tmp;
@@ -2951,6 +3291,17 @@ sub __calc_date_delta {
       $dmn = int($ds/60);
       $ds -= $dmn*60;
       use integer;
+
+      if ($dd) {
+         my $prev = 0;
+         if ($dd < 1) {
+            $prev = 1;
+            $dd  *= -1;
+         }
+
+         ($y,$m,$d,$h,$mn,$s) =
+           @{ $self->__nextprev_business_day($prev,$dd,0,[$y,$m,$d,$h,$mn,$s]) };
+      }
 
       # At this point, we're adding less than a day for the
       # hours/minutes/seconds part AND we know that the current
@@ -2971,8 +3322,8 @@ sub __calc_date_delta {
 
          # We've gone past the end of the business day.
 
-         my $t2 = $dmb->calc_time_time([$h,$mn,$s],[$hend,$mend,$send],1);
-         $d++;
+         my $t2      = $dmb->calc_time_time([$h,$mn,$s],[$hend,$mend,$send],1);
+         ($y,$m,$d)  = @{ $dmb->calc_date_days([$y,$m,$d],1) };
          ($h,$mn,$s) = @{ $dmb->calc_time_time([$hbeg,$mbeg,$sbeg],$t2) };
 
       } elsif ($h < $hbeg  ||
@@ -2981,116 +3332,110 @@ sub __calc_date_delta {
 
          # We've gone back past the start of the business day.
 
-         my $t2 = $dmb->calc_time_time([$hbeg,$mbeg,$sbeg],[$h,$mn,$s],1);
-         $dd--;
+         my $t2      = $dmb->calc_time_time([$hbeg,$mbeg,$sbeg],[$h,$mn,$s],1);
+         ($y,$m,$d)  = @{ $dmb->calc_date_days([$y,$m,$d],-1) };
          ($h,$mn,$s) = @{ $dmb->calc_time_time([$hend,$mend,$send],$t2,1) };
       }
 
-   } else {
-      $dmb->_mod_add(60,$ds,\$s,\$mn);
-      $dmb->_mod_add(60,$dmn,\$mn,\$h);
-      $dmb->_mod_add(24,$dh,\$h,\$d);
-   }
+      # Now make sure that the date is valid within DST constraints.
 
-   #
-   # If we have just gone past the first/last day of the month, we
-   # need to make up for this:
-   #
-
-   if ($d > $dim) {
-      $dd += $d-$dim;
-      $d   = $dim;
-   } elsif ($d < 1) {
-      $dd += $d-1;
-      $d   = 1;
-   }
-
-   #
-   # Now add the days part.
-   #
-
-   if ($business) {
-      my $prev = 0;
-      if ($dd < 1) {
-         $prev = 1;
-         $dd  *= -1;
-      }
-
-      ($y,$m,$d,$h,$mn,$s) =
-        @{ $self->__nextprev_business_day($prev,$dd,0,[$y,$m,$d,$h,$mn,$s]) };
+      my $force = ( ($dd > 0  ||  $dh > 0  ||  $dmn > 0  ||  $ds > 0) ? 1 : -1 );
+      my($off,$abb);
+      ($date,$off,$isdst,$abb) =
+        $self->_calc_date_check_dst([$y,$m,$d,$h,$mn,$s],$tz,$isdst,$force);
+      return (0,$date,$off,$isdst,$abb);
 
    } else {
-      ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],$dd) };
-   }
 
-   return [$y,$m,$d,$h,$mn,$s];
+      # Convert to GTM
+      # Do the calculation
+      # Convert back
+
+      my ($dd,$dh,$dm,$ds) = @$delta;   # $dd is always 0
+      my $del              = [$dh,$dm,$ds];
+      my ($err,$offset,$abbrev);
+
+      ($err,$date,$offset,$isdst,$abbrev) =
+        $dmt->_convert('__calc_date_delta_exact',$date,$tz,'GMT',$isdst);
+
+      $date                               = $dmb->calc_date_time($date,$del,0);
+
+      ($err,$date,$offset,$isdst,$abbrev) =
+        $dmt->_convert('__calc_date_delta_exact',$date,'GMT',$tz,$isdst);
+
+      return($err,$date,$offset,$isdst,$abbrev);
+   }
 }
 
-# Calculates @date2 such that @date2 + @delta = @date .
+# This checks to see which time (STD or DST) a date is in.  It checks
+# $isdst first, and the other value (1-$isdst) second.
 #
-# *** FIX ***
-# This is impossible in some cases. If @date is "Dec 31" and
-# @delta is "+ 1 month", there is no value for @date2 which
-# satisfies this.
+# If the date is found in either time, it is returned.
 #
-sub __calc_date_delta_inverse {
-   my($self,$date,$delta) = @_;
+# If the date is NOT found, then we got here by adding/subtracting 1 day
+# from a different value, and we've obtained an invalid value.  In this
+# case, if $force = 0, then return nothing.
+#
+# If $force = 1, then go to the previous day and add 24 hours.  If force
+# is -1, then go to the next day and subtract 24 hours.
+#
+# Returns:
+#   ($date,$off,$isdst,$abb)
+# or
+#   (undef)
+#
+sub _calc_date_check_dst {
+   my($self,$date,$tz,$isdst,$force) = @_;
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
+   my($abb,$off,$err);
 
-   my @date     = @$date;
-   my @delta    = @$delta;
+   # Try the date as is in both ISDST and 1-ISDST times
 
-   # Our first estimate for @date2 is:
-   #
-   #   @date2 = @date + -(@delta)
-   #
-   # @deltasub = -(@delta)
-
-   my @deltasub = map { -1*$_ } @$delta;
-
-   # Add @deltasub to @date it to get a first guess for @date2.  Then,
-   # add the original delta back to get @altdate (which we want to be
-   # identical to @date).
-
-   my @date2    = @{ $self->__calc_date_delta(0,[@date],[@deltasub]) };
-   my @altdate  = @{ $self->__calc_date_delta(0,[@date2],[@delta]) };
-
-   # The H/Mn/S part of @date and @date2 should be identical. The only
-   # thing that may differ is the Y/M/D part.
-
-   if ($date[3] != $altdate[3]  ||
-       $date[4] != $altdate[4]  ||
-       $date[5] != $altdate[5]) {
-      return undef;
+   my $per = $dmt->date_period($date,$tz,1,$isdst);
+   if ($per) {
+      $abb   = $$per[4];
+      $off   = $$per[3];
+      return($date,$off,$isdst,$abb);
    }
 
-   # If @altdate = @date, we're done.
-
-   my $flag = $dmb->cmp(\@date,\@altdate);
-   return [@date2]  if ($flag == 0);
-
-   # Otherwise, we need to adjust @date2 forward or back 1 day at
-   # a time until the resulting @date2 + @delta is equal to @date.
-   #
-   # If $flag < 0, it means that @date < @altdate and @date2 needs to
-   # be 1 day earlier.
-   #
-   # If $flag > 0, it means that @altdate > @date, and @date2 needs to
-   # be 1 dat later.
-
-   while (1) {
-      @date2 = @{ $dmb->calc_date_days([@date2],$flag) };
-
-      @altdate  = @{ $self->__calc_date_delta(0,[@date2],[@delta]) };
-      my $f = $dmb->cmp(\@date,\@altdate);
-      return [@date2]  if ($f == 0);
-
-      # If we've overshot, it's an impossible error... otherwise, we'll
-      # adjust another day.
-
-      return undef  if ($f != $flag);
+   $per = $dmt->date_period($date,$tz,1,1-$isdst);
+   if ($per) {
+      $isdst = 1-$isdst;
+      $abb   = $$per[4];
+      $off   = $$per[3];
+      return($date,$off,$isdst,$abb);
    }
+
+   # If we made it here, the date is invalid in this timezone.
+   # Either return undef, or add/subtract a day from the date
+   # and find out what time period we're in (all we care about
+   # is the ISDST value).
+
+   if (! $force) {
+      return(undef);
+   }
+
+   my($dd);
+   if ($force > 0) {
+      $date = $dmb->calc_date_days($date,-1);
+      $dd   = 1;
+   } else {
+      $date = $dmb->calc_date_days($date,+1);
+      $dd   = -1;
+   }
+
+   $per     = $dmt->date_period($date,$tz,1,$isdst);
+   $isdst   = (1-$isdst)  if (! $per);
+
+   # Now, convert it to GMT, add/subtract 24 hours, and convert
+   # it back.
+
+   ($err,$date,$off,$isdst,$abb) = $dmt->convert_to_gmt($date,$tz,$isdst);
+   $date                         = $dmb->calc_date_days($date,$dd);
+   ($err,$date,$off,$isdst,$abb) = $dmt->convert_from_gmt($date,$tz);
+
+   return($date,$off,$isdst,$abb);
 }
 
 ########################################################################
@@ -3287,7 +3632,7 @@ sub list_holidays {
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
 
-   ($y) = $dmt->_now('y',1)  if (! $y);
+   $y = $dmt->_now('y',1)  if (! $y);
    $self->_holidays($y,2);
 
    my @ret;
@@ -4064,7 +4409,7 @@ sub _events_year {
    my($self,$y) = @_;
    my $dmt      = $$self{'tz'};
    my $dmb      = $$dmt{'base'};
-   my ($tz)     = $dmt->_now('tz',1);
+   my $tz       = $dmt->_now('tz',1);
    return  if (exists $$dmb{'data'}{'eventyears'}{$y});
    $self->_event_objs()  if (! $$dmb{'data'}{'eventobjs'});
 
@@ -4299,8 +4644,8 @@ sub _event_objs {
             $err    = $del->parse($o2);
 
             if ($err) {
-               warn "ERROR: invalid event definition (must be Date;Date or Date;Delta)\n"
-                  . "       $string\n";
+               warn "ERROR: invalid event definition (must be Date;Date or\n"
+                  . "       Date;Delta) $string\n";
                next;
             }
 
@@ -4335,9 +4680,9 @@ sub _event_objs {
          }
 
          if ($err) {
-            warn "ERROR: invalid event definition (must be Date;Date, YMD;YMD, YM;YM,"
-              .  "      Date;Delta, or Recur;Delta)\n"
-              . "       $string\n";
+            warn "ERROR: invalid event definition (must be Date;Date, YMD;YMD, "
+              .  "       YM;YM, Date;Delta, or Recur;Delta)\n"
+              . "        $string\n";
             next;
          }
 
@@ -4377,5 +4722,5 @@ sub _event_objs {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

@@ -98,17 +98,13 @@ Saturday => 2000012200:00:00 2000012205:00:00
 
 '3rd tuesday in Jun 96' => 1996061800:00:00 1996061804:00:00
 
-'3rd tuesday in Jun 96 at 10:30am' => 1996061810:30:00
-1996061814:30:00
+'3rd tuesday in Jun 96 at 10:30am' => 1996061810:30:00 1996061814:30:00
 
-'3rd tuesday in Jun 96 at 10:30 pm' => 1996061822:30:00
-1996061902:30:00
+'3rd tuesday in Jun 96 at 10:30 pm' => 1996061822:30:00 1996061902:30:00
 
-'3rd tuesday in Jun 96 at 10:30 pm GMT' => 1996061822:30:00
-1996061822:30:00
+'3rd tuesday in Jun 96 at 10:30 pm GMT' => 1996061822:30:00 1996061822:30:00
 
-'3rd tuesday in Jun 96 at 10:30 pm CDT' => 1996061822:30:00
-1996061903:30:00
+'3rd tuesday in Jun 96 at 10:30 pm CDT' => 1996061822:30:00 1996061903:30:00
 
 'first tue in Jun' => 2000060600:00:00 2000060604:00:00
 
@@ -206,6 +202,8 @@ now => 2000012112:00:00 2000012117:00:00
 
 'Monday, 3rd October 2010' => '[parse] Day of week invalid'
 
+'3rd tuesday in Jun 96 at 10:30 pm CET' => 'Invalid timezone'
+
 ";
 
 $t->tests(func  => \&test,
@@ -220,5 +218,5 @@ $t->done_testing();
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

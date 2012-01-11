@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -48,11 +48,11 @@
                      'America/Adak'                              ,1983,1983,
                     ],
    'AKDT'        => [
-                     'America/Anchorage'                         ,1984,9999,
                      'America/Juneau'                            ,1984,9999,
                      'America/Nome'                              ,1984,9999,
                      'America/Yakutat'                           ,1984,9999,
                      'America/Sitka'                             ,1984,9999,
+                     'America/Anchorage'                         ,1984,2037,
                     ],
    'AKST'        => [
                      'America/Anchorage'                         ,1983,9999,
@@ -278,7 +278,7 @@
    'BRST'        => [
                      'America/Sao_Paulo'                         ,1931,9999,
                      'America/Araguaina'                         ,1931,2003,
-                     'America/Bahia'                             ,1931,2003,
+                     'America/Bahia'                             ,1931,9999,
                      'America/Fortaleza'                         ,1931,2002,
                      'America/Maceio'                            ,1931,2002,
                      'America/Recife'                            ,1931,2002,
@@ -758,14 +758,14 @@
                      'Europe/Chisinau'                           ,1932,9999,
                      'Africa/Cairo'                              ,1940,2010,
                      'Europe/Helsinki'                           ,1942,9999,
-                     'Asia/Gaza'                                 ,1957,9999,
+                     'Asia/Gaza'                                 ,1957,2011,
                      'Asia/Amman'                                ,1973,9999,
                      'Asia/Nicosia'                              ,1975,9999,
                      'Europe/Sofia'                              ,1979,9999,
                      'Europe/Riga'                               ,1989,9999,
                      'Europe/Tallinn'                            ,1989,9999,
                      'Europe/Kaliningrad'                        ,1991,2010,
-                     'Europe/Minsk'                              ,1991,9999,
+                     'Europe/Minsk'                              ,1991,2010,
                      'Europe/Vilnius'                            ,1991,9999,
                      'Europe/Zaporozhye'                         ,1991,9999,
                      'Europe/Kiev'                               ,1992,9999,
@@ -773,6 +773,7 @@
                      'Europe/Uzhgorod'                           ,1992,9999,
                      'Europe/Moscow'                             ,1991,1991,
                      'Europe/Warsaw'                             ,1919,1919,
+                     'Asia/Hebron'                               ,1957,2011,
                     ],
    'EET'         => [
                      'EET'                                       ,0001,9999,
@@ -788,7 +789,7 @@
                      'Europe/Helsinki'                           ,1921,9999,
                      'Europe/Tallinn'                            ,1921,9999,
                      'Europe/Kiev'                               ,1924,9999,
-                     'Europe/Minsk'                              ,1924,9999,
+                     'Europe/Minsk'                              ,1924,2011,
                      'Europe/Simferopol'                         ,1924,9999,
                      'Europe/Zaporozhye'                         ,1924,9999,
                      'Europe/Riga'                               ,1926,9999,
@@ -800,6 +801,7 @@
                      'Europe/Uzhgorod'                           ,1991,9999,
                      'Europe/Moscow'                             ,1922,1992,
                      'Europe/Warsaw'                             ,1918,1922,
+                     'Asia/Hebron'                               ,1900,9999,
                     ],
    'EGST'        => [
                      'America/Scoresbysund'                      ,1981,9999,
@@ -884,11 +886,15 @@
    'F'           => [
                      'F'                                         ,0001,9999,
                     ],
+   'FET'         => [
+                     'Europe/Kaliningrad'                        ,2011,9999,
+                     'Europe/Minsk'                              ,2011,9999,
+                    ],
    'FFMT'        => [
                      'America/Martinique'                        ,1890,1911,
                     ],
    'FJST'        => [
-                     'Pacific/Fiji'                              ,1998,2011,
+                     'Pacific/Fiji'                              ,1998,2012,
                     ],
    'FJT'         => [
                      'Pacific/Fiji'                              ,1915,9999,
@@ -1108,6 +1114,7 @@
    'IDT'         => [
                      'Asia/Jerusalem'                            ,1940,2037,
                      'Asia/Gaza'                                 ,1974,1995,
+                     'Asia/Hebron'                               ,1974,1995,
                     ],
    'IHST'        => [
                      'Asia/Colombo'                              ,1942,1942,
@@ -1146,6 +1153,7 @@
                      'Atlantic/Reykjavik'                        ,1908,1968,
                      'Asia/Karachi'                              ,1906,1951,
                      'Asia/Dhaka'                                ,1942,1942,
+                     'Asia/Hebron'                               ,1967,1995,
                     ],
    'JAVT'        => [
                      'Asia/Jakarta'                              ,1923,1932,
@@ -1175,9 +1183,6 @@
                     ],
    'K'           => [
                      'K'                                         ,0001,9999,
-                    ],
-   'KALT'        => [
-                     'Europe/Kaliningrad'                        ,2011,9999,
                     ],
    'KART'        => [
                      'Asia/Karachi'                              ,1951,1971,
@@ -1840,6 +1845,9 @@
    'UT'          => [
                      'UT'                                        ,0001,9999,
                     ],
+   'UTC'         => [
+                     'UTC'                                       ,0001,9999,
+                    ],
    'UYHST'       => [
                      'America/Montevideo'                        ,1923,1974,
                     ],
@@ -1996,7 +2004,7 @@
                      'Europe/Warsaw'                             ,1879,1915,
                     ],
    'WSDT'        => [
-                     'Pacific/Apia'                              ,2010,2011,
+                     'Pacific/Apia'                              ,2010,2012,
                     ],
    'WST'         => [
                      'Australia/Perth'                           ,1895,9999,
@@ -2071,5 +2079,5 @@
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

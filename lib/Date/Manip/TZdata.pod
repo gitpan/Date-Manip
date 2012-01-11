@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -23,15 +23,9 @@ solely for the sake of completeness. Currently, no support is offered
 for this module, and it can (and may) change without notice.
 
 This module consists of routines for working with the tzdata files
-obtained from ftp://elsie.nci.nih.gov/pub/ . These files are updated
+obtained from ftp://ftp.iana.org/tz/ . These files are updated
 several times a year and are the basis for time zone descriptions for
 most computer systems.
-
-At some point, I am interested in making this module a direct
-interface to the tzdata files, but in the limited amount of time I
-have to work on perl modules, other modifications to Date::Manip are
-much higher priority, so I'm not sure when (or if) this will ever
-happen.
 
 =head1 ROUTINES
 

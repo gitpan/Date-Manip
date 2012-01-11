@@ -153,7 +153,7 @@ overmorrow => $overmorrow
 
 '3rd tuesday in Jun 96 at 10:30 pm GMT' => 1996061818:30:00
 
-'3rd tuesday in Jun 96 at 10:30 pm CET' => 1996061816:30:00
+'3rd tuesday in Jun 96 at 10:30 pm CET' => __blank__
 
 # Tests YYMMDD time
 
@@ -572,5 +572,5 @@ $t->done_testing();
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

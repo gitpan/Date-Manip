@@ -1,5 +1,5 @@
 package Date::Manip::TZdata;
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -13,7 +13,7 @@ use integer;
 use warnings;
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -547,7 +547,8 @@ sub _tzd_CheckAliases {
 
    print "... aliases\n"  if ($Verbose);
 
- ALIAS: foreach my $alias ($self->_tzd_AliasKeys()) {
+   ALIAS:
+   foreach my $alias ($self->_tzd_AliasKeys()) {
       my $zone = $self->_tzd_Alias($alias);
 
       my %tmp;
@@ -1341,5 +1342,5 @@ sub _tzd_ParseRuleDate {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

@@ -1,58 +1,18 @@
 ########################################################################
+# Deprecated variables:
+
+   intcharset           10/2012
+
+   recurnumfudgedays    12/2012
+
+   tz                   12/2013
+
+
+########################################################################
 # +1 significant release
 ########################################################################
 
-Add support for doing calculations which ignore daylight-saving time
-transitions (so 1 day is 1 day, NOT 24 hours).
-
-   Date::Manip::Delta
-
-      new()
-         $self{'calendar'} = undef    (not set explicitly)
-                             0/1      (se explicitly)
-
-      parse($string [$mode,$mode,...])
-
-         If $mode is 'calendar', the delta is treated as groups:
-            (y,m) (w,d) (h,mn,s)
-            (y,m) (w) (d) (h,mn,s)    if business delta
-         If $mode is 'business' (or any other non-null value), it's a
-         business mode delta.
-
-         There is no word that can be added to the delta to make
-         it parsed as a calendar delta.
-
-      set('business',$val)
-      set('normal',$val)
-         Deprecated
-      set('mode','calendar')
-         Set the calendar mode.
-      set('delta',[Y,M,W,D,H,MN,S,MODE1,MODE2,...])
-
-      type($op)
-         $op can be 'business', 'normal', 'exact', 'calendar'
-
-   Date::Manip::Calc
-
-      (date,date, [$subtract] [$mode,$mode,...])
-      (date,delta [$subtract] [$mode,$mode,...])
-         $mode can be 'exact', 'approx', 'business', 'calendar'
-         Deprecate 'bapprox'
-
-         A calendar mode delta ignores daylight saving time issues
-         mostly.  Add 1 day and the time stays the same (and in the
-         same timezone) (if possible).  If that isn't possible, it
-         adds 24 hours
-
-      (delta,delta)
-         The two deltas must be the same type exactly
-
-   Date::Manip::Config
-
-      CalendarMode
-         If set to true, all calculations default to calendar mode
-         if $self{'calendar'} is undef.
-
+Autogenerate pod for each language including all translations.
 
 See if I can get Date::Manip to use a different YAML module (which doesn't use
 Module::Build) if YAML::Syck is not available.  Based on discussion with Martin

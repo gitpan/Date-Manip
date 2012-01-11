@@ -1,5 +1,5 @@
 package Date::Manip::Recur;
-# Copyright (c) 1998-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1998-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify
 # it under the same terms as Perl itself.
 
@@ -22,7 +22,7 @@ use integer;
 #use re 'debug';
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 ########################################################################
@@ -88,7 +88,7 @@ sub _init {
       $$self{'data'}{'end'}      = undef;
 
    } elsif ($range eq 'year') {
-      my ($y)    = $dmt->_now('y',1);
+      my $y      = $dmt->_now('y',1);
       my $start  = $self->new_date();
       my $end    = $self->new_date();
       $start->set('date',[$y, 1, 1,00,00,00]);
@@ -1984,7 +1984,7 @@ sub _rtime_values {
       @args = (0,0,59,59);
 
    } elsif ($type eq 'y') {
-      my ($curry) = $dmt->_now('y',1);
+      my $curry = $dmt->_now('y',1);
       foreach my $y (@$val) {
          $y = $curry  if (! ref($y)  &&  $y==0);
       }
@@ -2192,5 +2192,5 @@ sub _field_add_values {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

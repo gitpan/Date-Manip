@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -24,10 +24,10 @@ interface does not preserve time zone information with the date, and
 may therefore give incorrect results in some cases. However, working
 in the time zone of the system should give correct results.
 
-It should be noted that, in the examples below, it appears that the
-OO method takes a lot more lines of code than the functional interface.
-There are a number of ways to shorten the OO method, but for the
-examples, I wanted to include all the steps explicitly.
+It should be noted that, in the examples below, it appears that the OO
+method often requires more lines of code than the functional
+interface.  There are a number of ways to shorten the OO method, but
+for the examples, I wanted to include all the steps explicitly.
 
 =head1 PARSING A DATE
 
@@ -66,13 +66,13 @@ Amounts of time (referred to as deltas) can also be parsed:
 
    $delta = new Date::Manip::Delta;
    $err = $delta->parse("in 12 hours");
-   $err = $delta->parse("-0:1:30:0");
+   $err = $delta->parse("-1:30:0");
    $err = $delta->parse("4 business days later");
 
 =item B<Functional>
 
    $delta = ParseDateDelta("in 12 hours");
-   $delta = ParseDateDelta("-0:1:30:0");
+   $delta = ParseDateDelta("-1:30:0");
    $delta = ParseDateDelta("4 business days later");
 
 =back

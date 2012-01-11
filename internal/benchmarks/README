@@ -60,7 +60,7 @@ time ./parse-1.dm_fo.pl
 time ./parse-1.dm.pl
 ./parse-1.dm.pl  3.64s user 0.04s system 99% cpu 3.706 total
 
-perl -d:NYTProf parse-1.dm.pl
+perl -d:NYTProf parse-1.dm6.pl
 nytprofhtml
 
 11323   613ms   Date::::_parse_time Date::Manip::Date::_parse_time

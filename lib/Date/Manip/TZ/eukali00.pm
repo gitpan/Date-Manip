@@ -1,17 +1,17 @@
 package Date::Manip::TZ::eukali00;
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed Aug 31 11:04:50 EDT 2011
-#    Data version: tzdata2011i
+#    Generated on: Tue Jan 10 15:46:24 EST 2012
+#    Data version: tzdata2011n
 #    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://elsie.nci.nih.gov/pub
+#    ftp://ftp.iana.orgtz
 
 =pod
 
@@ -38,7 +38,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -399,7 +399,7 @@ END { undef $VERSION; }
    2011 =>
      [
         [ [2011,3,27,0,0,0],[2011,3,27,3,0,0],'+03:00:00',[3,0,0],
-          'KALT',0,[9999,12,31,0,0,0],[9999,12,31,3,0,0],
+          'FET',0,[9999,12,31,0,0,0],[9999,12,31,3,0,0],
           '2011032700:00:00','2011032703:00:00','9999123100:00:00','9999123103:00:00' ],
      ],
 );

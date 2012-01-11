@@ -97,13 +97,13 @@ delta 10                     => [ 0 0 0 0 0 0 10 ]
 
 delta 10:-70                 => [ 0 0 0 0 0 8 50 ]
 
-delta 10:-70:130:+90         => [ 0 0 0 6 23 51 30 ]
+delta 10:-70:130:+90         => [ 0 0 1 3 -72 -8 -30 ]
 
 delta 10:70                  => [ 0 0 0 0 0 11 10 ]
 
-delta -1:13:2:10:+70:-130:90 => [ -2 -1 -3 0 -4 -11 -30 ]
+delta -1:13:2:10:+70:-130:90 => [ -2 -1 -3 -3 67 48 30 ]
 
-delta 1:13:2:10:-70:130:+90  => [ 2 1 2 6 23 51 30 ]
+delta 1:13:2:10:-70:130:+90  => [ 2 1 3 3 -72 -8 -30 ]
 
 delta 1::                    => [ 0 0 0 0 1 0 0 ]
 
@@ -135,5 +135,5 @@ $t->done_testing();
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

@@ -1,5 +1,5 @@
 package Date::Manip::DM6;
-# Copyright (c) 1995-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -53,7 +53,7 @@ use integer;
 use warnings;
 
 our $VERSION;
-$VERSION='6.25';
+$VERSION='6.30';
 
 ###########################################################################
 
@@ -61,7 +61,7 @@ our ($dmb,$dmt,$date,$delta,$recur,$date2,$dateUT);
 use Date::Manip::Date;
 
 $dateUT = new Date::Manip::Date;
-$dateUT->config("setdate","now,Etc/GMT");
+$dateUT->config('setdate','now,Etc/GMT');
 
 $date   = new Date::Manip::Date;
 $date2  = $date->new_date();
@@ -92,11 +92,12 @@ sub Date_Init {
          warn "ERROR: invalid Date_Init argument: $arg\n";
       }
    }
-   $date->config(@args2,"oldconfigfiles",1);
+   $date->config(@args2);
 }
 
 sub ParseDateString {
    my($string) = @_;
+   $string = ''  if (! defined($string));
    my $err = $date->parse($string);
    return ''  if ($err);
    my $ret = $date->value('local');
@@ -112,6 +113,7 @@ sub ParseDate {
    }
    my @args;
    my $args = $a[0];
+   $args    = ''  if (! defined($args));
    my $ref  = ref($args);
    my $list = 0;
 
@@ -150,6 +152,7 @@ sub ParseDateDelta {
    }
    my @args;
    my $args = $a[0];
+   $args    = ''  if (! defined($args));
    my $ref  = ref($args);
    my $list = 0;
 
@@ -203,27 +206,27 @@ sub Delta_Format {
    return ()  if ($err);
 
    my($mode,$dec,@in);
-   if (lc($args[0]) eq 'exact'  ||
-       lc($args[0]) eq 'approx') {
-      ($mode,$dec,@in) = (@args);
-      $mode = lc($mode);
-
-   } elsif (! defined($args[0])) {
-      $mode = '';
+   if (! defined($args[0])) {
+      $mode = 'exact';
       @in = @args;
       shift(@in);
+
+   } elsif (lc($args[0]) eq 'exact'  ||
+            lc($args[0]) eq 'approx' ||
+            lc($args[0]) eq 'semi') {
+      ($mode,$dec,@in) = (@args);
+      $mode = lc($mode);
 
    } elsif ($args[0] =~ /^\d+$/) {
       ($mode,$dec,@in) = ('exact',@args);
 
    } else {
-      $mode = '';
+      $mode = 'exact';
       @in = @args;
    }
 
-   if ($mode) {
-      @in = _Delta_Format_old($mode,$dec,@in);
-   }
+   $dec = 0  if (! $dec);
+   @in = _Delta_Format_old($mode,$dec,@in);
 
    my @ret = ();
    foreach my $in (@in) {
@@ -245,24 +248,28 @@ sub _Delta_Format_old {
    foreach my $in (@in) {
       my $out = '';
 
+      # This will look for old formats (%Xd, %Xh, %Xt) and turn them
+      # into the new format: %XYZ
+
       while ($in) {
          if ($in =~ s/^([^%]+)//) {
             $out .= $1;
 
-         } elsif ($in =~ s/^%([yMwdhms])([vdht])//) {
+         } elsif ($in =~ s/^%([yMwdhms])([dht])//) {
             my($field,$scope) = ($1,$2);
             $out .= '%';
 
-            if ($scope eq 'v') {
-               $out .= "${field}v";
-
-            } elsif ($scope eq 'd') {
+            if ($scope eq 'd') {
                if      ($mode eq 'approx') {
                   $out .= ".${dec}${field}${field}s";
                } elsif ($field eq 'y'  ||  $field eq 'M') {
                   $out .= ".${dec}${field}${field}M";
+               } elsif ($mode eq 'semi') {
+                  $out .= ".${dec}${field}${field}s";
                } elsif ($field eq 'w'  &&  $business) {
-                  $out .= ".${dec}wws";
+                  $out .= ".${dec}www";
+               } elsif (($field eq 'w'  ||  $field eq 'd')  &&  ! $business) {
+                  $out .= ".${dec}${field}${field}d";
                } else {
                   $out .= ".${dec}${field}${field}s";
                }
@@ -272,14 +279,16 @@ sub _Delta_Format_old {
                   $out .= ".${dec}${field}y${field}";
                } elsif ($field eq 'y'  ||  $field eq 'M') {
                   $out .= ".${dec}${field}y${field}";
-               } elsif ($business) {
-                  if ($field eq 'w') {
-                     $out .= 'wv';
-                  } else {
-                     $out .= ".${dec}${field}d${field}";
-                  }
-               } else {
+               } elsif ($mode eq 'semi') {
                   $out .= ".${dec}${field}w${field}";
+               } elsif ($field eq 'w') {
+                  $out .= ".${dec}www";
+               } elsif ($field eq 'd'  &&  ! $business) {
+                  $out .= ".${dec}dwd";
+               } elsif ($business) {
+                  $out .= ".${dec}${field}d${field}";
+               } else {
+                  $out .= ".${dec}${field}h${field}";
                }
 
             } elsif ($scope eq 't') {
@@ -287,20 +296,23 @@ sub _Delta_Format_old {
                   $out .= ".${dec}${field}ys";
                } elsif ($field eq 'y'  ||  $field eq 'M') {
                   $out .= ".${dec}${field}yM";
-               } elsif ($business) {
-                  if ($field eq 'w') {
-                     $out .= 'wv';
-                  } else {
-                     $out .= ".${dec}${field}ds";
-                  }
-               } else {
+               } elsif ($mode eq 'semi') {
                   $out .= ".${dec}${field}ws";
+               } elsif ($field eq 'w'  &&  $business) {
+                  $out .= ".${dec}www";
+               } elsif (($field eq 'w'  ||  $field eq 'd')  &&  ! $business) {
+                  $out .= ".${dec}${field}wd";
+               } elsif ($business) {
+                  $out .= ".${dec}${field}ds";
+               } else {
+                  $out .= ".${dec}${field}hs";
                }
             }
 
          } else {
-            $in =~ s/^(%.?)//;
-            $out .= $1;
+            # It's one of the new formats so don't modify it.
+            $in =~ s/^%//;
+            $out .= '%';
          }
       }
 
@@ -783,8 +795,8 @@ sub Date_TimeZone {
 
 sub Date_ConvTZ {
    my($str,$from,$to) = @_;
-   $from = $dmb->_now("tz")  if (! $from);
-   $to   = $dmb->_now("tz")  if (! $to);
+   $from = $dmb->_now('tz')  if (! $from);
+   $to   = $dmb->_now('tz')  if (! $to);
 
    # Parse the date (ignoring timezone information):
 
@@ -852,5 +864,5 @@ sub Date_Cmp {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

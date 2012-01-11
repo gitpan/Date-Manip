@@ -1,5 +1,5 @@
 package Date::Manip::TZ_Base;
-# Copyright (c) 2010-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2010-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -11,7 +11,7 @@ use warnings;
 use strict;
 
 our ($VERSION);
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 ########################################################################
@@ -50,7 +50,7 @@ sub _fix_year {
 
    my $curr_y;
    if (ref($self) eq 'Date::Manip::TZ') {
-      ($curr_y) = $self->_now('y',1);
+      $curr_y  = $self->_now('y',1);
    } else {
       $curr_y  = ( localtime(time) )[5];
       $curr_y += 1900;
@@ -120,82 +120,75 @@ sub _fix_year {
 #    'abb'
 #
 sub _now {
-   my($self,@op) = @_;
+   my($self,$op,$noupdate) = @_;
    my $istz      = ref($self) eq 'Date::Manip::TZ';
    my $base      = ($istz ? $self->base() : $self);
-   my($noupdate,@ret);
 
    # Update "NOW" if we're checking 'now', 'time', or the date
    # is not set already.
 
-   if (@op   &&  ($op[$#op] eq "0"  ||  $op[$#op] eq "1")) {
-      $noupdate = pop(@op);
-   } else {
-      $noupdate = 1;
-      my $op = join(" ",@op);
-      $noupdate = 0  if ($op =~ /\b(?:now|time)\b/);
+   if (! defined $noupdate) {
+      if ($op =~ /(?:now|time)/) {
+         $noupdate = 0;
+      } else {
+         $noupdate = 1;
+      }
    }
    $noupdate = 0  if (! exists $$base{'data'}{'now'}{'date'});
-
    $self->_update_now()  unless ($noupdate);
+
+   # Now return the value of the operation
 
    my @tmpnow   = @{ $$base{'data'}{'tmpnow'} };
    my @now      = (@tmpnow ? @tmpnow : @{ $$base{'data'}{'now'}{'date'} });
 
-   # Get the appropriate values.
-
-   foreach my $op (@op) {
-
-      if ($op eq 'now') {
-         push (@ret,@now);
-
-      } elsif ($op eq 'tz') {
-         if (exists $$base{'data'}{'now'}{'tz'}) {
-            push (@ret,$$base{'data'}{'now'}{'tz'});
-         } else {
-            push (@ret,$$base{'data'}{'now'}{'systz'});
-         }
-
-      } elsif ($op eq 'y') {
-         push (@ret,$now[0]);
-
-      } elsif ($op eq 'systz') {
-         push (@ret,$$base{'data'}{'now'}{'systz'});
-
-      } elsif ($op eq 'time') {
-         push (@ret,@now[3..5]);
-
-      } elsif ($op eq 'm') {
-         push (@ret,$now[1]);
-
-      } elsif ($op eq 'd') {
-         push (@ret,$now[2]);
-
-      } elsif ($op eq 'h') {
-         push (@ret,$now[3]);
-
-      } elsif ($op eq 'mn') {
-         push (@ret,$now[4]);
-
-      } elsif ($op eq 's') {
-         push (@ret,$now[5]);
-
-      } elsif ($op eq 'isdst') {
-         push (@ret,$$base{'data'}{'now'}{'isdst'});
-
-      } elsif ($op eq 'offset') {
-         push (@ret,@{ $$base{'data'}{'now'}{'offset'} });
-
-      } elsif ($op eq 'abb') {
-         push (@ret,$$base{'data'}{'now'}{'abb'});
-
+   if ($op eq 'tz') {
+      if (exists $$base{'data'}{'now'}{'tz'}) {
+         return $$base{'data'}{'now'}{'tz'};
       } else {
-         warn "ERROR: [now] invalid argument list: @op\n";
-         return ();
+         return $$base{'data'}{'now'}{'systz'};
       }
-   }
 
-   return @ret;
+   } elsif ($op eq 'systz') {
+      return $$base{'data'}{'now'}{'systz'};
+
+   } elsif ($op eq 'isdst') {
+      return $$base{'data'}{'now'}{'isdst'};
+
+   } elsif ($op eq 'offset') {
+      return @{ $$base{'data'}{'now'}{'offset'} };
+
+   } elsif ($op eq 'abb') {
+      return $$base{'data'}{'now'}{'abb'};
+
+   } elsif ($op eq 'now') {
+      return @now;
+
+   } elsif ($op eq 'y') {
+      return $now[0];
+
+   } elsif ($op eq 'time') {
+      return @now[3..5];
+
+   } elsif ($op eq 'm') {
+      return $now[1];
+
+   } elsif ($op eq 'd') {
+      return $now[2];
+
+   } elsif ($op eq 'h') {
+      return $now[3];
+
+   } elsif ($op eq 'mn') {
+      return $now[4];
+
+   } elsif ($op eq 's') {
+      return $now[5];
+
+   } else {
+      warn "ERROR: [now] invalid argument list: $op\n";
+      return ();
+   }
 }
 
 sub _update_now {
@@ -216,7 +209,7 @@ sub _update_now {
       my $secs = time - $$base{'data'}{'now'}{'setsecs'};
 
       $date      = $base->calc_date_time($date,[0,0,$secs]);  # 'now' in GMT
-      my ($zone) = $self->_now('tz',1);
+      my $zone   = $self->_now('tz',1);
       my ($err,$date2,$offset,$isdst,$abbrev) = $self->convert_from_gmt($date,$zone);
 
       $$base{'data'}{'now'}{'date'}   = $date2;
@@ -246,7 +239,7 @@ sub _update_now {
 
    my $abb = '???';
    if (ref($self) eq 'Date::Manip::TZ') {
-      my ($zone) = $self->_now('tz',1);
+      my $zone   = $self->_now('tz',1);
       my $per    = $self->date_period([$y,$m,$d,$h,$mn,$s],$zone,1,$isdst);
       $abb = $$per[4];
    }
@@ -265,5 +258,5 @@ sub _update_now {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:

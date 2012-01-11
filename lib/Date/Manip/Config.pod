@@ -1,4 +1,4 @@
-# Copyright (c) 1996-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1996-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -393,8 +393,9 @@ documentation for details.
 
 =item B<WorkDayEnd>
 
-If WorkDay24Hr is non-zero, a work day is treated as being 24 hours long.
-The WorkDayBeg and WorkDayEnd variables are ignored in this case.
+If WorkDay24Hr is non-zero, a work day is treated as usually being 24
+hours long (daylight saving time changes ARE taken into account).  The
+WorkDayBeg and WorkDayEnd variables are ignored in this case.
 
 By default, WorkDay24Hr is zero, and the work day is defined by the
 WorkDayBeg and WorkDayEnd variables. These are the times when the work
@@ -645,67 +646,6 @@ The following config variables are currently supported, but are
 deprecated.  They will be removed in a future Date::Manip release:
 
 =over 4
-
-=item B<GlobalCnf>
-
-=item B<IgnoreGlobalCnf>
-
-=item B<PersonalCnf>
-
-=item B<PersonalCnfPath>
-
-=item B<PathSep>
-
-These variables are currently supported, but will be removed. These
-have been replaced in favor of ConfigFile.
-
-GlobalCnf (which is ignored in a config file, and is only useful
-in the Date_Init call) sets the full path to a global config file.
-
-IgnoreGlobalCnf is ignored completely at this point.
-
-PersonalCnf is the name of a personal (or local) config file which
-will be read in after the global config file. The file will be
-searched for in a list of directories specified by PersonalCnfPath.
-The list of directories is delimited by the value of PathSep.
-
-In the future, the distinction between a global and personal config
-file will be removed, and there will be no searching across a path
-of directories. Instead, full paths will be specified using the ConfigFile
-variable.
-
-Scheduled for removal 2011-12-01 .
-
-=item B<Internal>
-
-This is an alias for Printable. Internal was used previously because
-the actual format of the date stored by Date::Manip would actually change
-based on this value. Now, the internal form will never change... just
-the printable version of it. The variable name has been changed to reflect
-that change.
-
-Scheduled for removal 2011-12-01 .
-
-=item B<DeltaSigns>
-
-This is ignored. Use the Date::Manip::Delta::printf format to format
-deltas as desired.
-
-Scheduled for removal 2011-12-01 .
-
-=item B<UpdateCurrTZ>
-
-This is ignored. With real time zone support, daylight saving time changes
-are handled automatically and correctly.
-
-Scheduled for removal 2011-12-01 .
-
-=item B<ConvTZ>
-
-This is ignored. Calculations automatically handle multiple time zones,
-so this is no longer necessary.
-
-Scheduled for removal 2011-12-01 .
 
 =item B<TZ>
 

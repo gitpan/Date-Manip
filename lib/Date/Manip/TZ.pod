@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -79,7 +79,7 @@ or 0 if it is a standard time.
 Date::Manip includes all of the data for all of the time zones from
 the zoneinfo database. This data is available from:
 
-   ftp://elsie.nci.nih.gov/pub/
+   ftp://ftp.iana.org/tz/
 
 Additional data from other standards are also used.
 
@@ -153,8 +153,8 @@ If $dstflag is "std", it will check both standard and daylight saving
 times, but will give preference to standard times. If $dstflag is
 "stdonly", only standard times will be checked.
 
-The "dst" and "dstonly" values are similar but will check daylight saving
-times in preference.
+The "dst" flag will search both, but give preference to daylight saving
+times.  The "dstonly" values will only use daylight saving times.
 
 =item B<$date>
 
@@ -195,7 +195,7 @@ is 0 or 1 if it is standard or daylight saving time.
 
 When accessing the elements in a period, use ONLY positive indices.
 In other words, to get $endUT, access it as $$period[6], NOT as
-$$period[-2], since I am looking at adding more information to the
+$$period[-2], since I am considering adding more information to the
 period description that may speed up performance.
 
 $begUTs is the string representation (YYYYMMDDHH:MN:SS) of $begUT.
@@ -704,7 +704,7 @@ the zoneinfo files which are distributed with most operating systems.
 Although I considered doing that, I rejected the idea for two reasons.
 
 First, not all operating systems come with the zoneinfo databases in a
-user accessible state (Micro$oft for example).  Even those that do
+user accessible state (Microsoft for example).  Even those that do
 include them store the information in various formats and locations.
 In order to bypass all that, I have included the data directly in
 these modules.

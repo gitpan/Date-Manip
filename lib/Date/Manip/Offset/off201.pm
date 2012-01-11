@@ -1,23 +1,23 @@
 package Date::Manip::Offset::off201;
-# Copyright (c) 2008-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed Aug 31 12:08:26 EDT 2011
-#    Data version: tzdata2011i
+#    Generated on: Tue Jan 10 15:48:32 EST 2012
+#    Data version: tzdata2011n
 #    Code version: tzcode2011i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://elsie.nci.nih.gov/pub
+#    ftp://ftp.iana.orgtz
 
 =pod
 
 =head1 NAME
 
-Date::Manip::Offset::off201 - Support for the +09:14:20 offset
+Date::Manip::Offset::off201 - Support for the +09:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.25';
+$VERSION='6.30';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +41,54 @@ END {
    undef %Offset;
 }
 
-$Offset        = '+09:14:20';
+$Offset        = '+09:00:00';
 
 %Offset        = (
    0 => [
+      'asia/tokyo',
+      'pacific/palau',
+      'asia/pyongyang',
+      'asia/seoul',
+      'asia/jayapura',
+      'asia/dili',
+      'asia/irkutsk',
+      'asia/yakutsk',
+      'etc/gmt+9',
+      'v',
+      'asia/choibalsan',
+      'asia/vladivostok',
+      'pacific/saipan',
+      'asia/harbin',
+      'asia/sakhalin',
+      'asia/hong_kong',
+      'asia/jakarta',
+      'asia/kuala_lumpur',
+      'asia/kuching',
+      'asia/makassar',
+      'asia/pontianak',
+      'asia/rangoon',
+      'asia/singapore',
+      'asia/manila',
+      'pacific/nauru',
       'australia/adelaide',
+      'australia/darwin',
+      'australia/broken_hill',
+      ],
+   1 => [
+      'asia/irkutsk',
+      'australia/perth',
+      'asia/ulaanbaatar',
+      'asia/shanghai',
+      'asia/chongqing',
+      'asia/harbin',
+      'asia/kashgar',
+      'asia/urumqi',
+      'asia/yakutsk',
+      'asia/macau',
+      'asia/hong_kong',
+      'asia/taipei',
+      'asia/manila',
+      'asia/seoul',
       ],
 );
 

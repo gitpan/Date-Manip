@@ -1,4 +1,4 @@
-# Copyright (c) 2008-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2008-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -55,7 +55,7 @@ most efficient reuse of this cached data.
 
 Because all other objects depend on a Date::Manip::Base object, a
 Date::Manip::Base object is embedded in all other objects, and the
-same Base object can be embedded as often as desired to achieve
+same Base object can be shared by any number of objects to achieve
 maximum performance.
 
 =item B<Date::Manip::TZ>
@@ -75,6 +75,11 @@ Date::Manip::Base object is always embedded in a Date::Manip::TZ
 object).  All higher level objects (those listed next) depend on both
 a Date::Manip::Base and Date::Manip::TZ object, so a Date::Manip::TZ
 object is embedded in them.
+
+In order to achieve maximum performance, and minimize memory usage,
+a Date::Manip::TZ object can be shared by any number of higher
+level objects, and in fact, it is desirable to reuse the same Date::Manip::TZ
+object as often as possible.
 
 =item B<Date::Manip::Date>
 

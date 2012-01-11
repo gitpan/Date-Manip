@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -362,8 +362,10 @@ two digit representations.
 The string formed by the join function will always be of the form
 +HH:MN:SS.
 
-   $time = $dmb->split("time",$string);
-   $string = $dmb->join("time",$time);
+The offset must be between -23:59:59 and +23:59:59 .
+
+   $time = $dmb->split("time",$string [,$no_normalize]);
+   $string = $dmb->join("time",$time [,$no_normalize]);
 
 This works with an amount of time in hours, minutes, and seconds. The
 string is of the format:
@@ -372,13 +374,13 @@ string is of the format:
 
 where all signs are optional. The returned value (whether a list reference
 from the split function, or a string from the join function) will have
-all fields normalized (see Date::Manip::Delta for an explanation).
+all fields normalized unless $no_normalize is passed in.
 
-   $delta = $dmb->split("delta",$string);
-   $delta = $dmb->split("business",$string);
+   $delta = $dmb->split("delta",$string [,$no_normalize]);
+   $delta = $dmb->split("business",$string [,$no_normalize]);
 
-   $string = $dmb->join("delta",$delta);
-   $string = $dmb->join("business",$delta);
+   $string = $dmb->join("delta",$delta [,$no_normalize]);
+   $string = $dmb->join("business",$delta [,$no_normalize]);
 
 Both of these split a string containing a delta, or create a string
 containing one. The difference is whether the delta is treated as
@@ -400,7 +402,8 @@ Fields may be omitted entirely. For example:
 
 are both valid.
 
-The string or list output is normalized.
+The string or list output is normalized unless $no_normalize is passed
+in.
 
 =item B<week1_day1>
 

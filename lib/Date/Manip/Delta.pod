@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -25,6 +25,27 @@ of a delta.
 
 =over 4
 
+=item B<standard and business delta>
+
+Deltas can refer to changes in either the full calendar (standard
+deltas), or they can refer to a business calendar.
+
+With a business delta, non-business days are ignored.  Typically, this
+includes holidays and weekends.  In addition, the part of the day
+outside of business hours is also ignored, so a day may only run from
+08:00 to 17:00 and everything outside of this is ignored.
+
+The length of a work day is usually not 24 hours.  It is defined by
+the start and end of the work day and is set using the config
+variables: WorkDayBeg and WorkDayEnd (WorkDay24Hr may be used to
+specify a 24-hour work day).  The work week is defined using the
+config variables: WorkWeekBeg and WorkWeekEnd.
+
+Daylight saving time will have no impact on business calculations
+because time changes occur at night (usually on the weekends) outside
+of business hours.  As such, they are ignored in business
+calculations.
+
 =item B<fields>
 
 A delta consists of 7 fields: years, months, weeks, days, hours,
@@ -49,20 +70,70 @@ is not normalized since 70 seconds is better expressed as 1 minute
 
    0:0:0:0:0:11:10
 
-Deltas are automatically converted to a normalized form in almost all
-functions.
+By default, deltas are converted to a normalized form in most
+functions that create/modify a delta, but this can be overridden.
 
 =item B<sets of fields>
 
 When normalizing a delta, fields are grouped together in sets where
 the exact relationship is known between all fields in the set.
 
-For example, in a normal delta, it is known that there are exactly
-60 seconds in a minute, exactly 60 minutes in an hour, etc.
+For example, there is an exactly known relationship between seconds
+and minutes (Date::Manip ignores leap seconds, so there are always
+60 seconds in a minute), so they will be in one set.
 
-It is NOT known how many weeks are in a month however. So, the
-year and month fields form one set, and the weeks, days, hours,
-minutes, and seconds form a second set.
+Likewise, the relationship between years and months is known, so
+they will be in one set.  There is no known relationship between
+months and weeks though, so they will be in separate sets.
+
+A standard (i.e. non-business) delta contains 3 sets of
+fields:
+
+   approximate:  year, month
+   semi-exact:   week, day
+   exact:        hour, minute, second
+
+The following known relationships exist:
+
+   1 year   = 12 months
+   1 week   = 7 days
+   1 hour   = 60 minutes
+   1 minute = 60 seconds
+
+The following semi-approximate relationships are used to link
+the semi-exact and exact fields when required:
+
+   1 day    = 24 hours
+
+The following approximate relationship is used to link the
+approximate fields to the semi-exact fields when required:
+
+   1 year = 365.2425
+
+Business deltas differ slightly,  Since daylight saving times
+effects are ignored, the length of the work day is constant, but
+due to there being holidays, the length of a week is not known,
+so a business delta has the following sets of fields:
+
+   approximate:  year, month
+   semi-exact:   week
+   exact:        day, hour, minute, second
+
+and the relationships used are:
+
+   1 year   = 12 months
+   1 day    = length of business day
+   1 hour   = 60 minutes
+   1 minute = 60 seconds
+
+The semi-approximate relationship may be used to link the
+semi-approximate and exact fields together:
+
+   1 week   = X  (length of business week in days)
+
+and the following approximate relationship may be used:
+
+   1 year   = X/7 * 365.2425
 
 When normalizing a delta, no data from one set will ever be mixed
 with data from another set.
@@ -74,66 +145,66 @@ As a result, the following delta is normalized:
 Although 8 weeks is clearly more than 1 month, we don't know the
 relationship between the two, so they don't mix.
 
-=item B<exact deltas>
+=item B<exact, semi-exact, and approximate deltas>
 
-An exact delta is one which does not include any fields which cannot
-be exactly written in terms of seconds. For example, a delta which
-includes a year or month field can never be exact since there is no
-exact length for either.
+An exact delta is one which every value is of an exactly known length
+(i.e. it only includes the exact fields listed above).
+
+A semi-exact delta is a delta which includes the exact fields as well
+as semi-exact ones.
+
+An approximate delta can include any of the fields.
 
 So, the delta:
 
    0:3:8:0:0:0:0
 
-is not exact, but the delta:
+is approximate.  The delta:
 
-   0:0:0:12:30:0:0
+   0:0:0:0:30:0:0
 
-is exact.
+is exact.  The delta:
 
-=item B<business delta>
+   0:0:0:1:30:0:0
 
-Deltas can refer to changes in either the full calendar, or they can
-refer to a business calendar.
+is semi-exact (if it is non-business) or exact (if it is business).
 
-Business deltas have the added complexity that there is no definite
-relationship between the number of work days in a work week (there may
-be a holiday during the week). As a result, there are three sets of
-fields: year/month, week, day/hour/minute/second.  An exact business
-delta will not have a year, month, or week field.
+The term "semi-exact" needs a little explanation.  Date::Manip tries to
+do things in a way which humans think of them.  It is immediately
+recognized that the approximate fields are of completely unknown
+length, and the exact fields are of known length. The "semi-exact"
+fields are termed such since humans have a way of looking at them
+which is consistent, even if it is not exact.
 
-There IS a definite relationship between hours and days, but it is
-probably not 24 hours = 1 day. Common definitions of a work day
-include 8 hours long (09:00-17:00) or 9 hours long (08:00-17:00), and
-any other definition may be included may be defined as long as the
-start time is earlier in the day than the end time. The config
-variables WorkDayBeg, WorkDayEnd, and WorkDay24Hr can be used to
-defined the length of the work day.
+For example, a day is thought of as the same wall clock time on two
+successive days, so from noon on one day to noon the next day is one
+day.  Usually that is 24 hours (for standard deltas), but if you cross
+a daylight saving time change, it might be 23 or 25 hours (or
+something different if a very irregular time change occurs).  So where
+possible, in a standard delta, a day field will change the date, but
+leave the time alone.
+
+Likewise, a business week is thought of as 7 days (i.e. Wednesday to
+Wednesday) regardless of whether there was a holiday in there.
 
 =item B<signs>
 
-Each set of fields has a sign associated with it. For example, the
+Each field has a sign associated with it. For example, the
 delta "1 year ago" is written as:
 
    -1:0:0:0:0:0:0
 
-Since there is no mixing of data between sets of fields, you can
-end up with a delta with two (or three in the case of business
-deltas) signs. So, the following is a fully normalized business
-delta:
+The sign of any field is optional, and if omitted, it is the
+same as the next higher field.  So, the following are identical:
 
-   +1:0:-3:+3:0:0:0
+   +1:2:3:4:5:6:7
+   +1:+2:+3:+4:+5:+6:+7
 
-Note that for a fully normalized delta, the leading field in each
-set of fields will always have a sign, even when it is redundant
-or unnecessary.
+Since there is no mixing of data between sets of fields, you can end
+up with a delta with as many as four signs. So, the following is a
+fully normalized business delta:
 
-For example:
-
-   +2:1:+2:6:23:51:30
-   +0:0:+0:0:0:0:10
-
-In a normalized delta, all fields in a set will have the same sign.
+   +1:0:-3:+3:1:0:0
 
 =back
 
@@ -169,41 +240,46 @@ Please refer to the Date::Manip::Obj documentation for these methods.
 
 =item B<parse>
 
-   $err = $delta->parse($string [,$business]);
+   $err = $delta->parse($string [,$business] [,$no_normalize]);
 
 This takes a string and parses it to see if it is a valid delta. If it is,
 an error code of 0 is returned and $delta now contains the value of the
-delta. Otherwise, an error code of 1 is returned.
+delta. Otherwise, an error code of 1 is returned and an error condition
+is set in the delta.
 
-A valid delta is in one of two forms: colon or expanded.
+A valid delta is in one of two forms: compact or expanded.
 
-The colon format is:
+The compact format is a colon separated list of numbers (with optional
+signs):
 
-   +Y:+M:+W:+D:+H:+MN:+S
-      examples:
-         0:0:0:0:4:3:-2
-         +4:3:-2
-         +4::3
+   Examples:
+      0:0:0:0:4:3:-2
+      +4:3:-2
+      +4::3
 
-In the colon format, from 1 to 7 of the fields may be given.  For
-example +D:+H:+MN:+S may be given to specify only four of the fields.
-No spaces may be present in the colon format. It is allowed to omit
+In the compact format, from 1 to 7 of the fields may be given.  For
+example D:H:MN:S may be given to specify only four of the fields.  No
+spaces may be present in the compact format. It is allowed to omit
 some of the fields. For example 5::3:30 is valid. In this case,
 missing fields default to the value 0.
 
-The expanded format is:
+The expanded format has the fields spelled out in some language specific
+form:
 
-   +Yy +Mm +Ww +Dd +Hh +MNmn +Ss
-      examples:
-         +4 hours +3mn -2second
-         + 4 hr 3 minutes -2
-         4 hour + 3 min -2 s
-         4 hr 2 s       (note that minutes are omitted)
+   Examples:
+      +4 hours +3mn -2second
+      + 4 hr 3 minutes -2
+      4 hour + 3 min -2 s
+      4 hr 2 s
 
-A field in the expanded format (+Yy) is a sign, a number, and a string
-specifying the type of field.  The sign is "+", "-", or absent
-(defaults to the next larger element).  The valid strings (in English)
-specifying the field type are:
+A field in the expanded format has an optional sign, a number, and a string
+specifying the type of field.  If the sign is absent, it defaults to the
+sign of the next larger element.  So the following are equivalent:
+
+   -4 hr 3 min 2 sec
+   -4 hr -3 min -2 sec
+
+The valid strings (in English) specifying the field type are:
 
    y:  y, yr, year, years
    m:  m, mon, month, months
@@ -215,11 +291,10 @@ specifying the field type are:
 
 Other languages have similar abbreviations.
 
-Also, the "seconds" string may be omitted.  The sign, number, and
-string may all be separated from each other by any number of
-whitespace. The string specifying the unit must be separated
-from a following number by whitespace or a comma, so the following example
-will NOT work:
+The "seconds" string may be omitted.  The sign, number, and string may
+all be separated from each other by any amount of whitespace. The
+string specifying the unit must be separated from a following number
+by whitespace or a comma, so the following example will NOT work:
 
    4hours3minutes
 
@@ -266,20 +341,33 @@ is invalid:
 
    1:0:0 ago
 
-A delta may be business mode, or non-business mode. By default, a delta
-is treated as a non-business mode delta, but this can be changed in two
+A delta may be standard (non-business) or business. By default, a delta
+is treated as a non-business delta, but this can be changed in two
 different ways.
 
-The first way to make a delta be business mode is to pass in the 2nd
-argument to the function that is non-zero. If this is done, the delta
-will be a business delta by default.
+The first way to make a delta be business is to pass in the 2nd
+argument to the function.  The $business argument may be a string
+'standard' or 'business' to explicitly set the type of delta.  Alternately,
+any non-zero value for $business will force the delta to be a business
+delta.
+
+So the following are identical:
+
+   $delta->parse($string,'business');
+   $delta->parse($string,1);
+
+and the following are identical:
+
+   $delta->parse($string);
+   $delta->parse($string,'standard');
+   $delta->parse($string,0);
 
 The second way to specify whether a delta is business or non-business
 is to include a key word in the string that is parsed. When this is
 done, these strings override any value of the $business argument.
 
 Most languages include a word like "business" which can be used to
-specify that the resulting delta is a business mode delta or a
+specify that the resulting delta is a business delta or a
 non-business delta. Other languages have equivalent words. The
 placement of the word is not important. Also, the "business" word can
 be included with both types of deltas, so the following are valid and
@@ -289,11 +377,21 @@ equivalent:
    4:0:0 business
    business 0:0:0:0:4:0:0
 
-There are also words "exact" or "approximate" which serve to force the
-delta to be non-business mode. For backward compatibility, both are
-available and serve the same purpose (they no longer determine whether
-the delta is exact or not... that is determined only by the fields
-that are included as described above).
+There are also words "exact" or "approximate" which may be included in
+the delta for backward compatibility.  However, they will be ignored.
+The accuracy of delta (exact, semi-exact, approximate) will be
+determined only by what fields are present in the delta.
+
+When a delta is parsed, it is automatically normalized, unless the
+$no_normalize argument is passed in.  It can be the string 'nonormalize'
+or any non-zero value.  If passing it as a non-zero value, the $business
+argument MUST be included (though it can be zero) in order to avoid
+ambiguity.
+
+So the following are equivalent:
+
+   $delta->parse($string,'nonormalize');
+   $delta->parse($string,$business,1);
 
 =item B<input>
 
@@ -303,7 +401,7 @@ This returns the string that was parsed to form the delta.
 
 =item B<set>
 
-   $err = $delta->set($field,$val);
+   $err = $delta->set($field,$val [,$no_normalize]);
 
 This explicitly sets one or more fields in a delta.
 
@@ -313,7 +411,7 @@ $field can be any of the following:
 
    delta    [Y,M,W,D,H,MN,S]  sets the entire delta
    business [Y,M,W,D,H,MN,S]  sets the entire delta
-   normal   [Y,M,W,D,H,MN,S]  sets the entire delta
+   standard [Y,M,W,D,H,MN,S]  sets the entire delta
    y        YEAR              sets one field
    M        MONTH
    w        WEEK
@@ -322,13 +420,24 @@ $field can be any of the following:
    m        MINUTE
    s        SECOND
 
-   mode     business, normal
+   mode     business, standard
 
 An error is returned if an invalid value is passed in.
 
-When setting the entire delta with "business" or "normal", it flags the
-delta as a business or non-business delta respectively. When setting
-the entire delta with "delta", the flag is left unchanged.
+When setting the entire delta with "business" or "normal", it flags
+the delta as a business or non-business delta respectively. When
+setting the entire delta with "delta", the flag is left unchanged.
+Also, when setting the entire delta, signs are not carried from one
+field to another.
+
+By default, a delta is normalized, but passing $no_normalize as any
+true value, this will not be done.
+
+If $no_normalize is not passed in, the current value for the delta
+(which defaults to 0) will be used.
+
+For backwards compatibility, 'normal' can be used in place of 'standard',
+both as $field or as $val.
 
 =item B<printf>
 
@@ -357,7 +466,11 @@ Please refer to the Date::Manip::Calc documentation for details.
 This tests to see if a delta is of a certain type. $op can be;
 
    business  : returns 1 if it is a business delta
+   standard  : returns 1 if it is a standard (non-business delta)
+
    exact     : returns 1 if it is exact
+   semi      : returns 1 if it is semi-exact
+   approx    : returns 1 if it is approximate
 
 =item B<value>
 
@@ -392,8 +505,8 @@ These are directives which print simple characters. Currently, the only one is:
 
 As an example:
 
-  $delta->printf('|A %% B|');
-     => |A % B|
+  $delta->printf('|%%|');
+     => |%|
 
 =item B<Directives to print out a single field>
 
@@ -456,15 +569,23 @@ relationships are used.
 If the X, Y, and Z fields do not all belong to the same set of fields,
 approximate relationships are used.
 
-For non-business deltas, an approximate relationship is needed to
-link the Y/M part of the delta to the W/D/H/Mn/S part. The relationship
-used is that a year is assigned a length of 365.2425 days.
+For non-business deltas, an approximate relationship is needed to link
+the Y/M part of the delta to the W/D part and a semi-approximate
+relationship is needed to link the W/D part with the H/MN/S part.
+These relationships are:
 
-For business deltas, the relationship between weeks and days is
-set to be the length of the business week (as defined using the
-WorkWeekBeg and WorkWeekEnd config variables). Also, a factor of
-X/7 * 365.2425 (where X is the number of days in a work week) is used
-to determine the number of work days in a year.
+   1 day    = 24 hours
+   1 year   = 365.2425
+
+For business deltas, the approximate and semi-approximate relationships
+used to link the fields together are:
+
+   1 week   = X    (length of business week in days)
+   1 year   = X/7 * 365.2425
+
+For business deltas, the length of the day is defined using
+WorkDayStart and WorkDayEnd.  For non-business deltas, a day is 24
+hours long (i.e. daylight saving time is ignored).
 
 If 'precision' is included, it is the number of decimal places to
 print. If it is not included, but 'width' is included, precision will

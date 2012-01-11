@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2011 Sullivan Beck. All rights reserved.
+# Copyright (c) 2009-2012 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -66,27 +66,31 @@ If you use either the ConvTZ or TZ config variables, you should
 replace them with either SetDate or ForceDate. See the
 Date::Manip::Config document for information.
 
+The TZ variable will continue to work until Dec 2013 at which point
+it will be removed.
+
 =item B<Other deprecated config variables>
 
-Most of the deprecated config variables continue to function (though
-they will be removed at a future date). These include:
+The following config variables have been deprecated, but will continue
+to function (though they will be removed at a future date):
 
-   GlobalCnf
-   IgnoreGlobalCnf
-   PersonalCnf
-   PersonalCnfPath
-   PathSep
-   TZ
-   Internal
-   IntCharSet
+   IntCharSet   (removed Oct 2012)
+   TZ           (removed Dec 2013)
 
 The following variables have been removed. If you use any of them,
 you may need to modify your scripts:
 
+   GlobalCnf
+   PersonalCnf
+   PathSep
+   IgnoreGlobalCnf
+   PersonalCnfPath
    ConvTZ
+   Internal
    TodayIsMidnight
    DeltaSigns
    UpdateCurrTZ
+   ResetWorkdDay
 
 =item B<today, yesterday, tomorrow>
 

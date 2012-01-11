@@ -22,7 +22,9 @@ sub test {
   return $$obj2{"err"}  if ($err);
 
   my $obj3 = $obj1->calc($obj2,@test);
-  return   if (! defined $obj3);
+  if ($$obj3{'err'}) {
+     return $$obj3{'err'};
+  }
   $ret = $obj3->value();
   return $ret;
 }
@@ -91,13 +93,13 @@ $tests="
 
 1998010500:00:00 '0:1:1:0:0:0:0 business' 1 => 1997112808:00:00
 
-1998010500:00:00 '0:1:1:0:0:0:0 business' 2 => 1997112808:00:00
+1998010500:00:00 '0:1:1:0:0:0:0 business' 2 => '[calc] Unable to perform calculation'
 
 1998010400:00:00 '0:1:1:0:0:0:0 business' 0 => 1998021108:00:00
 
 1998010400:00:00 '0:1:1:0:0:0:0 business' 1 => 1997112708:00:00
 
-1998010400:00:00 '0:1:1:0:0:0:0 business' 2 => 1997112708:00:00
+1998010400:00:00 '0:1:1:0:0:0:0 business' 2 => '[calc] Unable to perform calculation'
 
 ";
 
@@ -113,5 +115,5 @@ $t->done_testing();
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

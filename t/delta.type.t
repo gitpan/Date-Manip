@@ -34,13 +34,41 @@ normal [ 0 0 0 0 1 2 3 ]   => 0
 
 business                   => 0
 
+standard                   => 1
+
 exact                      => 1
+
+semi                       => 0
+
+approx                     => 0
+
+###
+
+normal [ 0 0 1 2 1 2 3 ]   => 0
+
+business                   => 0
+
+standard                   => 1
+
+exact                      => 0
+
+semi                       => 1
+
+approx                     => 0
+
+###
 
 delta [ 1 0 0 0 1 2 3 ]    => 0
 
 business                   => 0
 
+standard                   => 1
+
 exact                      => 0
+
+semi                       => 0
+
+approx                     => 1
 
 ###
 
@@ -48,19 +76,55 @@ business [ 0 0 0 0 1 2 3 ] => 0
 
 business                   => 1
 
+standard                   => 0
+
 exact                      => 1
+
+semi                       => 0
+
+approx                     => 0
+
+###
+
+business [ 0 0 0 1 1 2 3 ] => 0
+
+business                   => 1
+
+standard                   => 0
+
+exact                      => 1
+
+semi                       => 0
+
+approx                     => 0
+
+###
+
+business [ 0 0 1 2 1 2 3 ] => 0
+
+business                   => 1
+
+standard                   => 0
+
+exact                      => 0
+
+semi                       => 1
+
+approx                     => 0
+
+###
 
 delta [ 1 0 0 0 10 20 30 ] => 0
 
 business                   => 1
 
-exact                      => 0
-
-mode normal                => 0
-
-business                   => 0
+standard                   => 0
 
 exact                      => 0
+
+semi                       => 0
+
+approx                     => 1
 
 ###
 
@@ -78,5 +142,5 @@ $t->done_testing();
 #cperl-continued-brace-offset: 0
 #cperl-brace-offset: 0
 #cperl-brace-imaginary-offset: 0
-#cperl-label-offset: -2
+#cperl-label-offset: 0
 #End:

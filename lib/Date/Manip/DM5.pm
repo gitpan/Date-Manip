@@ -1,5 +1,5 @@
 package Date::Manip::DM5;
-# Copyright (c) 1995-2011 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2012 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -220,7 +220,7 @@ use IO::File;
 our($Abbrevs);
 use Date::Manip::DM5abbrevs;
 
-$VERSION='5.62';
+$VERSION='5.63';
 
 ########################################################################
 ########################################################################
@@ -4857,6 +4857,7 @@ sub _DateCalc_DateDelta {
   if ($mode==2 || $mode==3) {
     while (1) {
       _ModuloAddition(60,$dmn,\$mn,\$h);
+      $dmn=0;
       $h+= $dh;
 
       if ($h>$h2  or  $h==$h2 && $mn>$m2) {
@@ -4868,9 +4869,9 @@ sub _DateCalc_DateDelta {
 
       } elsif ($h<$h1  or  $h==$h1 && $mn<$m1) {
         $dh=$h-$h1;
-        $dmn=$m1-$mn;
+        #$dmn=$m1-$mn;
         $h=$h2;
-        $mn=$m2;
+        #$mn=$m2;
         $dd--;
 
       } elsif ($h==$h2  &&  $mn==$m2) {
@@ -7471,5 +7472,5 @@ sub _ReturnList {
 # cperl-continued-brace-offset: 0
 # cperl-brace-offset: 0
 # cperl-brace-imaginary-offset: 0
-# cperl-label-offset: -2
+# cperl-label-offset: 0
 # End:
