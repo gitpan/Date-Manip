@@ -109,7 +109,7 @@ respectively.
 In 5.xx, it was documented that you could use the module Memoize to
 speed up Date::Manip, especially when sorting dates.
 
-This information is no longer accurate. Using Memoize in conjuction
+This information is no longer accurate. Using Memoize in conjunction
 with Date::Manip should have little impact on performance, and may
 lead to incorrect results, especially if you change config variables.
 

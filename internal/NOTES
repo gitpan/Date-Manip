@@ -148,6 +148,8 @@ Set the release version
 #########################################################################
 Before every release, spellcheck the documents:
 
+   internal/langpod
+
    for i in `find lib -type f -name \*.pod` ;do
       podspell $i > $i.txt
       ispell -p internal/manip.isp $i.txt

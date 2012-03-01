@@ -6,20 +6,6 @@ package Date::Manip::Lang::danish;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::danish - Danish language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,13 +13,15 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
+$LangName  = "Danish";
+$YearAdded = 2001;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
@@ -41,15 +29,12 @@ __DATA__
 ampm:
   -
     - FM
-    - ''
     - f.m.
   -
     - EM
-    - ''
     - e.m.
 at:
   - klokken
-  - ''
   - kl
   - kl.
 day_abb:
@@ -64,11 +49,11 @@ day_abb:
   -
     - Fre
   -
+    - Lør
     - Lor
-    - lør
   -
-    - Son
     - Søn
+    - Son
 day_char:
   -
     - M
@@ -96,11 +81,11 @@ day_name:
   -
     - Fredag
   -
-    - Lordag
     - Lørdag
+    - Lordag
   -
-    - Sondag
     - Søndag
+    - Sondag
 each:
   - hver
 fields:
@@ -116,35 +101,29 @@ fields:
     - måned
   -
     - uger
-    - ''
     - u
     - uge
   -
     - dage
-    - ''
     - d
     - dag
   -
     - timer
-    - ''
     - t
     - tim
     - time
   -
     - minutter
-    - ''
     - m
     - min
     - minut
   -
     - sekunder
-    - ''
     - s
     - sek
     - sekund
 last:
   - forrige
-  - ''
   - sidste
   - nyeste
 mode:
@@ -154,7 +133,6 @@ mode:
     - circa
   -
     - arbejdsdag
-    - ''
     - arbejdsdage
 month_abb:
   -
@@ -208,136 +186,224 @@ month_name:
     - December
 nextprev:
   -
-    - nasta
+    - naste
     - næste
   -
     - forrige
 nth:
   -
-    - 1:e
-    - ''
+    - 1.
     - forste
     - første
+    - en
   -
-    - 2:e
-    - ''
+    - 2.
     - anden
+    - to
   -
-    - 3:e
-    - ''
+    - 3.
     - tredie
+    - tre
   -
-    - 4:e
-    - ''
+    - 4.
     - fjerde
+    - fire
   -
-    - 5:e
-    - ''
+    - 5.
     - femte
+    - fem
   -
-    - 6:e
-    - ''
+    - 6.
     - sjette
+    - seks
   -
-    - 7:e
-    - ''
+    - 7.
     - syvende
+    - syv
   -
-    - 8:e
-    - ''
+    - 8.
     - ottende
+    - otte
   -
-    - 9:e
-    - ''
+    - 9.
     - niende
+    - ni
   -
-    - 10:e
-    - ''
+    - 10.
     - tiende
+    - ti
   -
-    - 11:e
-    - ''
+    - 11.
     - elfte
+    - elleve
   -
-    - 12:e
-    - ''
+    - 12.
     - tolvte
+    - tolv
   -
-    - 13:e
-    - ''
+    - 13.
     - trettende
+    - tretten
   -
-    - 14:e
-    - ''
+    - 14.
     - fjortende
+    - fjorten
   -
-    - 15:e
-    - ''
+    - 15.
     - femtende
+    - femten
   -
-    - 16:e
-    - ''
+    - 16.
     - sekstende
+    - seksten
   -
-    - 17:e
-    - ''
+    - 17.
     - syttende
+    - sytten
   -
-    - 18:e
-    - ''
+    - 18.
     - attende
+    - atten
   -
-    - 19:e
-    - ''
+    - 19.
     - nittende
+    - nitten
   -
-    - 20:e
-    - ''
+    - 20.
     - tyvende
+    - tyve
   -
-    - 21:e
-    - ''
+    - 21.
     - enogtyvende
+    - enogtyve
   -
-    - 22:e
-    - ''
+    - 22.
     - toogtyvende
+    - toogtyve
   -
-    - 23:e
-    - ''
+    - 23.
     - treogtyvende
+    - treogtyve
   -
-    - 24:e
-    - ''
+    - 24.
     - fireogtyvende
+    - fireogtyve
   -
-    - 25:e
-    - ''
+    - 25.
     - femogtyvende
+    - femogtyve
   -
-    - 26:e
-    - ''
+    - 26.
     - seksogtyvende
+    - seksogtyve
   -
-    - 27:e
-    - ''
+    - 27.
     - syvogtyvende
+    - syvogtyve
   -
-    - 28:e
-    - ''
+    - 28.
     - otteogtyvende
+    - otteogtyve
   -
-    - 29:e
-    - ''
+    - 29.
     - niogtyvende
+    - niogtyve
   -
-    - 30:e
-    - ''
+    - 30.
     - tredivte
+    - tredive
   -
-    - 31:e
-    - ''
+    - 31.
     - enogtredivte
+    - enogtredive
+  -
+    - 32.
+    - toogtredivte
+    - toogtredive
+  -
+    - 33.
+    - treogtredivte
+    - treogtredive
+  -
+    - 34.
+    - fireogtredivte
+    - fireogtredive
+  -
+    - 35.
+    - femogtredivte
+    - femogtredive
+  -
+    - 36.
+    - seksogtredivte
+    - seksogtredive
+  -
+    - 37.
+    - syvogtredivte
+    - syvogtredive
+  -
+    - 38.
+    - otteogtredivte
+    - otteogtredive
+  -
+    - 39.
+    - niogtredivte
+    - niogtredive
+  -
+    - 40.
+    - fyrretyvende
+    - fyrre
+  -
+    - 41.
+    - enogtyvende
+    - enogtyve
+  -
+    - 42.
+    - toogtyvende
+    - toogtyve
+  -
+    - 43.
+    - treogtyvende
+    - treogtyve
+  -
+    - 44.
+    - fireogtyvende
+    - fireogtyve
+  -
+    - 45.
+    - femogtyvende
+    - femogtyve
+  -
+    - 46.
+    - seksogtyvende
+    - seksogtyve
+  -
+    - 47.
+    - syvogtyvende
+    - syvogtyve
+  -
+    - 48.
+    - otteogtyvende
+    - otteogtyve
+  -
+    - 49.
+    - niogtyvende
+    - niogtyve
+  -
+    - 50.
+    - halvtredsindstyvende
+    - halvtreds
+  -
+    - 51.
+    - enogindstyvende
+    - enogindstyve
+  -
+    - 52.
+    - toogindstyvende
+    - toogindstyve
+  -
+    - 53.
+    - treogindstyvende
+    - treogindstyve
 of:
   - om
 offset_date:
@@ -363,5 +429,4 @@ when:
     - siden
   -
     - om
-    - ''
     - senere

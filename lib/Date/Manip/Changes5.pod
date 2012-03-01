@@ -1726,7 +1726,7 @@ an uninitialized variable.
 
 =item New features
 
-Added "which dofw in mmm" formats to ParseDate
+Added "which dofw in mmm" formats to ParseDate.  Mark Dedlow
 
 =item Bug fixes
 

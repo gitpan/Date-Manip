@@ -6,20 +6,6 @@ package Date::Manip::Lang::romanian;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::romanian - Romanian language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,13 +13,15 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-16 perl);
+$LangName  = "Romanian";
+$YearAdded = 1999;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
@@ -41,11 +29,9 @@ __DATA__
 ampm:
   -
     - AM
-    - ''
     - A.M.
   -
     - PM
-    - ''
     - P.M.
 at:
   - la
@@ -61,8 +47,8 @@ day_abb:
   -
     - vin
   -
-    - sam
     - sâm
+    - sam
   -
     - dum
 day_char:
@@ -84,8 +70,8 @@ day_name:
   -
     - luni
   -
-    - marti
     - marți
+    - marti
   -
     - miercuri
   -
@@ -93,17 +79,16 @@ day_name:
   -
     - vineri
   -
-    - sambata
     - sâmbătă
+    - sambata
   -
-    - duminica
     - duminică
+    - duminica
 each:
   - fiecare
 fields:
   -
     - ani
-    - ''
     - an
     - a
   -
@@ -120,7 +105,6 @@ fields:
     - săpt
   -
     - zile
-    - ''
     - zi
     - z
   -
@@ -130,12 +114,10 @@ fields:
     - h
   -
     - minute
-    - ''
     - min
     - m
   -
     - secunde
-    - ''
     - sec
     - s
 last:
@@ -143,7 +125,6 @@ last:
 mode:
   -
     - exact
-    - ''
     - aproximativ
   -
     - lucratoare
@@ -153,9 +134,8 @@ month_abb:
   -
     - ian
   -
-    - febr
-    - ''
     - feb
+    - febr
   -
     - mart
   -
@@ -207,320 +187,272 @@ nextprev:
     - următoarea
   -
     - precedenta
-    - ''
     - ultima
 nth:
   -
+    - a 1-a
     - prima
-    - ''
     - prima
     - intii
     - întîi
     - unu
   -
+    - a 2-a
     - a doua
-    - ''
     - a doua
     - doi
   -
     - a 3-a
-    - ''
     - a treia
     - trei
   -
     - a 4-a
-    - ''
     - a patra
     - patru
   -
     - a 5-a
-    - ''
     - a cincea
     - cinci
   -
     - a 6-a
-    - ''
     - a sasea
     - a şasea
     - sase
     - şase
   -
     - a 7-a
-    - ''
     - a saptea
     - a şaptea
     - sapte
     - şapte
   -
     - a 8-a
-    - ''
     - a opta
     - opt
   -
     - a 9-a
-    - ''
     - a noua
     - noua
     - nouă
   -
     - a 10-a
-    - ''
     - a zecea
     - zece
   -
     - a 11-a
-    - ''
     - a unsprezecea
     - unsprezece
   -
     - a 12-a
-    - ''
     - a doisprezecea
     - doisprezece
   -
     - a 13-a
-    - ''
     - a treisprezecea
     - treisprezece
   -
     - a 14-a
-    - ''
     - a patrusprezecea
     - patrusprezece
     - paisprezece
   -
     - a 15-a
-    - ''
     - a cincisprezecea
     - cincisprezece
   -
     - a 16-a
-    - ''
     - a saiprezecea
     - a şaiprezecea
     - saiprezece
     - şaiprezece
   -
     - a 17-a
-    - ''
     - a saptesprezecea
     - a şaptesprezecea
     - saptesprezece
     - şaptesprezece
   -
     - a 18-a
-    - ''
     - a optsprezecea
     - optsprezece
   -
     - a 19-a
-    - ''
     - a nouasprezecea
     - a nouăsprezecea
     - nouasprezece
     - nouăsprezece
   -
     - a 20-a
-    - ''
     - a douazecea
     - a douăzecea
     - douazeci
     - douăzeci
   -
     - a 21-a
-    - ''
     - a douazecisiuna
     - a douăzecişiuna
     - douazecisiunu
     - douăzecişiunu
   -
     - a 22-a
-    - ''
     - a douazecisidoua
     - a douăzecişidoua
     - douazecisidoi
     - douăzecişidoi
   -
     - a 23-a
-    - ''
     - a douazecisitreia
     - a douăzecişitreia
     - douazecisitrei
     - douăzecişitrei
   -
     - a 24-a
-    - ''
     - a douazecisipatra
     - a douăzecişipatra
     - douazecisipatru
     - douăzecisipatru
   -
     - a 25-a
-    - ''
     - a douazecisicincea
     - a douăzecişicincea
     - douazecisicinci
     - douăzecişicinci
   -
     - a 26-a
-    - ''
     - a douazecisisasea
     - a douăzecişişasea
     - douazecisisase
     - douăzecişişase
   -
     - a 27-a
-    - ''
     - a douazecisisaptea
     - a douăzecişişaptea
     - douazecisisapte
     - douăzecişişapte
   -
     - a 28-a
-    - ''
     - a douazecisiopta
     - a douăzecişiopta
     - douazecisiopt
     - douăzecişiopt
   -
     - a 29-a
-    - ''
     - a douazecisinoua
     - a douăzecişinoua
     - douazecisinoua
     - douăzecişinouă
   -
     - a 30-a
-    - ''
     - a treizecea
     - treizeci
   -
     - a 31-a
-    - ''
     - a treizecisiuna
     - a treizecişiuna
     - treizecisiunu
     - treizecişiunu
   -
     - a 32-a
-    - ''
     - a treizecisidoua
     - a treizecişdoua
     - treizecişidoi
     - treizecisidoi
   -
     - a 33-a
-    - ''
     - a treizecisitreia
     - a treizeciştreia
     - treizecişitrei
     - treizecisitrei
   -
     - a 34-a
-    - ''
     - a treizecisipatra
     - a treizecişpatra
     - treizecişipatru
     - treizecisipatru
   -
     - a 35-a
-    - ''
     - a treizecisicincea
     - a treizecişcincea
     - treizecişicinci
     - treizecisicinci
   -
     - a 36-a
-    - ''
     - a treizecisisasea
     - a treizecişşasea
     - treizecişişase
     - treizecisisase
   -
     - a 37-a
-    - ''
     - a treizecisisaptea
     - a treizecişşaptea
     - treizecişişapte
     - treizecisisapte
   -
     - a 38-a
-    - ''
     - a treizecisiopta
     - a treizecişopta
     - treizecişiopt
     - treizecisiopt
   -
     - a 39-a
-    - ''
     - a treizecisinoua
     - a treizecişnoua
     - treizecişinouă
     - treizecisinoua
   -
     - a 40-a
-    - ''
     - a patruzecea
     - patruzeci
   -
     - a 41-a
-    - ''
     - a patruzecisiuna
     - a patruzecişiuna
     - patruzecisiunu
     - patruzecişiunu
   -
     - a 42-a
-    - ''
     - a patruzecisidoua
     - a patruzecişidoua
     - patruzecişidoi
     - patruzecisidoi
   -
     - a 43-a
-    - ''
     - a patruzecisitreia
     - a patruzecişitreia
     - patruzecişitrei
     - patruzecisitrei
   -
     - a 44-a
-    - ''
     - a patruzecisipatra
     - a patruzecişipatra
     - patruzecişipatru
     - patruzecisipatru
   -
     - a 45-a
-    - ''
     - a patruzecisicincea
     - a patruzecişicincea
     - patruzecişicinci
     - patruzecisicinci
   -
     - a 46-a
-    - ''
     - a patruzecisisasea
     - a patruzecişişasea
     - patruzecişişase
     - patruzecisisase
   -
     - a 47-a
-    - ''
     - a patruzecisisaptea
     - a patruzecişişaptea
     - patruzecişişapte
     - patruzecisisapte
   -
     - a 48-a
-    - ''
     - a patruzecisiopta
     - a patruzecişiopta
     - patruzecişiopt
     - patruzecisiopt
   -
     - a 49-a
-    - ''
     - a patruzecisinoua
     - a patruzecişinoua
     - patruzecişinouă
@@ -528,26 +460,22 @@ nth:
 
   -
     - a 50-a
-    - ''
     - a cincizecea
     - cincizeci
   -
     - a 51-a
-    - ''
     - a cincizecisiuna
     - a cincizecişiuna
     - cincizecisiunu
     - cincizecişiunu
   -
     - a 52-a
-    - ''
     - a cincizecisidoua
     - a cincizecişidoua
     - cincizecişidoi
     - cincizecisidoi
   -
     - a 53-a
-    - ''
     - a cincizecisitreia
     - a cincizecişitreia
     - cincizecişitrei
@@ -555,7 +483,6 @@ nth:
 
 of:
   - din
-  - ''
   - in
   - 'n'
 offset_date:

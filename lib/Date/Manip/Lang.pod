@@ -6,247 +6,135 @@
 
 =head1 NAME
 
-Date::Manip::Lang - date manipulation routines (language initialization)
+Date::Manip::Lang - language support for Date::Manip
 
 =head1 DESCRIPTION
 
-This module is a series of routines, one per language, used to
-initialize the support for different languages in Date::Manip
+Date::Manip supports a number of different languages when
+parsing dates, and more can be added.
+
+=head1 CURRENT LANGUAGES
+
+Currently, the following languages are supported by Date::Manip.
+The version of Date::Manip where they were added is included (so
+you can see the minimum version of Date::Manip needed to parse
+each).
+
+The language can be chosen by setting the Language config
+variable to the name of the language or any of the aliases
+included in the table.
+
+All names and aliases are case insensitive.
+
+   Language     Version  Aliases
+
+   English      default  en, en_us
+
+   Catalan      5.43     ca
+   Danish       5.41     da
+   Dutch        5.32     Nederlands, nl
+   Finnish      6.31     fi, fi_fi
+   French       5.02     fr, fr_fr
+   German       5.31     de, de_de
+   Italian      5.35     it, it_it
+   Norwegian    6.21     nb, nb_no
+   Polish       5.32     pl, pl_pl
+   Portuguese   5.34     pt, pt_pt
+   Romanian     5.35     ro, ro_ro
+   Russian      5.41     ru, ru_ru
+   Spanish      5.33     es, es_es
+   Swedish      5.05     sv
+   Turkish      5.41     tr, tr_tr
 
 =head1 ADDING A LANGUAGE
 
-Adding a language is easily done.  If you want to add a language,
-refer to the files in module that live in: lib/Date/Manip/Lang .
-
-First, send me the name of the language (in ASCII character) as well
-as any locale designations.
-
-For example, to create a Spanish translation (which is not necessary
-since it already exists), I need the following list::
-
-   spanish es es_es
-
-The first word is the name of the language. Copy copy the english.pm
-file to spanish.pm.
-
-The language file you just created is a new module containing the data
-for that language. It needs to be modified in the following ways:
+Adding a language is easily done (if you're fluent in both English
+and the other language).  If you want to add a new language, do the
+following:
 
 =over 4
 
-=item
+=item Language name
 
-Change "english" to "spanish" everywhere it appears in the new file.
-Also change "English" to "Spanish".
+When you submit the new language, I'll need the name of the
+language (of course) and any common locale names that might
+be useful for people to select the language.
 
-=item
+For example, if you were creating a Spanish translation (which is not
+necessary since it already exists), I would need the following list:
 
-Look for a line of the form:
+   spanish es es_es
 
-   @Encodings = qw();
+=item Copy the english module
 
-and change it to include the encodings most often used by this
-language. For example,
+Copy the english.pm file (which is in lib/Date/Manip/Lang in the
+Date::Manip distribution) to the new language (i.e. spanish.pm in
+this example).
 
-   @Encodings = qw(utf-8 iso-8859-1 perl);
+=item Set some variables in the new module
 
-Always include 'utf-8' and 'perl' as the first and last elements in the list.
+The new module (spanish.pm) will need a few simple modifications.
+Change the package name from 'english' to 'spanish'.
 
-=item
+Fix the @Encodings lines.  Most languages can be written in more
+than one encoding.  The first encoding in the list should be utf-8
+and the last should be perl.  Include any other encodings that
+should be supported as well.
 
-Change all of the data (after the __DATA__ line) as described below.
+Set the $YearAdded and $LangName appropriately.
 
-=back
+=item Translate the language terms
+
+Translate all of the data (after the __DATA__ line).
 
 The data section of the module (which is written in YAML) is fairly
 straightforward to translate.
 
-Where possible, please store all data in UTF-8 characters. If you have
-to escape high-byte characters, or use some other character encoding,
-please let me know. I'll do my best to deal with it, but it will delay
-me incorporating the translation into the module.
-
-Most of the sections below can contain any number of alternate words
-which imply the same thing. Any time a list contains multiple words,
-the first should be the 'preferred' or most common word.
-
-If a word contains UTF-8 characters which have a simple ASCII
-equivalent, you should include both forms. For example, the spanish
-name for Saturday in ASCII would be written sabado, but in reality,
-the first 'a' has an accent over it. This word should appear
-twice... first in full UTF-8 encoding, and second as all ASCII. If the
-language (Russian for example) has no ASCII equivalent, just include
-the UTF-8 representation.
-
-=over 4
-
-=item ampm
-
-The ampm section consists of two lists of words. The first section are
-words which can be included after a time to designate a morning time
-(i.e. AM). The second set are words which designate an afternoon time
-(i.e. PM).
-
-=item at
-
-The word 'at' as it appears in the phrase:
-
-   AT 3:00
-
-=item day_abb, day_char, day_name
-
-These are each a list of seven elements which refer to the days Monday
-through Sunday.
-
-day_char is typically a one or two character designation of the day
-(M, T, W, ...).
-
-day_abb is an abbreviation for the day (Mon, Tue, Wed, ...).
-
-day_name is the full day name (Monday, Tuesday, ...).
-
-=item each
-
-This is a list of words that could be used to translate the following
-phrases:
-
-   EACH Monday
-
-   EVERY Monday
-
-   EVERY month
-
-=item fields
-
-These are the names of the fields in a delta. There are 7 fields:
-years, months, weeks, days, hours, minutes, seconds.
-
-The first field would be the ways that you might name the years field:
-
-   YEARS YEAR YRS YR
-
-=item last
-
-This is a list of words that could be used to translate the following
-phrase:
-
-   LAST day of the month
-
-=item mode
-
-This contains two lists of words which can be used to specify whether
-a delta is exact, approximate, or business.
-
-The first list contains words which would specify exact or approximate
-deltas.  In other words, a delta could be specified:
-
-   in EXACTLY 3 hours
-
-   in APPROXIMATELY 3 hours
-
-The second list contains words which would specify business deltas. In
-other words:
-
-   in 3 BUSINESS days
-
-=item month_abb, month_name
-
-These specify the abbreviation and name respectively of the 12 months.
-
-=item nextprev
-
-This contains two sets of words. The first specifies the next element,
-and would be used to translate the following phrases:
-
-   NEXT week
-
-   NEXT Tuesday
-
-The second set specifies the previous element, and would be used to
-translate the following phrases:
-
-   LAST Tuesday
-
-   PREVIOUS week
-
-=item nth
-
-This contains the numbers from 1-53. The first element should be the
-equivalent of '1st', '2nd', Additional elements should be the equivalent
-of the number spelled out (one, two, ...) and the ordinal number
-spelled out (first, second, ...).
-
-=item of
-
-This is a word which might be used to translate the following phrases:
-
-   1st dat OF December
-
-   1st day IN December
-
-=item offset_date
-
-This actually contains a hash, rather than a list.
-
-Most languages have special words which refer to a day relative to today.
-The most common (in English) are:
-
-   TODAY
-   TOMORROW
-   YESTERDAY
-
-The keys of the hash are the words, and the values of the hash are a
-delta which can be used to get the date relative to today.
-
-For example, tomorrow is the delta '+0:0:0:1:0:0:0'.
-
-If the word contains UTF-8 characters, please include it twice, once with
-the UTF-8 characters, and once as ASCII (if relevant).
-
-=item offset_time
-
-This is a hash similar to offset_date.
-
-Most languages have words which might refer to times relative to the
-current time. In English, the only common word is
-
-   NOW
-
-but in other languages, there may be other common words.
-
-=item on
-
-This is a word which might be used to translate the following phrases:
-
-   ON July 5th
-
-=item times
-
-This is a hash similar to offset_date.
-
-Most languages have special words which refer to specific times of the
-day. In English, these include:
-
-   NOON
-   MIDNIGHT
-
-=item when
-
-This is two lists of words. The first list would be in a delta referring to
-a time in the past. For example:
-
-   5 hours AGO
-
-   5 hours EARLIER
-
-The second list of words would be in a delta referring to a time in the
-future. For example:
-
-   IN 5 hours
-
-   5 hours LATER
+Every term is defined in the Date::Manip::Lang::english document
+(or in any of the other language module documents), so please
+refer to it to find out what each element means.  Then replace the
+English version with the new translation.
+
+There are some requirements:
+
+1) Every element should be defined (except for the sephm and sepms
+elements).
+
+2) The module must be written using UTF-8 characters if the language
+includes any non-ASCII characters.
+
+3) Each element includes a list of values (different variations of the
+element).  In most cases, the order of the values for each element is
+not important since they are just used to create a regular expression
+for parsing dates, but a few of them are also used to determine printable
+values using the Date::Manip::Date::printf method (or the UnixDate
+function).  These elements are:
+
+   Element       printf directive
+
+   ampm          %p
+   day_abb       %a
+   day_char      %v
+   day_name      %A
+   month_abb     %b
+   month_name    %B
+   nth           %E
+
+For each of these, the value that should be printed out must be the
+first value in the list.
+
+4) When possible, if a language includes characters that are
+essentially ASCII characters with a punctuation mark, please include a
+variation of the value which is just ASCII with the punctuation
+removed.  For example, the spanish name for Saturday in ASCII would be
+written sabado, but in reality, the first 'a' has an accent over
+it. This word should appear twice... first in full UTF-8 encoding, and
+second as all ASCII. If the language (Russian for example) has no
+ASCII equivalent, just include the UTF-8 representation.
 
 =back
+
+Feel free to contact me if you have any questions.
 
 =head1 SEE ALSO
 

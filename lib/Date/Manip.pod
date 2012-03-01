@@ -323,6 +323,9 @@ Miscellaneous information:
   Date::Manip::Holidays   - information on defining and using
                             holidays and events
   Date::Manip::ConfigFile - sample config file
+  Date::Manip::Lang       - information about the languages
+                            supported by Date::Manip and how
+                            to add a new language
 
 Information about the module and administrative things:
 

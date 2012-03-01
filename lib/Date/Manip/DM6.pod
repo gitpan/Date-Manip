@@ -51,6 +51,7 @@ Date::Manip::DM6 - Date manipulation routines
    $date = Date_GetNext($date,$dow,$today,$time);
 
    $name = Date_IsHoliday($date);
+   @name = Date_IsHoliday($date);
 
    $listref = Events_List($date);
    $listref = Events_List($date0,$date1);
@@ -408,10 +409,11 @@ $val is the new value.
 =item B<Date_IsHoliday>
 
    $name = Date_IsHoliday($date);
+   @name = Date_IsHoliday($date);
 
-This returns undef if $date is not a holiday, or a string containing the
-name of the holiday otherwise.  An empty string is returned for an unnamed
-holiday.
+This returns undef if $date is not a holiday, or a string containing
+the name of the holiday otherwise (or a list of names in list
+context).  An empty string is returned for an unnamed holiday.
 
 =item B<Date_IsWorkDay>
 

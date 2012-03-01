@@ -13,7 +13,7 @@ use IO::File;
 use Storable qw(dclone);
 
 our ($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 END { undef $VERSION; }
 
 ########################################################################
@@ -37,10 +37,9 @@ sub new {
    # $tz     is a Date::Manip::TZ object to base the new object on
    #         (only for Date, Delta, Recur objects)
    # $base   is the Date::Manip::Base object to base the new object on
-   # $string an initial parse string
    # @opts   options to pass to config method
 
-   my($old,$new,$class,$tz,$base,$string,@opts);
+   my($old,$new,$class,$tz,$base,@opts);
 
    # Get the class of the new object
 
@@ -72,7 +71,7 @@ sub new {
       @opts = @{ pop(@args) };
    }
 
-   # There must be at most 1 additional argument ($string)
+   # There must be at most 1 additional argument
 
    if (@args) {
       if (@args > 1) {

@@ -53,7 +53,7 @@ use integer;
 use warnings;
 
 our $VERSION;
-$VERSION='6.30';
+$VERSION='6.31';
 
 ###########################################################################
 
@@ -785,7 +785,7 @@ sub Date_LeapYear {
 
 sub Date_DaySuffix {
    my($d) = @_;
-   return $$dmb{'data'}{'wordlistL'}{'nth_dom'}[$d-1];
+   return $$dmb{'data'}{'wordlist'}{'nth_dom'}[$d-1];
 }
 
 sub Date_TimeZone {
@@ -843,7 +843,13 @@ sub Date_IsHoliday {
    my($str) = @_;
    my $err = $date->parse($str);
    return undef  if ($err);
-   return $date->holiday();
+   if (wantarray) {
+      my @ret = $date->holiday();
+      return @ret;
+   } else {
+      my $ret = $date->holiday();
+      return $ret;
+   }
 }
 
 sub Date_Cmp {

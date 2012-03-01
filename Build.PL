@@ -10,6 +10,7 @@ my %requires = (
                  'IO::File'                 => '0',
                  'Storable'                 => '0',
                  'YAML::Syck'               => '0',
+                 'utf8'                     => '0',
                );
 my %build_mods = (
                  'Test::Inter'              => '0',
@@ -22,7 +23,7 @@ if ($IsWin32{ $^O }) {
 
 my $build = Module::Build->new(
         license            => 'perl',
-        dist_version       => '6.30',
+        dist_version       => '6.31',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',

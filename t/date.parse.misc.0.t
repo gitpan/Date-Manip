@@ -204,6 +204,12 @@ now => 2000012112:00:00 2000012117:00:00
 
 '3rd tuesday in Jun 96 at 10:30 pm CET' => 'Invalid timezone'
 
+###
+
+'sunday w 22 in 1996' => 1996060200:00:00 1996060204:00:00
+
+'sunday 22nd w in 1996' => 1996060200:00:00 1996060204:00:00
+
 ";
 
 $t->tests(func  => \&test,

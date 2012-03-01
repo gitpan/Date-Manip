@@ -1,7 +1,7 @@
 #!/usr/bin/perl -w
 
 use Test::Inter;
-$t = new Test::Inter 'list_holidays';
+$t = new Test::Inter 'list_holidays (New Years)';
 $testdir = '';
 $testdir = $t->testdir();
 

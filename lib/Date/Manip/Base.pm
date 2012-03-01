@@ -19,13 +19,14 @@ require 5.010000;
 use strict;
 use warnings;
 use integer;
+use utf8;
 use IO::File;
 #use re 'debug';
 use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.30';
+$VERSION='6.31';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -157,6 +158,10 @@ sub _init_config {
       # Use this to set the default time.
 
       'defaulttime'      => 'midnight',
+
+      # Whether or not to use a period as a time separator.
+
+      'periodtimesep'    => 0,
 
       # *** DEPRECATED ***
 
@@ -985,6 +990,8 @@ sub _config_file {
    $in->close();
 
    my $sect = 'conf';
+   my %sect;
+
    chomp(@in);
    foreach my $line (@in) {
       $line =~ s/^\s+//o;
@@ -995,7 +1002,33 @@ sub _config_file {
          # New section
          $sect = $self->_config_file_section($line);
       } else {
+         $sect{$sect} = 1;
          $self->_config_file_var($sect,$line);
+      }
+   }
+
+   # If we did a holidays section, we need to create a regular
+   # expression with all of the holiday names.
+
+   if (exists $sect{'holidays'}) {
+      my @hol = @{ $$self{'data'}{'sections'}{'holidays'} };
+      my @nam;
+      while (@hol) {
+         my $junk = shift(@hol);
+         my $hol  = shift(@hol);
+         push(@nam,$hol)  if ($hol);
+      }
+
+      if (@nam) {
+         @nam    = sort _sortByLength(@nam);
+         my $hol = '(?<holiday>' . join('|',map { "\Q$_\E" } @nam) . ')';
+         my $yr  = '(?<y>\d\d\d\d|\d\d)';
+
+         my $rx  = "$hol\\s*$yr|" .      # Christmas 2009
+                   "$yr\\s*$hol|" .      # 2009 Christmas
+                   "$hol";               # Christmas
+
+         $$self{'data'}{'rx'}{'holidays'} = qr/^(?:$rx)$/i;
       }
    }
 }
@@ -1035,7 +1068,7 @@ sub _config_file_var {
 # Config variable functions
 
 # $self->config(SECT);
-#    Creates a new section.
+#    Creates a new section (if it doesn't already exist).
 #
 # $self->config(SECT,'_vars');
 #    Returns a list of (VAR VAL VAR VAL ...)
@@ -1051,7 +1084,8 @@ sub _section {
    # $self->_section(SECT)    creates a new section
    #
 
-   if (! defined $var) {
+   if (! defined $var  &&
+       ! exists $$self{'data'}{'sections'}{$sect}) {
       if ($sect eq 'conf') {
          $$self{'data'}{'sections'}{$sect} = {};
       } else {
@@ -1182,11 +1216,15 @@ sub _config_var_base {
       my $err = $self->_config_var_defaulttime($val);
       return  if ($err);
 
-   } elsif ($var eq 'dateformat'  ||
-            $var eq 'jan1week1'   ||
-            $var eq 'printable'   ||
+   } elsif ($var eq 'periodtimesep') {
+      # We have to redo the time regexp
+      delete $$self{'data'}{'rx'}{'time'};
+
+   } elsif ($var eq 'dateformat'    ||
+            $var eq 'jan1week1'     ||
+            $var eq 'printable'     ||
             $var eq 'tomorrowfirst') {
-         # do nothing
+      # do nothing
 
       #
       # Deprecated ones
@@ -1495,12 +1533,7 @@ sub _rx_wordlist {
    if (exists $$self{'data'}{'lang'}{$ele}) {
       my @tmp = @{ $$self{'data'}{'lang'}{$ele} };
 
-      $$self{'data'}{'wordlistA'}{$ele} = $tmp[0];
-      if (defined $tmp[1]  &&  $tmp[1]) {
-         $$self{'data'}{'wordlistL'}{$ele} = $tmp[1];
-      } else {
-         $$self{'data'}{'wordlistL'}{$ele} = $tmp[0];
-      }
+      $$self{'data'}{'wordlist'}{$ele} = $tmp[0];
 
       my @tmp2;
       foreach my $tmp (@tmp) {
@@ -1559,13 +1592,7 @@ sub _rx_wordlists {
 
       for (my $i=1; $i<=$max; $i++) {
          my @tmp = @{ $$self{'data'}{'lang'}{$ele}[$i-1] };
-
-         $$self{'data'}{'wordlistA'}{$subset}[$i-1] = $tmp[0];
-         if (defined $tmp[1]  &&  $tmp[1]) {
-            $$self{'data'}{'wordlistL'}{$subset}[$i-1] = $tmp[1];
-         } else {
-            $$self{'data'}{'wordlistL'}{$subset}[$i-1] = $tmp[0];
-         }
+         $$self{'data'}{'wordlist'}{$subset}[$i-1] = $tmp[0];
 
          my @str;
          foreach my $str (@tmp) {
@@ -1790,7 +1817,10 @@ sub join{
 sub _split_delta {
    my($self,$string) = @_;
 
-   my($f) = '(?:[-+]\d+|\d*)';
+   my $sign    = '[-+]?';
+   my $num     = '(?:\d+(?:\.\d*)?|\.\d+)';
+   my $f       = "(?:$sign$num)?";
+
    if ($string =~ /^$f(:$f){0,6}$/o) {
       $string =~ s/::/:0:/go;
       $string =~ s/^:/0:/o;
@@ -1831,6 +1861,7 @@ sub _split_delta {
 sub _delta_fields {
    my($self,$opts,$fields) = @_;
    my @fields = @$fields;
+   no integer;
 
    #
    # Make sure that all fields are defined, numerical, and that there
@@ -1839,7 +1870,7 @@ sub _delta_fields {
 
    foreach my $f (@fields) {
       $f=0  if (! defined($f));
-      return (1)  if ($f !~ /^[+-]?\d+$/o);
+      return (1)  if ($f !~ /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)$/o);
    }
    return (1)  if (@fields > 7);
    while (@fields < 7) {
@@ -1874,16 +1905,27 @@ sub _delta_fields {
 
    #
    # Normalize them.  Values will be signed only if they are
-   # negative.
+   # negative.  Handle fractional values.
    #
 
+   my $nonorm = $$opts{'nonorm'};
+   foreach my $f (@fields) {
+      if ($f != int($f)) {
+         $nonorm = 0;
+         last;
+      }
+   }
+
    my($y,$m,$w,$d,$h,$mn,$s) = @fields;
-   unless ($$opts{'nonorm'}) {
-      ($y,$m)           = $self->_normalize_ym($y,$m);
+   if (! $nonorm) {
+      ($y,$m)           = $self->_normalize_ym($y,$m)    if ($y || $m);
+      ($m,$w)           = $self->_normalize_mw($m,$w)    if (int($m) != $m);
       if ($$opts{'business'}) {
+         ($w,$d)        = $self->_normalize_wd($w,$d,1)  if (int($w) != $w);
          ($d,$h,$mn,$s) = $self->_normalize_bus_dhms($d,$h,$mn,$s);
       } else {
-         ($w,$d)        = $self->_normalize_wd($w,$d);
+         ($w,$d)        = $self->_normalize_wd($w,$d,0)  if ($w || $d);
+         ($d,$h)        = $self->_normalize_dh($d,$h)    if (int($d) != $d);
          ($h,$mn,$s)    = $self->_normalize_hms($h,$mn,$s);
       }
    }
@@ -2231,6 +2273,7 @@ sub _date_fields {
 
 sub _normalize_ym {
    my($self,$y,$m) = @_;
+   no integer;
 
    $m += $y*12;
    $y  = int($m/12);
@@ -2239,23 +2282,32 @@ sub _normalize_ym {
    return ($y,$m);
 }
 
+# This is only used for deltas with fractional months.
+#
+sub _normalize_mw {
+   my($self,$m,$w) = @_;
+   no integer;
+
+   my $d  = ($m-int($m)) * 365.2425/12;
+   $w    += $d/7;
+   $m     = int($m);
+
+   return ($m,$w);
+}
+
 sub _normalize_bus_dhms {
    my($self,$d,$h,$mn,$s) = @_;
+   no integer;
 
-   {
-      # Unfortunately, $s overflows for dates more than ~70 years
-      # apart. Do the minimum amount of work here.
-      no integer;
+   my $daylen = $$self{'data'}{'calc'}{'bdlength'};
 
-      my $daylen = $$self{'data'}{'calc'}{'bdlength'};
-
-      $s  += $d*$daylen + $h*3600 + $mn*60;
-      $d   = int($s/$daylen);
-      $s  -= $d*$daylen;
-   }
+   $s  += $d*$daylen + $h*3600 + $mn*60;
+   $d   = int($s/$daylen);
+   $s  -= $d*$daylen;
 
    $mn  = int($s/60);
    $s  -= $mn*60;
+   $s   = int($s);
 
    $h   = int($mn/60);
    $mn -= $h*60;
@@ -2265,16 +2317,12 @@ sub _normalize_bus_dhms {
 
 sub _normalize_hms {
    my($self,$h,$mn,$s) = @_;
+   no integer;
 
-   {
-      # Unfortunately, $s overflows for dates more than ~70 years
-      # apart. Do the minimum amount of work here.
-      no integer;
-
-      $s  += $h*3600 + $mn*60;
-      $mn  = int($s/60);
-      $s  -= $mn*60;
-   }
+   $s  += $h*3600 + $mn*60;
+   $mn  = int($s/60);
+   $s  -= $mn*60;
+   $s   = int($s);
 
    $h   = int($mn/60);
    $mn -= $h*60;
@@ -2282,14 +2330,34 @@ sub _normalize_hms {
    return ($h,$mn,$s);
 }
 
+# Business deltas only mix week and day if the week has a fractional
+# part.
+#
 sub _normalize_wd {
-   my($self,$w,$d) = @_;
+   my($self,$w,$d,$business) = @_;
+   no integer;
 
-   $d += $w*7;
-   $w  = int($d/7);
-   $d -= $w*7;
+   my $weeklen = ($business ? $$self{'data'}{'calc'}{'workweek'} : 7);
+
+   $d += $w*$weeklen;
+   $w  = int($d/$weeklen);
+   $d -= $w*$weeklen;
 
    return ($w,$d);
+}
+
+# This is only done for non-business days with a fractional part.
+# part.
+#
+sub _normalize_dh {
+   my($self,$d,$h) = @_;
+   no integer;
+
+   $h += $d*24;
+   $d  = int($h/24);
+   $h -= $d*24;
+
+   return ($d,$h);
 }
 
 # $self->_delta_convert(FORMAT,DELTA)

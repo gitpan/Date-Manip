@@ -6,20 +6,6 @@ package Date::Manip::Lang::italian;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::italian - Italian language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,13 +13,15 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
+$LangName  = "Italian";
+$YearAdded = 1999;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
@@ -41,11 +29,9 @@ __DATA__
 ampm:
   -
     - AM
-    - ''
     - m.
   -
     - PM
-    - ''
     - p.
 at:
   - alle
@@ -81,20 +67,20 @@ day_char:
     - D
 day_name:
   -
-    - Lunedi
     - Lunedì
+    - Lunedi
   -
-    - Martedi
     - Martedì
+    - Martedi
   -
-    - Mercoledi
     - Mercoledì
+    - Mercoledi
   -
-    - Giovedi
     - Giovedì
+    - Giovedi
   -
-    - Venerdi
     - Venerdì
+    - Venerdi
   -
     - Sabato
   -
@@ -104,38 +90,31 @@ each:
 fields:
   -
     - anni
-    - ''
     - anno
     - a
   -
     - mesi
-    - ''
     - mese
     - mes
     - m
   -
     - settimane
-    - ''
     - settimana
     - sett
   -
     - giorni
-    - ''
     - giorno
     - g
   -
     - ore
-    - ''
     - ora
     - h
   -
     - minuti
-    - ''
     - minuto
     - min
   -
     - secondi
-    - ''
     - s
     - secondo
     - sec
@@ -144,11 +123,9 @@ last:
 mode:
   -
     - esattamente
-    - ''
     - circa
   -
     - lavorativi
-    - ''
     - lavorativo
 month_abb:
   -
@@ -208,275 +185,221 @@ nextprev:
 nth:
   -
     - 1mo
-    - ''
     - uno
     - primo
   -
     - 2do
-    - ''
     - due
     - secondo
   -
     - 3zo
-    - ''
     - tre
     - terzo
   -
     - 4to
-    - ''
     - quattro
     - quarto
   -
     - 5to
-    - ''
     - cinque
     - quinto
   -
     - 6to
-    - ''
     - sei
     - sesto
   -
     - 7mo
-    - ''
     - sette
     - settimo
   -
     - 8vo
-    - ''
     - otto
     - ottavo
   -
     - 9no
-    - ''
     - nove
     - nono
   -
     - 10mo
-    - ''
     - dieci
     - decimo
   -
     - 11mo
-    - ''
     - undici
     - undicesimo
   -
     - 12mo
-    - ''
     - dodici
     - dodicesimo
   -
     - 13mo
-    - ''
     - tredici
     - tredicesimo
   -
     - 14mo
-    - ''
     - quattordici
     - quattordicesimo
   -
     - 15mo
-    - ''
     - quindici
     - quindicesimo
   -
     - 16mo
-    - ''
     - sedici
     - sedicesimo
   -
     - 17mo
-    - ''
     - diciassette
     - diciassettesimo
   -
     - 18mo
-    - ''
     - diciotto
     - diciottesimo
   -
     - 19mo
-    - ''
     - diciannove
     - diciannovesimo
   -
     - 20mo
-    - ''
     - venti
     - ventesimo
   -
     - 21mo
-    - ''
     - ventuno
     - ventunesimo
   -
     - 22mo
-    - ''
     - ventidue
     - ventiduesimo
   -
     - 23mo
-    - ''
     - ventitre
     - ventitreesimo
   -
     - 24mo
-    - ''
     - ventiquattro
     - ventiquattresimo
   -
     - 25mo
-    - ''
     - venticinque
     - venticinquesimo
   -
     - 26mo
-    - ''
     - ventisei
     - ventiseiesimo
   -
     - 27mo
-    - ''
     - ventisette
     - ventisettesimo
   -
     - 28mo
-    - ''
     - ventotto
     - ventottesimo
   -
     - 29mo
-    - ''
     - ventinove
     - ventinovesimo
   -
     - 3mo
-    - ''
     - trenta
     - trentesima
     - trentesimo
   -
     - 31mo
-    - ''
     - trentuno
     - trentunesimo
   -
     - 32mo
-    - ''
     - trentadue
     - trentiduesima
   -
     - 33mo
-    - ''
     - trentatré
     - trentatre
     - trentitreesime
   -
     - 34mo
-    - ''
     - trentaquattro
     - trentiquattresimo
   -
     - 35mo
-    - ''
     - trentacinque
     - trenticinquesima
   -
     - 36mo
-    - ''
     - trentasei
     - trentiseisima
   -
     - 37mo
-    - ''
     - trentasette
     - trentisettesima
   -
     - 38mo
-    - ''
     - trentotto
     - trentiottesime
   -
     - 39mo
-    - ''
     - trentanove
     - trentinovesime
   -
     - 40mo
-    - ''
     - quaranta
     - quarantesimo
   -
     - 41mo
-    - ''
     - quarantuno
     - quarantunesimo
   -
     - 42mo
-    - ''
     - quarantadue
     - quarantiduesime
   -
     - 43mo
-    - ''
     - quaranta
     - quarantitreesima
   -
     - 44mo
-    - ''
     - quarantaquattro
     - quarantiquattresime
   -
     - 45mo
-    - ''
     - quarantacinque
     - quaranticinquesima
   -
     - 46mo
-    - ''
     - quarantasei
     - quarantiseisime
   -
     - 47mo
-    - ''
     - quarantasette
     - quarantisettesimo
   -
     - 48mo
-    - ''
     - quarantotto
     - quarantiottesima
   -
     - 49mo
-    - ''
     - quarantanove
     - quarantinovesime
   -
     - 50mo
-    - ''
     - cinquanta
     - cinquantesimo
   -
     - 51mo
-    - ''
     - cinquantuno
     - cinquantunesimo
   -
     - 52mo
-    - ''
     - cinquantadue
     - cinquantiduesime
   -
     - 53mo
-    - ''
     - cinquantatré
     - cinquantatre
     - cinquantitreesimo
 of:
   - della
-  - ''
   - del
 offset_date:
   domani: +0:0:0:1:0:0:0
@@ -494,5 +417,4 @@ when:
     - fa
   -
     - fra
-    - ''
     - dopo

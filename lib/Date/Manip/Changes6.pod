@@ -27,8 +27,85 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.31
+=head1 VERSION 6.32
 
+=head1 VERSION 6.31  (2012-03-01)
+
+=over 4
+
+=item Added extended formats to printf method.
+
+These include the %<A=NUM>, %<a=NUM>, %<v=NUM>, %<B=NUM>, %<b=NUM>,
+%<p=NUM>, and %<E=NUM> formats.  Chris Jackson
+
+=item Can now parse formats where the time and zone are not adjacent
+
+A string like 'Jan 21 17:13:27 2010 -0400' can now be parsed.  Requested
+on perlmonks ('Can Date::Manip parse a unix timestamp' thread).
+
+=item Added PeriodTimeSep config variable.
+
+This allows you to use a period as a time separator.  Ed Avis
+
+=item Holidays can be used as date strings
+
+You can now parse a holiday name in the Date::Manip::Date::parse method.
+For example, parse('Christmas').  Requested by Abigail.
+
+=item Added new recur modifiers
+
+Added WDn, IBD, and NBD modifiers.
+
+=item Added a new date format
+
+You can now parse '2nd day in May' formats. Randy Harmon
+
+=item More flexibility in parsing timezones with both offset and abbrev
+
+If you include both the offset and abbreviation in the timezone portion
+of a date, the parenthesis around the abbreviation are now optional, so
+you can parse both:
+
+   -04:00 (EDT)
+   -04:00 EDT
+
+Requested by Steven Melendez.
+
+=item Deltas now support fractional values.
+
+You can now use a delta of 1.5 days.  RT 42699
+
+=item Multiple holidays supported
+
+A date may now have multiple holidays.  Keith Minkler
+
+=item Bug fixes
+
+Fixed a bug where abbreviations were not being examined case insensitively.
+Jurgen Muck
+
+The Holidays section may be safely split across multiple config files.
+A bug prevented this from working before.
+
+=item Language fixes
+
+The Norwegian translation was broken due to a typo in the language module.
+
+Included complete documentation for each language.
+
+Fixed a couple problems with Danish.  Nicholas Oxhaj
+
+Added Finnish (from a VERY old mail that I overlooked somehow).  Iikka
+Virkkunen
+
+Cleaned up the values used by printf directives to give the expected
+result.
+
+=item Documentation fixes
+
+Fixed a typo.  Nicholas Bamber
+
+=back
 
 =head1 VERSION 6.30  (2012-01-11)
 
@@ -58,7 +135,7 @@ perlmonks made me realize that this needed to be much higher priority.
 
 =item B<(!) Modified Delta_Format>
 
-In conjuction with the above work, added the 'semi' mode to
+In conjunction with the above work, added the 'semi' mode to
 Delta_Format.
 
 =item B<(!) Removed some deprecated config variables>

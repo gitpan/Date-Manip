@@ -6,20 +6,6 @@ package Date::Manip::Lang::catalan;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::catalan - Catalan language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,13 +13,15 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
+$LangName  = "Catalan";
+$YearAdded = 2003;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
@@ -41,87 +29,70 @@ __DATA__
 ampm:
   -
     - AM
-    - ''
     - A.M.
     - de la matinada
   -
     - PM
-    - ''
     - P.M.
     - de la tarda
 at:
   - a les
-  - ''
   - a
   - al
 day_abb:
   -
     - Dll
-    - ''
     - dl.
     - dl
   -
     - Dmt
-    - ''
     - Dim
     - dt.
     - dt
   -
     - Dmc
-    - ''
     - Dic
     - dc.
     - dc
   -
     - Dij
-    - ''
     - dj.
     - dj
   -
     - Div
-    - ''
     - dv.
     - dv
   -
     - Dis
-    - ''
     - ds.
     - ds
   -
     - Diu
-    - ''
     - dg.
     - dg
 day_char:
   -
     - Dl
-    - ''
     - L
   -
     - Dm
-    - ''
     - M
     - t
   -
     - Dc
-    - ''
     - X
     - c
   -
     - Dj
-    - ''
     - J
   -
     - Dv
-    - ''
     - V
   -
     - Ds
-    - ''
     - S
   -
     - Du
-    - ''
     - U
     - g
 day_name:
@@ -141,25 +112,21 @@ day_name:
     - Diumenge
 each:
   - cadascuna
-  - ''
   - cada
   - cadascun
 fields:
   -
     - anys
-    - ''
     - a
     - an
     - any
   -
     - mes
-    - ''
     - m
     - me
     - ms
   -
     - setmanes
-    - ''
     - s
     - se
     - set
@@ -167,30 +134,25 @@ fields:
     - setmana
   -
     - dies
-    - ''
     - d
     - dia
   -
     - hores
-    - ''
     - h
     - ho
     - hora
   -
     - minuts
-    - ''
     - mn
     - min
     - minut
   -
     - segons
-    - ''
     - s
     - seg
     - segon
 last:
   - darrer
-  - ''
   - darrera
   - ultim
   - últim
@@ -200,62 +162,49 @@ last:
 mode:
   -
     - exactament
-    - ''
     - approximadament
   -
     - empresa
 month_abb:
   -
     - Gen
-    - ''
     - gen.
   -
     - Feb
-    - ''
     - febr
     - feb.
     - febr.
   -
     - Mar
-    - ''
     - mar.
   -
     - Abr
-    - ''
     - abr.
   -
     - Mai
-    - ''
     - mai.
   -
     - Jun
-    - ''
     - jun.
   -
     - Jul
-    - ''
     - jul.
   -
     - Ago
-    - ''
     - ag
     - ago.
     - ag.
   -
     - Set
-    - ''
     - set.
   -
     - Oct
-    - ''
     - oct.
   -
     - Nov
-    - ''
     - nov.
   -
     - Des
-    - ''
     - Dec
     - des.
     - dec.
@@ -265,8 +214,8 @@ month_name:
   -
     - Febrer
   -
+    - Març
     - Marc
-    - març
   -
     - Abril
   -
@@ -288,280 +237,273 @@ month_name:
 nextprev:
   -
     - proper
-    - ''
     - seguent
     - següent
   -
     - passat
-    - ''
     - proppassat
     - anterior
 nth:
   -
     - 1er
-    - ''
     - primer
     - un
   -
     - 2n
-    - ''
     - segon
     - dos
   -
     - 3r
-    - ''
     - tercer
     - tres
   -
     - 4t
-    - ''
     - quart
     - quatre
   -
-    - 5e
     - 5è
+    - 5e
     - cinque
     - Cinquè
     - cinc
   -
-    - 6e
     - 6è
+    - 6e
     - sise
     - sisè
     - sis
   -
-    - 7e
     - 7è
+    - 7e
     - sete
     - setè
     - set
   -
-    - 8e
     - 8è
+    - 8e
     - vuite
     - vuitè
     - vuit
   -
-    - 9e
     - 9è
+    - 9e
     - nove
     - novè
     - nou
   -
-    - 10e
     - 10è
+    - 10e
     - dese
     - desè
     - deu
   -
-    - 11e
     - 11è
+    - 11e
     - onze
     - onzè
   -
-    - 12e
     - 12è
+    - 12e
     - dotze
     - dotzè
   -
-    - 13e
     - 13è
+    - 13e
     - tretze
     - tretzè
   -
-    - 14e
     - 14è
+    - 14e
     - catorze
     - catorzè
   -
-    - 15e
     - 15è
+    - 15e
     - quinze
     - quinzè
   -
-    - 16e
     - 16è
+    - 16e
     - setze
     - setzè
   -
-    - 17e
     - 17è
+    - 17e
     - dissete
     - dissetè
     - disset
   -
-    - 18e
     - 18è
+    - 18e
     - divuite
     - divuitè
     - divuit
   -
-    - 19e
     - 19è
+    - 19e
     - dinove
     - dinovèe
     - dinou
   -
-    - 20e
     - 20è
+    - 20e
     - vinte
     - vintè
     - vint
   -
-    - 21e
     - 21è
+    - 21e
     - vint-i-une
     - vint-i-unè
     - vint-i-u
   -
-    - 22e
     - 22è
+    - 22e
     - vint-i-dose
     - vint-i-dosè
     - vint-i-dos
   -
-    - 23e
     - 23è
+    - 23e
     - vint-i-trese
     - vint-i-tresè
     - vint-i-tres
   -
-    - 24e
     - 24è
+    - 24e
     - vint-i-quatre
     - vint-i-quatrè
   -
-    - 25e
     - 25è
+    - 25e
     - vint-i-cinque
     - vint-i-cinquè
   -
-    - 26e
     - 26è
+    - 26e
     - vint-i-sise
     - vint-i-sisè
   -
-    - 27e
     - 27è
+    - 27e
     - vint-i-sete
     - vint-i-setè
   -
-    - 28e
     - 28è
+    - 28e
     - vint-i-vuite
     - vint-i-vuitè
   -
-    - 29e
     - 29è
+    - 29e
     - vint-i-nove
     - vint-i-novè
   -
-    - 30e
     - 30è
+    - 30e
     - trente
     - trentè
     - trenta
   -
-    - 31e
     - 31è
+    - 31e
     - trenta-une
     - trenta-unè
     - trenta-u
   -
-    - 32e
     - 32è
+    - 32e
     - trenta-dos
   -
-    - 33e
     - 33è
+    - 33e
     - trenta-tres
   -
-    - 34e
     - 34è
+    - 34e
     - trenta-quatre
   -
-    - 35e
     - 35è
+    - 35e
     - trenta-cinc
   -
-    - 36e
     - 36è
+    - 36e
     - trenta-sis
   -
-    - 37e
     - 37è
+    - 37e
     - trenta-set
     - trenta-setè
     - trenta-sete
   -
-    - 38e
     - 38è
+    - 38e
     - trenta-vuit
   -
-    - 39e
     - 39è
+    - 39e
     - trenta-nou
   -
-    - 40e
     - 40è
+    - 40e
     - quaranta
   -
-    - 41e
     - 41è
+    - 41e
     - quaranta-un
   -
-    - 42e
     - 42è
+    - 42e
     - quaranta-dos
   -
-    - 43e
     - 43è
+    - 43e
     - quaranta-tres
   -
-    - 44e
     - 44è
+    - 44e
     - quaranta-quatre
   -
-    - 45e
     - 45è
+    - 45e
     - quaranta-cinc
   -
-    - 46e
     - 46è
+    - 46e
     - quaranta-sis
   -
-    - 47e
     - 47è
+    - 47e
     - quaranta-set
   -
-    - 48e
     - 48è
+    - 48e
     - quaranta-vuit
     - quaranta-vuitena
   -
-    - 49e
     - 49è
+    - 49e
     - quaranta-nou
   -
-    - 50e
     - 50è
+    - 50e
     - cinquantè
     - cinquante
   -
-    - 51e
     - 51è
+    - 51e
     - cinquanta-un
   -
-    - 52e
     - 52è
+    - 52e
     - cinquanta-dos
   -
-    - 53e
     - 53è
+    - 53e
     - cinquanta-tres
 of:
   - de
-  - ''
   - d'
 offset_date:
   abans d'ahir: -0:0:0:2:0:0:0

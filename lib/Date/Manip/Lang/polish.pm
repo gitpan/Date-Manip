@@ -6,20 +6,6 @@ package Date::Manip::Lang::polish;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::polish - Polish language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,13 +13,15 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-2 perl);
+$LangName  = "Polish";
+$YearAdded = 1998;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
@@ -41,58 +29,49 @@ __DATA__
 ampm:
   -
     - AM
-    - ''
     - A.M.
   -
     - PM
-    - ''
     - P.M.
 at:
   - o
-  - ''
   - u
 day_abb:
   -
-    - po.
-    - ''
     - po
+    - po.
     - pon.
     - pon
   -
-    - wt.
-    - ''
     - wt
+    - wt.
   -
-    - sr.
-    - śr.
-    - sr
     - śr
+    - śr.
+    - sr.
+    - sr
   -
-    - cz.
-    - ''
     - cz
+    - cz.
     - czw.
     - czw
   -
-    - pi.
-    - ''
     - pi
+    - pi.
   -
-    - so.
-    - ''
     - so
+    - so.
   -
-    - ni.
-    - ''
     - ni
+    - ni.
 day_char:
   -
     - p
   -
     - w
   -
-    - e
     - ś.
+    - e
   -
     - c
   -
@@ -103,18 +82,18 @@ day_char:
     - n
 day_name:
   -
-    - poniedzialek
     - poniedziałek
+    - poniedzialek
   -
     - wtorek
   -
-    - sroda
     - środa
+    - sroda
   -
     - czwartek
   -
-    - piatek
     - piątek
+    - piatek
   -
     - sobota
   -
@@ -127,7 +106,6 @@ each:
 fields:
   -
     - rok
-    - ''
     - lat
     - lata
     - latach
@@ -152,24 +130,20 @@ fields:
     - dni
   -
     - godzinie
-    - ''
     - g.
     - godzina
     - godziny
   -
     - minuty
-    - ''
     - mn.
     - min.
     - minut
   -
     - sekundy
-    - ''
     - s.
     - sekund
 last:
   - ostatni
-  - ''
   - ostatna
 mode:
   -
@@ -188,52 +162,42 @@ mode:
     - służbowym
 month_abb:
   -
-    - sty.
-    - ''
     - sty
+    - sty.
   -
-    - lut.
-    - ''
     - lut
+    - lut.
   -
-    - mar.
-    - ''
     - mar
+    - mar.
   -
-    - kwi.
-    - ''
     - kwi
+    - kwi.
   -
     - maj
   -
-    - cze.
-    - ''
     - cze
+    - cze.
   -
-    - lip.
-    - ''
     - lip
+    - lip.
   -
-    - sie.
-    - ''
     - sie
+    - sie.
   -
-    - wrz.
-    - ''
     - wrz
+    - wrz.
   -
+    - paź
     - paz.
     - paź.
     - paz
-    - paź
   -
-    - lis.
-    - ''
     - lis
+    - lis.
   -
-    - gru.
-    - ''
     - gru
+    - gru.
 month_name:
   -
     - stycznia
@@ -252,11 +216,11 @@ month_name:
   -
     - sierpnia
   -
-    - wrzesnia
     - września
+    - wrzesnia
   -
-    - pazdziernika
     - października
+    - pazdziernika
   -
     - listopada
   -
@@ -279,345 +243,291 @@ nextprev:
 nth:
   -
     - 1.
-    - ''
     - jeden
     - pierwszego
   -
     - 2.
-    - ''
     - dwa
     - drugiego
   -
     - 3.
-    - ''
     - trzy
     - trzeczego
   -
     - 4.
-    - ''
     - cztery
     - czwartego
   -
     - 5.
-    - ''
     - pięć
     - piec
     - piatego
     - piątego
   -
     - 6.
-    - ''
     - sześć
     - szesc
     - szostego
     - szóstego
   -
     - 7.
-    - ''
     - siedem
     - siodmego
     - siódmego
   -
     - 8.
-    - ''
     - osiem
     - osmego
     - ósmego
   -
     - 9.
-    - ''
     - dziewiąta
     - dziewiata
     - dziewiatego
     - dziewiątego
   -
     - 10.
-    - ''
     - dziesięć
     - dziesiec
     - dziesiatego
     - dziesiątego
   -
     - 11.
-    - ''
     - jedenaście
     - jedenascie
     - jedenastego
   -
     - 12.
-    - ''
     - dwanaście
     - dwanascie
     - dwunastego
   -
     - 13.
-    - ''
     - trzynaście
     - trzynascie
     - trzynastego
   -
     - 14.
-    - ''
     - czternaście
     - czternascie
     - czternastego
   -
     - 15.
-    - ''
     - piętnaście
     - pietnascie
     - pietnastego
     - piętnastego
   -
     - 16.
-    - ''
     - szesnaście
     - szesnascie
     - szestnastego
   -
     - 17.
-    - ''
     - siedemnaście
     - siedemnascie
     - siedemnastego
   -
     - 18.
-    - ''
     - osiemnaście
     - osiemnascie
     - osiemnastego
   -
     - 19.
-    - ''
     - dziewiętnaście
     - dziewietnascie
     - dziewietnastego
   -
     - 20.
-    - ''
     - dwadzieścia
     - dwadziescia
     - dwudziestego
   -
     - 21.
-    - ''
     - dwadzieścia jeden
     - dwadziescia jeden
     - dwudziestego pierwszego
   -
     - 22.
-    - ''
     - dwadzieścia dwa
     - dwadziescia dwa
     - dwudziestego drugiego
   -
     - 23.
-    - ''
     - dwadzieścia trzy
     - dwadziescia trzy
     - dwudziestego trzeczego
   -
     - 24.
-    - ''
     - dwadzieścia cztery
     - dwadziescia cztery
     - dwudziestego czwartego
   -
     - 25.
-    - ''
     - dwadzieścia pięć
     - dwadziescia piec
     - dwudziestego piatego
     - dwudziestego piątego
   -
     - 26.
-    - ''
     - dwadzieścia sześć
     - dwadziescia szesc
     - dwudziestego szostego
     - dwudziestego szóstego
   -
     - 27.
-    - ''
     - dwadzieścia siedem
     - dwadziescia siedem
     - dwudziestego siodmego
     - dwudziestego siódmego
   -
     - 28.
-    - ''
     - dwadzieścia osiem
     - dwadziescia osiem
     - dwudziestego osmego
     - dwudziestego ósmego
   -
     - 29.
-    - ''
     - dwadzieścia dziewięć
     - dwadziescia dziewiec
     - dwudziestego dziewiatego
     - dwudziestego dziewiątego
   -
     - 30.
-    - ''
     - trzydzieści
     - trzydziesci
     - trzydziestego
   -
     - 31.
-    - ''
     - trzydzieści jeden
     - trzydziesci jeden
     - trzydziestego pierwszego
   -
     - 32.
-    - ''
     - trzydzieści dwa
     - trzydziesci dwa
     - trzydziestego drugiego
   -
     - 33.
-    - ''
     - trzydzieści trzy
     - trzydziesci trzy
     - trzydziestego trzeczego
   -
     - 34.
-    - ''
     - trzydzieści cztery
     - trzydziesci cztery
     - trzydziestego czwartego
   -
     - 35.
-    - ''
     - trzydzieści pięć
     - trzydziesci piec
     - trzydziestego piątego
     - trzydziestego piatego
   -
     - 36.
-    - ''
     - trzydzieści sześć
     - trzydziesci szesc
     - trzydziestego szóstego
     - trzydziestego szostego
   -
     - 37.
-    - ''
     - trzydzieści siedem
     - trzydziesci siedem
     - trzydziestego siódmego
     - trzydziestego siodmego
   -
     - 38.
-    - ''
     - trzydzieści osiem
     - trzydziesci osiem
     - trzydziestego ósmego
     - trzydziestego osmego
   -
     - 39.
-    - ''
     - trzydzieści dziewięć
     - trzydziesci dziewiec
     - trzydziestego dziewiątego
     - trzydziestego dziewiatego
   -
     - 40.
-    - ''
     - czterdzieści
     - czterdziesci
     - czterdziestego
   -
     - 41.
-    - ''
     - czterdzieści jeden
     - czterdziesci jeden
     - czterdziestego pierwszego
   -
     - 42.
-    - ''
     - czterdzieści dwa
     - czterdziesci dwa
     - czterdziestego drugiego
   -
     - 43.
-    - ''
     - czterdzieści trzy
     - czterdziesci trzy
     - czterdziestego trzeczego
   -
     - 44.
-    - ''
     - czterdzieści cztery
     - czterdziesci cztery
     - czterdziestego czwartego
   -
     - 45.
-    - ''
     - czterdzieści pięć
     - czterdziesci piec
     - czterdziestego piątego
     - czterdziestego piatego
   -
     - 46.
-    - ''
     - czterdzieści sześć
     - czterdziesci szesc
     - czterdziestego szóstego
     - czterdziestego szostego
   -
     - 47.
-    - ''
     - czterdzieści siedem
     - czterdziesci siedem
     - czterdziestego siódmego
     - czterdziestego siodmego
   -
     - 48.
-    - ''
     - czterdzieści osiem
     - czterdziesci osiem
     - czterdziestego ósmego
     - czterdziestego osmego
   -
     - 49.
-    - ''
     - czterdzieści dziewięć
     - czterdziesci dziewiec
     - czterdziestego dziewiątego
     - czterdziestego dziewiatego
   -
     - 50.
-    - ''
     - pięćdziesiąt
     - piecdziesiat
     - pięćdziesiątego
     - piecdziesiatego
   -
     - 51.
-    - ''
     - pięćdziesiąt jeden
     - piecdziesiat jeden
     - pięćdziesiątego pierwszego
     - piecdziesiatego pierwszego
   -
     - 52.
-    - ''
     - pięćdziesiąt dwa
     - piecdziesiat dwa
     - pięćdziesiątego drugiego
     - piecdziesiatego drugiego
   -
     - 53.
-    - ''
     - pięćdziesiąt trzy
     - piecdziesiat trzy
     - pięćdziesiątego trzeczego
     - piecdziesiatego trzeczego
 of:
   - w
-  - ''
   - z
 offset_date:
   dzisaj: 0:0:0:0:0:0:0
@@ -637,5 +547,4 @@ when:
     - temu
   -
     - za
-    - ''
     - later

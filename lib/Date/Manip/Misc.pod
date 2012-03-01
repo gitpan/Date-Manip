@@ -200,20 +200,6 @@ date forms that might be used in other languages but do not have a
 common English equivalent, and to account for the fact that some
 English formats may not have an equivalent in another language.
 
-=item B<Making the primary interface OO>
-
-Currently, the Date::Manip module is the original functional interface
-(though it now uses all of the OO modules to do the actual work).
-
-I am considering writing a primary OO interface. In this case, the
-functional interface will still be available, perhaps as Date::Manip::Compat.
-
-When (and if) I do this, it will be in a new major-number release (i.e.
-Date::Manip 7.00 or higher).
-
-I keep going back and forth on whether this would be useful, so at
-this point, there is no definite plan to make this change.
-
 =item B<Adding granularity>
 
 The granularity of a time basically refers to how accurate you wish to

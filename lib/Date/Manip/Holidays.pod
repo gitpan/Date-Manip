@@ -130,6 +130,31 @@ business day after that as Boxing day.  Since the definitions are
 stored as a list (NOT a hash as they were in Date::Manip 5.xx), using
 the same recurrence twice does not cause a problem.
 
+=item B<Multiple holidays>
+
+Having multiple holidays on a single day is allowed. As an example,
+you may want to look at New Years day as both the observed and actual
+holidays, so you might have:
+
+   1*1:0:1:0:0:0*DWD               = New Year's Day (observed)
+   Jan 1                           = New Year's Day
+
+Most of the time, both will fall on the same day, but sometimes
+they may differ.  In this example, it is important that the
+observed holiday be listed first.  Otherwise, Jan 1 will be
+marked as a holiday and then the observed date will check Jan 1,
+but where it is not a business day, it will move to another day
+(due to the DWD modifier).
+
+Likewise, the two holidays:
+
+   3rd Sunday in June              = Father's Day
+   Jun 17                          = Bunker Hill Day
+
+sometimes fall on the same day.  Using the
+Date::Manip::Date::list_holidays method (or the Date_IsHoliday
+function), you can get a list of all names that the date contains.
+
 =back
 
 =head1 EVENTS

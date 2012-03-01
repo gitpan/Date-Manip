@@ -1,22 +1,26 @@
 ########################################################################
 # Deprecated variables:
 
-   intcharset           10/2012
+12/2012
+   intcharset
+   recurnumfudgedays
 
-   recurnumfudgedays    12/2012
-
-   tz                   12/2013
+12/2013
+   tz
 
 
 ########################################################################
 # +1 significant release
 ########################################################################
 
-Autogenerate pod for each language including all translations.
+Switch to YAML::XS or JSON.
+   See if I can get Date::Manip to use a different YAML module (which doesn't use
+   Module::Build) if YAML::Syck is not available.  Based on discussion with Martin
+   Zinser.
 
-See if I can get Date::Manip to use a different YAML module (which doesn't use
-Module::Build) if YAML::Syck is not available.  Based on discussion with Martin
-Zinser.
+   Switch to YAML::XS (but it converts text to non-UTF-8 so take that into account)
+
+   The tojson script will convert the YAML modules to JSON.
 
 Add UseTZ
   = %all      use all timezones
@@ -60,8 +64,6 @@ RT #60662 (Matt Blythe)
 # +2 significant release
 ########################################################################
 
-Switch to YAML::XS (but it converts text to non-UTF-8 so take that into account)
-
 Everywhere a timezone can be entered, allow:
    zone
    abbrev
@@ -77,23 +79,9 @@ string.
 
 Clear as much of the backlog of suggestions as possible.
 
-#### Recur
-
-Add ParseRecur flag:
-   WDn (n=1-7): Day n of the current week.
-
-Add a new flag:
-  IBD  = is business day
-If the current date (with all previous flags applied) is a business
-day, keep it, otherwise discard this date.
-
 ########################################################################
 # TO DO
 ########################################################################
-
-Add support for parsing:
-  Thu Jan 21 17:13:27 2010 -0400
-(which means that the time and timezone are NOT next to each other).
 
 Make sure there is a correspondance between:
   time,localtime,gmtime
@@ -104,14 +92,6 @@ and document it all.
 Support timezones of the format +500.  David Coppit
 
 Make sure that &DateCalc($date1,"") returns an error.  Jim Anderson
-
-Add a function for printing "words" from the language.  For example:
-  printf_value("%b",2) => Feb
-  printf_value("%b")   => (Jan Feb ...)
-Chris Jackson
-
-Mark Dedlow
-  nth DAY of month
 
 Change the Jan1Week1 variable to accept the values "m1-m7" (1st week contains
 Jan X) or "d1-d7" (1st week contains the 1st dX day of week ... so d1
@@ -128,9 +108,6 @@ Add a method:
    ($date0,$date1) = $date->week_range();
 where $date0 and $date1 are the start and end of the week containing
 $date.  Ha Quach
-
-Add support for partial dates (John Washburn)
-   April 1625 == April 1, 1625
 
 Add Date_LocaleInit which calls Date_Init and then sets DateFormat
 config varialbe.  Benjamin Low
@@ -176,17 +153,11 @@ Make DateFormat variable handle y/m/d y/d/m m/d/y and d/m/y formats
 in addition to m/d vs. d/m .  Also, make "%D" and "%x" UnixDate formats
 use this variable.  Benjamin Low
 
-Use of holidays and other named days in ParseDate ("Christmas 1995")
-Abigal
-
 Make the following work for ParseDate Adrian Conte:
   1 epoch
   epoch 1
   -1 epoch
   epoch -1
-
-Add another INIT variable to NOT initialize any language variable unless
-needed.
 
 Make work weeks able to start and stop on arbitrary days (even across
 weekends).  Mohammed Saggaf
@@ -194,8 +165,6 @@ weekends).  Mohammed Saggaf
 Switch to Math::BigInt instead of using "no integer".  Vishal Bhatia
 
 Use autoloader.  Ted Ashton
-
-Change EXPORT to EXPORT_OK. Peter Bray
 
 Better support for fractional seconds.  RT 61535
 

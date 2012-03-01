@@ -42,13 +42,15 @@ perl -I../lib date.calc.date_delta_business.french.t 1
 perl -I../lib date.calc.date_delta_exact.t 1
 perl -I../lib date.cmp.t 1
 perl -I../lib date.convert.t 1
-perl -I../lib date.holiday.t 1
+perl -I../lib date.holiday.0.t 1
+perl -I../lib date.holiday.1.t 1
 perl -I../lib date.is_business_day.t 1
 perl -I../lib date.list_events.0.t 1
 perl -I../lib date.list_events.1.t 1
 perl -I../lib date.list_holidays.0.t 1
 perl -I../lib date.list_holidays.1.t 1
 perl -I../lib date.list_holidays.2.t 1
+perl -I../lib date.list_holidays.3.t 1
 perl -I../lib date.nearest_business_day.t 1
 perl -I../lib date.next.t 1
 perl -I../lib date.next_business_day.t 1
@@ -58,10 +60,12 @@ perl -I../lib date.parse.danish.t 1
 perl -I../lib date.parse.delta.t 1
 perl -I../lib date.parse.dst.t 1
 perl -I../lib date.parse.french.t 1
+perl -I../lib date.parse.holidays.t 1
 perl -I../lib date.parse.iso.t 1
 perl -I../lib date.parse.italian.t 1
 perl -I../lib date.parse.misc.0.t 1
 perl -I../lib date.parse.misc.1.t 1
+perl -I../lib date.parse.period.t 1
 perl -I../lib date.parse.polish.t 1
 perl -I../lib date.parse.portuguese.t 1
 perl -I../lib date.parse.romanian.t 1
@@ -90,6 +94,7 @@ perl -I../lib delta.calc.delta_delta_approx.t 1
 perl -I../lib delta.calc.delta_delta_business.0.t 1
 perl -I../lib delta.calc.delta_delta_business.1.t 1
 perl -I../lib delta.calc.delta_delta_exact.t 1
+perl -I../lib delta.parse.fract.t 1
 perl -I../lib delta.parse.t 1
 perl -I../lib delta.printf.t 1
 perl -I../lib delta.set.t 1
@@ -132,6 +137,7 @@ perl -I../lib dm5.recur_1.t 1
 perl -I../lib dm5.settime.t 1
 perl -I../lib dm5.unixdate.t 1
 perl -I../lib orig.convtz.t 1
+perl -I../lib orig.date_isholiday.t 1
 perl -I../lib orig.datecalc.date_date.t 1
 perl -I../lib orig.datecalc.date_delta.0.t 1
 perl -I../lib orig.datecalc.date_delta.1.t 1

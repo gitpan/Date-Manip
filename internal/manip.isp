@@ -11,6 +11,7 @@ Andres
 Arzul
 Asaf
 Babakov
+Bamber
 bapprox
 Barta
 Bartov
@@ -38,6 +39,7 @@ Burgin
 Burlison
 calc
 Caminati
+CET
 Cezar
 CGI
 Chadd
@@ -83,6 +85,7 @@ DD
 ddascalescu
 DDYYmmm
 DEceMBer
+Dedlow
 DefaultTime
 DeltaSigns
 Dembach
@@ -151,7 +154,9 @@ Howansky
 hr
 Hranicky
 Hughes
+IBD
 IgnoreGlobalCnf
+Iikka
 IMO
 Ingham
 init
@@ -170,6 +175,7 @@ Jerius
 Jesper
 Johansson
 Jorgen
+Jurgen
 Jyrgen
 Kalika
 Kang
@@ -212,9 +218,11 @@ Markwick
 Martinec
 Mauro
 McGonigal
+Melendez
 Melo
 Meng
 Miao
+Minkler
 Minsoul
 MMDD
 mmm
@@ -232,6 +240,7 @@ Mstrict
 MSWin
 MW
 my'ed
+NBD
 Nesbitt
 NetWare
 nextprev
@@ -257,6 +266,7 @@ OpenVMS
 Osbourne
 Ostermiller
 overmorrow
+Oxhaj
 Paco
 Padwardhan
 parseable
@@ -268,6 +278,7 @@ ParseRecur
 PathSep
 Pedrozzi
 Perelman
+PeriodTimeSep
 perl
 perlmonks
 Pero
@@ -317,6 +328,8 @@ Schkolnik
 Schulze
 secs
 Selinger
+sephm
+sepms
 Serodio
 SetDate
 Setzer
@@ -363,6 +376,7 @@ Twomey
 tz
 tzcode
 tzdata
+unix
 UnixDate
 UpdateCurrTZ
 uselongdouble
@@ -371,8 +385,10 @@ utf
 Vasey
 Verdes
 Virden
+Virkkunen
 Vishal
 Vivek
+WDn
 Westhoff
 Winzig
 wk

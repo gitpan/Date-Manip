@@ -17,11 +17,12 @@ use Date::Manip::Obj;
 require 5.010000;
 use warnings;
 use strict;
+use utf8;
 use IO::File;
 #use re 'debug';
 
 our $VERSION;
-$VERSION='6.30';
+$VERSION='6.31';
 END { undef $VERSION; }
 
 ########################################################################
@@ -209,14 +210,15 @@ sub _rx {
       my $hf      = $$dmb{data}{rx}{fields}[5];
       my $mnf     = $$dmb{data}{rx}{fields}[6];
       my $sf      = $$dmb{data}{rx}{fields}[7];
+      my $num     = '(?:\d+(?:\.\d*)?|\.\d+)';
 
-      my $y       = "(?:(?:(?<y>$sign\\d+)|(?<y>$nth))\\s*(?:$yf)$sep)";
-      my $m       = "(?:(?:(?<m>$sign\\d+)|(?<m>$nth))\\s*(?:$mf)$sep)";
-      my $w       = "(?:(?:(?<w>$sign\\d+)|(?<w>$nth))\\s*(?:$wf)$sep)";
-      my $d       = "(?:(?:(?<d>$sign\\d+)|(?<d>$nth))\\s*(?:$df)$sep)";
-      my $h       = "(?:(?:(?<h>$sign\\d+)|(?<h>$nth))\\s*(?:$hf)$sep)";
-      my $mn      = "(?:(?:(?<mn>$sign\\d+)|(?<mn>$nth))\\s*(?:$mnf)$sep)";
-      my $s       = "(?:(?:(?<s>$sign\\d+)|(?<s>$nth))\\s*(?:$sf)?)";
+      my $y       = "(?:(?:(?<y>$sign$num)|(?<y>$nth))\\s*(?:$yf)$sep)";
+      my $m       = "(?:(?:(?<m>$sign$num)|(?<m>$nth))\\s*(?:$mf)$sep)";
+      my $w       = "(?:(?:(?<w>$sign$num)|(?<w>$nth))\\s*(?:$wf)$sep)";
+      my $d       = "(?:(?:(?<d>$sign$num)|(?<d>$nth))\\s*(?:$df)$sep)";
+      my $h       = "(?:(?:(?<h>$sign$num)|(?<h>$nth))\\s*(?:$hf)$sep)";
+      my $mn      = "(?:(?:(?<mn>$sign$num)|(?<mn>$nth))\\s*(?:$mnf)$sep)";
+      my $s       = "(?:(?:(?<s>$sign$num)|(?<s>$nth))\\s*(?:$sf)?)";
 
       my $exprx   = qr/^\s*$y?$m?$w?$d?$h?$mn?$s?\s*$/i;
       $$dmb{'data'}{'rx'}{'delta'}{$rx} = $exprx;

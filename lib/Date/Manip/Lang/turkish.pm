@@ -6,20 +6,6 @@ package Date::Manip::Lang::turkish;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::turkish - Turkish language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,24 +13,26 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
+$LangName  = "Turkish";
+$YearAdded = 2001;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
 ---
 ampm:
   -
-    - ogleden once
     - "ögleden önce"
+    - ogleden once
   -
-    - ogleden sonra
     - "öðleden sonra"
+    - ogleden sonra
 at:
   - saat
 day_abb:
@@ -53,15 +41,14 @@ day_abb:
   -
     - sal
   -
-    - car
     - "çar"
+    - car
   -
     - per
   -
     - cum
   -
     - cts
-    - ''
     - cmt
   -
     - paz
@@ -71,8 +58,8 @@ day_char:
   -
     - S
   -
-    - Cr
     - "Ç"
+    - Cr
   -
     - Pr
   -
@@ -85,14 +72,14 @@ day_name:
   -
     - pazartesi
   -
-    - sali
     - "salý"
+    - sali
   -
-    - carsamba
     - "çarþamba"
+    - carsamba
   -
-    - persembe
     - "perþembe"
+    - persembe
   -
     - cuma
   -
@@ -104,41 +91,32 @@ each:
 fields:
   -
     - yil
-    - ''
     - 'y'
   -
     - ay
-    - ''
     - a
   -
     - hafta
-    - ''
     - h
   -
     - gun
-    - ''
     - g
   -
     - saat
-    - ''
     - s
   -
     - dakika
-    - ''
     - dak
     - d
   -
     - saniye
-    - ''
     - sn
 last:
   - son
-  - ''
   - sonuncu
 mode:
   -
     - tam
-    - ''
     - yaklasik
     - "yaklaþýk"
   -
@@ -150,8 +128,8 @@ month_abb:
   -
     - oca
   -
-    - sub
     - "þub"
+    - sub
   -
     - mar
   -
@@ -163,8 +141,8 @@ month_abb:
   -
     - tem
   -
-    - agu
     - "aðu"
+    - agu
   -
     - eyl
   -
@@ -177,37 +155,36 @@ month_name:
   -
     - ocak
   -
-    - subat
     - "þubat"
+    - subat
   -
     - mart
   -
     - nisan
   -
-    - mayis
     - "mayýs"
+    - mayis
   -
     - haziran
   -
     - temmuz
   -
-    - agustos
     - "aðustos"
+    - agustos
   -
-    - eylul
     - "eylül"
+    - eylul
   -
     - ekim
   -
-    - kasim
     - "kasým"
+    - kasim
   -
-    - aralik
     - "aralýk"
+    - aralik
 nextprev:
   -
     - gelecek
-    - ''
     - sonraki
   -
     - onceki
@@ -215,316 +192,263 @@ nextprev:
 nth:
   -
     - 1.
-    - ''
     - bir
     - ilk
     - birinci
   -
     - 2.
-    - ''
     - iki
     - ikinci
   -
     - 3.
-    - ''
     - "üç"
     - uc
     - "üçüncü"
     - ucuncu
   -
     - 4.
-    - ''
     - "dört"
     - dort
     - "dördüncü"
     - dorduncu
   -
     - 5.
-    - ''
     - "beş"
     - bes
     - "beşinci"
     - besinci
   -
     - 6.
-    - ''
     - "altı"
     - alti
     - altıncı
   -
     - 7.
-    - ''
     - yedi
     - yedinci
   -
     - 8.
-    - ''
     - sekiz
     - sekizinci
   -
     - 9.
-    - ''
     - dokuz
     - dokuzuncu
   -
     - 10.
-    - ''
     - on
     - onuncu
   -
     - 11.
-    - ''
     - on bir
     - on birinci
   -
     - 12.
-    - ''
     - on iki
     - on ikinci
   -
     - 13.
-    - ''
     - "on üç"
     - on uc
     - "on üçüncü"
     - on ucuncu
   -
     - 14.
-    - ''
     - "on dört"
     - on dort
     - "on dördüncü"
     - on dorduncu
   -
     - 15.
-    - ''
     - "on beş"
     - on bes
     - "on beşinci"
     - on besinci
   -
     - 16.
-    - ''
     - "on altı"
     - on alti
     - on altıncı
   -
     - 17.
-    - ''
     - on yedi
     - on yedinci
   -
     - 18.
-    - ''
     - on sekiz
     - on sekizinci
   -
     - 19.
-    - ''
     - on dokuz
     - on dokuzuncu
   -
     - 20.
-    - ''
     - yirmi
     - yirminci
   -
     - 21.
-    - ''
     - yirmi bir
     - yirminci birinci
   -
     - 22.
-    - ''
     - yirmi iki
     - yirminci ikinci
   -
     - 23.
-    - ''
     - "yirmi üç"
     - yirmi uc
     - "yirminci üçüncü"
     - yirminci ucuncu
   -
     - 24.
-    - ''
     - "yirmi dört"
     - yirmi dort
     - "yirminci dördüncü"
     - yirminci dorduncu
   -
     - 25.
-    - ''
     - "yirmi beş"
     - yirmi bes
     - "yirminci beşinci"
     - yirminci besinci
   -
     - 26.
-    - ''
     - "yirmi altı"
     - yirmi alti
     - yirminci altıncı
   -
     - 27.
-    - ''
     - yirmi yedi
     - yirminci yedinci
   -
     - 28.
-    - ''
     - yirmi sekiz
     - yirminci sekizinci
   -
     - 29.
-    - ''
     - yirmi dokuz
     - yirminci dokuzuncu
   -
     - 30.
-    - ''
     - otuz
     - otuzuncu
   -
     - 31.
-    - ''
     - otuz bir
     - otuz birinci
   -
     - 32.
-    - ''
     - otuz iki
     - otuz ikinci
   -
     - 33.
-    - ''
     - "otuz üç"
     - otuz uc
     - "otuz üçüncü"
     - otuz ucuncu
   -
     - 34.
-    - ''
     - "otuz dört"
     - otuz dort
     - "otuz dördüncü"
     - otuz dorduncu
   -
     - 35.
-    - ''
     - "otuz beş"
     - otuz bes
     - "otuz beşinci"
     - otuz besinci
   -
     - 36.
-    - ''
     - "otuz altı"
     - otuz alti
     - otuz altıncı
   -
     - 37.
-    - ''
     - otuz yedi
     - otuz yedinci
   -
     - 38.
-    - ''
     - otuz sekiz
     - otuz sekizinci
   -
     - 39.
-    - ''
     - otuz dokuz
     - otuz dokuzuncu
   -
     - 40.
-    - ''
     - "kırk"
     - kirk
     - "kırkıncı"
     - kirkinci
   -
     - 41.
-    - ''
     - "kırk bir"
     - kirk bir
     - "kırk birinci"
     - kirk birinci
   -
     - 42.
-    - ''
     - "kırk iki"
     - kirk iki
     - "kırk ikinci"
     - kirk ikinci
   -
     - 43.
-    - ''
     - "kırk üç"
     - kirk uc
     - "kırk üçüncü"
     - kirk ucuncu
   -
     - 44.
-    - ''
     - "kırk dört"
     - kirk dort
     - "kırk dördüncü"
     - kirk dorduncu
   -
     - 45.
-    - ''
     - "kırk beş"
     - kirk bes
     - "kırk beşinci"
     - kirk besinci
   -
     - 46.
-    - ''
     - "kırk altı"
     - kirk alti
     - "kırk altıncı"
     - kirk altıncı
   -
     - 47.
-    - ''
     - "kırk yedi"
     - kirk yedi
     - "kırk yedinci"
     - kirk yedinci
   -
     - 48.
-    - ''
     - "kırk sekiz"
     - kirk sekiz
     - "kırk sekizinci"
     - kirk sekizinci
   -
     - 49.
-    - ''
     - "kırk dokuz"
     - kirk dokuz
     - "kırk dokuzuncu"
     - kirk dokuzuncu
   -
     - 50.
-    - ''
     - elli
     - ellinci
   -
     - 51.
-    - ''
     - elli bir
     - elli birinci
   -
     - 52.
-    - ''
     - elli iki
     - elli ikinci
   -
     - 53.
-    - ''
     - "elli üç"
     - elli uc
     - "elli üçüncü"
@@ -558,5 +482,4 @@ when:
     - "geçen"
   -
     - gelecek
-    - ''
     - sonra

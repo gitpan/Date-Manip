@@ -6,20 +6,6 @@ package Date::Manip::Lang::spanish;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::spanish - Spanish language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,13 +13,15 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
+$LangName  = "Spanish";
+$YearAdded = 1998;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
@@ -41,11 +29,9 @@ __DATA__
 ampm:
   -
     - AM
-    - ''
     - A.M.
   -
     - PM
-    - ''
     - P.M.
 at:
   - a
@@ -55,15 +41,15 @@ day_abb:
   -
     - Mar
   -
+    - Mié
     - Mie
-    - mié
   -
     - Jue
   -
     - Vie
   -
+    - Sáb
     - Sab
-    - sáb
   -
     - Dom
 day_char:
@@ -87,15 +73,15 @@ day_name:
   -
     - Martes
   -
+    - Miércoles
     - Miercoles
-    - miércoles
   -
     - Jueves
   -
     - Viernes
   -
+    - Sábado
     - Sabado
-    - sábado
   -
     - Domingo
 each:
@@ -103,7 +89,6 @@ each:
 fields:
   -
     - anos
-    - ''
     - a
     - ano
     - ano
@@ -112,36 +97,30 @@ fields:
     - año
   -
     - meses
-    - ''
     - m
     - mes
     - mes
   -
     - semanas
-    - ''
     - sem
     - semana
     - semana
   -
     - dias
-    - ''
     - d
     - dia
   -
     - horas
-    - ''
     - hr
     - hrs
     - hora
   -
     - minutos
-    - ''
     - min
     - min
     - minuto
   -
     - segundos
-    - ''
     - s
     - seg
     - segundo
@@ -151,7 +130,6 @@ last:
 mode:
   -
     - exactamente
-    - ''
     - aproximadamente
   -
     - laborales
@@ -213,7 +191,6 @@ nextprev:
 nth:
   -
     - 1o
-    - ''
     - 1a
     - uno
     - una
@@ -221,42 +198,36 @@ nth:
     - primera
   -
     - 2o
-    - ''
     - 2a
     - dos
     - segundo
     - segunda
   -
     - 3o
-    - ''
     - 3a
     - tres
     - tercero
     - tercera
   -
     - 4o
-    - ''
     - 4a
     - cuatro
     - cuarto
     - cuarta
   -
     - 5o
-    - ''
     - 5a
     - cinco
     - quinto
     - quinta
   -
     - 6o
-    - ''
     - 6a
     - seis
     - sexto
     - sexta
   -
     - 7o
-    - ''
     - 7a
     - siete
     - séptimo
@@ -265,21 +236,18 @@ nth:
     - septima
   -
     - 8o
-    - ''
     - 8a
     - ocho
     - octavo
     - octava
   -
     - 9o
-    - ''
     - 9a
     - nueve
     - noveno
     - novena
   -
     - 10o
-    - ''
     - 10a
     - diez
     - décimo
@@ -288,7 +256,6 @@ nth:
     - decima
   -
     - 11o
-    - ''
     - 11a
     - once
     - undécimo
@@ -299,7 +266,6 @@ nth:
     - decimo primera
   -
     - 12o
-    - ''
     - 12a
     - doce
     - décimo segundo
@@ -308,7 +274,6 @@ nth:
     - decimo segunda
   -
     - 13o
-    - ''
     - 13a
     - trece
     - décimo tercero
@@ -317,7 +282,6 @@ nth:
     - decimo tercera
   -
     - 14o
-    - ''
     - 14a
     - catorce
     - décimo cuarto
@@ -326,7 +290,6 @@ nth:
     - decimo cuarta
   -
     - 15o
-    - ''
     - 15a
     - quince
     - décimo quinto
@@ -335,7 +298,6 @@ nth:
     - decimo quinta
   -
     - 16o
-    - ''
     - 16a
     - dieciséis
     - dieciseis
@@ -345,7 +307,6 @@ nth:
     - decimo sexta
   -
     - 17o
-    - ''
     - 17a
     - diecisiete
     - décimo séptimo
@@ -354,7 +315,6 @@ nth:
     - decimo septima
   -
     - 18o
-    - ''
     - 18a
     - dieciocho
     - décimo octavo
@@ -363,7 +323,6 @@ nth:
     - decimo octava
   -
     - 19o
-    - ''
     - 19a
     - diecinueve
     - décimo noveno
@@ -372,7 +331,6 @@ nth:
     - decimo novena
   -
     - 20o
-    - ''
     - 20a
     - veinte
     - vigesimo
@@ -381,7 +339,6 @@ nth:
     - vigésima
   -
     - 21o
-    - ''
     - 21a
     - veintiuno
     - veintiuna
@@ -392,7 +349,6 @@ nth:
     - vigesimo primera
   -
     - 22o
-    - ''
     - 22a
     - veintidós
     - veintidos
@@ -402,7 +358,6 @@ nth:
     - vigesimo segunda
   -
     - 23o
-    - ''
     - 23a
     - veintitrés
     - veintitres
@@ -412,7 +367,6 @@ nth:
     - vigesimo tercera
   -
     - 24o
-    - ''
     - 24a
     - veinticuatro
     - vigésimo cuarto
@@ -421,7 +375,6 @@ nth:
     - vigesimo cuarta
   -
     - 25o
-    - ''
     - 25a
     - veinticinco
     - vigésimo quinto
@@ -430,7 +383,6 @@ nth:
     - vigesimo quinta
   -
     - 26o
-    - ''
     - 26a
     - veintiséis
     - veintiseis
@@ -440,7 +392,6 @@ nth:
     - vigesimo sexta
   -
     - 27o
-    - ''
     - 27a
     - veintisiete
     - vigésimo séptimo
@@ -449,7 +400,6 @@ nth:
     - vigesimo septima
   -
     - 28o
-    - ''
     - 28a
     - veintiocho
     - vigésimo octavo
@@ -458,7 +408,6 @@ nth:
     - vigesimo octava
   -
     - 29o
-    - ''
     - 29a
     - veintinueve
     - vigésimo noveno
@@ -467,7 +416,6 @@ nth:
     - vigesimo novena
   -
     - 30o
-    - ''
     - 30a
     - treinta
     - trigésimo
@@ -476,7 +424,6 @@ nth:
     - trigesima
   -
     - 31o
-    - ''
     - 31a
     - treinta y uno
     - treinta y una
@@ -486,7 +433,6 @@ nth:
     - trigesimo primera
   -
     - 32o
-    - ''
     - 32a
     - treinta y dos
     - trigésimo segundo
@@ -495,7 +441,6 @@ nth:
     - trigesimo segunda
   -
     - 33o
-    - ''
     - 33a
     - treinta y tres
     - trigésimo tercero
@@ -504,7 +449,6 @@ nth:
     - trigesimo tercera
   -
     - 34o
-    - ''
     - 34a
     - treinta y cuatro
     - trigésimo cuarto
@@ -513,7 +457,6 @@ nth:
     - trigesimo cuarta
   -
     - 35o
-    - ''
     - 35a
     - treinta y cinco
     - trigésimo quinto
@@ -522,7 +465,6 @@ nth:
     - trigesimo quinta
   -
     - 36o
-    - ''
     - 36a
     - treinta y seis
     - trigésimo sexto
@@ -531,7 +473,6 @@ nth:
     - trigesimo sexta
   -
     - 37o
-    - ''
     - 37a
     - treinta y siete
     - trigésimo séptimo
@@ -540,7 +481,6 @@ nth:
     - trigesimo septima
   -
     - 38o
-    - ''
     - 38a
     - treinta y ocho
     - trigésimo octavo
@@ -549,7 +489,6 @@ nth:
     - trigesimo octava
   -
     - 39o
-    - ''
     - 39a
     - treinta y nueve
     - trigésimo noveno
@@ -558,7 +497,6 @@ nth:
     - trigesimo novena
   -
     - 40o
-    - ''
     - 40a
     - cuarenta
     - cuadragésimo
@@ -567,7 +505,6 @@ nth:
     - cuadragesima
   -
     - 41o
-    - ''
     - 41a
     - cuarenta y uno
     - cuarenta y una
@@ -577,7 +514,6 @@ nth:
     - cuadragesimo primera
   -
     - 42o
-    - ''
     - 42a
     - cuarenta y dos
     - cuadragésimo segundo
@@ -586,7 +522,6 @@ nth:
     - cuadragesimo segunda
   -
     - 43o
-    - ''
     - 43a
     - cuarenta y tres
     - cuadragésimo tercero
@@ -595,7 +530,6 @@ nth:
     - cuadragesimo tercera
   -
     - 44o
-    - ''
     - 44a
     - cuarenta y cuatro
     - cuadragésimo cuarto
@@ -604,7 +538,6 @@ nth:
     - cuadragesimo cuarta
   -
     - 45o
-    - ''
     - 45a
     - cuarenta y cinco
     - cuadragésimo quinto
@@ -613,7 +546,6 @@ nth:
     - cuadragesimo quinta
   -
     - 46o
-    - ''
     - 46a
     - cuarenta y seis
     - cuadragésimo sexto
@@ -622,7 +554,6 @@ nth:
     - cuadragesimo sexta
   -
     - 47o
-    - ''
     - 47a
     - cuarenta y siete
     - cuadragésimo séptimo
@@ -631,7 +562,6 @@ nth:
     - cuadragesimo septima
   -
     - 48o
-    - ''
     - 48a
     - cuarenta y ocho
     - cuadragésimo octavo
@@ -640,7 +570,6 @@ nth:
     - cuadragesimo octava
   -
     - 49o
-    - ''
     - 49a
     - cuarenta y nueve
     - cuadragésimo noveno
@@ -649,7 +578,6 @@ nth:
     - cuadragesimo novena
   -
     - 50o
-    - ''
     - 50a
     - cincuenta
     - quincuagésimo
@@ -658,7 +586,6 @@ nth:
     - quincuagesima
   -
     - 51o
-    - ''
     - 51a
     - cincuenta y uno
     - cincuenta y una
@@ -668,7 +595,6 @@ nth:
     - quincuagesimo primera
   -
     - 52o
-    - ''
     - 52a
     - cincuenta y dos
     - quincuagésimo segundo
@@ -677,7 +603,6 @@ nth:
     - quincuagesimo segunda
   -
     - 53o
-    - ''
     - 53a
     - cincuenta y tres
     - quincuagésimo tercero
@@ -686,7 +611,6 @@ nth:
     - quincuagesimo tercera
 of:
   - en
-  - ''
   - de
 offset_date:
   Hoy: 0:0:0:0:0:0:0
@@ -704,5 +628,4 @@ when:
     - hace
   -
     - en
-    - ''
     - later

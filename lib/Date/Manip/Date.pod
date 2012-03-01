@@ -98,11 +98,16 @@ date is converted to the local time zone.
 =item B<holiday>
 
    $name = $date->holiday();
+   @name = $date->holiday();
    $name = $date->event();
 
 This returns the name of the holiday if $date is a holiday. If $date
 is not a holiday, undef is returned. If $date is an unnamed holiday,
 an empty string is returned.
+
+In scalar context, holiday returns the name of one holiday that occurs
+on that date (the one first defined in the config file).  In list
+context, it returns all holidays on that date.
 
 =item B<input>
 
@@ -305,6 +310,8 @@ improve the speed of parsing. These include:
               date and time" formats.
    nodelta    Do not treat deltas as
               a date relative to now.
+   noholidays Do not parse holiday
+              names as dates.
 
 =item B<parse_date>
 
@@ -784,6 +791,12 @@ an optional abbreviation:
    2001-07-01-00:00:00 -04:00 (EDT)
    2001-07-01-00:00:00 -04:00:00 (EDT)
 
+   2001-07-01-00:00:00 -04 EDT
+   2001-07-01-00:00:00 -0400 EDT
+   2001-07-01-00:00:00 -040000 EDT
+   2001-07-01-00:00:00 -04:00 EDT
+   2001-07-01-00:00:00 -04:00:00 EDT
+
 The offset almost never sufficient to uniquely determine the time zone
 (and it is not even guaranteed that both the offset and abbreviation
 will, though in practice, it is probably sufficient). In this
@@ -1128,6 +1141,11 @@ The following formats are also supported by Date::Manip:
            22nd Sunday
            22nd Sunday in 1996
 
+   Nth day in MMM [YYYY]
+        The Nth day of the month
+           1st day of February
+           1st day of February 2012
+
    DoW week
         British: same as "in 1 week on DoW"
            Monday week
@@ -1170,6 +1188,15 @@ There is also support for the British formats:
 which refer to one week after today/tomorrow/yesterday respectively.
 
 Other languages have similar strings.
+
+=item B<Holidays>
+
+You can parse holiday names as dates.  For example:
+
+   Christmas
+   Christmas 2010
+   Christmas 2010 at noon
+   Saturday Christmas 2010 at noon
 
 =back
 
@@ -1506,6 +1533,13 @@ The time/time zone is removed from the date before the date is parsed,
 so the time may appear before or after the date, or between any two
 parts of the date.
 
+The time and the zone do not need to be adjacent, so the string:
+
+   Jan 21 17:13:27 2010 -0400
+
+will work.  If the timezone is separate from the date, it MUST be
+separated from any other portion of the date by whitespace.
+
 Certain words such as "on", "in", "at", "of", etc. which commonly
 appear in a date or time are ignored (except in ISO 8601 formats).
 
@@ -1595,7 +1629,35 @@ from the date.
        %+     insert a `+' character
 
    All other characters are currently unused, but may be used in the
-   future.  They currently insert the character following the %,
+   future.  They currently insert the character following the %.
+
+   The following multi-character formats also exist:
+
+   Extended formats
+       %<A=NUM>   These returns the NUMth value of the %A, %a, and %v formats
+       %<a=NUM>   resepectively.  In English, that would yield:
+       %<v=NUM>      %<A=2>   => Tuesday
+                     %<a=2>   => Tue
+                     %<v=2>   => T
+                  NUM must be in the range 1-7.
+
+       %<B=NUM>   These return the NUMth value of the %B and %b formats
+       %<b=NUM>   respectively.  In English, that would yield:
+                     %<B=2>   => February
+                     %<b=2>   => Feb
+                  NUM must be in the range 1-12 (or 01-12).
+
+       %<p=NUM>   These return the NUMth value of the %p format.  In
+                  English, that would yield:
+                     %<p=1>   => AM
+                     %<p=2>   => PM
+                  NUM must be in the range 1-2.
+
+       %<E=NUM>   These return the NUMth value of the %E format.  In
+                  English, that would yield:
+                     %<E=1>   => 1st
+                     %<E=53>  => 53rd
+                  NUM must be in the range 1-53.
 
 If a lone percent is the final character in a format, it is ignored.
 

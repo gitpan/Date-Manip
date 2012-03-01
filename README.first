@@ -36,9 +36,9 @@ to run using the new modules.
 It should be noted that version 6.00 required perl 5.10 or higher.
 
 Date::Manip 5.xx is integrated into the package (i.e. both 5.xx and 6.xx
-are available), so Date::Manip will continue to run (the old version only)
-on older versions of perl. Please refer to the main Date::Manip document
-for more details.
+are available in the 6.xx release), so Date::Manip will continue to run
+(the old version only) on older versions of perl. Please refer to the
+main Date::Manip document for more details.
 
 ===
 

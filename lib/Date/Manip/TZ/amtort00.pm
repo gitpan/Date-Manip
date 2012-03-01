@@ -5,7 +5,7 @@ package Date::Manip::TZ::amtort00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jan 10 15:46:34 EST 2012
+#    Generated on: Mon Feb 27 11:41:37 EST 2012
 #    Data version: tzdata2011n
 #    Code version: tzcode2011i
 
@@ -21,9 +21,11 @@ Date::Manip::TZ::amtort00 - Support for the America/Tortola time zone
 
 =head1 SYNPOSIS
 
-This module contains data from the Olsen database for the time zone. It
-is not intended to be used directly (other Date::Manip modules will
-load it as needed).
+This module contains data describing a time zone.  Most of the time zone
+data comes from the Olsen database, but there are a few exceptions.
+
+This module is not intended to be used directly.  Other Date::Manip modules
+will load it as needed.
 
 =cut
 
@@ -38,7 +40,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 END { undef $VERSION; }
 
 %Dates         = (

@@ -206,6 +206,41 @@ fully normalized business delta:
 
    +1:0:-3:+3:1:0:0
 
+=item B<fractional values>
+
+Fractional fields are allowed such as:
+
+   1.25 days
+   1.1 years
+
+When parsing a delta with fractional fields, the delta will ALWAY be
+normalized using the exact, semi-exact, and approximate relationships
+described above.
+
+For example, for a non-business delta, a delta of 1.1 years will use
+the following relationships:
+
+   1 year = 365.2425 days
+   1 year = 12 months
+   1 day  = 24 hours
+
+Since the delta includes approximate fields, as much of the 1.1 year
+portion of the delta will be stored in the approximate fields as
+possible.
+
+Using the above approximate relationships, we can see that:
+
+   1 month = 365.2425/12 days = 30.436875 days
+
+so
+
+   1.1 years
+   = 1 year, 1.2 months
+   = 1 year, 1 month, 6.087375 days
+   = 1 year, 1 month, 6 days, 2 hours, 5 minutes, 49 seconds
+
+Fractional seconds will be discarded (no rounding).
+
 =back
 
 =head1 METHODS

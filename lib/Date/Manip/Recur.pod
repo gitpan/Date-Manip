@@ -497,6 +497,7 @@ day of the week.
   PTn   Means the previous day n counting today
   NDn   Means the next day n not counting today
   NTn   Means the next day n counting today
+  WDn   Day n (1-7) of the current week
 
 In each of these, 'n' is 1-7 (1 being Sunday, 7 being Saturday).
 
@@ -532,6 +533,9 @@ on business days. These modifiers include:
   DWD   The closest work day (using the TomorrowFirst config
         variable) counting today
 
+  IBD   This discards the date if it is not a business day.
+  NBD   This discards the date if it IS a business day.
+
 The CWD, CWN, and CWP modifiers will always change the date to the
 closest working day NOT counting the current date.
 
@@ -550,6 +554,16 @@ calculated at Saturday at noon, and the FW1 is applied, the date is
 initially moved to the following Monday (assuming it is a work day)
 and the FW1 moves it to Tuesday. The final result will be Tuesday at
 noon.
+
+The IBD and NBD modifiers eliminate dates from the list immediately.
+In other words, if a recurrence has three modifiers:
+
+  FD1,IBD,FD1
+
+then as a date is being tested, first the FD1 modifier is applied.
+Then, it is tested to see if it is a business day.  If it is, the
+second FD1 modifier will be applied.  Otherwise, the date will not
+be included in the list of recurring events.
 
 =item B<Special modifiers>
 

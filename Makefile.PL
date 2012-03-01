@@ -10,6 +10,7 @@ my %requires = (
                  'IO::File'                 => '0',
                  'Storable'                 => '0',
                  'YAML::Syck'               => '0',
+                 'utf8'                     => '0',
                  'Test::Inter'              => '0',
                );
 
@@ -20,7 +21,7 @@ if ($IsWin32{ $^O }) {
 
 WriteMakefile(
         NAME             => 'Date::Manip',
-        VERSION          => '6.30',
+        VERSION          => '6.31',
         ($] >= 5.006
         ? (ABSTRACT=>'Date manipulation routines',
            AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')

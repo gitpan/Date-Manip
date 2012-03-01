@@ -182,27 +182,13 @@ The path to the file may be specified in any way valid for the
 operating system. If a file is not found, a warning will be issued,
 but execution will continue.
 
+Multiple config files are safe, and a section may safely be split
+across multiple files.
+
 =item B<Language>
 
 Date::Manip can be used to parse dates in many different languages.
-Currently, it contains translations for the following languages (the
-version in which they added is included for historical interest):
-
-   English      (default)
-   French       (5.02)
-   Swedish      (5.05)
-   German       (5.31)
-   Dutch        (5.32)     aka Nederlands
-   Polish       (5.32)
-   Spanish      (5.33)
-   Portuguese   (5.34)
-   Romanian     (5.35)
-   Italian      (5.35)
-   Russian      (5.41)
-   Turkish      (5.41)
-   Danish       (5.41)
-   Catalan      (5.43)
-   Norwegian    (6.21)
+A list of the languages is given in the Date::Manip::Lang document.
 
 To parse dates in a different language, just use the Language config
 variable with the name of the language as the value. Language names
@@ -351,6 +337,18 @@ variable. The two possible values are:
 
 NOTE: this only applies to dates parsed with the parse method. Dates parsed
 using the parse_date method always default to 00:00:00.
+
+=item B<PeriodTimeSep>
+
+By default, the only default time separator is a colon (:), so the
+time can be written as 12:15:30 .
+
+If you want to use a period (.) as a time separator as well, set this
+to 1.  Then you can write the time as 12.15.30 .
+
+By default, a period is used as a date separator, so 12.15.30 would be
+interpreted as Dec 15 1930 (or 2030), so if you use the period as a
+date separator, it should not be used as a time separator too.
 
 =back
 

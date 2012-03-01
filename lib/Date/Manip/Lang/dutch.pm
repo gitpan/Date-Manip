@@ -6,20 +6,6 @@ package Date::Manip::Lang::dutch;
 ########################################################################
 ########################################################################
 
-=pod
-
-=head1 NAME
-
-Date::Manip::Lang::dutch - Dutch language support.
-
-=head1 SYNPOSIS
-
-This module contains a list of words and expressions supporting
-the language. It is not intended to be used directly (other
-Date::Manip modules will load it as needed).
-
-=cut
-
 require 5.010000;
 use YAML::Syck;
 
@@ -27,13 +13,15 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
-our($Language,@Encodings);
+our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw();
+$LangName  = "Dutch";
+$YearAdded = 1998;
 
-my @in    = <DATA>;
-$Language = Load(join('',@in));
+my @in     = <DATA>;
+$Language  = Load(join('',@in));
 
 1;
 __DATA__
@@ -41,7 +29,6 @@ __DATA__
 ampm:
   -
     - am
-    - ''
     - a.m.
     - vm
     - v.m.
@@ -52,7 +39,6 @@ ampm:
     - nacht
   -
     - pm
-    - ''
     - p.m.
     - nm
     - n.m.
@@ -76,11 +62,9 @@ day_abb:
     - vr
   -
     - zat
-    - ''
     - za
   -
     - zon
-    - ''
     - zo
 day_char:
   -
@@ -114,56 +98,46 @@ day_name:
     - zondag
 each:
   - elke
-  - ''
   - elk
 fields:
   -
     - jaren
-    - ''
     - jaar
     - ja
     - j
   -
     - maanden
-    - ''
     - maand
     - mnd
   -
     - weken
-    - ''
     - week
     - w
   -
     - dagen
-    - ''
     - dag
     - d
   -
     - uren
-    - ''
     - uur
     - u
     - h
   -
     - minuten
-    - ''
     - m
     - minuut
     - min
   -
     - seconden
-    - ''
     - seconde
     - sec
     - s
 last:
   - laatste
-  - ''
   - afgelopen
 mode:
   -
     - exact
-    - ''
     - precies
     - nauwkeurig
     - ongeveer
@@ -174,7 +148,6 @@ mode:
     - ca.
   -
     - werk
-    - ''
     - werkdagen
     - zakelijke
     - zakelijk
@@ -185,7 +158,6 @@ month_abb:
     - feb
   -
     - maa
-    - ''
     - mrt
   -
     - apr
@@ -201,7 +173,6 @@ month_abb:
     - sep
   -
     - oct
-    - ''
     - okt
   -
     - nov
@@ -235,118 +206,95 @@ month_name:
 nextprev:
   -
     - volgende
-    - ''
     - volgend
   -
     - voorgaande
-    - ''
     - voorgaand
     - vorige
 nth:
   -
     - 1ste
-    - ''
     - eerste
     - een
   -
     - 2de
-    - ''
     - tweede
     - twee
   -
     - 3de
-    - ''
     - derde
     - drie
   -
     - 4de
-    - ''
     - vierde
     - vier
   -
     - 5de
-    - ''
     - vijfde
     - vijf
   -
     - 6de
-    - ''
     - zesde
     - zes
   -
     - 7de
-    - ''
     - zevende
     - zeven
   -
     - 8ste
-    - ''
     - achtste
     - acht
   -
     - 9de
-    - ''
     - negende
     - negen
   -
     - 10de
-    - ''
     - tiende
     - tien
   -
     - 11de
-    - ''
     - elfde
     - elf
   -
     - 12de
-    - ''
     - twaalfde
     - twaalf
   -
     - 13de
-    - ''
     - dertiende
     - dertien
   -
     - 14de
-    - ''
     - veertiende
     - veertien
   -
     - 15de
-    - ''
     - vijftiende
     - vijftien
   -
     - 16de
-    - ''
     - zestiende
     - zestien
   -
     - 17de
-    - ''
     - zeventiende
     - zeventien
   -
     - 18de
-    - ''
     - achttiende
     - achttien
   -
     - 19de
-    - ''
     - negentiende
     - negentien
   -
     - 20ste
-    - ''
     - twintigstetiende
     - twintigtien
     - twintig
   -
     - 21ste
-    - ''
     - eenentwintigstetiende
     - een-en-twintigste
     - eenentwintigtien
@@ -354,7 +302,6 @@ nth:
     - Eenentwintig
   -
     - 22ste
-    - ''
     - tweeentwintigstetiende
     - twee-en-twintigste
     - tweeentwintigtien
@@ -365,7 +312,6 @@ nth:
     - tweeëntwintigste
   -
     - 23ste
-    - ''
     - drieentwintigstetiende
     - drie-en-twintigste
     - drieentwintigtien
@@ -376,7 +322,6 @@ nth:
     - drieëntwintigste
   -
     - 24ste
-    - ''
     - vierentwintigstetiende
     - vier-en-twintigste
     - vierentwintigtien
@@ -385,7 +330,6 @@ nth:
     - vierentwintigste
   -
     - 25ste
-    - ''
     - vijfentwintigstetiende
     - vijf-en-twintigste
     - vijfentwintigtien
@@ -394,7 +338,6 @@ nth:
     - vijfentwintigste
   -
     - 26ste
-    - ''
     - zesentwintigstetiende
     - zes-en-twintigste
     - zesentwintigtien
@@ -403,7 +346,6 @@ nth:
     - zesentwintigste
   -
     - 27ste
-    - ''
     - zevenentwintigstetiende
     - zeven-en-twintigste
     - zevenentwintigtien
@@ -412,7 +354,6 @@ nth:
     - zevenentwintigste
   -
     - 28ste
-    - ''
     - achtentwintigstetiende
     - acht-en-twintigste
     - achtentwintigtien
@@ -421,7 +362,6 @@ nth:
     - achtentwintigste
   -
     - 29ste
-    - ''
     - negenentwintigstetiende
     - negen-en-twintigste
     - negenentwintigtien
@@ -430,7 +370,6 @@ nth:
     - negenentwintigste
   -
     - 30ste
-    - ''
     - dertigsteentwintigstetiende
     - dertigste-en-twintigste
     - dertigentwintigtien
@@ -439,7 +378,6 @@ nth:
     - dertigste
   -
     - 31ste
-    - ''
     - eenendertigsteentwintigstetiende
     - een-en-dertigste-en-twintigste
     - eenendertigentwintigtien
@@ -448,129 +386,106 @@ nth:
     - eenendertigste
   -
     - 32ste
-    - ''
     - tweeendertig
     - tweeendertigste
     - tweeëndertig
     - tweeëndertigste
   -
     - 33ste
-    - ''
     - drieendertig
     - drieendertigste
     - drieëndertig
     - drieëndertigste
   -
     - 34ste
-    - ''
     - vierendertig
     - vierendertigste
   -
     - 35ste
-    - ''
     - vijfendertig
     - vijfendertigste
   -
     - 36ste
-    - ''
     - zesendertig
     - zesendertigste
   -
     - 37ste
-    - ''
     - zevenendertig
     - zevenendertigste
   -
     - 38ste
-    - ''
     - achtendertig
     - achtendertigste
   -
     - 39ste
-    - ''
     - negenendertig
     - negenendertigste
   -
     - 40ste
-    - ''
     - veertig
     - veertigste
   -
     - 41ste
-    - ''
     - eenenveertig
     - eenenveertigste
   -
     - 42ste
-    - ''
     - tweeënveertig
     - tweeënveertigste
     - tweeenveertig
     - tweeenveertigste
   -
     - 43ste
-    - ''
     - drieënveertig
     - drieënveertigste
     - drieenveertig
     - drieenveertigste
   -
     - 44ste
-    - ''
     - vierenveertig
     - vierenveertigste
   -
     - 45ste
-    - ''
     - vijfenveertig
     - vijfenveertigste
   -
     - 46ste
-    - ''
     - zesenveertig
     - zesenveertigste
   -
     - 47ste
-    - ''
     - zevenenveertig
     - zevenenveertigste
   -
     - 48ste
-    - ''
     - achtenveertig
     - achtenveertigste
   -
     - 49ste
-    - ''
     - negenenveertig
     - negenenveertigste
   -
     - 50ste
-    - ''
     - vijftig
     - vijftigste
   -
     - 51ste
-    - ''
     - eenenvijftig
     - eenenvijftigste
   -
     - 52ste
-    - ''
     - tweeënvijftig
     - tweeënvijftigste
     - tweeenvijftig
     - tweeenvijftigste
   -
     - 53ste
-    - ''
     - drieënvijftig
     - drieënvijftigste
     - drieenvijftig
     - drieenvijftigste
 of:
   - in
-  - ''
   - van
 offset_date:
   eergisteren: -0:0:0:2:0:0:0
@@ -595,10 +510,8 @@ times:
 when:
   -
     - geleden
-    - ''
     - vroeger
     - eerder
   -
     - over
-    - ''
     - later

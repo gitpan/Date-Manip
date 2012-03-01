@@ -57,6 +57,9 @@ the time typically moves forward from 02:00 to 03:00, any date
 calculation which would intuitively report a time in that range
 will also move forward (or backward as the case may be).
 
+*NOTE* This should be less of a problem since 6.30 with the addition
+of semi-exact deltas.
+
 =item B<Missing date formats>
 
 Due to the large number of date formats that Date::Manip CAN process,
@@ -127,19 +130,6 @@ alternatives if possible (i.e. doing the calculation in exact mode and
 then multiplying by 5/7).  Who needs a business date more accurate
 than "6 to 8 weeks" anyway, right :-)
 
-=item B<RCS Control>
-
-If you try to put Date::Manip under RCS control, you are going to have
-problems.  Apparently, RCS replaces strings of the form "$Date...$" with
-the current date.  This form occurs all over in Date::Manip.  To prevent the
-RCS keyword expansion, checkout files using:
-
-   co -ko
-
-Since very few people will ever have a desire to do this (and I don't
-use RCS), I have not worried about it, and I do not intend to try to
-workaround this problem.
-
 =item B<Using functions/methods which are not supported>
 
 There have been a handful of incidents of people using a function from
@@ -175,6 +165,19 @@ If you feel that an internal function is of more general use, feel
 free to contact me with an argument of why it should be "promoted".  I
 welcome suggestions and will definitely consider any such request.
 
+=item B<RCS Control>
+
+If you try to put Date::Manip under RCS control, you are going to have
+problems.  Apparently, RCS replaces strings of the form "$Date...$" with
+the current date.  This form occurs all over in Date::Manip.  To prevent the
+RCS keyword expansion, checkout files using:
+
+   co -ko
+
+Since very few people will ever have a desire to do this (and I don't
+use RCS), I have not worried about it, and I do not intend to try to
+workaround this problem.
+
 =back
 
 =head1 KNOWN COMPLAINTS
@@ -203,7 +206,8 @@ received is due to this.
 In the past, I've avoided using new features of perl in order to allow
 Date::Manip to run on older versions of perl.  Prior to perl 5.10,
 none of the new features would have had a major impact on how
-Date::Manip was written, however that changed in 5.10.
+Date::Manip was written so this practice was justified. That all
+changed with the release of perl 5.10.
 
 One of the aspects of Date::Manip that has received the most positive
 response is the ability to parse almost every conceivable date format.
@@ -246,7 +250,7 @@ work unmodified with 6.xx (of course, you should still refer to the
 migration document to see what features are deprecated or changed to
 make sure that you don't need to modify your script so that it will
 continue to work in the future). Even with scripts that need to be
-changed, those changes should be trivial.
+changed, the changes should be trivial.
 
 So, Date::Manip 6.xx is almost entirely backward compatible with 5.xx
 (to the extent that you would expect any major version release to be
@@ -260,8 +264,8 @@ allowed to switch minimum perl versions. At some point, you have to
 let go of an old version if you want to make use of the features of
 the newer version. The question is, did I jump to 5.10 too fast?
 
-The complaints I see on the CPAN ratings complain that I no longer
-support perl 5.6 and perl 5.8.
+The negative ratings I see in the CPAN ratings complain that I no
+longer support perl 5.6 and perl 5.8.
 
 With respect to 5.6, perl 5.6 was released in March of 2000 (that's
 before Windows XP which was released in 2001). To be honest, I don't
@@ -352,6 +356,9 @@ the complaint) only require that you need to save the seconds from the
 epoch, zone, and a couple other pieces of information, all of which
 could probably be stored in 100 bytes or less.
 
+This complaint is not accurate, and comes from a misunderstanding
+of how Date::Manip objects are created.
+
 Date::Manip is very configurable, and contains a great deal of
 information which could theoretically be calculated on the fly, but
 which would greatly reduce it's performance. Instead, in the interest
@@ -381,8 +388,8 @@ timezones, this object will grow slowly as new timezones are used.
 The size of the actual Date::Manip::Date object is a little over 300
 bytes.  However, each includes a pointer to a Date::Manip::Base and
 a Date::Manip::TZ object (and due to how the object was being looked
-at in the complaint, they were getting the size of all three objects),
-NOT just the Date::Manip::Date object.
+at in the complaint, they were reporting the size of all three objects,
+NOT just the Date::Manip::Date object).
 
 Both the Date::Manip::Base and Date::Manip::TZ objects are reused by
 any number of Date::Manip::Date objects. They can almost be thought of
@@ -393,9 +400,9 @@ configurations (see Date::Manip::Config), you'll need multiple Base
 and TZ objects. However, most of the time you will not need to do
 this.
 
-The Date::Manip::Date object is a bit larger than suggested in the
-complaint, but it should be noted that Date::Manip actually stores the
-dates in a number of different formats (a string of the form
+The actual Date::Manip::Date object is a bit larger than suggested in
+the complaint, but it should be noted that Date::Manip actually stores
+the dates in a number of different formats (a string of the form
 YYYYMMDDHH:MN:SS and a list [YYYY,MM,DD,HH,MN,SS] in the time zone it
 was parsed in, the local time zone (if different) and GMT. By caching
 this information as it is used, it has a huge impact on the

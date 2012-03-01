@@ -25,7 +25,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.30';
+$VERSION='6.31';
 
 our(%Lang);
 
@@ -45,6 +45,10 @@ our(%Lang);
             english     english
             en          english
             en_us       english
+
+            finnish     finnish
+            fi          finnish
+            fi_fi       finnish
 
             french      french
             fr          french
