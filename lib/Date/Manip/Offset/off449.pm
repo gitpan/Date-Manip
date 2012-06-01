@@ -5,9 +5,9 @@ package Date::Manip::Offset::off449;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Feb 27 11:41:56 EST 2012
-#    Data version: tzdata2011n
-#    Code version: tzcode2011i
+#    Generated on: Wed May 30 08:44:47 EDT 2012
+#    Data version: tzdata2012c
+#    Code version: tzcode2012b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -17,7 +17,7 @@ package Date::Manip::Offset::off449;
 
 =head1 NAME
 
-Date::Manip::Offset::off449 - Support for the -08:00:56 offset
+Date::Manip::Offset::off449 - Support for the -08:00:00 offset
 
 =head1 SYNPOSIS
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +41,38 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-08:00:56';
+$Offset        = '-08:00:00';
 
 %Offset        = (
    0 => [
+      'america/los_angeles',
+      'america/vancouver',
+      'america/metlakatla',
+      'america/santa_isabel',
+      'america/tijuana',
+      'america/whitehorse',
+      'america/dawson',
+      'pacific/pitcairn',
+      'etc/gmt-8',
+      'h',
+      'america/juneau',
+      'america/sitka',
+      'america/inuvik',
       'america/dawson_creek',
+      'america/bahia_banderas',
+      'america/hermosillo',
+      'america/mazatlan',
+      'america/boise',
+      'america/creston',
+      ],
+   1 => [
+      'america/juneau',
+      'america/yakutat',
+      'america/anchorage',
+      'america/nome',
+      'america/dawson',
+      'america/whitehorse',
+      'america/sitka',
       ],
 );
 

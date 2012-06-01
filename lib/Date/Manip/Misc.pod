@@ -15,17 +15,14 @@ Time packages.  Is Date::Manip the one you should be using? That isn't
 a trivial question to answer. It depends to a large extent on what you
 are trying to do.
 
-Date::Manip is certainly the most powerful of the Date modules.  I'm
-trying to build a library which can do _EVERY_ conceivable date/time
-manipulation that you'll run into in everyday life dealing with the
-Gregorian calendar.  To the best of my knowledge, it will do
+Date::Manip is certainly one of the most powerful of the Date modules
+(the other main contender being the DateTime suite of modules).  I'm
+trying to build a library which can do _EVERY_ conceivable
+date/time manipulation that you'll run into in everyday life dealing with
+the Gregorian calendar.  To the best of my knowledge, it will do
 everything that any other date module will do which work with the
-Gregorian calendar (Date::Manip does NOT provide functionality for
-working with alternate calendars such as the Chinese or Hebrew
-calendars, so if you need that functionality, you definitely need to
-look elsewhere). There are a number of features that Date::Manip has
-that none of the other modules have.  Date::Manip is the "Swiss Army
-Knife" of Date modules.
+Gregorian calendar, and there are a number of features that Date::Manip
+has that other modules do not have.
 
 There is a tradeoff in being able to do "everything"... and that
 tradeoff is primarily in terms of performance.  Date::Manip is written
@@ -43,6 +40,11 @@ an important factor, and you're doing a fairly small set of simple
 date operations over and over again, you should carefully examine the
 other date modules to see if they will meet your needs.
 
+Date::Manip does NOT provide functionality for working with alternate
+calendars such as the Chinese or Hebrew calendars, so if you need that
+functionality, you definitely need to look elsewhere (the DateTime suite
+probably).
+
 On the other hand, if you want one solution for all your date needs,
 don't need peak speed, or are trying to do more exotic date
 operations, Date::Manip is for you.  Operations on things like
@@ -50,7 +52,9 @@ business dates, foreign language dates, holidays and other recurring
 events, complete timezone handling, etc. are available more-or-less
 exclusively in Date::Manip. At the very least, if you want to be able
 to do these operations, it will require using several other modules,
-each with it's own interface.
+each with it's own interface.  Also, when you work with Date::Manip,
+you work with one author and one module.  The DateTime suite
+currently consists of almost 100 modules and 75 authors.
 
 In addition, I am making significant performance improvements in
 Date::Manip.  Although it will never be as fast as some of the other

@@ -5,13 +5,13 @@ package Date::Manip::TZ::pafaka00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Feb 27 11:41:31 EST 2012
-#    Data version: tzdata2011n
-#    Code version: tzcode2011i
+#    Generated on: Wed May 30 08:37:00 EDT 2012
+#    Data version: tzdata2012c
+#    Code version: tzcode2012b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://ftp.iana.orgtz
+#    ftp://ftp.iana.org/tz
 
 =pod
 
@@ -40,7 +40,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -53,8 +53,14 @@ END { undef $VERSION; }
    1901 =>
      [
         [ [1901,1,1,11,24,56],[1901,1,1,1,24,56],'-10:00:00',[-10,0,0],
-          'TKT',0,[9999,12,31,0,0,0],[9999,12,30,14,0,0],
-          '1901010111:24:56','1901010101:24:56','9999123100:00:00','9999123014:00:00' ],
+          'TKT',0,[2011,12,30,9,59,59],[2011,12,29,23,59,59],
+          '1901010111:24:56','1901010101:24:56','2011123009:59:59','2011122923:59:59' ],
+     ],
+   2011 =>
+     [
+        [ [2011,12,30,10,0,0],[2011,12,31,0,0,0],'+14:00:00',[14,0,0],
+          'TKT',0,[9999,12,31,0,0,0],[9999,12,31,14,0,0],
+          '2011123010:00:00','2011123100:00:00','9999123100:00:00','9999123114:00:00' ],
      ],
 );
 

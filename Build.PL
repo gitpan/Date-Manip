@@ -21,9 +21,14 @@ if ($IsWin32{ $^O }) {
    $requires{'Win32::TieRegistry'} = 0;
 }
 
-my $build = Module::Build->new(
+my $class = Module::Build->subclass(
+   class => "Module::Build::Custom",
+   code  => q { sub ACTION_html { my $self = shift ; $self->SUPER::ACTION_html ( @_ ) if ( $ENV{ MAKE_HTML } ) ; } }
+);
+
+my $build = $class->new(
         license            => 'perl',
-        dist_version       => '6.31',
+        dist_version       => '6.32',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',

@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 our $VERSION;
-$VERSION='6.31';
+$VERSION='6.32';
 
 our ($dmb);
 $dmb = new Date::Manip::Base;
@@ -1035,7 +1035,7 @@ sub _do_mods_write {
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://$tzdata_src$tzdata_dir
+#    ftp://$tzdata_src/$tzdata_dir
 
 $podstr
 
@@ -1064,7 +1064,7 @@ END {
 }
 
 our (\$VERSION);
-\$VERSION='6.31';
+\$VERSION='6.32';
 END { undef \$VERSION; }
 
 \%Dates         = (
@@ -1303,7 +1303,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.31';
+\$VERSION='6.32';
 END { undef \$VERSION; }
 
 our (\$Offset,\%Offset);
@@ -1383,7 +1383,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.31';
+\$VERSION='6.32';
 END { undef \$VERSION; }
 
 our (\$TzdataVersion,\$TzcodeVersion,

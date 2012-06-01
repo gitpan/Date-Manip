@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 # To get rid of a 'used only once' warnings.
@@ -1504,6 +1504,10 @@ sub _config_var_tz {
       return  if ($err);
       $$self{'data'}{'sections'}{'conf'}{'setdate'} = 0;
       $val = 1;
+
+   } elsif ($var eq 'configfile') {
+      $self->_config_file($val);
+      return;
    }
 
    my $base = $$self{'base'};

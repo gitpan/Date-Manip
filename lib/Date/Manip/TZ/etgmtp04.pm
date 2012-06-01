@@ -5,13 +5,13 @@ package Date::Manip::TZ::etgmtp04;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Feb 27 11:41:25 EST 2012
-#    Data version: tzdata2011n
-#    Code version: tzcode2011i
+#    Generated on: Wed May 30 08:36:54 EDT 2012
+#    Data version: tzdata2012c
+#    Code version: tzcode2012b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://ftp.iana.orgtz
+#    ftp://ftp.iana.org/tz
 
 =pod
 
@@ -40,7 +40,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 %Dates         = (

@@ -29,6 +29,7 @@ perl up to the following versions:
 The bug has been fixed in:
 
    5.15.6
+   5.16.0
 
 If a maintenance release is done for any of the other releases (5.10,
 5.12, 5.14), that includes the patch, I'll update this section to
@@ -422,7 +423,7 @@ accepted procedures for accessing the data.
 Please refer to the Date::Manip::Objects document for more
 information.
 
-=item Date::Manip has an inconsistent interface
+=item B<Date::Manip has an inconsistent interface>
 
 I've gotten a few complaints that the interface to Date::Manip is
 inconsistent... and I agree (at least when using the functional

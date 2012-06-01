@@ -27,6 +27,10 @@ $VERSION='6.31';
 our $langdir  = 'lib/Date/Manip/Lang';
 our $curry    = ( localtime(time) )[5] + 1900;
 
+# so the CPAN indexer won't treat this as a POD file
+our $podstr = '=pod';
+our $hdstr  = '=head1';
+
 ###############################################################################
 # HELP
 ###############################################################################
@@ -162,19 +166,21 @@ sub write_pod {
 ########################################################################
 ########################################################################
 
-=pod
+$podstr
 
-=head1 NAME
+=encoding utf-8
+
+$hdstr NAME
 
 Date::Manip::Lang::${mod} - ${name} language support.
 
-=head1 SYNOPSIS
+$hdstr SYNOPSIS
 
 This module contains a list of words and expressions supporting
 the language. It is not intended to be used directly (other
 Date::Manip modules will load it as needed).
 
-=head1 LANGUAGE EXPRESSIONS
+$hdstr LANGUAGE EXPRESSIONS
 
 The following is a list of all language words and expressions used
 to write times and/or dates.
@@ -502,25 +508,25 @@ $words{seps}
 
 =back
 
-=head1 KNOWN BUGS
+$hdstr KNOWN BUGS
 
 None known.
 
-=head1 BUGS AND QUESTIONS
+$hdstr BUGS AND QUESTIONS
 
 Please refer to the Date::Manip::Problems documentation for
 information on submitting bug reports or questions to the author.
 
-=head1 SEE ALSO
+$hdstr SEE ALSO
 
 Date::Manip        - main module documentation
 
-=head1 LICENSE
+$hdstr LICENSE
 
 This script is free software; you can redistribute it and/or
 modify it under the same terms as Perl itself.
 
-=head1 AUTHOR
+$hdstr AUTHOR
 
 Sullivan Beck (sbeck\@cpan.org)
 

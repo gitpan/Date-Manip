@@ -11,9 +11,10 @@ use YAML::Syck;
 
 use strict;
 use warnings;
+use utf8;
 
 our($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 
 our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 ISO-8859-15 perl);

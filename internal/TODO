@@ -13,6 +13,8 @@
 # +1 significant release
 ########################################################################
 
+Add ability to treat deltas in the old way (with 1 day = 24 hours) when normalizing.
+
 Switch to YAML::XS or JSON.
    See if I can get Date::Manip to use a different YAML module (which doesn't use
    Module::Build) if YAML::Syck is not available.  Based on discussion with Martin

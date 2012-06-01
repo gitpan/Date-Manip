@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 ########################################################################
@@ -3095,11 +3095,19 @@ sub __calc_date_delta {
    # In business mode, daylight saving time is ignored, so days are
    # of a constant, known length, so they'll be done in the exact
    # function.  Otherwise, they'll be done in the approximate function.
+   #
+   # Also in business mode, if $subtract = 2, then the starting date
+   # must be a business date or an error occurs.
 
    my($dd_exact,$dd_approx);
    if ($business) {
       $dd_exact  = $dd;
       $dd_approx = 0;
+
+      if ($subtract == 2  &&  ! $self->__is_business_day($date,1)) {
+         return (1);
+      }
+
    } else {
       $dd_exact  = 0;
       $dd_approx = $dd;
@@ -3426,6 +3434,7 @@ sub __calc_date_delta_exact {
       $dmb->_mod_add(60,$ds,\$s,\$mn);
       $dmb->_mod_add(60,$dmn,\$mn,\$h);
       $h += $dh;
+      # Note: it's possible that $h > 23 at this point or $h < 0
 
       if ($h > $hend  ||
           ($h == $hend  &&  $mn > $mend)  ||
@@ -3435,7 +3444,12 @@ sub __calc_date_delta_exact {
          # We've gone past the end of the business day.
 
          my $t2      = $dmb->calc_time_time([$h,$mn,$s],[$hend,$mend,$send],1);
-         ($y,$m,$d)  = @{ $dmb->calc_date_days([$y,$m,$d],1) };
+
+         while (1) {
+            ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],1) };
+            last  if ($self->__is_business_day([$y,$m,$d,$h,$mn,$s]));
+         }
+
          ($h,$mn,$s) = @{ $dmb->calc_time_time([$hbeg,$mbeg,$sbeg],$t2) };
 
       } elsif ($h < $hbeg  ||
@@ -3445,7 +3459,12 @@ sub __calc_date_delta_exact {
          # We've gone back past the start of the business day.
 
          my $t2      = $dmb->calc_time_time([$hbeg,$mbeg,$sbeg],[$h,$mn,$s],1);
-         ($y,$m,$d)  = @{ $dmb->calc_date_days([$y,$m,$d],-1) };
+
+         while (1) {
+            ($y,$m,$d) = @{ $dmb->calc_date_days([$y,$m,$d],-1) };
+            last  if ($self->__is_business_day([$y,$m,$d,$h,$mn,$s]));
+         }
+
          ($h,$mn,$s) = @{ $dmb->calc_time_time([$hend,$mend,$send],$t2,1) };
       }
 

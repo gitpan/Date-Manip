@@ -188,6 +188,7 @@ section.
 
 A patch for this went in on Dec 13, 2011 when the following versions of
 perl are active:
+   5.16.0  FIXED
    5.15.6  FIXED
    5.14.2  maint
    5.12.4  maint

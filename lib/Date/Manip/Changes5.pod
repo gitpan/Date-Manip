@@ -17,7 +17,17 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 5.64
+=head1 VERSION 5.65
+
+=head1 VERSION 5.64 (Released with 6.32)
+
+=over 4
+
+=item Better handling of '0000' timezone
+
+Applied a patch supplied by Ed Avis that improves handling of the '0000' timezone..
+
+=back
 
 =head1 VERSION 5.63 (Released with 6.26)
 

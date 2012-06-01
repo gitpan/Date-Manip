@@ -76,7 +76,7 @@
    'AMST'        => [
                      'America/Campo_Grande'                      ,1931,9999,
                      'America/Cuiaba'                            ,1931,9999,
-                     'Asia/Yerevan'                              ,1991,9999,
+                     'Asia/Yerevan'                              ,1991,2011,
                      'America/Boa_Vista'                         ,1931,2000,
                      'America/Manaus'                            ,1931,1994,
                      'America/Porto_Velho'                       ,1931,1988,
@@ -321,7 +321,7 @@
                      'America/Anchorage'                         ,1945,1945,
                     ],
    'CAST'        => [
-                     'Antarctica/Casey'                          ,2009,2010,
+                     'Antarctica/Casey'                          ,2009,2012,
                      'Africa/Khartoum'                           ,1970,1985,
                      'Africa/Juba'                               ,1970,1985,
                      'Africa/Gaborone'                           ,1943,1944,
@@ -742,7 +742,7 @@
                      'America/Pangnirtung'                       ,1995,9999,
                      'America/Kentucky/Monticello'               ,2001,9999,
                      'America/Indiana/Petersburg'                ,2008,9999,
-                     'America/Port-au-Prince'                    ,1983,2006,
+                     'America/Port-au-Prince'                    ,1983,2012,
                      'America/Cancun'                            ,1996,1998,
                      'America/Jamaica'                           ,1974,1983,
                      'America/Indiana/Tell_City'                 ,1969,1970,
@@ -758,7 +758,7 @@
                      'Europe/Chisinau'                           ,1932,9999,
                      'Africa/Cairo'                              ,1940,2010,
                      'Europe/Helsinki'                           ,1942,9999,
-                     'Asia/Gaza'                                 ,1957,2011,
+                     'Asia/Gaza'                                 ,1957,2012,
                      'Asia/Amman'                                ,1973,9999,
                      'Asia/Nicosia'                              ,1975,9999,
                      'Europe/Sofia'                              ,1979,9999,
@@ -773,7 +773,7 @@
                      'Europe/Uzhgorod'                           ,1992,9999,
                      'Europe/Moscow'                             ,1991,1991,
                      'Europe/Warsaw'                             ,1919,1919,
-                     'Asia/Hebron'                               ,1957,2011,
+                     'Asia/Hebron'                               ,1957,2012,
                     ],
    'EET'         => [
                      'EET'                                       ,0001,9999,
@@ -903,7 +903,7 @@
                      'Atlantic/Stanley'                          ,1937,9999,
                     ],
    'FKT'         => [
-                     'Atlantic/Stanley'                          ,1912,9999,
+                     'Atlantic/Stanley'                          ,1912,2010,
                     ],
    'FMT'         => [
                      'Africa/Freetown'                           ,1882,1913,
@@ -1391,6 +1391,7 @@
    'MST'         => [
                      'America/Denver'                            ,1883,9999,
                      'America/Phoenix'                           ,1883,9999,
+                     'America/Creston'                           ,1884,9999,
                      'America/Edmonton'                          ,1906,9999,
                      'America/Cambridge_Bay'                     ,1920,9999,
                      'America/Chihuahua'                         ,1922,9999,
@@ -1637,6 +1638,7 @@
                      'America/Boise'                             ,1883,1923,
                      'America/Metlakatla'                        ,1900,1983,
                      'America/Sitka'                             ,1900,1983,
+                     'America/Creston'                           ,1916,1918,
                     ],
    'PWT'         => [
                      'Pacific/Palau'                             ,1900,9999,
@@ -1957,7 +1959,7 @@
                      'Atlantic/Madeira'                          ,1977,9999,
                      'Atlantic/Canary'                           ,1980,9999,
                      'Atlantic/Faroe'                            ,1981,9999,
-                     'Africa/Casablanca'                         ,1939,2011,
+                     'Africa/Casablanca'                         ,1939,9999,
                      'Africa/Algiers'                            ,1916,1980,
                      'Africa/Ceuta'                              ,1918,1978,
                      'Europe/Madrid'                             ,1917,1946,

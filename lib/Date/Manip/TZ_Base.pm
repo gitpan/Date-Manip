@@ -9,9 +9,10 @@ package Date::Manip::TZ_Base;
 require 5.010000;
 use warnings;
 use strict;
+use IO::File;
 
 our ($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 ########################################################################
@@ -28,15 +29,158 @@ sub _config_var {
 
    my $istz     = ref($self) eq 'Date::Manip::TZ';
 
-   if ($istz  &&  ($var eq 'tz'  ||
+   if ($istz  &&  ($var eq 'tz'         ||
                    $var eq 'forcedate'  ||
-                   $var eq 'setdate')) {
+                   $var eq 'setdate'    ||
+                   $var eq 'configfile')) {
       return $self->_config_var_tz($var,$val);
    } else {
       my $base  = ($istz ? $$self{'base'} : $self);
       return $base->_config_var_base($var,$val);
    }
 }
+
+# This reads a config file
+#
+sub _config_file {
+   my($self,$file) = @_;
+
+   return  if (! $file);
+
+   if (! -f $file) {
+      warn "ERROR: [config_file] file doesn't exist: $file\n";
+      return;
+   }
+   if (! -r $file) {
+      warn "ERROR: [config_file] file not readable: $file\n";
+      return;
+   }
+
+   my $in = new IO::File;
+   if (! $in->open($file)) {
+      warn "ERROR: [config_file] unable to open file: $file: $!\n";
+      return;
+   }
+   my @in = <$in>;
+   $in->close();
+
+   my $sect = 'conf';
+   my %sect;
+
+   chomp(@in);
+   foreach my $line (@in) {
+      $line =~ s/^\s+//o;
+      $line =~ s/\s+$//o;
+      next  if (! $line  or  $line =~ /^\043/o);
+
+      if ($line =~ /^\*/o) {
+         # New section
+         $sect = $self->_config_file_section($line);
+      } else {
+         $sect{$sect} = 1;
+         $self->_config_file_var($sect,$line);
+      }
+   }
+
+   # If we did a holidays section, we need to create a regular
+   # expression with all of the holiday names.
+
+   my $istz  = ref($self) eq 'Date::Manip::TZ';
+   my $base  = ($istz ? $$self{'base'} : $self);
+
+   if (exists $sect{'holidays'}) {
+      my @hol = @{ $$base{'data'}{'sections'}{'holidays'} };
+      my @nam;
+      while (@hol) {
+         my $junk = shift(@hol);
+         my $hol  = shift(@hol);
+         push(@nam,$hol)  if ($hol);
+      }
+
+      if (@nam) {
+         @nam    = sort _sortByLength(@nam);
+         my $hol = '(?<holiday>' . join('|',map { "\Q$_\E" } @nam) . ')';
+         my $yr  = '(?<y>\d\d\d\d|\d\d)';
+
+         my $rx  = "$hol\\s*$yr|" .      # Christmas 2009
+                   "$yr\\s*$hol|" .      # 2009 Christmas
+                   "$hol";               # Christmas
+
+         $$base{'data'}{'rx'}{'holidays'} = qr/^(?:$rx)$/i;
+      }
+   }
+}
+
+sub _config_file_section {
+   my($self,$line) = @_;
+
+   my $istz  = ref($self) eq 'Date::Manip::TZ';
+   my $base  = ($istz ? $$self{'base'} : $self);
+
+   $line    =~ s/^\*//o;
+   $line    =~ s/\s*$//o;
+   my $sect = lc($line);
+   if (! exists $$base{'data'}{'sections'}{$sect}) {
+      warn "WARNING: [config_file] unknown section created: $sect\n";
+      $base->_section($sect);
+   }
+   return $sect;
+}
+
+sub _config_file_var {
+   my($self,$sect,$line) = @_;
+
+   my $istz  = ref($self) eq 'Date::Manip::TZ';
+   my $base  = ($istz ? $$self{'base'} : $self);
+
+   my($var,$val);
+   if ($line =~ /^\s*(.*?)\s*=\s*(.*?)\s*$/o) {
+      ($var,$val) = ($1,$2);
+   } else {
+      die "ERROR: invalid Date::Manip config file line:\n  $line\n";
+   }
+
+   if ($sect eq 'conf') {
+      $var = lc($var);
+      $self->_config($var,$val);
+   } else {
+      $base->_section($sect,$var,$val);
+   }
+}
+
+# $val = $self->config(VAR);
+#    Returns the value of a variable.
+#
+# $self->config([SECT], VAR, VAL)  sets the value of a variable
+#    Sets the value of a variable.
+#
+sub _config {
+   my($self,$var,$val) = @_;
+
+   my $sect = 'conf';
+
+   #
+   # $self->_conf(VAR, VAL)  sets the value of a variable
+   #
+
+   $var = lc($var);
+   if (defined $val) {
+      return $self->_config_var($var,$val);
+   }
+
+   #
+   # $self->_conf(VAR)       returns the value of a variable
+   #
+
+   if (exists $$self{'data'}{'sections'}{$sect}{$var}) {
+      return $$self{'data'}{'sections'}{$sect}{$var};
+   } else {
+      warn "ERROR: [config] invalid config variable: $var\n";
+      return '';
+   }
+}
+
+########################################################################
 
 sub _fix_year {
    my($self,$y) = @_;
@@ -248,6 +392,15 @@ sub _update_now {
 
    return;
 }
+
+###############################################################################
+# This sorts from longest to shortest element
+#
+no strict 'vars';
+sub _sortByLength {
+   return (length $b <=> length $a);
+}
+use strict 'vars';
 
 1;
 # Local Variables:

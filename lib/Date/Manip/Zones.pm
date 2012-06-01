@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Feb 27 11:41:59 EST 2012
-#    Data version: tzdata2011n
-#    Code version: tzcode2011i
+#    Generated on: Wed May 30 08:49:39 EDT 2012
+#    Data version: tzdata2012c
+#    Code version: tzcode2012b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,8 +37,8 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2011n';
-$TzcodeVersion = 'tzcode2011i';
+$TzdataVersion = 'tzdata2012c';
+$TzcodeVersion = 'tzcode2012b';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
 $LastYear      = '2042';
@@ -135,6 +135,7 @@ $LastYear      = '2042';
   'america/chicago'                    => 'amchic00',
   'america/chihuahua'                  => 'amchih00',
   'america/costa_rica'                 => 'amcost00',
+  'america/creston'                    => 'amcres00',
   'america/cuiaba'                     => 'amcuia00',
   'america/curacao'                    => 'amcura00',
   'america/danmarkshavn'               => 'amdanm00',
@@ -590,6 +591,7 @@ $LastYear      = '2042';
   'america/chicago'                    => 'America/Chicago',
   'america/chihuahua'                  => 'America/Chihuahua',
   'america/costa_rica'                 => 'America/Costa_Rica',
+  'america/creston'                    => 'America/Creston',
   'america/cuiaba'                     => 'America/Cuiaba',
   'america/curacao'                    => 'America/Curacao',
   'america/danmarkshavn'               => 'America/Danmarkshavn',
@@ -1046,6 +1048,7 @@ $LastYear      = '2042';
   'america/chicago'                    => 'america/chicago',
   'america/chihuahua'                  => 'america/chihuahua',
   'america/costa_rica'                 => 'america/costa_rica',
+  'america/creston'                    => 'america/creston',
   'america/cuiaba'                     => 'america/cuiaba',
   'america/curacao'                    => 'america/curacao',
   'america/danmarkshavn'               => 'america/danmarkshavn',
@@ -2701,7 +2704,8 @@ $LastYear      = '2042';
                      'america/santa_isabel',
                      'america/tijuana',
                      'europe/moscow',
-                     'america/north_dakota/beulah' ],
+                     'america/north_dakota/beulah',
+                     'america/creston' ],
   'must'        => [ 'indian/mauritius' ],
   'mut'         => [ 'indian/mauritius' ],
   'mvt'         => [ 'indian/maldives' ],
@@ -2824,7 +2828,8 @@ $LastYear      = '2042';
                      'america/mazatlan',
                      'america/boise',
                      'america/metlakatla',
-                     'america/sitka' ],
+                     'america/sitka',
+                     'america/creston' ],
   'pwt'         => [ 'pacific/palau',
                      'america/los_angeles',
                      'america/dawson_creek',
@@ -3494,48 +3499,49 @@ $LastYear      = '2042';
   '-07:33:52'  => 'off443',
   '-07:39:28'  => 'off444',
   '-07:44:49'  => 'off445',
-  '-07:48:04'  => 'off446',
-  '-07:52:58'  => 'off447',
-  '-08:00:00'  => 'off448',
-  '-08:00:56'  => 'off449',
-  '-08:12:28'  => 'off450',
-  '-08:30:00'  => 'off451',
-  '-08:40:20'  => 'off452',
-  '-08:46:18'  => 'off453',
-  '-08:57:41'  => 'off454',
-  '-08:59:48'  => 'off455',
-  '-09:00:00'  => 'off456',
-  '-09:00:12'  => 'off457',
-  '-09:01:13'  => 'off458',
-  '-09:17:40'  => 'off459',
-  '-09:18:00'  => 'off460',
-  '-09:18:55'  => 'off461',
-  '-09:30:00'  => 'off462',
-  '-09:58:16'  => 'off463',
-  '-09:59:36'  => 'off464',
-  '-10:00:00'  => 'off465',
-  '-10:29:20'  => 'off466',
-  '-10:30:00'  => 'off467',
-  '-10:31:26'  => 'off468',
-  '-10:39:04'  => 'off469',
-  '-10:40:00'  => 'off470',
-  '-11:00:00'  => 'off471',
-  '-11:01:38'  => 'off472',
-  '-11:19:40'  => 'off473',
-  '-11:20:00'  => 'off474',
-  '-11:22:48'  => 'off475',
-  '-11:24:20'  => 'off476',
-  '-11:24:56'  => 'off477',
-  '-11:26:56'  => 'off478',
-  '-11:30:00'  => 'off479',
-  '-11:46:38'  => 'off480',
-  '-11:49:28'  => 'off481',
-  '-12:00:00'  => 'off482',
-  '-13:00:00'  => 'off483',
-  '-14:00:00'  => 'off484',
-  '-14:17:00'  => 'off485',
-  '-14:21:00'  => 'off486',
-  '-15:56:00'  => 'off487',
+  '-07:46:04'  => 'off446',
+  '-07:48:04'  => 'off447',
+  '-07:52:58'  => 'off448',
+  '-08:00:00'  => 'off449',
+  '-08:00:56'  => 'off450',
+  '-08:12:28'  => 'off451',
+  '-08:30:00'  => 'off452',
+  '-08:40:20'  => 'off453',
+  '-08:46:18'  => 'off454',
+  '-08:57:41'  => 'off455',
+  '-08:59:48'  => 'off456',
+  '-09:00:00'  => 'off457',
+  '-09:00:12'  => 'off458',
+  '-09:01:13'  => 'off459',
+  '-09:17:40'  => 'off460',
+  '-09:18:00'  => 'off461',
+  '-09:18:55'  => 'off462',
+  '-09:30:00'  => 'off463',
+  '-09:58:16'  => 'off464',
+  '-09:59:36'  => 'off465',
+  '-10:00:00'  => 'off466',
+  '-10:29:20'  => 'off467',
+  '-10:30:00'  => 'off468',
+  '-10:31:26'  => 'off469',
+  '-10:39:04'  => 'off470',
+  '-10:40:00'  => 'off471',
+  '-11:00:00'  => 'off472',
+  '-11:01:38'  => 'off473',
+  '-11:19:40'  => 'off474',
+  '-11:20:00'  => 'off475',
+  '-11:22:48'  => 'off476',
+  '-11:24:20'  => 'off477',
+  '-11:24:56'  => 'off478',
+  '-11:26:56'  => 'off479',
+  '-11:30:00'  => 'off480',
+  '-11:46:38'  => 'off481',
+  '-11:49:28'  => 'off482',
+  '-12:00:00'  => 'off483',
+  '-13:00:00'  => 'off484',
+  '-14:00:00'  => 'off485',
+  '-14:17:00'  => 'off486',
+  '-14:21:00'  => 'off487',
+  '-15:56:00'  => 'off488',
 
 );
 

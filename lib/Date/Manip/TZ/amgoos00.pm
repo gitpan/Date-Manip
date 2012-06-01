@@ -5,13 +5,13 @@ package Date::Manip::TZ::amgoos00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Feb 27 11:41:30 EST 2012
-#    Data version: tzdata2011n
-#    Code version: tzcode2011i
+#    Generated on: Wed May 30 08:36:59 EDT 2012
+#    Data version: tzdata2012c
+#    Code version: tzcode2012b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://ftp.iana.orgtz
+#    ftp://ftp.iana.org/tz
 
 =pod
 
@@ -40,7 +40,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -59,11 +59,11 @@ END { undef $VERSION; }
    1918 =>
      [
         [ [1918,4,14,5,30,52],[1918,4,14,3,0,0],'-02:30:52',[-2,-30,-52],
-          'NDT',1,[1918,10,31,4,30,51],[1918,10,31,1,59,59],
-          '1918041405:30:52','1918041403:00:00','1918103104:30:51','1918103101:59:59' ],
-        [ [1918,10,31,4,30,52],[1918,10,31,1,0,0],'-03:30:52',[-3,-30,-52],
+          'NDT',1,[1918,10,27,4,30,51],[1918,10,27,1,59,59],
+          '1918041405:30:52','1918041403:00:00','1918102704:30:51','1918102701:59:59' ],
+        [ [1918,10,27,4,30,52],[1918,10,27,1,0,0],'-03:30:52',[-3,-30,-52],
           'NST',0,[1935,3,30,3,30,51],[1935,3,29,23,59,59],
-          '1918103104:30:52','1918103101:00:00','1935033003:30:51','1935032923:59:59' ],
+          '1918102704:30:52','1918102701:00:00','1935033003:30:51','1935032923:59:59' ],
      ],
    1935 =>
      [

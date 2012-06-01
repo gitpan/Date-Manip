@@ -38,6 +38,8 @@ perl -I../lib date.calc.date_delta_approx.t 1
 perl -I../lib date.calc.date_delta_business.0.t 1
 perl -I../lib date.calc.date_delta_business.1.t 1
 perl -I../lib date.calc.date_delta_business.2.t 1
+perl -I../lib date.calc.date_delta_business.3.t 1
+perl -I../lib date.calc.date_delta_business.4.t 1
 perl -I../lib date.calc.date_delta_business.french.t 1
 perl -I../lib date.calc.date_delta_exact.t 1
 perl -I../lib date.cmp.t 1

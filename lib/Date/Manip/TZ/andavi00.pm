@@ -5,13 +5,13 @@ package Date::Manip::TZ::andavi00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Feb 27 11:41:34 EST 2012
-#    Data version: tzdata2011n
-#    Code version: tzcode2011i
+#    Generated on: Wed May 30 08:37:02 EDT 2012
+#    Data version: tzdata2012c
+#    Code version: tzcode2012b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
-#    ftp://ftp.iana.orgtz
+#    ftp://ftp.iana.org/tz
 
 =pod
 
@@ -40,7 +40,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.31';
+$VERSION='6.32';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -77,8 +77,20 @@ END { undef $VERSION; }
    2010 =>
      [
         [ [2010,3,10,20,0,0],[2010,3,11,3,0,0],'+07:00:00',[7,0,0],
+          'DAVT',0,[2011,10,27,18,59,59],[2011,10,28,1,59,59],
+          '2010031020:00:00','2010031103:00:00','2011102718:59:59','2011102801:59:59' ],
+     ],
+   2011 =>
+     [
+        [ [2011,10,27,19,0,0],[2011,10,28,0,0,0],'+05:00:00',[5,0,0],
+          'DAVT',0,[2012,2,21,19,59,59],[2012,2,22,0,59,59],
+          '2011102719:00:00','2011102800:00:00','2012022119:59:59','2012022200:59:59' ],
+     ],
+   2012 =>
+     [
+        [ [2012,2,21,20,0,0],[2012,2,22,3,0,0],'+07:00:00',[7,0,0],
           'DAVT',0,[9999,12,31,0,0,0],[9999,12,31,7,0,0],
-          '2010031020:00:00','2010031103:00:00','9999123100:00:00','9999123107:00:00' ],
+          '2012022120:00:00','2012022203:00:00','9999123100:00:00','9999123107:00:00' ],
      ],
 );
 

@@ -7,6 +7,8 @@
 
 =pod
 
+=encoding utf-8
+
 =head1 NAME
 
 Date::Manip::Lang::swedish - Swedish language support.
@@ -640,7 +642,7 @@ the minute-second separator.  Both are perl regular expressions.
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
 
-   ARRAY(0xa65480)  ARRAY(0xa65540)
+   ARRAY(0xa64e60)  ARRAY(0xa64f20)
 
 
 =back

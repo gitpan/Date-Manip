@@ -579,6 +579,7 @@ lib/Date/Manip/Offset/off484.pm
 lib/Date/Manip/Offset/off485.pm
 lib/Date/Manip/Offset/off486.pm
 lib/Date/Manip/Offset/off487.pm
+lib/Date/Manip/Offset/off488.pm
 lib/Date/Manip/Problems.pod
 lib/Date/Manip/Recur.pm
 lib/Date/Manip/Recur.pod
@@ -668,6 +669,7 @@ lib/Date/Manip/TZ/amchic00.pm
 lib/Date/Manip/TZ/amchih00.pm
 lib/Date/Manip/TZ/amcord00.pm
 lib/Date/Manip/TZ/amcost00.pm
+lib/Date/Manip/TZ/amcres00.pm
 lib/Date/Manip/TZ/amcuia00.pm
 lib/Date/Manip/TZ/amcura00.pm
 lib/Date/Manip/TZ/amdanm00.pm
@@ -1089,6 +1091,8 @@ t/date.calc.date_delta_approx.t
 t/date.calc.date_delta_business.0.t
 t/date.calc.date_delta_business.1.t
 t/date.calc.date_delta_business.2.t
+t/date.calc.date_delta_business.3.t
+t/date.calc.date_delta_business.4.t
 t/date.calc.date_delta_business.french.t
 t/date.calc.date_delta_exact.t
 t/date.cmp.t

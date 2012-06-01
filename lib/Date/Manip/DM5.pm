@@ -220,7 +220,7 @@ use IO::File;
 our($Abbrevs);
 use Date::Manip::DM5abbrevs;
 
-$VERSION='5.63';
+$VERSION='5.64';
 
 ########################################################################
 ########################################################################
@@ -3205,7 +3205,7 @@ sub Date_SecsSince1970GMT {
   return $sec   if ($Cnf{"ConvTZ"} eq "IGNORE");
 
   my($tz)=$Cnf{"ConvTZ"};
-  $tz=$Cnf{"TZ"}  if (! $tz);
+  $tz=$Cnf{"TZ"}  if (not defined $tz  or  $tz eq "");
   $tz=$Zone{"n2o"}{lc($tz)}  if ($tz !~ /^[+-]\d{4}$/);
 
   my($tzs)=1;
@@ -3325,9 +3325,9 @@ sub Date_ConvTZ {
   Date_Init()  if (! $Curr{"InitDone"});
   my($gmt)=();
 
-  if (! $from) {
+  if (! defined $from) {
 
-    if (! $to) {
+    if (! defined $to) {
       # TZ -> ConvTZ
       return $date  if ($Cnf{"ConvTZ"} eq "IGNORE" or ! $Cnf{"ConvTZ"});
       $from=$Cnf{"TZ"};
@@ -3336,12 +3336,12 @@ sub Date_ConvTZ {
     } else {
       # ConvTZ,TZ -> $to
       $from=$Cnf{"ConvTZ"};
-      $from=$Cnf{"TZ"}  if (! $from);
+      $from=$Cnf{"TZ"}  if (! defined $from);
     }
 
   } else {
 
-    if (! $to) {
+    if (! defined $to) {
       # $from -> ConvTZ,TZ
       return $date  if ($Cnf{"ConvTZ"} eq "IGNORE");
       $to=$Cnf{"ConvTZ"};
@@ -3448,9 +3448,9 @@ sub Date_TimeZone {
      if ($Date::Manip::DM5::NoTaint) {
         if ($OS eq "VMS") {
            $tz=$ENV{'SYS$TIMEZONE_NAME'};
-           if (! $tz) {
+           if (! defined $tz) {
               $tz=$ENV{'MULTINET_TIMEZONE'};
-              if (! $tz) {
+              if (! defined $tz) {
                  $tz=$ENV{'SYS$TIMEZONE_DIFFERENTIAL'}/3600.; # e.g. '-4' for EDT
               }
            }
@@ -3459,7 +3459,7 @@ sub Date_TimeZone {
         } else {
            $tz=`date +%Z 2> /dev/null`;
            chomp($tz);
-           if (! $tz) {
+           if (! defined $tz) {
               $tz=`date 2> /dev/null`;
               chomp($tz);
               $tz=(split(/\s+/,$tz))[4];
@@ -3479,7 +3479,7 @@ sub Date_TimeZone {
         local $ENV{BASH_ENV} = '';
         $tz=`date +%Z 2> /dev/null`;
         chomp($tz);
-        if (! $tz) {
+        if (! defined $tz) {
            $tz=`date 2> /dev/null`;
            chomp($tz);
            $tz=(split(/\s+/,$tz))[4];
@@ -5283,7 +5283,7 @@ sub _Date_InitFile {
     chomp;
     s/^\s+//;
     s/\s+$//;
-    next  if (! $_  or  /^\#/);
+    next  if ($_ eq ''  or  /^\#/);
 
     if (/^\*holiday/i) {
       $section="holiday";
@@ -7282,7 +7282,7 @@ sub _ExpandTilde {
       $home= (getpwuid($<))[7];
     }
     $home = VMS::Filespec::unixpath($home)  if ($OS eq "VMS");
-    return ""  if (! $home);
+    return ""  if (! defined $home);
     $file="$home/$file";
   }
   $file;
@@ -7297,7 +7297,7 @@ sub _FullFilePath {
   my($rootpat) = '^/'; #default pattern to match absolute path
   $rootpat = '^(\\|/|([A-Za-z]:[\\/]))' if ($OS eq 'Windows');
   $file=_ExpandTilde($file);
-  return ""  if (! $file);
+  return ""  if (! defined $file);
   return _CleanFile($file);
 }
 
@@ -7393,13 +7393,13 @@ sub _FixPath {
     } else {
       $_=_ExpandTilde($_);
     }
-    if (! $_) {
+    if (! defined $_) {
       return ""  if ($err);
       next;
     }
 
     # Check mode
-    if (! $mode  or  _CheckFilePath($_,$mode)) {
+    if (! defined $mode  or  _CheckFilePath($_,$mode)) {
       $path .= $Cnf{"PathSep"} . $_;
     } else {
       return "" if ($err);

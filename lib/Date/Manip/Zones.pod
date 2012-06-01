@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Feb 27 11:41:59 EST 2012
-#    Data version: tzdata2011n
-#    Code version: tzcode2011i
+#    Generated on: Wed May 30 08:49:39 EDT 2012
+#    Data version: tzdata2012c
+#    Code version: tzcode2012b
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://ftp.iana.orgtz/tzdata2011n.tar.gz
+   ftp://ftp.iana.orgtz/tzdata2012c.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -139,6 +139,7 @@ database:
      America/Chicago                      amchic00
      America/Chihuahua                    amchih00
      America/Costa_Rica                   amcost00
+     America/Creston                      amcres00
      America/Cuiaba                       amcuia00
      America/Curacao                      amcura00
      America/Danmarkshavn                 amdanm00
@@ -1308,8 +1309,10 @@ Date::Manip::TZ module.
                         America/Hermosillo
                         America/Mazatlan
                         America/Boise
+                        America/Creston
      0      -07:52:58   America/Los_Angeles
      0      -07:48:04   America/Tijuana
+     0      -07:46:04   America/Creston
      0      -07:44:49   America/Boise
      0      -07:39:28   America/Santa_Isabel
      0      -07:33:52   America/Edmonton
@@ -1323,6 +1326,7 @@ Date::Manip::TZ module.
      0      -07:01:00   America/Bahia_Banderas
      0      -07:00:00   America/Denver
                         America/Phoenix
+                        America/Creston
                         America/Edmonton
                         America/Cambridge_Bay
                         America/Chihuahua
@@ -2416,6 +2420,7 @@ Date::Manip::TZ module.
                         Pacific/Tongatapu
                         Pacific/Apia
      0      +14:00:00   Pacific/Kiritimati
+                        Pacific/Fakaofo
      0      +14:00:24   America/Anchorage
      0      +14:41:05   America/Yakutat
      0      +14:58:47   America/Sitka
@@ -3790,6 +3795,7 @@ altering the order.
                       America/Tijuana
                       Europe/Moscow
                       America/North_Dakota/Beulah
+                      America/Creston
      MUST             Indian/Mauritius
      MUT              Indian/Mauritius
      MVT              Indian/Maldives
@@ -3913,6 +3919,7 @@ altering the order.
                       America/Boise
                       America/Metlakatla
                       America/Sitka
+                      America/Creston
      PWT              Pacific/Palau
                       America/Los_Angeles
                       America/Dawson_Creek
