@@ -23,8 +23,10 @@ use IO::File;
 require Date::Manip::Zones;
 use Date::Manip::Base;
 
+$ENV{PATH} = '/bin:/usr/bin';
+
 our $VERSION;
-$VERSION='6.32';
+$VERSION='6.33';
 END { undef $VERSION; }
 
 # To get rid of a 'used only once' warnings.
@@ -446,24 +448,71 @@ sub _get_curr_zone {
          my $in = new IO::File;
          $in->open($file)  ||  next;
          my $firstline = 1;
+
+         my @z;
          while (! $in->eof) {
             my $line = <$in>;
             next  if ($line =~ /^\s*\043/  ||
                       $line =~ /^\s*$/);
-            if ($line =~ /^\s*(?:TZ|TIMEZONE|ZONE)\s*=\s*(\S+)/i) {
-               my $zone = $1;
-               $zone    =~ s/["']//g;  # "
-               push(@zone,$zone);
+
+            # We're looking for lines of the form:
+            #   TZ = string
+            #   TIMEZONE = string
+            #   ZONE = string
+            #
+            # 'string' can be:
+            #   the name of a timezone enclosed in single/double quotes
+            #   with everything after the closing quote ignored (the
+            #   name of the timezone may have spaces instead of underscores)
+            #
+            #   a space delimited list of tokens, the first of which
+            #   is the time zone
+            #
+            #   the name of a timezone with underscores replaced by
+            #   spaces and nothing after the timezone
+            #
+            # For some reason, RHEL6 desktop version stores timezones as
+            #   America/New York
+            # instead of
+            #   America/New_York
+            # which is why we have to handle the space/underscore
+            # substitution.
+
+            if ($line =~ /^\s*(?:TZ|TIMEZONE|ZONE)\s*=\s*(.*)\s*$/) {
+               my $val  = $1;
+               @z       = ();
+               last  if (! $val);
+
+               if ($val =~ /^(["'])(.*?)\1/) {
+                  my $z = $2;
+                  last  if (! $z);
+                  $z    =~ s/\s+/_/g;
+                  push(@zone,$z);
+
+               } elsif ($val =~ /\s/) {
+                  $val  =~ /^(\S+)/;
+                  push(@zone,$1);
+                  $val  =~ s/\s+/_/g;
+                  push(@zone,$val);
+
+               } else {
+                  push(@zone,$val);
+               }
+
                last;
             }
             if ($firstline) {
                $firstline = 0;
-               $line      =~ s/\s//g;
+               $line      =~ s/^\s*//;
+               $line      =~ s/\s*$//;
                $line      =~ s/["']//g;  # "
-               push(@zone,$line);
+               $line      =~ s/\s+/_/g;
+               push(@z,$line);
             }
          }
          close(IN);
+
+         push(@zone,@z)  if (@z);
 
       } elsif ($method eq 'command') {
          if (! @methods) {

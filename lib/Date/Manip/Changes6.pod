@@ -29,7 +29,42 @@ incompatible. These are marked with an exclamation mark (!).
 
 =head1 VERSION 6.34  (planned 2012-12-01)
 
-=head1 VERSION 6.33  (planned 2012-09-01)
+=head1 VERSION 6.33
+
+=over 5
+
+=item Improvements to Date::Manip::Delta
+
+Added convert method.  This had been planned since 6.30, but based on
+a discussion with Henrique Martins, I moved it up in priority.
+
+Cleaned up handling of delta field lengths (they are now only calculated
+once.
+
+Added cmp method.  Henrique Martins
+
+=item Bug fixes
+
+The language modules read from the DATA section, but I never closed the
+filehandle.  This is fixed now.  Patch by Doru Theodor Petrescu
+
+Added better loading of DM5/DM6 modules.  RT 78512
+
+Added a secure PATH to TZ.pm for taint reasons.  In response to RT 78566
+
+=item Time zone fixes
+
+Now supports timezones in files with spaces where there should be
+underscores.  This occurs in RHEL desktop.  RT 78566
+
+Newest zoneinfo data (tzdata 2012e)
+
+
+=item Documentation fixes
+
+Minor fix.  Henrique Martins
+
+=back
 
 =head1 VERSION 6.32  (2012-06-01)
 

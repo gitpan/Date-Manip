@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.32';
+$VERSION='6.33';
 
 END {
    my $tmp;
@@ -389,7 +389,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       tbit   +0400
       tft    +0500
       tjt    +0500
-      tkt    +1400
+      tkt    +1300
       tlt    +0900
       tmt    +0500
       tost   +1400
@@ -802,7 +802,7 @@ The following timezones are defined:
       TBIT   +0400
       TFT    +0500
       TJT    +0500
-      TKT    +1400
+      TKT    +1300
       TLT    +0900
       TMT    +0500
       TOST   +1400

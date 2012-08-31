@@ -36,7 +36,7 @@ There are 3 types of date calculations:
 
 =item B<Date-Date calculations>
 
-   $delta  = $date->calc($date2 [,$subtract] [,$mode]);
+   $delta  = $date1->calc($date2 [,$subtract] [,$mode]);
 
 Two dates can be worked with and a delta will be produced which is
 the amount of time between the two dates.
@@ -153,8 +153,8 @@ business calculations) in addition to the exact fields.
 
 A semi-exact day is defined as the same clock time on two successive
 days.  So noon to noon is 1 day (even though it may not be exactly 24
-hours).  A week is defined as 7 days. This is described in more detail
-below.
+hours due to a daylight saving time transition).  A week is defined as
+7 days. This is described in more detail below.
 
 An approximate calculation is one in which the deltas used (or
 produced) are approximate, and may include any of the fields.

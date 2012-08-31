@@ -1209,10 +1209,10 @@ $def_off{0} = {
                                'Pacific/Enderbury'              ,1995,9999,
                                'Pacific/Tongatapu'              ,1940,9999,
                                'Pacific/Apia'                   ,2012,9999,
+                               'Pacific/Fakaofo'                ,2011,9999,
                               ],
                '+14:00:00' => [
                                'Pacific/Kiritimati'             ,1995,9999,
-                               'Pacific/Fakaofo'                ,2011,9999,
                               ],
                '+14:00:24' => [
                                'America/Anchorage'              ,0001,1867,
@@ -2098,7 +2098,6 @@ $def_off{0} = {
                               ],
                '-10:00:00' => [
                                'Pacific/Honolulu'               ,1947,9999,
-                               'Pacific/Fakaofo'                ,1901,2011,
                                'Pacific/Tahiti'                 ,1912,9999,
                                'Pacific/Rarotonga'              ,1979,9999,
                                'America/Adak'                   ,1983,9999,
@@ -2125,11 +2124,12 @@ $def_off{0} = {
                               ],
                '-11:00:00' => [
                                'Pacific/Midway'                 ,1901,9999,
-                               'Pacific/Apia'                   ,1950,2011,
                                'Pacific/Pago_Pago'              ,1950,9999,
                                'Pacific/Niue'                   ,1978,9999,
                                'Etc/GMT-11'                     ,0001,9999,
                                'L'                              ,0001,9999,
+                               'Pacific/Fakaofo'                ,1901,2011,
+                               'Pacific/Apia'                   ,1950,2011,
                                'Pacific/Enderbury'              ,1979,1995,
                                'America/Adak'                   ,1900,1983,
                                'America/Nome'                   ,1900,1983,

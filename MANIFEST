@@ -1149,6 +1149,8 @@ t/delta.calc.delta_delta_approx.t
 t/delta.calc.delta_delta_business.0.t
 t/delta.calc.delta_delta_business.1.t
 t/delta.calc.delta_delta_exact.t
+t/delta.cmp.t
+t/delta.convert.t
 t/delta.parse.fract.t
 t/delta.parse.t
 t/delta.printf.t

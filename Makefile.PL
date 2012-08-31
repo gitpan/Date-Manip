@@ -6,7 +6,6 @@ use warnings;
 my %requires = (
                  'Carp'                     => '0',
                  'Encode'                   => '0',
-                 'Exporter'                 => '0',
                  'IO::File'                 => '0',
                  'Storable'                 => '0',
                  'YAML::Syck'               => '0',
@@ -21,7 +20,7 @@ if ($IsWin32{ $^O }) {
 
 WriteMakefile(
         NAME             => 'Date::Manip',
-        VERSION          => '6.32',
+        VERSION          => '6.33',
         ($] >= 5.006
         ? (ABSTRACT=>'Date manipulation routines',
            AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')
@@ -29,4 +28,8 @@ WriteMakefile(
         'dist' => {COMPRESS=>'gzip',SUFFIX=>'gz'},
         PL_FILES  => {},
         PREREQ_PM => \%requires,
+        EXE_FILES => [
+           'examples/dm_zdump',
+           'examples/dm_date',
+        ],
 );

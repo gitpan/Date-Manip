@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed May 30 08:49:39 EDT 2012
-#    Data version: tzdata2012c
-#    Code version: tzcode2012b
+#    Generated on: Tue Aug 28 10:07:27 EDT 2012
+#    Data version: tzdata2012e
+#    Code version: tzcode2012e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://ftp.iana.orgtz/tzdata2012c.tar.gz
+   ftp://ftp.iana.orgtz/tzdata2012e.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -1111,10 +1111,10 @@ Aliases include:
      Arabian Standard Time                Asia/Dubai
      Arabic Standard Time                 Asia/Baghdad
      Argentina Standard Time              America/Argentina/Buenos_Aires
-     Armenian Standard Time               Asia/Yerevan
      Atlantic Standard Time               America/Halifax
      Azerbaijan Standard Time             Asia/Baku
      Azores Standard Time                 Atlantic/Azores
+     Bahia Standard Time                  America/Bahia
      Bangladesh Standard Time             Asia/Dhaka
      Canada Central Standard Time         America/Regina
      Cape Verde Standard Time             Atlantic/Cape_Verde
@@ -1132,7 +1132,7 @@ Aliases include:
      Dateline Standard Time               Etc/GMT+12
      E. Africa Standard Time              Africa/Nairobi
      E. Australia Standard Time           Australia/Brisbane
-     E. Europe Standard Time              Europe/Minsk
+     E. Europe Standard Time              Asia/Nicosia
      E. South America Standard Time       America/Sao_Paulo
      Eastern Standard Time                America/New_York
      Egypt Standard Time                  Africa/Cairo
@@ -1152,13 +1152,10 @@ Aliases include:
      Iran Standard Time                   Asia/Tehran
      Israel Standard Time                 Asia/Jerusalem
      Jordan Standard Time                 Asia/Amman
-     Kamchatka Standard Time              Asia/Kamchatka
+     Kaliningrad Standard Time            Europe/Kaliningrad
      Korea Standard Time                  Asia/Seoul
      Magadan Standard Time                Asia/Magadan
      Mauritius Standard Time              Indian/Mauritius
-     Mexico Standard Time                 America/Mexico_City
-     Mexico Standard Time 2               America/Chihuahua
-     Mid-Atlantic Standard Time           Etc/GMT+2
      Middle East Standard Time            Asia/Beirut
      Montevideo Standard Time             America/Montevideo
      Morocco Standard Time                Africa/Casablanca
@@ -1193,6 +1190,7 @@ Aliases include:
      Tasmania Standard Time               Australia/Hobart
      Tokyo Standard Time                  Asia/Tokyo
      Tonga Standard Time                  Pacific/Tongatapu
+     Turkey Standard Time                 Europe/Istanbul
      UCT                                  UTC
      US Eastern Standard Time             America/Indiana/Indianapolis
      US Mountain Standard Time            America/Phoenix
@@ -1243,11 +1241,12 @@ Date::Manip::TZ module.
      0      -11:19:40   Pacific/Niue
      0      -11:01:38   America/Nome
      0      -11:00:00   Pacific/Midway
-                        Pacific/Apia
                         Pacific/Pago_Pago
                         Pacific/Niue
                         Etc/GMT-11
                         L
+                        Pacific/Fakaofo
+                        Pacific/Apia
                         Pacific/Enderbury
                         America/Adak
                         America/Nome
@@ -1258,7 +1257,6 @@ Date::Manip::TZ module.
                         Pacific/Honolulu
      0      -10:29:20   Pacific/Kiritimati
      0      -10:00:00   Pacific/Honolulu
-                        Pacific/Fakaofo
                         Pacific/Tahiti
                         Pacific/Rarotonga
                         America/Adak
@@ -2419,8 +2417,8 @@ Date::Manip::TZ module.
                         Pacific/Enderbury
                         Pacific/Tongatapu
                         Pacific/Apia
-     0      +14:00:00   Pacific/Kiritimati
                         Pacific/Fakaofo
+     0      +14:00:00   Pacific/Kiritimati
      0      +14:00:24   America/Anchorage
      0      +14:41:05   America/Yakutat
      0      +14:58:47   America/Sitka
@@ -3775,6 +3773,7 @@ altering the order.
                       Europe/Tallinn
      MST              America/Denver
                       America/Phoenix
+                      America/Creston
                       America/Edmonton
                       America/Cambridge_Bay
                       America/Chihuahua
@@ -3795,7 +3794,6 @@ altering the order.
                       America/Tijuana
                       Europe/Moscow
                       America/North_Dakota/Beulah
-                      America/Creston
      MUST             Indian/Mauritius
      MUT              Indian/Mauritius
      MVT              Indian/Maldives

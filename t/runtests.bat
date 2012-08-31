@@ -96,6 +96,8 @@ perl -I../lib delta.calc.delta_delta_approx.t 1
 perl -I../lib delta.calc.delta_delta_business.0.t 1
 perl -I../lib delta.calc.delta_delta_business.1.t 1
 perl -I../lib delta.calc.delta_delta_exact.t 1
+perl -I../lib delta.cmp.t 1
+perl -I../lib delta.convert.t 1
 perl -I../lib delta.parse.fract.t 1
 perl -I../lib delta.parse.t 1
 perl -I../lib delta.printf.t 1

@@ -10,7 +10,7 @@
 %windows_zones =
   (
    # http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/zone_tzid.html
-   # CLDR 2.0 (2011-05-25)
+   # CLDR 21 (2012-03-01)
 
    "AUS Central Standard Time"       => "Australia/Darwin",
    "AUS Eastern Standard Time"       => "Australia/Sydney",
@@ -20,10 +20,10 @@
    "Arabian Standard Time"           => "Asia/Dubai",
    "Arabic Standard Time"            => "Asia/Baghdad",
    "Argentina Standard Time"         => "America/Argentina/Buenos_Aires",
-   "Armenian Standard Time"          => "Asia/Yerevan",
    "Atlantic Standard Time"          => "America/Halifax",
    "Azerbaijan Standard Time"        => "Asia/Baku",
    "Azores Standard Time"            => "Atlantic/Azores",
+   "Bahia Standard Time"             => "America/Bahia",
    "Bangladesh Standard Time"        => "Asia/Dhaka",
    "Canada Central Standard Time"    => "America/Regina",
    "Cape Verde Standard Time"        => "Atlantic/Cape_Verde",
@@ -41,7 +41,7 @@
    "Dateline Standard Time"          => "Etc/GMT+12",
    "E. Africa Standard Time"         => "Africa/Nairobi",
    "E. Australia Standard Time"      => "Australia/Brisbane",
-   "E. Europe Standard Time"         => "Europe/Minsk",
+   "E. Europe Standard Time"         => "Asia/Nicosia",
    "E. South America Standard Time"  => "America/Sao_Paulo",
    "Eastern Standard Time"           => "America/New_York",
    "Egypt Standard Time"             => "Africa/Cairo",
@@ -58,13 +58,10 @@
    "Iran Standard Time"              => "Asia/Tehran",
    "Israel Standard Time"            => "Asia/Jerusalem",
    "Jordan Standard Time"            => "Asia/Amman",
-   "Kamchatka Standard Time"         => "Asia/Kamchatka",
+   "Kaliningrad Standard Time"       => "Europe/Kaliningrad",
    "Korea Standard Time"             => "Asia/Seoul",
    "Magadan Standard Time"           => "Asia/Magadan",
    "Mauritius Standard Time"         => "Indian/Mauritius",
-   "Mexico Standard Time 2"          => "America/Chihuahua",
-   "Mexico Standard Time"            => "America/Mexico_City",
-   "Mid-Atlantic Standard Time"      => "Etc/GMT+2",
    "Middle East Standard Time"       => "Asia/Beirut",
    "Montevideo Standard Time"        => "America/Montevideo",
    "Morocco Standard Time"           => "Africa/Casablanca",
@@ -98,6 +95,7 @@
    "Tasmania Standard Time"          => "Australia/Hobart",
    "Tokyo Standard Time"             => "Asia/Tokyo",
    "Tonga Standard Time"             => "Pacific/Tongatapu",
+   "Turkey Standard Time"            => "Europe/Istanbul",
    "US Eastern Standard Time"        => "America/Indiana/Indianapolis",
    "US Mountain Standard Time"       => "America/Phoenix",
    "UTC+12"                          => "Etc/GMT-12",

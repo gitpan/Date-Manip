@@ -25,7 +25,7 @@ use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.32';
+$VERSION='6.33';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -72,6 +72,10 @@ sub _init_config {
    my($self,$force) = @_;
    return  if (exists $$self{'data'}{'sections'}{'conf'}  &&  ! $force);
    $self->_init_data();
+
+   #
+   # Set config defaults
+   #
 
    $$self{'data'}{'sections'}{'conf'} =
      {
@@ -168,9 +172,24 @@ sub _init_config {
       'tz'               => '',
      };
 
-   # Set config defaults
+   #
+   # Calculate delta field lengths
+   #
 
-   # In order to avoid a bootstrap issue, set the default work day here.
+   # non-business
+   $$self{'data'}{'len'}{'yrlen'} = 365.2425;
+   $$self{'data'}{'len'}{'0'} =
+     { 'yl'   => 31556952,  # 365.2425 * 24 * 3600
+       'ml'   => 2629746,   # yl / 12
+       'wl'   => 604800,    # 6 * 24 * 3600
+       'dl'   => 86400,     # 24 * 3600
+     };
+   $self->_calc_workweek();
+
+   #
+   # Initialize some config variables that do some additional work.
+   #
+
    $self->_config_var('workday24hr',  1);
    $self->_config_var('workdaybeg',   '08:00:00');
    $self->_config_var('workdayend',   '17:00:00');
@@ -190,6 +209,41 @@ sub _init_config {
    # Set OS specific defaults
 
    my $os = $self->_os();
+}
+
+sub _calc_workweek {
+   my($self,$beg,$end) = @_;
+
+   $beg = $self->_config('workweekbeg')  if (! $beg);
+   $end = $self->_config('workweekend')  if (! $end);
+
+   $$self{'data'}{'len'}{'workweek'} = $end - $beg + 1;
+}
+
+sub _calc_bdlength {
+   my($self) = @_;
+
+   my @beg = @{ $$self{'data'}{'calc'}{'workdaybeg'} };
+   my @end = @{ $$self{'data'}{'calc'}{'workdayend'} };
+
+   $$self{'data'}{'len'}{'bdlength'} =
+     ($end[0]-$beg[0])*3600 + ($end[1]-$beg[1])*60 + ($end[2]-$beg[2]);
+}
+
+sub _init_business_length {
+   my($self) = @_;
+
+   no integer;
+   my $x      = $$self{'data'}{'len'}{'workweek'};
+   my $y_to_d = $x/7 * 365.2425;
+   my $d_to_s = $$self{'data'}{'len'}{'bdlength'};
+   my $w_to_d = $x;
+
+   $$self{'data'}{'len'}{'1'} = { 'yl' => $y_to_d * $d_to_s,
+                                  'ml' => $y_to_d * $d_to_s / 12,
+                                  'wl' => $w_to_d * $d_to_s,
+                                  'dl' => $d_to_s,
+                                };
 }
 
 # Events and holidays are reset only when they are read in.
@@ -434,7 +488,7 @@ sub days_since_1BC {
       my($days) = $arg;
       my($y,$m,$d);
 
-      $y = int($days/365.2425)+1;
+      $y = int($days/$$self{'data'}{'len'}{'yrlen'})+1;
       while ($self->days_since_1BC([$y,1,1]) > $days) {
          $y--;
       }
@@ -1193,8 +1247,8 @@ sub _config_var_workweekbeg {
       return 1;
    }
 
-   $$self{'data'}{'calc'}{'workweek'} =
-     $self->_config('workweekend') - $val + 1;
+   $self->_calc_workweek($val,'');
+   $self->_init_business_length();
    return 0;
 }
 
@@ -1210,8 +1264,8 @@ sub _config_var_workweekend {
       return 1;
    }
 
-   $$self{'data'}{'calc'}{'workweek'} =
-     $val - $self->_config('workweekbeg') + 1;
+   $self->_calc_workweek('',$val);
+   $self->_init_business_length();
    return 0;
 }
 
@@ -1223,7 +1277,9 @@ sub _config_var_workday24hr {
       $$self{'data'}{'sections'}{'conf'}{'workdayend'} = '24:00:00';
       $$self{'data'}{'calc'}{'workdaybeg'}             = [0,0,0];
       $$self{'data'}{'calc'}{'workdayend'}             = [24,0,0];
-      $$self{'data'}{'calc'}{'bdlength'}               = 86400; # 24*60*60
+
+      $self->_calc_bdlength();
+      $self->_init_business_length();
    }
 
    return 0;
@@ -1254,11 +1310,12 @@ sub _config_var_workdaybegend {
       return 1;
    }
 
-   # Calculate bdlength (unless 24 hour work day set)
+   # Calculate bdlength
 
    $$self{'data'}{'sections'}{'conf'}{'workday24hr'} = 0;
-   $$self{'data'}{'calc'}{'bdlength'} =
-     ($end[0]-$beg[0])*3600 + ($end[1]-$beg[1])*60 + ($end[2]-$beg[2]);
+
+   $self->_calc_bdlength();
+   $self->_init_business_length();
 
    return 0;
 }
@@ -2151,7 +2208,7 @@ sub _normalize_mw {
    my($self,$m,$w) = @_;
    no integer;
 
-   my $d  = ($m-int($m)) * 365.2425/12;
+   my $d  = ($m-int($m)) * $$self{'data'}{'len'}{'yrlen'}/12;
    $w    += $d/7;
    $m     = int($m);
 
@@ -2162,11 +2219,11 @@ sub _normalize_bus_dhms {
    my($self,$d,$h,$mn,$s) = @_;
    no integer;
 
-   my $daylen = $$self{'data'}{'calc'}{'bdlength'};
+   my $dl = $$self{'data'}{'len'}{'1'}{'dl'};
 
-   $s  += $d*$daylen + $h*3600 + $mn*60;
-   $d   = int($s/$daylen);
-   $s  -= $d*$daylen;
+   $s  += $d*$dl + $h*3600 + $mn*60;
+   $d   = int($s/$dl);
+   $s  -= $d*$dl;
 
    $mn  = int($s/60);
    $s  -= $mn*60;
@@ -2200,7 +2257,7 @@ sub _normalize_wd {
    my($self,$w,$d,$business) = @_;
    no integer;
 
-   my $weeklen = ($business ? $$self{'data'}{'calc'}{'workweek'} : 7);
+   my $weeklen = ($business ? $$self{'data'}{'len'}{'workweek'} : 7);
 
    $d += $w*$weeklen;
    $w  = int($d/$weeklen);

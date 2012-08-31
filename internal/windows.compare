@@ -72,6 +72,16 @@ if (@chg) {
 ############################################################################
 ############################################################################
 
+# It's a file of TAB separated lines:
+#
+#    ALIAS \t TAG \t ZONE_LIST
+#
+# where ALIAS is the windows time zone name and ZONE_LIST is a space
+# separated list of timezones.
+#
+# ALIAS may appear on multiple lines... use the first, and ZONE_LIST
+# may have multiple zones... use the first.
+#
 sub _parse {
    my($file) = @_;
    my %ret;
@@ -83,16 +93,46 @@ sub _parse {
    foreach my $line (@lines) {
       $n++;
 
-      if ($line =~ /^\s*(.*?)\s+any\s+(.*?)\s*$/) {
-         $ret{$1} = $2;
-      } else {
+      my @f = split(/\t/,$line);
+      if (@f != 3) {
          warn "ERROR: invalid line: $file[$n]\n" .
               "       $line\n";
       }
+
+      my($alias,$tmp,$zones) = @f;
+      next  if (exists $ret{$alias});
+
+      my @tmp = split(/\s+/,$zones);
+      my $zone = $tmp[0];
+
+      $ret{$alias} = $zone;
    }
 
    return %ret;
 }
+
+# For CLDR 2.0
+# sub _parse {
+#    my($file) = @_;
+#    my %ret;
+
+#    my @lines = `cat $file`;
+#    chomp(@lines);
+
+#    my $n = 0;
+#    foreach my $line (@lines) {
+#       $n++;
+
+#       if ($line =~ /^\s*(.*?)\s+any\s+(.*?)\s*$/) {
+#          $ret{$1} = $2;
+#       } else {
+#          warn "ERROR: invalid line: $file[$n]\n" .
+#               "       $line\n";
+#       }
+#    }
+
+#    return %ret;
+# }
 
 # Local Variables:
 # mode: cperl

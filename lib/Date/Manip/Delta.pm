@@ -25,7 +25,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.32';
+$VERSION='6.33';
 END { undef $VERSION; }
 
 ########################################################################
@@ -55,15 +55,18 @@ sub _init {
    my $dmt = $$self{'tz'};
    my $dmb = $$dmt{'base'};
 
-   $$self{'err'}              = '';
-   $$self{'data'}{'delta'}    = $def;    # the delta (all negative fields signed)
-   $$self{'data'}{'in'}       = '';      # the string that was parsed (if any)
+   $$self{'err'}  = '';
+   $$self{'data'} = {
+                     'delta'      => $def,  # the delta (all negative fields signed)
+                     'in'         => '',    # the string that was parsed (if any)
+                     'length'     => 0,     # length of delta (in seconds)
 
-   $$self{'data'}{'gotmode'}  = 0;       # if mode set explicitly
-   $$self{'data'}{'business'} = 0;       # 1 for a business delta
+                     'gotmode'    => 0,     # 1 if mode set explicitly
+                     'business'   => 0,     # 1 for a business delta
 
-   $$self{'data'}{'f'}        = {};      # format fields
-   $$self{'data'}{'flen'}     = {};      # field lengths
+                     'f'          => {},    # format fields
+                     'flen'       => {},    # field lengths
+                    }
 }
 
 sub _init_args {
@@ -115,11 +118,12 @@ BEGIN {
    sub set {
       my($self,$field,$val,$no_normalize) = @_;
 
-      my $dmt      = $$self{'tz'};
-      my $dmb      = $$dmt{'base'};
-      my $zone     = $$self{'data'}{'tz'};
-      my $gotmode  = $$self{'data'}{'gotmode'};
-      my $business = 0;
+      my $dmt        = $$self{'tz'};
+      my $dmb        = $$dmt{'base'};
+      my $zone       = $$self{'data'}{'tz'};
+      my $gotmode    = $$self{'data'}{'gotmode'};
+      my $business   = 0;
+
       my (@delta,$err);
 
       if (exists $ops{lc($field)}) {
@@ -185,9 +189,10 @@ BEGIN {
       }
 
       $self->_init();
-      $$self{'data'}{'delta'}    = [ @delta ];
-      $$self{'data'}{'business'} = $business;
-      $$self{'data'}{'gotmode'}  = $gotmode;
+      $$self{'data'}{'delta'}      = [ @delta ];
+      $$self{'data'}{'business'}   = $business;
+      $$self{'data'}{'gotmode'}    = $gotmode;
+      $$self{'data'}{'length'}     = 'unknown';
 
       return 0;
    }
@@ -414,10 +419,11 @@ sub parse {
       return 1;
    }
 
-   $$self{'data'}{'in'}       = $instring;
-   $$self{'data'}{'delta'}    = [@delta];
-   $$self{'data'}{'business'} = $business;
-   $$self{'data'}{'gotmode'}  = $gotmode;
+   $$self{'data'}{'in'}         = $instring;
+   $$self{'data'}{'delta'}      = [@delta];
+   $$self{'data'}{'business'}   = $business;
+   $$self{'data'}{'gotmode'}    = $gotmode;
+   $$self{'data'}{'length'}     = 'unknown';
    return 0;
 }
 
@@ -718,35 +724,16 @@ sub _printf_field_val {
    # Find the length of 1 unit of each field in terms of seconds.
 
    if (! exists $$self{'data'}{'flen'}{'s'}) {
-      $$self{'data'}{'flen'}{'s'} = 1;
-      $$self{'data'}{'flen'}{'m'} = 60;
-      $$self{'data'}{'flen'}{'h'} = 3600;
-
-      # Find the length of day/week/year
-      #
-      # $daylen is the number of second in a day
-      # $weeklen is the number of days in a week
-      # $yrlen is the number of days in a year
-
       my $business = $$self{'data'}{'business'};
-      my ($weeklen,$daylen,$yrlen);
-      if ($business) {
-         my $dmt = $$self{'tz'};
-         my $dmb = $$dmt{'base'};
-         $daylen  = $$dmb{'data'}{'calc'}{'bdlength'};
-         $weeklen = $$dmb{'data'}{'calc'}{'workweek'};
-         # The approximate length of the business year in business days
-         $yrlen   = 365.2425*$weeklen/7;
-      } else {
-         $weeklen = 7;
-         $daylen  = 86400;  # 24*60*60
-         $yrlen   = 365.2425;
-      }
-
-      $$self{'data'}{'flen'}{'d'} = $daylen;
-      $$self{'data'}{'flen'}{'w'} = $weeklen*$daylen;
-      $$self{'data'}{'flen'}{'M'} = $yrlen*$daylen/12;
-      $$self{'data'}{'flen'}{'y'} = $yrlen*$daylen;
+      my $dmb      = $self->base();
+      $$self{'data'}{'flen'} = { 's'  => 1,
+                                 'm'  => 60,
+                                 'h'  => 3600,
+                                 'd'  => $$dmb{'data'}{'len'}{$business}{'dl'},
+                                 'w'  => $$dmb{'data'}{'len'}{$business}{'wl'},
+                                 'M'  => $$dmb{'data'}{'len'}{$business}{'ml'},
+                                 'y'  => $$dmb{'data'}{'len'}{$business}{'yl'},
+                               };
    }
 
    # Calculate the value for each field.
@@ -883,10 +870,118 @@ sub _calc_delta_delta {
                                           'sign'    => -1 },
                                         [@delta])  if (! $no_normalize);
 
-   $$ret{'data'}{'delta'}    = [@delta];
-   $$ret{'data'}{'business'} = $business;
+   $$ret{'data'}{'delta'}       = [@delta];
+   $$ret{'data'}{'business'}    = $business;
+   $$self{'data'}{'length'}     = 'unknown';
 
    return $ret;
+}
+
+sub convert {
+   my($self,$to) = @_;
+
+   # What mode are we currently in
+
+   my $from;
+   my($y,$m,$w,$d,$h,$mn,$s) = @{ $$self{'data'}{'delta'} };
+   if ($y  ||  $m) {
+      $from = 'approx';
+   } elsif ($w  ||  (! $$self{'data'}{'business'}  &&  $d)) {
+      $from = 'semi';
+   } else {
+      $from = 'exact';
+   }
+
+   my $business = $$self{'data'}{'business'};
+
+   #
+   # Do the conversion
+   #
+
+   {
+      no integer;
+
+      my $dmb = $self->base();
+      my $yl  = $$dmb{'data'}{'len'}{$business}{'yl'};
+      my $ml  = $$dmb{'data'}{'len'}{$business}{'ml'};
+      my $wl  = $$dmb{'data'}{'len'}{$business}{'wl'};
+      my $dl  = $$dmb{'data'}{'len'}{$business}{'dl'};
+
+      # Convert it to seconds
+
+      $s += $y*$yl + $m*$ml + $w*$wl + $d*$dl + $h*3600 + $mn*60;
+      ($y,$m,$w,$d,$h,$mn) = (0,0,0,0,0,0);
+
+      # Convert it to $to
+
+      if ($to eq 'approx') {
+         # Figure out how many months there are
+         $m          = int($s/$ml);
+         $s         -= $m*$ml;
+      }
+
+      if ($to eq 'approx'  ||  $to eq 'semi') {
+         if ($business) {
+            $w       = int($s/$wl);
+            $s      -= $w*$wl;
+         } else {
+            $d       = int($s/$dl);
+            $s      -= $d*$dl;
+         }
+      }
+
+      $s = int($s);
+   }
+
+   $self->set('delta',[$y,$m,$w,$d,$h,$mn,$s]);
+}
+
+sub cmp {
+   my($self,$delta) = @_;
+
+   if ($$self{'err'}) {
+      warn "WARNING: [cmp] Arguments must be valid deltas: delta1\n";
+      return undef;
+   }
+
+   if (! ref($delta) eq 'Date::Manip::Delta') {
+      warn "WARNING: [cmp] Argument must be a Date::Manip::Delta object\n";
+      return undef;
+   }
+   if ($$delta{'err'}) {
+      warn "WARNING: [cmp] Arguments must be valid deltas: delta2\n";
+      return undef;
+   }
+
+   if ($$self{'data'}{'business'} != $$delta{'data'}{'business'}) {
+      warn "WARNING: [cmp] Deltas must both be business or standard\n";
+      return undef;
+   }
+
+   my $business = $$self{'data'}{'business'};
+   my $dmb      = $self->base();
+   my $yl       = $$dmb{'data'}{'len'}{$business}{'yl'};
+   my $ml       = $$dmb{'data'}{'len'}{$business}{'ml'};
+   my $wl       = $$dmb{'data'}{'len'}{$business}{'wl'};
+   my $dl       = $$dmb{'data'}{'len'}{$business}{'dl'};
+
+   if ($$self{'data'}{'length'} eq 'unknown') {
+      my($y,$m,$w,$d,$h,$mn,$s) = @{ $$self{'data'}{'delta'} };
+
+      no integer;
+      $$self{'data'}{'length'}  = int($y*$yl + $m*$ml + $w*$wl +
+                                      $d*$dl + $h*3600 + $mn*60 + $s);
+   }
+
+   if ($$delta{'data'}{'length'} eq 'unknown') {
+      my($y,$m,$w,$d,$h,$mn,$s) = @{ $$delta{'data'}{'delta'} };
+
+      no integer;
+      $$delta{'data'}{'length'}  = int($y*$yl + $m*$ml + $w*$wl +
+                                       $d*$dl + $h*3600 + $mn*60 + $s);
+   }
+
+   return ($$self{'data'}{'length'} cmp $$delta{'data'}{'length'});
 }
 
 1;

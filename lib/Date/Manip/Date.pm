@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.32';
+$VERSION='6.33';
 END { undef $VERSION; }
 
 ########################################################################
@@ -3398,7 +3398,7 @@ sub __calc_date_delta_exact {
       my ($y,$m,$d,$h,$mn,$s)= @$date;
       my ($hbeg,$mbeg,$sbeg) = @{ $$dmb{'data'}{'calc'}{'workdaybeg'} };
       my ($hend,$mend,$send) = @{ $$dmb{'data'}{'calc'}{'workdayend'} };
-      my $bdlen              = $$dmb{'data'}{'calc'}{'bdlength'};
+      my $bdlen              = $$dmb{'data'}{'len'}{'bdlength'};
 
       no integer;
       my $tmp;

@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Wed May 30 08:49:39 EDT 2012
-#    Data version: tzdata2012c
-#    Code version: tzcode2012b
+#    Generated on: Tue Aug 28 10:07:27 EDT 2012
+#    Data version: tzdata2012e
+#    Code version: tzcode2012e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.32';
+$VERSION='6.33';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,8 +37,8 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2012c';
-$TzcodeVersion = 'tzcode2012b';
+$TzdataVersion = 'tzdata2012e';
+$TzcodeVersion = 'tzcode2012e';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
 $LastYear      = '2042';
@@ -1683,10 +1683,10 @@ $LastYear      = '2042';
   'arabian standard time'              => 'asia/dubai',
   'arabic standard time'               => 'asia/baghdad',
   'argentina standard time'            => 'america/argentina/buenos_aires',
-  'armenian standard time'             => 'asia/yerevan',
   'atlantic standard time'             => 'america/halifax',
   'azerbaijan standard time'           => 'asia/baku',
   'azores standard time'               => 'atlantic/azores',
+  'bahia standard time'                => 'america/bahia',
   'bangladesh standard time'           => 'asia/dhaka',
   'canada central standard time'       => 'america/regina',
   'cape verde standard time'           => 'atlantic/cape_verde',
@@ -1704,7 +1704,7 @@ $LastYear      = '2042';
   'dateline standard time'             => 'etc/gmt+12',
   'e. africa standard time'            => 'africa/nairobi',
   'e. australia standard time'         => 'australia/brisbane',
-  'e. europe standard time'            => 'europe/minsk',
+  'e. europe standard time'            => 'asia/nicosia',
   'e. south america standard time'     => 'america/sao_paulo',
   'eastern standard time'              => 'america/new_york',
   'egypt standard time'                => 'africa/cairo',
@@ -1724,13 +1724,10 @@ $LastYear      = '2042';
   'iran standard time'                 => 'asia/tehran',
   'israel standard time'               => 'asia/jerusalem',
   'jordan standard time'               => 'asia/amman',
-  'kamchatka standard time'            => 'asia/kamchatka',
+  'kaliningrad standard time'          => 'europe/kaliningrad',
   'korea standard time'                => 'asia/seoul',
   'magadan standard time'              => 'asia/magadan',
   'mauritius standard time'            => 'indian/mauritius',
-  'mexico standard time'               => 'america/mexico_city',
-  'mexico standard time 2'             => 'america/chihuahua',
-  'mid-atlantic standard time'         => 'etc/gmt+2',
   'middle east standard time'          => 'asia/beirut',
   'montevideo standard time'           => 'america/montevideo',
   'morocco standard time'              => 'africa/casablanca',
@@ -1765,6 +1762,7 @@ $LastYear      = '2042';
   'tasmania standard time'             => 'australia/hobart',
   'tokyo standard time'                => 'asia/tokyo',
   'tonga standard time'                => 'pacific/tongatapu',
+  'turkey standard time'               => 'europe/istanbul',
   'uct'                                => 'utc',
   'us eastern standard time'           => 'america/indiana/indianapolis',
   'us mountain standard time'          => 'america/phoenix',
@@ -2685,6 +2683,7 @@ $LastYear      = '2042';
                      'europe/tallinn' ],
   'mst'         => [ 'america/denver',
                      'america/phoenix',
+                     'america/creston',
                      'america/edmonton',
                      'america/cambridge_bay',
                      'america/chihuahua',
@@ -2704,8 +2703,7 @@ $LastYear      = '2042';
                      'america/santa_isabel',
                      'america/tijuana',
                      'europe/moscow',
-                     'america/north_dakota/beulah',
-                     'america/creston' ],
+                     'america/north_dakota/beulah' ],
   'must'        => [ 'indian/mauritius' ],
   'mut'         => [ 'indian/mauritius' ],
   'mvt'         => [ 'indian/maldives' ],

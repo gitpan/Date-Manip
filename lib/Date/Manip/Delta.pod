@@ -518,6 +518,51 @@ list context, it returns a list of fields.
 
 undef is returned if there is no valid delta stored in $delta.
 
+=item B<convert>
+
+   $delta->convert($to);
+
+This converts a delta from one type to another.  $to can be 'exact',
+'semi', or 'approx'.  The conversion uses the approximate relationships
+listed above to convert the delta.
+
+For example, if the exact non-business delta $delta contains:
+
+   0:0:0:0:44:0:0
+
+then the following call:
+
+   $delta->convert('semi')
+
+would produce the semi-exact delta:
+
+   0:0:0:1:20:0:0
+
+The result will always be normalized, and will be strictly positive or
+negative (i.e. all fields will have the same sign).
+
+This function can be used to take an exact delta and turn it into a
+semi-exact delta (with a day being treated as 24 hours in non-business
+mode).
+
+There is currently no support for converting business to non-business
+(or vice-versa).
+
+=item B<cmp>
+
+   $flag = $delta1->cmp($delta2);
+
+This compares two deltas (using the approximate relationships listed
+above) and returns -1, 0, or 1 which could be used to sort them by length
+of time.
+
+Both deltas must be valid, and both must be either business or
+non-business deltas.  They do not need to be the same out of exact,
+semi-exact, and approximate.
+
+undef will be returned if either delta is invalid, or you try to compare
+a business and non-business delta.
+
 =back
 
 =head1 PRINTF DIRECTIVES

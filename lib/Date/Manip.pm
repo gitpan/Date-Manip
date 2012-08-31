@@ -11,7 +11,7 @@ use strict;
 use Exporter;
 
 our $VERSION;
-$VERSION='6.32';
+$VERSION='6.33';
 
 our (@ISA,@EXPORT);
 
@@ -30,7 +30,10 @@ if ((exists $ENV{'DATE_MANIP'}  &&  $ENV{'DATE_MANIP'} eq 'DM5') ||
 
 my $backend_exp = $backend . "::EXPORT";
 
-eval "require $backend; $backend->import(); return 1;";
+my $flag = eval "require $backend; $backend->import(); return 'loaded';";
+if (! $flag) {
+   die "ERROR LOADING MODULE";
+}
 
 {
    no strict 'refs';

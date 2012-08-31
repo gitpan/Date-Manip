@@ -595,10 +595,12 @@ The following methods are available:
                                 timezone = ZONE
                              ZONE may be quoted (single or
                              double) and whitespace is
-                             ignored. If the entire line
-                             is a zone, it must be the first
-                             non-blank non-comment line in
-                             the file.
+                             ignored (except that underscores
+                             in the zone name may be replaced
+                             by whitespace on some OSes). If
+                             the entire line is a zone, it must
+                             be the first non-blank non-comment
+                             line in the file.
 
    command    COMMAND        Runs a command which produces
                              a time zone as the output.

@@ -14,7 +14,7 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.32';
+$VERSION='6.33';
 
 our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 ISO-8859-15 perl);
@@ -23,6 +23,7 @@ $YearAdded = 1996;
 
 my @in     = <DATA>;
 $Language  = Load(join('',@in));
+close DATA;
 
 1;
 __DATA__

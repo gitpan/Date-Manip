@@ -10,19 +10,25 @@ module (though I hope that won't be necessary).
 
 #########################################################################
 Update the windows zones.  Useful information in determining timezone
-mapping may be obtained by searching for 'Time Zone Index Values' at:
+mapping may be obtained at:
 
-   http://support.microsoft.com/
-   http://support.microsoft.com/kb/973627
+   http://support.microsoft.com/kb/914387
 
 Go to:
+
    http://unicode.org/repos/cldr-tmp/trunk/diff/supplemental/zone_tzid.html
+
 and copy the contents of the 'Mapping for: windows' table into a file 'windows.new'
 and run the script:
+
    windows.compare
 
-Currently, ignore the suggestions:
+Currently, ignore the addition:
+   "UTC"                             => "Etc/GMT",
+
+and the suggestions:
    "Argentina Standard Time"         => "America/Buenos_Aires",
+   "GTB Standard Time"               => "Europe/Bucharest",
    "India Standard Time"             => "Asia/Calcutta",
    "Nepal Standard Time"             => "Asia/Katmandu",
    "US Eastern Standard Time"        => "America/Indianapolis",
