@@ -25,7 +25,7 @@ use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.33';
+$VERSION='6.34';
 END { undef $VERSION; }
 
 ###############################################################################

@@ -23,10 +23,8 @@ use IO::File;
 require Date::Manip::Zones;
 use Date::Manip::Base;
 
-$ENV{PATH} = '/bin:/usr/bin';
-
 our $VERSION;
-$VERSION='6.33';
+$VERSION='6.34';
 END { undef $VERSION; }
 
 # To get rid of a 'used only once' warnings.
@@ -95,6 +93,7 @@ sub _init {
    my $os  = $dmb->_os();
 
    if ($os eq 'Unix') {
+      $ENV{PATH} = '/bin:/usr/bin';
       $$self{'data'}{'methods'} = [
                                    qw(main TZ
                                       env  zone TZ
