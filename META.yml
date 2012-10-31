@@ -5,9 +5,9 @@ author:
 build_requires:
   Test::Inter: 0
 configure_requires:
-  Module::Build: 0.38
+  Module::Build: 0.39
 dynamic_config: 1
-generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.120630'
+generated_by: 'Module::Build version 0.3901, CPAN::Meta::Converter version 2.120921'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -22,7 +22,7 @@ provides:
     version: 6.34
   Date::Manip::DM5:
     file: lib/Date/Manip/DM5.pm
-    version: 5.64
+    version: 5.65
   Date::Manip::DM5abbrevs:
     file: lib/Date/Manip/DM5abbrevs.pm
     version: 6.34
@@ -2935,9 +2935,8 @@ requires:
   Encode: 0
   IO::File: 0
   Storable: 0
-  YAML::Syck: 0
   perl: 5.006
   utf8: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 6.34
+version: 6.35

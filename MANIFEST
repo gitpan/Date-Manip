@@ -26,7 +26,6 @@ internal/leak.pl
 internal/manip.isp
 internal/NOTES
 internal/TODO
-internal/tojson
 internal/translate
 internal/tzdata
 internal/VERSION

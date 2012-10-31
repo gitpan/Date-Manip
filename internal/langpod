@@ -10,7 +10,6 @@
 use lib "./lib";
 
 require 5.010000;
-use YAML;
 use IO::File;
 use strict;
 use warnings;

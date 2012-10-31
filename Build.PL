@@ -8,7 +8,6 @@ my %requires = (
                  'Encode'                   => '0',
                  'IO::File'                 => '0',
                  'Storable'                 => '0',
-                 'YAML::Syck'               => '0',
                  'utf8'                     => '0',
                );
 my %build_mods = (
@@ -27,7 +26,7 @@ my $class = Module::Build->subclass(
 
 my $build = $class->new(
         license            => 'perl',
-        dist_version       => '6.34',
+        dist_version       => '6.35',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',

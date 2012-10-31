@@ -26,15 +26,6 @@ In Recur.pm, handle encodings in parse
 
 Add delta.parse_LANG tests
 
-Switch to YAML::XS or JSON.
-   See if I can get Date::Manip to use a different YAML module (which doesn't use
-   Module::Build) if YAML::Syck is not available.  Based on discussion with Martin
-   Zinser.
-
-   Switch to YAML::XS (but it converts text to non-UTF-8 so take that into account)
-
-   The tojson script will convert the YAML modules to JSON.
-
 Add UseTZ
   = %all      use all timezones
   = %local    use local timezone

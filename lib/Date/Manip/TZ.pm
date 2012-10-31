@@ -71,6 +71,8 @@ sub _init {
 
       # methods     a list of methods used for determining the
       #             current zone
+      # path        the PATH to set for determining the current
+      #             zone
       # dates       critical dates on a per/year (UT) basis
       # zonerx      the regular expression for matching timezone
       #             names/aliases
@@ -81,6 +83,7 @@ sub _init {
       # zrx         the regular expression to match all timezone
       #             information
       'methods'        => [],
+      'path'           => undef,
       'zonerx'         => undef,
       'abbrx'          => undef,
       'offrx'          => undef,
@@ -93,7 +96,7 @@ sub _init {
    my $os  = $dmb->_os();
 
    if ($os eq 'Unix') {
-      $ENV{PATH} = '/bin:/usr/bin';
+      $$self{'data'}{'path'}    = '/bin:/usr/bin';
       $$self{'data'}{'methods'} = [
                                    qw(main TZ
                                       env  zone TZ
@@ -398,6 +401,9 @@ sub _get_curr_zone {
    my $dstflag = ($isdst ? 'dstonly' : 'stdonly');
 
    my (@methods) = @{ $$self{'data'}{'methods'} };
+
+   defined $$self{'data'}{'path'}
+     and local $ENV{PATH} = $$self{'data'}{'path'};
 
    METHOD:
    while (@methods) {
