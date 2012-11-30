@@ -277,8 +277,8 @@
                     ],
    'BRST'        => [
                      'America/Sao_Paulo'                         ,1931,9999,
-                     'America/Araguaina'                         ,1931,2003,
-                     'America/Bahia'                             ,1931,9999,
+                     'America/Araguaina'                         ,1931,9999,
+                     'America/Bahia'                             ,1931,2012,
                      'America/Fortaleza'                         ,1931,2002,
                      'America/Maceio'                            ,1931,2002,
                      'America/Recife'                            ,1931,2002,
@@ -426,7 +426,7 @@
                      'Africa/Ceuta'                              ,1986,9999,
                      'Africa/Tunis'                              ,1939,2008,
                      'Europe/Vilnius'                            ,1941,1999,
-                     'Africa/Tripoli'                            ,1951,1997,
+                     'Africa/Tripoli'                            ,1951,9999,
                      'Europe/Lisbon'                             ,1993,1995,
                      'Africa/Algiers'                            ,1944,1978,
                      'Europe/Kaliningrad'                        ,1916,1945,
@@ -469,7 +469,7 @@
                      'Europe/Gibraltar'                          ,1957,9999,
                      'Africa/Ceuta'                              ,1984,9999,
                      'Europe/Vilnius'                            ,1919,1999,
-                     'Africa/Tripoli'                            ,1919,1997,
+                     'Africa/Tripoli'                            ,1919,9999,
                      'Europe/Lisbon'                             ,1966,1996,
                      'Europe/Uzhgorod'                           ,1890,1991,
                      'Africa/Casablanca'                         ,1984,1985,
@@ -796,7 +796,7 @@
                      'Asia/Amman'                                ,1930,9999,
                      'Europe/Bucharest'                          ,1931,9999,
                      'Europe/Chisinau'                           ,1931,9999,
-                     'Africa/Tripoli'                            ,1958,9999,
+                     'Africa/Tripoli'                            ,1958,2012,
                      'Europe/Kaliningrad'                        ,1991,2011,
                      'Europe/Uzhgorod'                           ,1991,9999,
                      'Europe/Moscow'                             ,1922,1992,
@@ -894,7 +894,7 @@
                      'America/Martinique'                        ,1890,1911,
                     ],
    'FJST'        => [
-                     'Pacific/Fiji'                              ,1998,2012,
+                     'Pacific/Fiji'                              ,1998,9999,
                     ],
    'FJT'         => [
                      'Pacific/Fiji'                              ,1915,9999,
@@ -1112,7 +1112,7 @@
                      'Asia/Jerusalem'                            ,1948,1948,
                     ],
    'IDT'         => [
-                     'Asia/Jerusalem'                            ,1940,2037,
+                     'Asia/Jerusalem'                            ,1940,2096,
                      'Asia/Gaza'                                 ,1974,1995,
                      'Asia/Hebron'                               ,1974,1995,
                     ],
@@ -2006,7 +2006,7 @@
                      'Europe/Warsaw'                             ,1879,1915,
                     ],
    'WSDT'        => [
-                     'Pacific/Apia'                              ,2010,2012,
+                     'Pacific/Apia'                              ,2010,9999,
                     ],
    'WST'         => [
                      'Australia/Perth'                           ,1895,9999,

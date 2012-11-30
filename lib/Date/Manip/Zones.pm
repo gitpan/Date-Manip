@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Aug 28 10:07:27 EDT 2012
-#    Data version: tzdata2012e
-#    Code version: tzcode2012e
+#    Generated on: Fri Nov 30 12:40:49 EST 2012
+#    Data version: tzdata2012j
+#    Code version: tzcode2012j
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.36';
+$VERSION='6.37';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,11 +37,11 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2012e';
-$TzcodeVersion = 'tzcode2012e';
+$TzdataVersion = 'tzdata2012j';
+$TzcodeVersion = 'tzcode2012j';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
-$LastYear      = '2042';
+$LastYear      = '2087';
 
 
 %Module = (
@@ -1668,6 +1668,7 @@ $LastYear      = '2042';
   'wet-1west'                          => 'europe/luxembourg',
   'wet0west'                           => 'wet',
   'wgt3wgst'                           => 'america/godthab',
+  'wst-13wsdt'                         => 'pacific/apia',
   'wst-8wst'                           => 'australia/perth',
   'yakt-8yakst'                        => 'asia/yakutsk',
   'yakt-9yakst'                        => 'asia/yakutsk',

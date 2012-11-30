@@ -5,9 +5,9 @@ package Date::Manip::TZ::ashebr00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Aug 28 10:05:01 EDT 2012
-#    Data version: tzdata2012e
-#    Code version: tzcode2012e
+#    Generated on: Fri Nov 30 12:39:56 EST 2012
+#    Data version: tzdata2012j
+#    Code version: tzcode2012j
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -40,7 +40,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.36';
+$VERSION='6.37';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -476,11 +476,11 @@ END { undef $VERSION; }
    2012 =>
      [
         [ [2012,3,29,22,0,0],[2012,3,30,1,0,0],'+03:00:00',[3,0,0],
-          'EEST',1,[2012,9,27,23,59,59],[2012,9,28,2,59,59],
-          '2012032922:00:00','2012033001:00:00','2012092723:59:59','2012092802:59:59' ],
-        [ [2012,9,28,0,0,0],[2012,9,28,2,0,0],'+02:00:00',[2,0,0],
+          'EEST',1,[2012,9,20,21,59,59],[2012,9,21,0,59,59],
+          '2012032922:00:00','2012033001:00:00','2012092021:59:59','2012092100:59:59' ],
+        [ [2012,9,20,22,0,0],[2012,9,21,0,0,0],'+02:00:00',[2,0,0],
           'EET',0,[9999,12,31,0,0,0],[9999,12,31,2,0,0],
-          '2012092800:00:00','2012092802:00:00','9999123100:00:00','9999123102:00:00' ],
+          '2012092022:00:00','2012092100:00:00','9999123100:00:00','9999123102:00:00' ],
      ],
 );
 

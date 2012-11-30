@@ -18,8 +18,8 @@
 # greater than $keep_years.
 
 my($keep_years,$test_years);
-$keep_years = 30;
-$test_years = 40;
+$keep_years = 75;
+$test_years = 85;
 
 $curr_year  = (localtime)[5] + 1900;
 $keep_year  = $curr_year + $keep_years;

@@ -642,7 +642,7 @@ the minute-second separator.  Both are perl regular expressions.
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
 
-   ARRAY(0xa4db18)  ARRAY(0xa4dbd8)
+   [.]  [:]
 
 
 =back

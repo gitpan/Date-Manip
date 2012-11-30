@@ -421,8 +421,8 @@ foreach my $winz (keys %windows_zones) {
                       ],
    'BRT3BRST'      => [
                        'America/Sao_Paulo'                       ,1932,9999,
-                       'America/Araguaina'                       ,1932,2002,
-                       'America/Bahia'                           ,1932,9999,
+                       'America/Araguaina'                       ,1932,9999,
+                       'America/Bahia'                           ,1932,2002,
                        'America/Fortaleza'                       ,1932,1989,
                        'America/Maceio'                          ,1932,1989,
                        'America/Recife'                          ,1932,1989,
@@ -467,7 +467,7 @@ foreach my $winz (keys %windows_zones) {
                        'Africa/Ceuta'                            ,1986,9999,
                        'Europe/Vilnius'                          ,1943,1998,
                        'Europe/Lisbon'                           ,1993,1995,
-                       'Africa/Tripoli'                          ,1951,1989,
+                       'Africa/Tripoli'                          ,1951,9999,
                        'Africa/Algiers'                          ,1944,1978,
                        'Europe/Sofia'                            ,1943,1944,
                        'Europe/Uzhgorod'                         ,1943,1944,
@@ -592,7 +592,7 @@ foreach my $winz (keys %windows_zones) {
                        'America/Toronto'                         ,1945,1945,
                       ],
    'FJT-12FJST'    => [
-                       'Pacific/Fiji'                            ,1999,2011,
+                       'Pacific/Fiji'                            ,1999,9999,
                       ],
    'FKT3FKST'      => [
                        'Atlantic/Stanley'                        ,1983,1984,
@@ -643,7 +643,7 @@ foreach my $winz (keys %windows_zones) {
                        'Asia/Hebron'                             ,1967,1967,
                       ],
    'IST-2IDT'      => [
-                       'Asia/Jerusalem'                          ,1943,2037,
+                       'Asia/Jerusalem'                          ,1943,9999,
                        'Asia/Gaza'                               ,1974,1994,
                        'Asia/Hebron'                             ,1974,1994,
                       ],
@@ -894,6 +894,9 @@ foreach my $winz (keys %windows_zones) {
    'WGT3WGST'      => [
                        'America/Godthab'                         ,1980,9999,
                        'America/Danmarkshavn'                    ,1980,1995,
+                      ],
+   'WST-13WSDT'    => [
+                       'Pacific/Apia'                            ,2012,9999,
                       ],
    'WST-8WST'      => [
                        'Australia/Perth'                         ,1942,2008,

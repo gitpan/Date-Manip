@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Aug 28 10:07:27 EDT 2012
-#    Data version: tzdata2012e
-#    Code version: tzcode2012e
+#    Generated on: Fri Nov 30 12:40:49 EST 2012
+#    Data version: tzdata2012j
+#    Code version: tzcode2012j
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://ftp.iana.orgtz/tzdata2012e.tar.gz
+   ftp://ftp.iana.orgtz/tzdata2012j.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -1082,6 +1082,7 @@ default alias can be overridden as described above.
                                           Europe/Luxembourg
      WGT3WGST                             America/Godthab
                                           America/Danmarkshavn
+     WST-13WSDT                           Pacific/Apia
      WST-8WST                             Australia/Perth
      YAKT-8YAKST                          Asia/Yakutsk
      YAKT-9YAKST                          Asia/Yakutsk
@@ -2837,9 +2838,9 @@ Date::Manip::TZ module.
                         Asia/Kamchatka
                         Asia/Anadyr
      1      +13:45:00   Pacific/Chatham
-     1      +14:00:00   Pacific/Tongatapu
+     1      +14:00:00   Pacific/Apia
+                        Pacific/Tongatapu
                         Asia/Anadyr
-                        Pacific/Apia
 
 
 In the time zone definitions, abbreviations are used to specify the

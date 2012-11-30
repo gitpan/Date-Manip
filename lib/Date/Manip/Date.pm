@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.36';
+$VERSION='6.37';
 END { undef $VERSION; }
 
 ########################################################################
@@ -2180,7 +2180,7 @@ sub _def_date_dow {
    $d      += ($dow-1);
    if ($d > $n) {
       $m++;
-      if ($m==12) {
+      if ($m==13) {
          $y++;
          $m = 1;
       }

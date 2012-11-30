@@ -27,7 +27,32 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.37  (planned 2012-12-01)
+=head1 VERSION 6.38  (planned 2013-12-01)
+
+=head1 VERSION 6.38  (planned 2013-09-01)
+
+=head1 VERSION 6.38  (planned 2013-06-01)
+
+=head1 VERSION 6.38  (planned 2013-03-01)
+
+=head1 VERSION 6.37  (2012-12-01)
+
+=over 4
+
+=item Bug fixes
+
+Fixed a bug where ISO 8601 format YYYY-WXX-D didn't work if the week ended
+up in December.  Gordon Lugauer.
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2012j)
+
+=item Documentation fixes
+
+Spelling error fixed.  RT 80621
+
+=back
 
 =head1 VERSION 6.36  (2012-10-31)
 
@@ -41,7 +66,7 @@ replaced.
 
 =over 4
 
-=item Removed dependancy on YAML
+=item Removed dependency on YAML
 
 I've reverted the language data files to perl literals instead of YAML.  Though
 not quite as easy to maintain, it solves a few problems.  Patch provided by
@@ -63,7 +88,7 @@ This is a bug fix so that the PATH won't break non-unix installs.
 =item Bug fixes
 
 Put the PATH inside the Unix section so it doesn't affect non-unix
-envvironments.  Geoff Rowell
+environments.  Geoff Rowell
 
 =back
 
@@ -96,7 +121,6 @@ Now supports timezones in files with spaces where there should be
 underscores.  This occurs in RHEL desktop.  RT 78566
 
 Newest zoneinfo data (tzdata 2012e)
-
 
 =item Documentation fixes
 

@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.36';
+$VERSION='6.37';
 END { undef $VERSION; }
 
 # To get rid of a 'used only once' warnings.
@@ -401,6 +401,7 @@ sub _get_curr_zone {
    my $dstflag = ($isdst ? 'dstonly' : 'stdonly');
 
    my (@methods) = @{ $$self{'data'}{'methods'} };
+   my $debug     = ($ENV{DATE_MANIP_DEBUG} ? 1 : 0);
 
    defined $$self{'data'}{'path'}
      and local $ENV{PATH} = $$self{'data'}{'path'};
@@ -418,6 +419,11 @@ sub _get_curr_zone {
          }
          my $var = shift(@methods);
          push(@zone,$$::var)  if (defined $$::var);
+
+         if ($debug) {
+            print "*** DEBUG ***  main $var = " .
+                  (defined $$::var ? $$::var : 'undef') . "\n";
+         }
 
       } elsif ($method eq 'env') {
          if (@methods < 2) {
@@ -439,6 +445,17 @@ sub _get_curr_zone {
                $off    = $dmb->_delta_convert('time',"0:0:$off");
                $off    = $dmb->_delta_convert('offset',$off);
                push(@zone,$off);
+            }
+         }
+
+         if ($debug) {
+            print "*** DEBUG *** env $type $var ";
+            if (exists $ENV{$var}) {
+               print $ENV{$var};
+               print $zone[$#zone]  if ($type eq 'offset');
+               print "\n";
+            } else {
+               print "-no result-\n";
             }
          }
 
@@ -519,6 +536,15 @@ sub _get_curr_zone {
 
          push(@zone,@z)  if (@z);
 
+         if ($debug) {
+            print "*** DEBUG *** file $file\n";
+            if (@z) {
+               print "              @z\n";
+            } else {
+               print "              -no result-\n";
+            }
+         }
+
       } elsif ($method eq 'command') {
          if (! @methods) {
             warn "ERROR: [_set_curr_zone] command requires argument\n";
@@ -528,6 +554,15 @@ sub _get_curr_zone {
          my ($out)   = _cmd($command);
          push(@zone,$out)  if ($out);
 
+         if ($debug) {
+            print "*** DEBUG *** command $command\n";
+            if ($out) {
+               print "              $out\n";
+            } else {
+               print "              -no result-\n";
+            }
+         }
+
       } elsif ($method eq 'cmdfield') {
          if ($#methods < 1) {
             warn "ERROR: [_set_curr_zone] cmdfield requires 2 arguments\n";
@@ -536,11 +571,24 @@ sub _get_curr_zone {
          my $command = shift(@methods);
          my $n       = shift(@methods);
          my ($out)   = _cmd($command);
+         my @z;
+
          if ($out) {
             $out    =~ s/^\s*//;
             $out    =~ s/\s*$//;
             my @out = split(/\s+/,$out);
-            push(@zone,$out[$n])  if (defined $out[$n]);
+            push(@z,$out[$n])  if (defined $out[$n]);
+         }
+
+         push(@zone,@z)  if (@z);
+
+         if ($debug) {
+            print "*** DEBUG *** cmdfield $command $n\n";
+            if (@z) {
+               print "              @z\n";
+            } else {
+               print "              -no result-\n";
+            }
          }
 
       } elsif ($method eq 'gmtoff') {
@@ -561,9 +609,17 @@ sub _get_curr_zone {
          $off    = $dmb->_delta_convert('offset',$off);
          push(@zone,$off);
 
+         if ($debug) {
+            print "*** DEBUG *** gmtoff $off\n";
+         }
+
       } elsif ($method eq 'registry') {
          my $z = $self->_windows_registry_val();
          push(@zone,$z)  if ($z);
+
+         if ($debug) {
+            print "*** DEBUG *** registry $z\n";
+         }
 
       } else {
          warn "ERROR: [_set_curr_zone] invalid method: $method\n";

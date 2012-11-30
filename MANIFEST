@@ -4,6 +4,7 @@ examples/dm_zdump
 examples/README.examples
 HISTORY
 INSTALL
+internal/.NOTES.swp
 internal/benchmarks/NOTES
 internal/benchmarks/parse-1.date_parse.pl
 internal/benchmarks/parse-1.date_time.pl
