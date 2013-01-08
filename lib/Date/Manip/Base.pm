@@ -1,5 +1,5 @@
 package Date::Manip::Base;
-# Copyright (c) 1995-2012 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -25,7 +25,7 @@ use Encode qw(encode_utf8 from_to);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.37';
+$VERSION='6.38';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -146,9 +146,6 @@ sub _init_config {
 
       'tomorrowfirst'    => 1,
 
-      # Use an international character set.
-      'intcharset'       => 0,
-
       # Used to set the current date/time/timezone.
 
       'forcedate'        => 0,
@@ -168,7 +165,6 @@ sub _init_config {
 
       # *** DEPRECATED ***
 
-      'recurnumfudgedays'=> '',
       'tz'               => '',
      };
 
@@ -1144,14 +1140,6 @@ sub _config_var_base {
             $var eq 'printable'     ||
             $var eq 'tomorrowfirst') {
       # do nothing
-
-      #
-      # Deprecated ones
-      #
-
-   } elsif ($var eq 'recurnumfudgedays'  ||
-            $var eq 'intcharset') {
-         # do nothing
 
    } else {
       warn "ERROR: [config_var] invalid config variable: $var\n";

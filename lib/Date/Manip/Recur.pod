@@ -1,4 +1,4 @@
-# Copyright (c) 1998-2012 Sullivan Beck. All rights reserved.
+# Copyright (c) 1998-2013 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -46,8 +46,8 @@ limited. For example, the string "the first of every month" will NOT
 be parsed as a valid frequency. A limited number of frequencies can be
 expressed in a written out form (see OTHER FREQUENCY FORMATS below),
 but most must be expressed in the format described below in FREQUENCY
-NOTATION. In the documentation however, the written out form will
-often be used for the sake of clarity.
+NOTATION. In this document however, the written out form will often be
+used for the sake of clarity.
 
 Since a frequency typically refers to events could happen an infinite
 number of times, you must specify either a date range or a base date
@@ -59,7 +59,7 @@ occurred.
 Complex recurring events may require the use of modifiers in order to
 get them correct.
 
-For example, in America many places treat both Thanksgiving and the
+For example, in America, many places treat both Thanksgiving and the
 day after as holidays. Thanksgiving is easy to define as the
 frequency:
 
@@ -141,26 +141,23 @@ are:
     1  undefined
     2  May 31 2000
 
-There are actually two different uses of the term 'base date' which
-should be understood.
+As mentioned above, the base date is used to determine one of the
+occurrences of the recurring event... but it may not actually be on
+of those events.
 
-The first is the base date as specified by the programmer. The second
-is the actual base date as used internally by Date::Manip.
+As an example, for the recurring event:
 
-The information in the base date specified by the programmer may not
-actually refer to a date which matches the frequency. In this case,
-the base date used by Date::Manip is based on the specified base date,
-but is not identical to it.  For more details, refer to the BASE DATES
-section below.
+   every other Friday
 
-For example, with the frequence 'the first of every month', if the
-specified base date is 'Mar 1, 2000', this refers to a date on which
-the recurring event occurred, so the actual base date is the same
-as the specified one.
+a base date could be on a Friday, but it would also be possible to
+have a base date on some other day of the week, and it could
+unambiguously refer simply to a week, and the recurring event would
+occur on Friday of that week.
 
-If the specified base date were 'Feb 20, 2000', the actual base date
-would be use the month (Feb) of the specified base date, but not the day,
-and the actual base date would be 'Feb 1, 2000'.
+In most cases, it won't be necessary to treat base dates with that
+level of complexity, but with complicated recurring events, it may
+be necessary.  More information on how Date::Manip determines a
+recurring event from a base date is given below in the section BASE DATES.
 
 =item B<Range>
 

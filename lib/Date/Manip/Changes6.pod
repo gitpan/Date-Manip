@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2012 Sullivan Beck. All rights reserved.
+# Copyright (c) 2009-2013 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -34,6 +34,38 @@ incompatible. These are marked with an exclamation mark (!).
 =head1 VERSION 6.38  (planned 2013-06-01)
 
 =head1 VERSION 6.38  (planned 2013-03-01)
+
+=head1 VERSION 6.38  (2013-01-08)
+
+=over 4
+
+=item B<(*) Tar file format corrected>
+
+Problems were reported on several OSes by people unable to install Date::Manip
+(and other modules).  It turns out that the version of tar distributed by
+my linux distro (OpenSuSE) uses the 'posix' format instead of the traditional
+'gnu' format by default.  This causes problems for some versions of tar.  I
+have had reports from OSX, Windows, and SunOS.  Future versions of
+Date::Manip will be explicitly distributed in the 'gnu' tar archive format.
+
+Reported by Jay Allen and RT 80594.
+
+=item B<(*) Date::Manip 5.xx end-of-life>
+
+Date::Manip 5.xx is now officially out of support.  I will not be doing
+any further work on it.  The only exception is that I will consider
+adding user supplied patches on a case-by-case basis.
+
+If at all possible, please use Date::Manip 6.xx instead.
+
+=item B<(!) Removed some deprecated config variables>
+
+The following config variables have been removed.
+
+   IntCharset
+   RecurNumFudgeDays
+
+=back
 
 =head1 VERSION 6.37  (2012-12-01)
 

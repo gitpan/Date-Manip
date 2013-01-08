@@ -1,19 +1,6 @@
 ########################################################################
 # Deprecated variables:
 
-12/2012 - 5.xx support ends
-
-   no more patches to 5.xx
-
-   error reports that apply only to 5.xx will be politely declined
-
-   if YOU submit a patch that applies cleanly, and causes ZERO failures in
-      the test suite, I will consider adding it on a case-by-case basis.  
-
-12/2012
-   intcharset
-   recurnumfudgedays
-
 12/2013
    tz
 

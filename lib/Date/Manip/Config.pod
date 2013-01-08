@@ -1,4 +1,4 @@
-# Copyright (c) 1996-2012 Sullivan Beck. All rights reserved.
+# Copyright (c) 1996-2013 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -650,21 +650,6 @@ deprecated.  They will be removed in a future Date::Manip release:
 This is discussed above. Use SetDate or ForceDate instead.
 
 Scheduled for removal 2013-12-01 .
-
-=item B<IntCharSet>
-
-If set to 0, use the US character set (7-bit ASCII) to return strings such
-as the month name.  If set to 1, use the appropriate international character
-set.  For example, If you want your French representation of December to
-have the accent over the first "e", you'll want to set this to 1.
-
-Scheduled for removal 2012-10-01 .
-
-=item B<RecurNumFudgeDays>
-
-This is no longer used since recurrences were reworked in 6.20.
-
-Scheduled for removal 2012-12-01 .
 
 =back
 

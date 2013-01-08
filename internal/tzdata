@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 our $VERSION;
-$VERSION='6.37';
+$VERSION='6.38';
 
 our ($dmb);
 $dmb = new Date::Manip::Base;
@@ -1063,7 +1063,7 @@ END {
 }
 
 our (\$VERSION);
-\$VERSION='6.37';
+\$VERSION='6.38';
 END { undef \$VERSION; }
 
 \%Dates         = (
@@ -1304,7 +1304,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.37';
+\$VERSION='6.38';
 END { undef \$VERSION; }
 
 our (\$Offset,\%Offset);
@@ -1384,7 +1384,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.37';
+\$VERSION='6.38';
 END { undef \$VERSION; }
 
 our (\$TzdataVersion,\$TzcodeVersion,

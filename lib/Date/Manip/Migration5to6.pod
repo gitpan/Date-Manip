@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2012 Sullivan Beck. All rights reserved.
+# Copyright (c) 2009-2013 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -74,12 +74,12 @@ it will be removed.
 The following config variables have been deprecated, but will continue
 to function (though they will be removed at a future date):
 
-   IntCharSet   (removed Oct 2012)
    TZ           (removed Dec 2013)
 
 The following variables have been removed. If you use any of them,
 you may need to modify your scripts:
 
+   IntCharSet
    GlobalCnf
    PersonalCnf
    PathSep

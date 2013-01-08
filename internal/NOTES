@@ -69,6 +69,7 @@ CURR_YEAR is the current year.
    ./internal/tzdata -l           : to get a list of all the zones that need modules
    ./internal/tzdata -d           : to dump all zones
    ./internal/tzdata -m           : to create the individual zone modules
+                                    *** see NOTE 3 below ***
    ./internal/tzdata -o           : to create the individual offset modules
                                     *** see NOTE 2 below ***
    ./internal/tzdata -z           : to create the main Zone module
@@ -117,6 +118,12 @@ to the data.offset.pl file.
 
 If the '-z' option produces any output, the entries need to be added
 to the data.alias.pl or data.abbrev.pl file.
+
+NOTE 3: If you get a LAST RULE in Jan/Dec line, check it out.  A zone
+is doing time changes in Jan or Dec.  Make sure it won't cause any
+problems.
+
+Currently, Pacific/Fiji is, but it's safe.
 
 #########################################################################
 Clean up stuff that shouldn't be in the manifest

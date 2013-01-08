@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2012 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2013 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -17,7 +17,16 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 5.65
+=head1 VERSION 5.xx
+
+As of December 2012, Version 5 of Date::Manip will no longer be modified.
+It is expected that version 5.64 will be the final release.
+
+The one exception is that if someone submits a patch that applies cleanly
+and causes zero failures in the test suite, I will consider adding it on
+a case-by-cast bases.
+
+Please use Date::Manip 6.xx instead.
 
 =head1 VERSION 5.64 (Released with 6.32)
 

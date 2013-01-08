@@ -1,5 +1,5 @@
 package Date::Manip::Offset::off068;
-# Copyright (c) 2008-2012 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -32,7 +32,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.37';
+$VERSION='6.38';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);

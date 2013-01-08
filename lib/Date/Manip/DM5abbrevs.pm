@@ -1,5 +1,5 @@
 package Date::Manip::DM5abbrevs;
-# Copyright (c) 2003-2012 Sullivan Beck. All rights reserved.
+# Copyright (c) 2003-2013 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.37';
+$VERSION='6.38';
 
 END {
    my $tmp;
