@@ -25,9 +25,9 @@ Date::Manip::DM6 - Date manipulation routines
    @date = UnixDate($date,@format);
    $date = UnixDate($date,@format);
 
-   $delta = ParseDateDelta(\@args);
-   $delta = ParseDateDelta($string);
-   $delta = ParseDateDelta(\$string);
+   $delta = ParseDateDelta(\@args   [,$mode]);
+   $delta = ParseDateDelta($string  [,$mode]);
+   $delta = ParseDateDelta(\$string [,$mode]);
 
    @str = Delta_Format($delta, [$mode,] $dec,@format);
    $str = Delta_Format($delta, [$mode,] $dec,@format);
@@ -170,9 +170,9 @@ The formats are described in the Date::Manip::Date document.
 
 =item B<ParseDateDelta>
 
-   $delta = ParseDateDelta(\@args);
-   $delta = ParseDateDelta($string);
-   $delta = ParseDateDelta(\$string);
+   $delta = ParseDateDelta(\@args   [,$mode]);
+   $delta = ParseDateDelta($string  [,$mode]);
+   $delta = ParseDateDelta(\$string [,$mode]);
 
 In the first form, it takes an array and shifts a valid delta from it.
 In the other two forms, it parses a string to see if it contains a
@@ -180,6 +180,9 @@ valid delta.
 
 A valid delta is returned if found. Otherwise, an empty string is
 returned.
+
+The delta can be converted to 'exact', 'semi', or 'approx' using the
+Date::Manip::Delta::convert method if $mode is passed in.
 
 =item B<Delta_Format>
 

@@ -53,7 +53,7 @@ use integer;
 use warnings;
 
 our $VERSION;
-$VERSION='6.38';
+$VERSION='6.39';
 
 ###########################################################################
 
@@ -146,13 +146,20 @@ sub ParseDate {
 sub ParseDateDelta {
    my(@a) = @_;
 
-   if ($#a!=0) {
+   if (@a < 1  ||  @a > 2) {
       print "ERROR:  Invalid number of arguments to ParseDateDelta.\n";
       return '';
    }
-   my @args;
-   my $args = $a[0];
+   my($args,$mode) = @_;
    $args    = ''  if (! defined($args));
+   $mode    = ''  if (! $mode);
+   $mode    = lc($mode);
+   if ($mode  &&  ($mode ne 'exact'  &&  $mode ne 'semi'  &&  $mode ne 'approx')) {
+      print "ERROR:  Invalid arguments to ParseDateDelta.\n";
+      return '';
+   }
+
+   my @args;
    my $ref  = ref($args);
    my $list = 0;
 
@@ -172,6 +179,7 @@ sub ParseDateDelta {
       my $string = join(' ',@args);
       my $err = $delta->parse($string);
       if (! $err) {
+         $delta->convert($mode)  if ($mode);
          splice(@$args,0,$#args+1)  if ($list);
          my $ret = $delta->value('local');
          return $ret;

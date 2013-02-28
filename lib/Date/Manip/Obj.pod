@@ -229,6 +229,18 @@ This will set the value of any configuration variables. Please refer to the
 Date::Manip::Config manual for a list of all configuration variables and their
 description.
 
+=item B<get_config>
+
+   @var = $obj->get_config();
+   $val = $obj->get_config($var1);
+   @val = $obj->get_config($var1,$var2,...);
+
+This queries the current config values.  With no argument, it will return
+the list of config variables (all lowercase).
+
+With one or more arguments, it returns the current values for the config
+variables passed in (case insensitive).
+
 =item B<err>
 
    $err = $obj->err();

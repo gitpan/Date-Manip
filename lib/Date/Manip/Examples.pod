@@ -138,7 +138,7 @@ use the following:
    $delta->parse($deltastr);
 
    $d = $date->calc($delta);
- 
+
 =item B<Functional>
 
    $date = DateCalc($datestr,$deltastr);
@@ -197,18 +197,18 @@ about them as follows:
    $date->parse($datestr);
    $delta->parse($deltastr);
 
-   $date->printf("It is now %T on %b %e, %Y.");
+   $str = $date->printf("It is now %T on %b %e, %Y.");
      =>  "It is now 13:24:08 on Feb  3, 1996."
 
-   $delta->printf("In %hv hours, %mv minutes, %sv seconds");
+   $str = $delta->printf("In %hv hours, %mv minutes, %sv seconds");
      => "In -12 hours, 0 minutes, 0 seconds";
 
 =item B<Functional>
 
-   UnixDate($datestr,"It is now %T on %b %e, %Y.");
+   $str = UnixDate($datestr,"It is now %T on %b %e, %Y.");
      =>  "It is now 13:24:08 on Feb  3, 1996."
 
-   Delta_Format($deltastr,"In %hv hours, %mv minutes, %sv seconds");
+   $str = Delta_Format($deltastr,"In %hv hours, %mv minutes, %sv seconds");
      => "In -12 hours, 0 minutes, 0 seconds";
 
 =back
@@ -238,7 +238,7 @@ can do the following:
    $date     = new Date::Manip::Date;
    $err      = $date->parse($datestr);
 
-   $date->printf('%s');
+   $str      = $date->printf('%s');
       => number of seconds
 
 To find out the date that is a certain number of seconds since the
@@ -253,12 +253,12 @@ epoch, you can use the following:
 
 To find out how many seconds have elapsed:
 
-   UnixDate($datestr,'%s');
+   $str = UnixDate($datestr,'%s');
      => number of seconds
- 
+
 To find the date that is a number of seconds since the epoch:
 
-   ParseDateString("epoch $secs");
+   $date = ParseDateString("epoch $secs");
 
 =back
 

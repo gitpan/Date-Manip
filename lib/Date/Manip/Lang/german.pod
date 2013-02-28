@@ -35,8 +35,8 @@ exist including full names and abbreviations.
 
 The following month names may be used:
 
-   Jänner
    Januar
+   Jänner
 
    Februar
 

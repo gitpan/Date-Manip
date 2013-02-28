@@ -51,6 +51,28 @@ use anyway.
 Please refer to the Date::Manip::TZ documentation for a discussion
 of this problem.
 
+=item B<Dmake error on strawberry perl>
+
+Users of Strawberry perl on windows may encounter an error similar
+to the following:
+
+   dmake: makefile: line 3016: Error: -- Input line too long, increase MAXLINELENGTH
+
+This is a known problem with some versions of strawberry perl, and
+I can't fix it in Date::Manip.  If you encounter this problem, you
+can install the package manually using the commands:
+
+   c:> cpan
+   cpan> look Date::Manip::Date
+   > perl Makefile.PL
+   > dmake MAXLINELENGTH=300000 make
+   > dmake MAXLINELENGTH=300000 make test
+   > dmake MAXLINELENGTH=300000 make install
+
+You can find more details here:
+
+   http://www.nntp.perl.org/group/perl.win32.vanilla/2011/02/msg287.html
+
 =item B<Calculations appear to be off by an hour>
 
 Due to daylight saving time (specifically, the spring change where

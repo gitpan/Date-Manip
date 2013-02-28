@@ -13,7 +13,7 @@ use IO::File;
 use Storable qw(dclone);
 
 our ($VERSION);
-$VERSION='6.38';
+$VERSION='6.39';
 END { undef $VERSION; }
 
 ########################################################################
@@ -249,6 +249,42 @@ sub config {
       my $val = shift(@opts);
       $obj->_config_var($var,$val);
    }
+}
+
+sub get_config {
+   my($self,@args) = @_;
+
+   my $base;
+   my $t = ref($self);
+   if ($t eq 'Date::Manip::Base') {
+      $base = $self;
+   } elsif ($t eq 'Date::Manip::TZ') {
+      $base = $$self{'base'};
+   } else {
+      my $dmt = $$self{'tz'};
+      $base = $$dmt{'base'};
+   }
+
+   if (@args) {
+      my @ret;
+      foreach my $var (@args) {
+         if (exists $$base{'data'}{'sections'}{'conf'}{lc($var)}) {
+            push @ret,$$base{'data'}{'sections'}{'conf'}{lc($var)};
+         } else {
+            warn "ERROR: [config] invalid config variable: $var\n";
+            return '';
+         }
+      }
+
+      if (@ret == 1) {
+         return $ret[0];
+      } else {
+         return @ret;
+      }
+   }
+
+   my @ret = sort keys %{ $$base{'data'}{'sections'}{'conf'} };
+   return @ret;
 }
 
 sub err {

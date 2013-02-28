@@ -13,7 +13,7 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.38';
+$VERSION='6.39';
 
 our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
@@ -70,7 +70,7 @@ $YearAdded = 1998;
     ['Dez'],
   ],
   month_name => [
-    ['Jänner', 'Januar'],
+    ['Januar','Jänner'],
     ['Februar'],
     ['März', 'Marz', 'Maerz'],
     ['April'],
