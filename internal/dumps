@@ -7,6 +7,8 @@ fi
 
 for file in `cd tzdata/dump; echo *` ;do
    tz=`head -1 tzdata/dump/$file | awk '{print $1}'`
+   echo "##########################################################"
+   echo "### $tz"
 
    # Create the new dump
    examples/dm_zdump -v $tz | tail --lines=+2 > z.dump.new
@@ -16,7 +18,12 @@ for file in `cd tzdata/dump; echo *` ;do
    tail --lines=+3 tzdata/dump/$file | head --lines=-2 > z.dump.old
    lo=`wc -l z.dump.old | awk '{print $1}'`
 
-   if [ $lo -gt $ln ]; then
+   if [ "$ln" = "0" ]; then
+      echo "***"
+      echo "*** ERROR ***"
+      echo "***"
+
+   elif [ $lo -gt $ln ]; then
       mv z.dump.old z.dump.old.1
       head --lines=$ln z.dump.old.1 > z.dump.old
       rm -f z.dump.old.1
@@ -27,8 +34,6 @@ for file in `cd tzdata/dump; echo *` ;do
       rm -f z.dump.new.1
    fi
 
-   echo "##########################################################"
-   echo "### $tz"
    diff -c z.dump.old z.dump.new
    rm -f z.dump.old z.dump.new
 

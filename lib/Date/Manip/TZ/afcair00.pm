@@ -1,33 +1,18 @@
-package Date::Manip::TZ::afcair00;
+package #
+Date::Manip::TZ::afcair00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:06 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:09 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::afcair00 - Support for the Africa/Cairo time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,21 +25,21 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
    1    =>
      [
-        [ [1,1,2,0,0,0],[1,1,2,2,5,0],'+02:05:00',[2,5,0],
-          'LMT',0,[1900,9,30,21,54,59],[1900,9,30,23,59,59],
-          '0001010200:00:00','0001010202:05:00','1900093021:54:59','1900093023:59:59' ],
+        [ [1,1,2,0,0,0],[1,1,2,2,5,9],'+02:05:09',[2,5,9],
+          'LMT',0,[1900,9,30,21,54,50],[1900,9,30,23,59,59],
+          '0001010200:00:00','0001010202:05:09','1900093021:54:50','1900093023:59:59' ],
      ],
    1900 =>
      [
-        [ [1900,9,30,21,55,0],[1900,9,30,23,55,0],'+02:00:00',[2,0,0],
+        [ [1900,9,30,21,54,51],[1900,9,30,23,54,51],'+02:00:00',[2,0,0],
           'EET',0,[1940,7,14,21,59,59],[1940,7,14,23,59,59],
-          '1900093021:55:00','1900093023:55:00','1940071421:59:59','1940071423:59:59' ],
+          '1900093021:54:51','1900093023:54:51','1940071421:59:59','1940071423:59:59' ],
      ],
    1940 =>
      [

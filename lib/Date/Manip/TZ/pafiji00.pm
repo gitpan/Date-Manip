@@ -1,33 +1,18 @@
-package Date::Manip::TZ::pafiji00;
+package #
+Date::Manip::TZ::pafiji00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:39:55 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:52:57 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::pafiji00 - Support for the Pacific/Fiji time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,21 +25,21 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
    1    =>
      [
-        [ [1,1,2,0,0,0],[1,1,2,11,53,40],'+11:53:40',[11,53,40],
-          'LMT',0,[1915,10,25,12,6,19],[1915,10,25,23,59,59],
-          '0001010200:00:00','0001010211:53:40','1915102512:06:19','1915102523:59:59' ],
+        [ [1,1,2,0,0,0],[1,1,2,11,55,44],'+11:55:44',[11,55,44],
+          'LMT',0,[1915,10,25,12,4,15],[1915,10,25,23,59,59],
+          '0001010200:00:00','0001010211:55:44','1915102512:04:15','1915102523:59:59' ],
      ],
    1915 =>
      [
-        [ [1915,10,25,12,6,20],[1915,10,26,0,6,20],'+12:00:00',[12,0,0],
+        [ [1915,10,25,12,4,16],[1915,10,26,0,4,16],'+12:00:00',[12,0,0],
           'FJT',0,[1998,10,31,13,59,59],[1998,11,1,1,59,59],
-          '1915102512:06:20','1915102600:06:20','1998103113:59:59','1998110101:59:59' ],
+          '1915102512:04:16','1915102600:04:16','1998103113:59:59','1998110101:59:59' ],
      ],
    1998 =>
      [
@@ -784,6 +769,15 @@ END { undef $VERSION; }
         [ [2087,10,18,14,0,0],[2087,10,19,3,0,0],'+13:00:00',[13,0,0],
           'FJST',1,[2088,1,17,13,59,59],[2088,1,18,2,59,59],
           '2087101814:00:00','2087101903:00:00','2088011713:59:59','2088011802:59:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,1,17,14,0,0],[2088,1,18,2,0,0],'+12:00:00',[12,0,0],
+          'FJT',0,[2088,10,23,13,59,59],[2088,10,24,1,59,59],
+          '2088011714:00:00','2088011802:00:00','2088102313:59:59','2088102401:59:59' ],
+        [ [2088,10,23,14,0,0],[2088,10,24,3,0,0],'+13:00:00',[13,0,0],
+          'FJST',1,[2089,1,22,13,59,59],[2089,1,23,2,59,59],
+          '2088102314:00:00','2088102403:00:00','2089012213:59:59','2089012302:59:59' ],
      ],
 );
 

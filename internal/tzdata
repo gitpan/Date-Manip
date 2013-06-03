@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 our $VERSION;
-$VERSION='6.39';
+$VERSION='6.40';
 
 our ($dmb);
 $dmb = new Date::Manip::Base;
@@ -1021,7 +1021,8 @@ sub _do_mods_write {
 
    my $out = new IO::File;
    $out->open(">$mod_dir/$module.pm");
-   print $out "package Date::Manip::TZ::$module;
+   print $out "package #
+Date::Manip::TZ::$module;
 # Copyright (c) 2008-$curr_year Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
@@ -1036,22 +1037,6 @@ sub _do_mods_write {
 # data was obtained from the URL:
 #    ftp://$tzdata_src/$tzdata_dir
 
-$podstr
-
-$hdstr NAME
-
-Date::Manip::TZ::$module - Support for the $zone time zone
-
-$hdstr SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
-
 use strict;
 use warnings;
 require 5.010000;
@@ -1063,7 +1048,7 @@ END {
 }
 
 our (\$VERSION);
-\$VERSION='6.39';
+\$VERSION='6.40';
 END { undef \$VERSION; }
 
 \%Dates         = (
@@ -1270,7 +1255,8 @@ sub _do_off {
    my $out = new IO::File;
    my $mod = "Date::Manip::Offset::$module";
    $out->open(">$off_dir/$module.pm");
-   print $out "package Date::Manip::Offset::$module;
+   print $out "package #
+Date::Manip::Offset::$module;
 # Copyright (c) 2008-$curr_year Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
@@ -1285,26 +1271,12 @@ sub _do_off {
 # data was obtained from the URL:
 #    ftp://$tzdata_src$tzdata_dir
 
-$podstr
-
-$hdstr NAME
-
-$mod - Support for the $offset offset
-
-$hdstr SYNPOSIS
-
-This module contains data from the Olsen database for the offset. It
-is not intended to be used directly (other Date::Manip modules will
-load it as needed).
-
-=cut
-
 use strict;
 use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.39';
+\$VERSION='6.40';
 END { undef \$VERSION; }
 
 our (\$Offset,\%Offset);
@@ -1384,7 +1356,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.39';
+\$VERSION='6.40';
 END { undef \$VERSION; }
 
 our (\$TzdataVersion,\$TzcodeVersion,

@@ -1,33 +1,18 @@
-package Date::Manip::TZ::euvien00;
+package #
+Date::Manip::TZ::euvien00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:13 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:15 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::euvien00 - Support for the Europe/Vienna time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,21 +25,21 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
    1    =>
      [
-        [ [1,1,2,0,0,0],[1,1,2,1,5,20],'+01:05:20',[1,5,20],
-          'LMT',0,[1893,3,31,22,54,39],[1893,3,31,23,59,59],
-          '0001010200:00:00','0001010201:05:20','1893033122:54:39','1893033123:59:59' ],
+        [ [1,1,2,0,0,0],[1,1,2,1,5,21],'+01:05:21',[1,5,21],
+          'LMT',0,[1893,3,31,22,54,38],[1893,3,31,23,59,59],
+          '0001010200:00:00','0001010201:05:21','1893033122:54:38','1893033123:59:59' ],
      ],
    1893 =>
      [
-        [ [1893,3,31,22,54,40],[1893,3,31,23,54,40],'+01:00:00',[1,0,0],
+        [ [1893,3,31,22,54,39],[1893,3,31,23,54,39],'+01:00:00',[1,0,0],
           'CET',0,[1916,4,30,21,59,59],[1916,4,30,22,59,59],
-          '1893033122:54:40','1893033123:54:40','1916043021:59:59','1916043022:59:59' ],
+          '1893033122:54:39','1893033123:54:39','1916043021:59:59','1916043022:59:59' ],
      ],
    1916 =>
      [
@@ -1129,6 +1114,15 @@ END { undef $VERSION; }
         [ [2087,10,26,1,0,0],[2087,10,26,2,0,0],'+01:00:00',[1,0,0],
           'CET',0,[2088,3,28,0,59,59],[2088,3,28,1,59,59],
           '2087102601:00:00','2087102602:00:00','2088032800:59:59','2088032801:59:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,3,28,1,0,0],[2088,3,28,3,0,0],'+02:00:00',[2,0,0],
+          'CEST',1,[2088,10,31,0,59,59],[2088,10,31,2,59,59],
+          '2088032801:00:00','2088032803:00:00','2088103100:59:59','2088103102:59:59' ],
+        [ [2088,10,31,1,0,0],[2088,10,31,2,0,0],'+01:00:00',[1,0,0],
+          'CET',0,[2089,3,27,0,59,59],[2089,3,27,1,59,59],
+          '2088103101:00:00','2088103102:00:00','2089032700:59:59','2089032701:59:59' ],
      ],
 );
 

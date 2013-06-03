@@ -1,33 +1,18 @@
-package Date::Manip::TZ::amcost00;
+package #
+Date::Manip::TZ::amcost00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:39:59 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:01 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::amcost00 - Support for the America/Costa_Rica time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,27 +25,27 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
    1    =>
      [
-        [ [1,1,2,0,0,0],[1,1,1,18,23,40],'-05:36:20',[-5,-36,-20],
-          'LMT',0,[1890,1,1,5,36,19],[1889,12,31,23,59,59],
-          '0001010200:00:00','0001010118:23:40','1890010105:36:19','1889123123:59:59' ],
+        [ [1,1,2,0,0,0],[1,1,1,18,23,47],'-05:36:13',[-5,-36,-13],
+          'LMT',0,[1890,1,1,5,36,12],[1889,12,31,23,59,59],
+          '0001010200:00:00','0001010118:23:47','1890010105:36:12','1889123123:59:59' ],
      ],
    1890 =>
      [
-        [ [1890,1,1,5,36,20],[1890,1,1,0,0,0],'-05:36:20',[-5,-36,-20],
-          'SJMT',0,[1921,1,15,5,36,19],[1921,1,14,23,59,59],
-          '1890010105:36:20','1890010100:00:00','1921011505:36:19','1921011423:59:59' ],
+        [ [1890,1,1,5,36,13],[1890,1,1,0,0,0],'-05:36:13',[-5,-36,-13],
+          'SJMT',0,[1921,1,15,5,36,12],[1921,1,14,23,59,59],
+          '1890010105:36:13','1890010100:00:00','1921011505:36:12','1921011423:59:59' ],
      ],
    1921 =>
      [
-        [ [1921,1,15,5,36,20],[1921,1,14,23,36,20],'-06:00:00',[-6,0,0],
+        [ [1921,1,15,5,36,13],[1921,1,14,23,36,13],'-06:00:00',[-6,0,0],
           'CST',0,[1979,2,25,5,59,59],[1979,2,24,23,59,59],
-          '1921011505:36:20','1921011423:36:20','1979022505:59:59','1979022423:59:59' ],
+          '1921011505:36:13','1921011423:36:13','1979022505:59:59','1979022423:59:59' ],
      ],
    1979 =>
      [

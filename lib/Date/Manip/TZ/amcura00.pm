@@ -1,33 +1,18 @@
-package Date::Manip::TZ::amcura00;
+package #
+Date::Manip::TZ::amcura00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:10 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:13 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::amcura00 - Support for the America/Curacao time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,21 +25,21 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
    1    =>
      [
-        [ [1,1,2,0,0,0],[1,1,1,19,24,16],'-04:35:44',[-4,-35,-44],
-          'LMT',0,[1912,2,12,4,35,43],[1912,2,11,23,59,59],
-          '0001010200:00:00','0001010119:24:16','1912021204:35:43','1912021123:59:59' ],
+        [ [1,1,2,0,0,0],[1,1,1,19,24,13],'-04:35:47',[-4,-35,-47],
+          'LMT',0,[1912,2,12,4,35,46],[1912,2,11,23,59,59],
+          '0001010200:00:00','0001010119:24:13','1912021204:35:46','1912021123:59:59' ],
      ],
    1912 =>
      [
-        [ [1912,2,12,4,35,44],[1912,2,12,0,5,44],'-04:30:00',[-4,-30,0],
+        [ [1912,2,12,4,35,47],[1912,2,12,0,5,47],'-04:30:00',[-4,-30,0],
           'ANT',0,[1965,1,1,4,29,59],[1964,12,31,23,59,59],
-          '1912021204:35:44','1912021200:05:44','1965010104:29:59','1964123123:59:59' ],
+          '1912021204:35:47','1912021200:05:47','1965010104:29:59','1964123123:59:59' ],
      ],
    1965 =>
      [

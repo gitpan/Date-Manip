@@ -1,33 +1,18 @@
-package Date::Manip::TZ::pachat00;
+package #
+Date::Manip::TZ::pachat00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:06 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:08 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::pachat00 - Support for the Pacific/Chatham time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -1078,6 +1063,15 @@ END { undef $VERSION; }
         [ [2087,9,27,14,0,0],[2087,9,28,3,45,0],'+13:45:00',[13,45,0],
           'CHADT',1,[2088,4,3,13,59,59],[2088,4,4,3,44,59],
           '2087092714:00:00','2087092803:45:00','2088040313:59:59','2088040403:44:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,4,3,14,0,0],[2088,4,4,2,45,0],'+12:45:00',[12,45,0],
+          'CHAST',0,[2088,9,25,13,59,59],[2088,9,26,2,44,59],
+          '2088040314:00:00','2088040402:45:00','2088092513:59:59','2088092602:44:59' ],
+        [ [2088,9,25,14,0,0],[2088,9,26,3,45,0],'+13:45:00',[13,45,0],
+          'CHADT',1,[2089,4,2,13,59,59],[2089,4,3,3,44,59],
+          '2088092514:00:00','2088092603:45:00','2089040213:59:59','2089040303:44:59' ],
      ],
 );
 

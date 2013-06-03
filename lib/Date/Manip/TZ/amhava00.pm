@@ -1,33 +1,18 @@
-package Date::Manip::TZ::amhava00;
+package #
+Date::Manip::TZ::amhava00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:39:56 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:52:58 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::amhava00 - Support for the America/Havana time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -1207,6 +1192,15 @@ END { undef $VERSION; }
         [ [2087,11,2,5,0,0],[2087,11,2,0,0,0],'-05:00:00',[-5,0,0],
           'CST',0,[2088,3,14,4,59,59],[2088,3,13,23,59,59],
           '2087110205:00:00','2087110200:00:00','2088031404:59:59','2088031323:59:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,3,14,5,0,0],[2088,3,14,1,0,0],'-04:00:00',[-4,0,0],
+          'CDT',1,[2088,11,7,4,59,59],[2088,11,7,0,59,59],
+          '2088031405:00:00','2088031401:00:00','2088110704:59:59','2088110700:59:59' ],
+        [ [2088,11,7,5,0,0],[2088,11,7,0,0,0],'-05:00:00',[-5,0,0],
+          'CST',0,[2089,3,13,4,59,59],[2089,3,12,23,59,59],
+          '2088110705:00:00','2088110700:00:00','2089031304:59:59','2089031223:59:59' ],
      ],
 );
 

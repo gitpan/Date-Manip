@@ -1,33 +1,18 @@
-package Date::Manip::TZ::asjeru00;
+package #
+Date::Manip::TZ::asjeru00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:39:54 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:52:56 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::asjeru00 - Support for the Asia/Jerusalem time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -1226,8 +1211,17 @@ END { undef $VERSION; }
           'IDT',1,[2096,10,6,22,59,59],[2096,10,7,1,59,59],
           '2096032300:00:00','2096032303:00:00','2096100622:59:59','2096100701:59:59' ],
         [ [2096,10,6,23,0,0],[2096,10,7,1,0,0],'+02:00:00',[2,0,0],
+          'IST',0,[2097,3,28,23,59,59],[2097,3,29,1,59,59],
+          '2096100623:00:00','2096100701:00:00','2097032823:59:59','2097032901:59:59' ],
+     ],
+   2097 =>
+     [
+        [ [2097,3,29,0,0,0],[2097,3,29,3,0,0],'+03:00:00',[3,0,0],
+          'IDT',1,[2097,10,5,22,59,59],[2097,10,6,1,59,59],
+          '2097032900:00:00','2097032903:00:00','2097100522:59:59','2097100601:59:59' ],
+        [ [2097,10,5,23,0,0],[2097,10,6,1,0,0],'+02:00:00',[2,0,0],
           'IST',0,[9999,12,31,0,0,0],[9999,12,31,2,0,0],
-          '2096100623:00:00','2096100701:00:00','9999123100:00:00','9999123102:00:00' ],
+          '2097100523:00:00','2097100601:00:00','9999123100:00:00','9999123102:00:00' ],
      ],
 );
 

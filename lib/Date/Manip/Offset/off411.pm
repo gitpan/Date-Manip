@@ -1,38 +1,25 @@
-package Date::Manip::Offset::off411;
+package #
+Date::Manip::Offset::off411;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:44 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:55:41 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.orgtz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::Offset::off411 - Support for the -05:50:07 offset
-
-=head1 SYNPOSIS
-
-This module contains data from the Olsen database for the offset. It
-is not intended to be used directly (other Date::Manip modules will
-load it as needed).
-
-=cut
 
 use strict;
 use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,11 +28,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-05:50:07';
+$Offset        = '-05:49:07';
 
 %Offset        = (
    0 => [
-      'america/indiana/vincennes',
+      'america/indiana/petersburg',
       ],
 );
 

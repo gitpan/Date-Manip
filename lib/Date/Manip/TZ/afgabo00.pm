@@ -1,33 +1,18 @@
-package Date::Manip::TZ::afgabo00;
+package #
+Date::Manip::TZ::afgabo00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:06 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:08 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::afgabo00 - Support for the Africa/Gaborone time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -52,9 +37,15 @@ END { undef $VERSION; }
      ],
    1884 =>
      [
-        [ [1884,12,31,22,16,20],[1885,1,1,0,16,20],'+02:00:00',[2,0,0],
+        [ [1884,12,31,22,16,20],[1884,12,31,23,46,20],'+01:30:00',[1,30,0],
+          'SAST',0,[1903,2,28,22,29,59],[1903,2,28,23,59,59],
+          '1884123122:16:20','1884123123:46:20','1903022822:29:59','1903022823:59:59' ],
+     ],
+   1903 =>
+     [
+        [ [1903,2,28,22,30,0],[1903,3,1,0,30,0],'+02:00:00',[2,0,0],
           'CAT',0,[1943,9,18,23,59,59],[1943,9,19,1,59,59],
-          '1884123122:16:20','1885010100:16:20','1943091823:59:59','1943091901:59:59' ],
+          '1903022822:30:00','1903030100:30:00','1943091823:59:59','1943091901:59:59' ],
      ],
    1943 =>
      [

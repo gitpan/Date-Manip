@@ -11,7 +11,9 @@ my %requires = (
                  'utf8'                     => '0',
                );
 my %build_mods = (
+                 'File::Basename'           => '0',
                  'Test::Inter'              => '0',
+                 'Test::More'               => '0',
                );
 
 my %IsWin32 = map { $_ => 1 } qw( MSWin32 NetWare symbian );
@@ -26,7 +28,7 @@ my $class = Module::Build->subclass(
 
 my $build = $class->new(
         license            => 'perl',
-        dist_version       => '6.39',
+        dist_version       => '6.40',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',

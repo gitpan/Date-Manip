@@ -22,8 +22,8 @@ that directly affects Date::Manip . The leak is in all versions of
 perl up to the following versions:
 
    5.10.1
-   5.12.4
-   5.14.2
+   5.12.5
+   5.14.3
    5.15.5
 
 The bug has been fixed in:

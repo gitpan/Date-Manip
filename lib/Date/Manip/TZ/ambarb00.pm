@@ -1,33 +1,18 @@
-package Date::Manip::TZ::ambarb00;
+package #
+Date::Manip::TZ::ambarb00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:39:56 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:52:58 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::ambarb00 - Support for the America/Barbados time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,27 +25,27 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
    1    =>
      [
-        [ [1,1,2,0,0,0],[1,1,1,20,1,32],'-03:58:28',[-3,-58,-28],
-          'LMT',0,[1924,1,1,3,58,27],[1923,12,31,23,59,59],
-          '0001010200:00:00','0001010120:01:32','1924010103:58:27','1923123123:59:59' ],
+        [ [1,1,2,0,0,0],[1,1,1,20,1,31],'-03:58:29',[-3,-58,-29],
+          'LMT',0,[1924,1,1,3,58,28],[1923,12,31,23,59,59],
+          '0001010200:00:00','0001010120:01:31','1924010103:58:28','1923123123:59:59' ],
      ],
    1924 =>
      [
-        [ [1924,1,1,3,58,28],[1924,1,1,0,0,0],'-03:58:28',[-3,-58,-28],
-          'BMT',0,[1932,1,1,3,58,27],[1931,12,31,23,59,59],
-          '1924010103:58:28','1924010100:00:00','1932010103:58:27','1931123123:59:59' ],
+        [ [1924,1,1,3,58,29],[1924,1,1,0,0,0],'-03:58:29',[-3,-58,-29],
+          'BMT',0,[1932,1,1,3,58,28],[1931,12,31,23,59,59],
+          '1924010103:58:29','1924010100:00:00','1932010103:58:28','1931123123:59:59' ],
      ],
    1932 =>
      [
-        [ [1932,1,1,3,58,28],[1931,12,31,23,58,28],'-04:00:00',[-4,0,0],
+        [ [1932,1,1,3,58,29],[1931,12,31,23,58,29],'-04:00:00',[-4,0,0],
           'AST',0,[1977,6,12,5,59,59],[1977,6,12,1,59,59],
-          '1932010103:58:28','1931123123:58:28','1977061205:59:59','1977061201:59:59' ],
+          '1932010103:58:29','1931123123:58:29','1977061205:59:59','1977061201:59:59' ],
      ],
    1977 =>
      [

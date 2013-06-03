@@ -1,33 +1,18 @@
-package Date::Manip::TZ::amadak00;
+package #
+Date::Manip::TZ::amadak00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:10 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:12 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::amadak00 - Support for the America/Adak time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -1156,6 +1141,15 @@ END { undef $VERSION; }
         [ [2087,11,2,11,0,0],[2087,11,2,1,0,0],'-10:00:00',[-10,0,0],
           'HAST',0,[2088,3,14,11,59,59],[2088,3,14,1,59,59],
           '2087110211:00:00','2087110201:00:00','2088031411:59:59','2088031401:59:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,3,14,12,0,0],[2088,3,14,3,0,0],'-09:00:00',[-9,0,0],
+          'HADT',1,[2088,11,7,10,59,59],[2088,11,7,1,59,59],
+          '2088031412:00:00','2088031403:00:00','2088110710:59:59','2088110701:59:59' ],
+        [ [2088,11,7,11,0,0],[2088,11,7,1,0,0],'-10:00:00',[-10,0,0],
+          'HAST',0,[2089,3,13,11,59,59],[2089,3,13,1,59,59],
+          '2088110711:00:00','2088110701:00:00','2089031311:59:59','2089031301:59:59' ],
      ],
 );
 

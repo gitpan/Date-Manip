@@ -31,9 +31,22 @@ incompatible. These are marked with an exclamation mark (!).
 
 =head1 VERSION 6.xx  (planned 2013-09-01)
 
-=head1 VERSION 6.xx  (planned 2013-06-01)
+=head1 VERSION 6.40  (2013-06-01)
 
-=head1 VERSION 6.39  2013-03-01
+=over 4
+
+=item Removed PODs
+
+POD documentation is no longer generated for Date::Manip::TZ::* and
+Date::Manip::Offset::* modules.
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2013c)
+
+=back
+
+=head1 VERSION 6.39  (2013-03-01)
 
 =over 4
 

@@ -580,6 +580,7 @@ lib/Date/Manip/Offset/off485.pm
 lib/Date/Manip/Offset/off486.pm
 lib/Date/Manip/Offset/off487.pm
 lib/Date/Manip/Offset/off488.pm
+lib/Date/Manip/Offset/off489.pm
 lib/Date/Manip/Problems.pod
 lib/Date/Manip/Recur.pm
 lib/Date/Manip/Recur.pod
@@ -828,6 +829,7 @@ lib/Date/Manip/TZ/askamc00.pm
 lib/Date/Manip/TZ/askara00.pm
 lib/Date/Manip/TZ/askash00.pm
 lib/Date/Manip/TZ/askath00.pm
+lib/Date/Manip/TZ/askhan00.pm
 lib/Date/Manip/TZ/askolk00.pm
 lib/Date/Manip/TZ/askras00.pm
 lib/Date/Manip/TZ/askual00.pm
@@ -863,6 +865,7 @@ lib/Date/Manip/TZ/asthim00.pm
 lib/Date/Manip/TZ/astoky00.pm
 lib/Date/Manip/TZ/asulaa00.pm
 lib/Date/Manip/TZ/asurum00.pm
+lib/Date/Manip/TZ/asustm00.pm
 lib/Date/Manip/TZ/asvien00.pm
 lib/Date/Manip/TZ/asvlad00.pm
 lib/Date/Manip/TZ/asyaku00.pm
@@ -1218,6 +1221,7 @@ t/orig.parserecur.t
 t/orig.settime.t
 t/orig.unixdate.t
 t/pod.t
+t/pod_coverage.ign
 t/pod_coverage.t
 t/recur.dates.0.t
 t/recur.dates.1.t

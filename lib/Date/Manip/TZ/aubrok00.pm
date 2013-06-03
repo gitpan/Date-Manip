@@ -1,33 +1,18 @@
-package Date::Manip::TZ::aubrok00;
+package #
+Date::Manip::TZ::aubrok00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:39:56 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:52:57 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::aubrok00 - Support for the Australia/Broken_Hill time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -1159,6 +1144,15 @@ END { undef $VERSION; }
         [ [2087,10,4,16,30,0],[2087,10,5,3,0,0],'+10:30:00',[10,30,0],
           'CST',1,[2088,4,3,16,29,59],[2088,4,4,2,59,59],
           '2087100416:30:00','2087100503:00:00','2088040316:29:59','2088040402:59:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,4,3,16,30,0],[2088,4,4,2,0,0],'+09:30:00',[9,30,0],
+          'CST',0,[2088,10,2,16,29,59],[2088,10,3,1,59,59],
+          '2088040316:30:00','2088040402:00:00','2088100216:29:59','2088100301:59:59' ],
+        [ [2088,10,2,16,30,0],[2088,10,3,3,0,0],'+10:30:00',[10,30,0],
+          'CST',1,[2089,4,2,16,29,59],[2089,4,3,2,59,59],
+          '2088100216:30:00','2088100303:00:00','2089040216:29:59','2089040302:59:59' ],
      ],
 );
 

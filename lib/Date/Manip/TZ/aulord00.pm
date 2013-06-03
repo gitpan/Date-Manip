@@ -1,33 +1,18 @@
-package Date::Manip::TZ::aulord00;
+package #
+Date::Manip::TZ::aulord00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:04 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:06 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::aulord00 - Support for the Australia/Lord_Howe time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -1018,6 +1003,15 @@ END { undef $VERSION; }
         [ [2087,10,4,15,30,0],[2087,10,5,2,30,0],'+11:00:00',[11,0,0],
           'LHST',1,[2088,4,3,14,59,59],[2088,4,4,1,59,59],
           '2087100415:30:00','2087100502:30:00','2088040314:59:59','2088040401:59:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,4,3,15,0,0],[2088,4,4,1,30,0],'+10:30:00',[10,30,0],
+          'LHST',0,[2088,10,2,15,29,59],[2088,10,3,1,59,59],
+          '2088040315:00:00','2088040401:30:00','2088100215:29:59','2088100301:59:59' ],
+        [ [2088,10,2,15,30,0],[2088,10,3,2,30,0],'+11:00:00',[11,0,0],
+          'LHST',1,[2089,4,2,14,59,59],[2089,4,3,1,59,59],
+          '2088100215:30:00','2088100302:30:00','2089040214:59:59','2089040301:59:59' ],
      ],
 );
 

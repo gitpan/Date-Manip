@@ -1,33 +1,18 @@
-package Date::Manip::TZ::asbaku00;
+package #
+Date::Manip::TZ::asbaku00;
 # Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 30 12:40:09 EST 2012
-#    Data version: tzdata2012j
-#    Code version: tzcode2012j
+#    Generated on: Mon Jun  3 12:53:12 EDT 2013
+#    Data version: tzdata2013c
+#    Code version: tzcode2013c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
 #    ftp://ftp.iana.org/tz
-
-=pod
-
-=head1 NAME
-
-Date::Manip::TZ::asbaku00 - Support for the Asia/Baku time zone
-
-=head1 SYNPOSIS
-
-This module contains data describing a time zone.  Most of the time zone
-data comes from the Olsen database, but there are a few exceptions.
-
-This module is not intended to be used directly.  Other Date::Manip modules
-will load it as needed.
-
-=cut
 
 use strict;
 use warnings;
@@ -40,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.39';
+$VERSION='6.40';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -1000,6 +985,15 @@ END { undef $VERSION; }
         [ [2087,10,26,0,0,0],[2087,10,26,4,0,0],'+04:00:00',[4,0,0],
           'AZT',0,[2088,3,27,23,59,59],[2088,3,28,3,59,59],
           '2087102600:00:00','2087102604:00:00','2088032723:59:59','2088032803:59:59' ],
+     ],
+   2088 =>
+     [
+        [ [2088,3,28,0,0,0],[2088,3,28,5,0,0],'+05:00:00',[5,0,0],
+          'AZST',1,[2088,10,30,23,59,59],[2088,10,31,4,59,59],
+          '2088032800:00:00','2088032805:00:00','2088103023:59:59','2088103104:59:59' ],
+        [ [2088,10,31,0,0,0],[2088,10,31,4,0,0],'+04:00:00',[4,0,0],
+          'AZT',0,[2089,3,26,23,59,59],[2089,3,27,3,59,59],
+          '2088103100:00:00','2088103104:00:00','2089032623:59:59','2089032703:59:59' ],
      ],
 );
 
