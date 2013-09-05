@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun  3 13:00:51 EDT 2013
-#    Data version: tzdata2013c
-#    Code version: tzcode2013c
+#    Generated on: Thu Sep  5 09:37:36 EDT 2013
+#    Data version: tzdata2013d
+#    Code version: tzcode2013d
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.40';
+$VERSION='6.41';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,8 +37,8 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2013c';
-$TzcodeVersion = 'tzcode2013c';
+$TzdataVersion = 'tzdata2013d';
+$TzcodeVersion = 'tzcode2013d';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
 $LastYear      = '2088';
@@ -2327,29 +2327,30 @@ $LastYear      = '2088';
                      'europe/athens',
                      'europe/bucharest',
                      'europe/chisinau',
-                     'africa/cairo',
                      'europe/helsinki',
                      'asia/gaza',
+                     'asia/hebron',
                      'asia/amman',
                      'asia/nicosia',
                      'europe/sofia',
                      'europe/riga',
                      'europe/tallinn',
-                     'europe/kaliningrad',
-                     'europe/minsk',
                      'europe/vilnius',
                      'europe/zaporozhye',
                      'europe/kiev',
                      'europe/simferopol',
                      'europe/uzhgorod',
+                     'africa/cairo',
+                     'europe/kaliningrad',
+                     'europe/minsk',
                      'europe/moscow',
-                     'europe/warsaw',
-                     'asia/hebron' ],
+                     'europe/warsaw' ],
   'eet'         => [ 'eet',
                      'asia/beirut',
                      'europe/sofia',
                      'africa/cairo',
                      'asia/gaza',
+                     'asia/hebron',
                      'europe/istanbul',
                      'europe/athens',
                      'asia/damascus',
@@ -2358,19 +2359,18 @@ $LastYear      = '2088';
                      'europe/helsinki',
                      'europe/tallinn',
                      'europe/kiev',
-                     'europe/minsk',
                      'europe/simferopol',
                      'europe/zaporozhye',
                      'europe/riga',
                      'asia/amman',
                      'europe/bucharest',
                      'europe/chisinau',
+                     'europe/uzhgorod',
                      'africa/tripoli',
                      'europe/kaliningrad',
-                     'europe/uzhgorod',
+                     'europe/minsk',
                      'europe/moscow',
-                     'europe/warsaw',
-                     'asia/hebron' ],
+                     'europe/warsaw' ],
   'egst'        => [ 'america/scoresbysund' ],
   'egt'         => [ 'america/scoresbysund' ],
   'ehdt'        => [ 'america/santo_domingo' ],
@@ -3152,7 +3152,7 @@ $LastYear      = '2088';
   '+02:20:00'  => 'off081',
   '+02:20:23'  => 'off082',
   '+02:20:40'  => 'off083',
-  '+02:20:56'  => 'off084',
+  '+02:20:54'  => 'off084',
   '+02:22:00'  => 'off085',
   '+02:23:44'  => 'off086',
   '+02:25:12'  => 'off087',

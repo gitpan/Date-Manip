@@ -147,22 +147,14 @@ need to be understood when using it:
 The version 5 functional interface is no longer being developed, and
 only limited support is available for it.
 
-I will continue to do limited bug fixes provided they do not require
-a lot of changes. Anything to do with time zone handling will not
-be fixed, and other problems (especially those that have already been
-fixed in the 6.xx release) may not be patched if they require
-significant changes to 5.xx.
+As of December 2012, no development will be done, and I will not
+correct any remaining bugs in version 5.  If a patch is supplied by
+someone else to fix bugs, I will apply it, provided it applies
+cleanly, and the resulting code continues to pass all tests.  I will
+not apply patches to add features.
 
-Limited bug fixes will be supported until December 2012. At that
-point, I will reevaluate things and decide whether or not to continue
-this or not. My prediction is that, at that point, I will cease
-providing bug fixes for the 5.xx release entirely.
-
-Whether or not I continue to do bug fixes, I will continue to
-distribute the version 5 functional interface until at least December
-2013. After that, I will evaluate the need for a perl 5.6/5.8 version
-of Date::Manip in order to decide whether or not to continue
-distributing it.
+I will continue to distribute version 5 for several years.  I do not
+have a date in mind where version 5 will be removed.
 
 =item B<Limited Time Zone Support>
 
@@ -180,10 +172,6 @@ automatically generated, I no longer take requests for time zones.
 
 The version 5 interface does not handle daylight saving time changes
 properly.
-
-=item B<No Further Development>
-
-No functionality will be added to 5.xx .
 
 =item B<Performance Issues>
 

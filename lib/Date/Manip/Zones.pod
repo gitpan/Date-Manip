@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Mon Jun  3 13:00:51 EDT 2013
-#    Data version: tzdata2013c
-#    Code version: tzcode2013c
+#    Generated on: Thu Sep  5 09:37:36 EDT 2013
+#    Data version: tzdata2013d
+#    Code version: tzcode2013d
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://ftp.iana.orgtz/tzdata2013c.tar.gz
+   ftp://ftp.iana.orgtz/tzdata2013d.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -862,24 +862,24 @@ default alias can be overridden as described above.
                                           Europe/Athens
                                           Europe/Bucharest
                                           Europe/Chisinau
-                                          Africa/Cairo
                                           Europe/Helsinki
                                           Asia/Gaza
+                                          Asia/Hebron
                                           Asia/Amman
                                           Asia/Nicosia
                                           Europe/Sofia
                                           Europe/Riga
                                           Europe/Tallinn
-                                          Europe/Kaliningrad
-                                          Europe/Minsk
                                           Europe/Vilnius
                                           Europe/Zaporozhye
                                           Europe/Kiev
                                           Europe/Simferopol
                                           Europe/Uzhgorod
+                                          Europe/Kaliningrad
+                                          Europe/Minsk
+                                          Africa/Cairo
                                           Europe/Moscow
                                           Europe/Warsaw
-                                          Asia/Hebron
      EET-2EET                             Asia/Gaza
                                           Asia/Hebron
      EGT1EGST                             America/Scoresbysund
@@ -1994,7 +1994,7 @@ Date::Manip::TZ module.
      0      +02:20:23   Asia/Hebron
      0      +02:20:40   Asia/Jerusalem
                         Europe/Zaporozhye
-     0      +02:20:56   Asia/Jerusalem
+     0      +02:20:54   Asia/Jerusalem
      0      +02:22:00   Asia/Beirut
      0      +02:23:44   Asia/Amman
      0      +02:25:12   Asia/Damascus
@@ -3434,29 +3434,30 @@ altering the order.
                       Europe/Athens
                       Europe/Bucharest
                       Europe/Chisinau
-                      Africa/Cairo
                       Europe/Helsinki
                       Asia/Gaza
+                      Asia/Hebron
                       Asia/Amman
                       Asia/Nicosia
                       Europe/Sofia
                       Europe/Riga
                       Europe/Tallinn
-                      Europe/Kaliningrad
-                      Europe/Minsk
                       Europe/Vilnius
                       Europe/Zaporozhye
                       Europe/Kiev
                       Europe/Simferopol
                       Europe/Uzhgorod
+                      Africa/Cairo
+                      Europe/Kaliningrad
+                      Europe/Minsk
                       Europe/Moscow
                       Europe/Warsaw
-                      Asia/Hebron
      EET              EET
                       Asia/Beirut
                       Europe/Sofia
                       Africa/Cairo
                       Asia/Gaza
+                      Asia/Hebron
                       Europe/Istanbul
                       Europe/Athens
                       Asia/Damascus
@@ -3465,19 +3466,18 @@ altering the order.
                       Europe/Helsinki
                       Europe/Tallinn
                       Europe/Kiev
-                      Europe/Minsk
                       Europe/Simferopol
                       Europe/Zaporozhye
                       Europe/Riga
                       Asia/Amman
                       Europe/Bucharest
                       Europe/Chisinau
+                      Europe/Uzhgorod
                       Africa/Tripoli
                       Europe/Kaliningrad
-                      Europe/Uzhgorod
+                      Europe/Minsk
                       Europe/Moscow
                       Europe/Warsaw
-                      Asia/Hebron
      EGST             America/Scoresbysund
      EGT              America/Scoresbysund
      EHDT             America/Santo_Domingo

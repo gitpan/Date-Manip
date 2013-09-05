@@ -473,10 +473,10 @@ knowing what time zone it is, and knowing whether it is daylight
 saving or not. All of this is necessary in order to correctly handle
 every possible date.
 
-The daylight saving time is only used for a couple hours each year
-during daylight saving time changes (at all other times, the date,
-time, and time zone are sufficient information), so it is optional, and
-defaults to standard time if omitted.
+The daylight saving time information is only used for a couple hours
+each year during daylight saving time changes (at all other times, the
+date, time, and time zone are sufficient information), so it is
+optional, and defaults to standard time if omitted.
 
 The default behavior of Date::Manip is to use the system localtime
 function to determine the date, time, and daylight saving time

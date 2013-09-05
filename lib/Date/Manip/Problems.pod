@@ -391,7 +391,7 @@ to the object.
 
 For example, Date::Manip allows you to parse dates in several
 languages.  Each language has a large number of regular expressions
-which are used to to the actual parsing. Instead of recreating these
+which are used to do the actual parsing. Instead of recreating these
 regular expressions each time they are needed, they are created once
 and stored in an object (specifically, a Date::Manip::Base object).
 The size of the Date::Manip::Base object is almost 15K (due primarily

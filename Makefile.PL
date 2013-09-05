@@ -12,6 +12,7 @@ my %requires = (
                  'File::Basename'           => '0',
                  'Test::Inter'              => '0',
                  'Test::More'               => '0',
+                 'ExtUtils::MakeMaker'      => '0',
                );
 
 my %IsWin32 = map { $_ => 1 } qw( MSWin32 NetWare symbian );
@@ -21,7 +22,7 @@ if ($IsWin32{ $^O }) {
 
 WriteMakefile(
         NAME             => 'Date::Manip',
-        VERSION          => '6.40',
+        VERSION          => '6.41',
         ($] >= 5.006
         ? (ABSTRACT=>'Date manipulation routines',
            AUTHOR  =>'Sullivan Beck (sbeck@cpan.org)')

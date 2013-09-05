@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.40';
+$VERSION='6.41';
 END { undef $VERSION; }
 
 ########################################################################
@@ -519,8 +519,8 @@ sub parse_format {
             $z = $dmt->_now('tz',$noupdate);
             $noupdate = 1;
          }
-         ($y,$m,$d,$h,$mn,$s) =
-           @{ $dmb->convert_from_gmt([$y,$m,$d,$h,$mn,$s],$z) };
+         my($err,$date) = $dmt->convert_from_gmt([$y,$m,$d,$h,$mn,$s],$z);
+         ($y,$m,$d,$h,$mn,$s) = @$date;
          last;
       }
 
@@ -567,7 +567,7 @@ sub parse_format {
       # Get h/mn/s from:
       #     $h,$mn,$s,$ampm
 
-      if ($h) {
+      if (defined($h)) {
          ($h,$mn,$s) = $self->_def_time($h,$mn,$s,\$noupdate);
       }
 
@@ -599,7 +599,7 @@ sub parse_format {
       ($y,$m,$d) = $dmt->_now('now',$noupdate);
       $noupdate = 1;
    }
-   if (! $h) {
+   if (! defined($h)) {
       ($h,$mn,$s) = (0,0,0);
    }
 

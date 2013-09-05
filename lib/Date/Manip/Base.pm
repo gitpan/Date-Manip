@@ -21,11 +21,11 @@ use warnings;
 use integer;
 use utf8;
 #use re 'debug';
-use Encode qw(encode_utf8 from_to);
+use Encode qw(encode_utf8 from_to find_encoding);
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.40';
+$VERSION='6.41';
 END { undef $VERSION; }
 
 ###############################################################################

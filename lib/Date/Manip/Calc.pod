@@ -199,8 +199,8 @@ delta. If $delta is a business delta, A business calculation is
 done. If $delta is a non-business delta, a non-business calculation
 will be done.
 
-The $delta will also contain information about whether it is
-exact, semi-exact, or approximate.
+The $delta will also be classified as exact, semi-exact, or approximate
+based on which fields are non-zero.
 
 =item B<Mode in delta-delta calculations>
 
@@ -348,12 +348,14 @@ Other relationships are not known.  These include:
   1 month  = ? days
   1 day    = ? hours
 
-For non-business calculations, a day is usually (but not always) 24
-hours long. Due to daylight saving time, there is some variability though,
-so whenever possible, a day is actually measured as the same time on
-two days (i.e. Tuesday at noon to Wednesday at noon) even if that period
-is not precisely 24 hours.  For business calculations, a days length
-is determined by the length of the work day and is known exactly.
+For non-business calculations, a day is usually 24 hours long. Due to
+daylight saving time transitions which might make a day be 23 or 25 hours
+long (or in some cases, some other length), the relation is not exact.
+Whenever possible, a day is actually measured as the same time on
+two days (i.e. Tuesday at noon to Wednesday at noon) even if that
+period is not precisely 24 hours.  For business calculations, a days
+length is determined by the length of the work day and is known
+exactly.
 
 Exact calculations involve ONLY quantities of time with a known length,
 so there is no ambiguity in them.

@@ -27,9 +27,41 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.xx  (planned 2013-12-01)
+=head1 VERSION 6.46  (planned 2014-12-01)
 
-=head1 VERSION 6.xx  (planned 2013-09-01)
+=head1 VERSION 6.45  (planned 2014-09-01)
+
+=head1 VERSION 6.44  (planned 2014-06-01)
+
+=head1 VERSION 6.43  (planned 2014-03-01)
+
+=head1 VERSION 6.42  (planned 2013-12-01)
+
+=head1 VERSION 6.41  (2013-09-05)
+
+=over 4
+
+=item Bug fixes
+
+Removed a .swp file accidentally left in the package.  RT 85845
+
+Fixed a bug in parse_format where times between 00:00:00 and 01:00:00 weren't
+parsed correctly.  Ole Nomann Thomsen
+
+Fixed generated META.* files to not require Module::Build 0.39.  RT 86137
+
+Fixed a bug where parse_format did not work with a '%s' format.  RT 87498
+
+Fixed a bug where find_encoding wasn't imported from the Encode module.  RT 87665
+
+Fixed a bug where recurrences with no interval did not work if a start and
+end date were specified, and no dates fell in that range.  Jan Pradac
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2013d)
+
+=back
 
 =head1 VERSION 6.40  (2013-06-01)
 

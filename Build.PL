@@ -15,6 +15,9 @@ my %build_mods = (
                  'Test::Inter'              => '0',
                  'Test::More'               => '0',
                );
+my %config_mods = (
+                 'Module::Build'            => '0.21',
+               );
 
 my %IsWin32 = map { $_ => 1 } qw( MSWin32 NetWare symbian );
 if ($IsWin32{ $^O }) {
@@ -28,12 +31,13 @@ my $class = Module::Build->subclass(
 
 my $build = $class->new(
         license            => 'perl',
-        dist_version       => '6.40',
+        dist_version       => '6.41',
         dist_author        => 'Sullivan Beck <sbeck@cpan.org>',
         module_name        => 'Date::Manip',
         dist_abstract      => 'Date manipulation routines',
         requires           => \%requires,
         build_requires     => \%build_mods,
+        configure_requires => \%config_mods,
         sign               => 1,
         script_files => [
            'examples/dm_zdump',
