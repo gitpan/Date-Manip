@@ -35,7 +35,33 @@ incompatible. These are marked with an exclamation mark (!).
 
 =head1 VERSION 6.43  (planned 2014-03-01)
 
-=head1 VERSION 6.42  (planned 2013-12-01)
+=head1 VERSION 6.42  (2013-12-02)
+
+=over 4
+
+=item Added ParseDateFormat function
+
+Added the ParseDateFormat function to the DM6 functional interface
+in response to RT 89286.
+
+=item Added Common Log format
+
+Added the date format used in apache logs: 11/Oct/2000:13:55:36 -0700
+RT 89286.
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2013h)
+
+=item Bug fixes
+
+Fixed a bug where dates of the form of a delta with a timezone attached
+(i.e. "1 day ago at midnight UTC") failed.  RT 89256
+
+Fixed a bug where events handling gave a warning if there were no events
+that applied.  RT 90344
+
+=back
 
 =head1 VERSION 6.41  (2013-09-05)
 

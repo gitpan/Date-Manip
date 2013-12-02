@@ -6,9 +6,9 @@ Date::Manip::TZ::asmaka00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Thu Sep  5 09:35:09 EDT 2013
-#    Data version: tzdata2013d
-#    Code version: tzcode2013d
+#    Generated on: Fri Nov 22 13:03:34 EST 2013
+#    Data version: tzdata2013h
+#    Code version: tzcode2013h
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.41';
+$VERSION='6.42';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -44,7 +44,7 @@ END { undef $VERSION; }
    1932 =>
      [
         [ [1932,10,31,16,2,24],[1932,11,1,0,2,24],'+08:00:00',[8,0,0],
-          'CIT',0,[1942,2,8,15,59,59],[1942,2,8,23,59,59],
+          'WITA',0,[1942,2,8,15,59,59],[1942,2,8,23,59,59],
           '1932103116:02:24','1932110100:02:24','1942020815:59:59','1942020823:59:59' ],
      ],
    1942 =>
@@ -56,7 +56,7 @@ END { undef $VERSION; }
    1945 =>
      [
         [ [1945,9,22,15,0,0],[1945,9,22,23,0,0],'+08:00:00',[8,0,0],
-          'CIT',0,[9999,12,31,0,0,0],[9999,12,31,8,0,0],
+          'WITA',0,[9999,12,31,0,0,0],[9999,12,31,8,0,0],
           '1945092215:00:00','1945092223:00:00','9999123100:00:00','9999123108:00:00' ],
      ],
 );

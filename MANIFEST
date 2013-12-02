@@ -18,7 +18,7 @@ internal/data.abbrev.pl
 internal/data.alias.pl
 internal/data.misc.pl
 internal/data.offset.pl
-internal/dm_translate.html
+internal/dm_translate
 internal/dumps
 internal/gen_dm5abbrevs
 internal/langpod
@@ -567,19 +567,6 @@ lib/Date/Manip/Offset/off473.pm
 lib/Date/Manip/Offset/off474.pm
 lib/Date/Manip/Offset/off475.pm
 lib/Date/Manip/Offset/off476.pm
-lib/Date/Manip/Offset/off477.pm
-lib/Date/Manip/Offset/off478.pm
-lib/Date/Manip/Offset/off479.pm
-lib/Date/Manip/Offset/off480.pm
-lib/Date/Manip/Offset/off481.pm
-lib/Date/Manip/Offset/off482.pm
-lib/Date/Manip/Offset/off483.pm
-lib/Date/Manip/Offset/off484.pm
-lib/Date/Manip/Offset/off485.pm
-lib/Date/Manip/Offset/off486.pm
-lib/Date/Manip/Offset/off487.pm
-lib/Date/Manip/Offset/off488.pm
-lib/Date/Manip/Offset/off489.pm
 lib/Date/Manip/Problems.pod
 lib/Date/Manip/Recur.pm
 lib/Date/Manip/Recur.pod
@@ -611,7 +598,6 @@ lib/Date/Manip/TZ/affree00.pm
 lib/Date/Manip/TZ/afgabo00.pm
 lib/Date/Manip/TZ/afhara00.pm
 lib/Date/Manip/TZ/afjoha00.pm
-lib/Date/Manip/TZ/afjuba00.pm
 lib/Date/Manip/TZ/afkamp00.pm
 lib/Date/Manip/TZ/afkhar00.pm
 lib/Date/Manip/TZ/afkiga00.pm
@@ -640,10 +626,8 @@ lib/Date/Manip/TZ/aftuni00.pm
 lib/Date/Manip/TZ/afwind00.pm
 lib/Date/Manip/TZ/amadak00.pm
 lib/Date/Manip/TZ/amanch00.pm
-lib/Date/Manip/TZ/amangu00.pm
 lib/Date/Manip/TZ/amanti00.pm
 lib/Date/Manip/TZ/amarag00.pm
-lib/Date/Manip/TZ/amarub00.pm
 lib/Date/Manip/TZ/amasun00.pm
 lib/Date/Manip/TZ/amatik00.pm
 lib/Date/Manip/TZ/ambahi00.pm
@@ -677,7 +661,6 @@ lib/Date/Manip/TZ/amdaws00.pm
 lib/Date/Manip/TZ/amdaws01.pm
 lib/Date/Manip/TZ/amdenv00.pm
 lib/Date/Manip/TZ/amdetr00.pm
-lib/Date/Manip/TZ/amdomi00.pm
 lib/Date/Manip/TZ/amedmo00.pm
 lib/Date/Manip/TZ/ameiru00.pm
 lib/Date/Manip/TZ/amel_s00.pm
@@ -686,8 +669,6 @@ lib/Date/Manip/TZ/amglac00.pm
 lib/Date/Manip/TZ/amgodt00.pm
 lib/Date/Manip/TZ/amgoos00.pm
 lib/Date/Manip/TZ/amgran00.pm
-lib/Date/Manip/TZ/amgren00.pm
-lib/Date/Manip/TZ/amguad00.pm
 lib/Date/Manip/TZ/amguat00.pm
 lib/Date/Manip/TZ/amguay00.pm
 lib/Date/Manip/TZ/amguya00.pm
@@ -724,7 +705,6 @@ lib/Date/Manip/TZ/ammont00.pm
 lib/Date/Manip/TZ/ammont01.pm
 lib/Date/Manip/TZ/ammont02.pm
 lib/Date/Manip/TZ/ammont03.pm
-lib/Date/Manip/TZ/ammont04.pm
 lib/Date/Manip/TZ/amnass00.pm
 lib/Date/Manip/TZ/amnew_00.pm
 lib/Date/Manip/TZ/amnew_01.pm
@@ -759,10 +739,6 @@ lib/Date/Manip/TZ/amsao_00.pm
 lib/Date/Manip/TZ/amscor00.pm
 lib/Date/Manip/TZ/amsitk00.pm
 lib/Date/Manip/TZ/amst_j00.pm
-lib/Date/Manip/TZ/amst_k00.pm
-lib/Date/Manip/TZ/amst_l00.pm
-lib/Date/Manip/TZ/amst_t00.pm
-lib/Date/Manip/TZ/amst_v00.pm
 lib/Date/Manip/TZ/amswif00.pm
 lib/Date/Manip/TZ/amtegu00.pm
 lib/Date/Manip/TZ/amtell00.pm
@@ -770,7 +746,6 @@ lib/Date/Manip/TZ/amthul00.pm
 lib/Date/Manip/TZ/amthun00.pm
 lib/Date/Manip/TZ/amtiju00.pm
 lib/Date/Manip/TZ/amtoro00.pm
-lib/Date/Manip/TZ/amtort00.pm
 lib/Date/Manip/TZ/amtucu00.pm
 lib/Date/Manip/TZ/amushu00.pm
 lib/Date/Manip/TZ/amvanc00.pm
@@ -786,7 +761,6 @@ lib/Date/Manip/TZ/andavi00.pm
 lib/Date/Manip/TZ/andumo00.pm
 lib/Date/Manip/TZ/anmacq00.pm
 lib/Date/Manip/TZ/anmaws00.pm
-lib/Date/Manip/TZ/anmcmu00.pm
 lib/Date/Manip/TZ/anpalm00.pm
 lib/Date/Manip/TZ/anroth00.pm
 lib/Date/Manip/TZ/ansyow00.pm
@@ -961,7 +935,6 @@ lib/Date/Manip/TZ/eustoc00.pm
 lib/Date/Manip/TZ/eutall00.pm
 lib/Date/Manip/TZ/eutira00.pm
 lib/Date/Manip/TZ/euuzhg00.pm
-lib/Date/Manip/TZ/euvadu00.pm
 lib/Date/Manip/TZ/euvien00.pm
 lib/Date/Manip/TZ/euviln00.pm
 lib/Date/Manip/TZ/euvolg00.pm
@@ -1130,6 +1103,7 @@ t/date.parse.romanian.t
 t/date.parse.russian.t
 t/date.parse.spanish.t
 t/date.parse.swedish.t
+t/date.parse.timezone.t
 t/date.parse_date.common.t
 t/date.parse_date.iso.t
 t/date.parse_date.misc.0.t
@@ -1216,6 +1190,7 @@ t/orig.getnext.t
 t/orig.getprev.t
 t/orig.nthdayofyear.t
 t/orig.parsedatedelta.t
+t/orig.parsedateformat.t
 t/orig.parsedatestring.t
 t/orig.parserecur.t
 t/orig.settime.t

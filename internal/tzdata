@@ -20,7 +20,7 @@ use strict;
 use warnings;
 
 our $VERSION;
-$VERSION='6.41';
+$VERSION='6.42';
 
 our ($dmb);
 $dmb = new Date::Manip::Base;
@@ -551,7 +551,7 @@ sub _do_mods_tzdata_check {
    my($time) = '(?:\d\d:\d\d:\d\d)';
    my($year) = '(?:\d\d\d\d)';
    my($drx)  = qr/$dow\s+$mon\s+$dom\s+$time\s+$year/;
-   my($rx)   = qr/\Q$zone\E\s+$drx\s+UTC\s+=\s+$drx\s+\S+\s+isdst=[01]$/;
+   my($rx)   = qr/\Q$zone\E\s+$drx\s+UT\s+=\s+$drx\s+\S+\s+isdst=[01]$/;
 
    my($err)  = 0;
    foreach my $line (@lines) {
@@ -1048,7 +1048,7 @@ END {
 }
 
 our (\$VERSION);
-\$VERSION='6.41';
+\$VERSION='6.42';
 END { undef \$VERSION; }
 
 \%Dates         = (
@@ -1276,7 +1276,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.41';
+\$VERSION='6.42';
 END { undef \$VERSION; }
 
 our (\$Offset,\%Offset);
@@ -1356,7 +1356,7 @@ use warnings;
 require 5.010000;
 
 our (\$VERSION);
-\$VERSION='6.41';
+\$VERSION='6.42';
 END { undef \$VERSION; }
 
 our (\$TzdataVersion,\$TzcodeVersion,

@@ -6,9 +6,9 @@ Date::Manip::TZ::amsan_01;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Thu Sep  5 09:35:24 EDT 2013
-#    Data version: tzdata2013d
-#    Code version: tzcode2013d
+#    Generated on: Fri Nov 22 13:03:29 EST 2013
+#    Data version: tzdata2013h
+#    Code version: tzcode2013h
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.41';
+$VERSION='6.42';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -320,7 +320,7 @@ END { undef $VERSION; }
           'WART',0,[2009,10,11,3,59,59],[2009,10,10,23,59,59],
           '2009030803:00:00','2009030723:00:00','2009101103:59:59','2009101023:59:59' ],
         [ [2009,10,11,4,0,0],[2009,10,11,1,0,0],'-03:00:00',[-3,0,0],
-          'WARST',1,[9999,12,31,0,0,0],[9999,12,30,21,0,0],
+          'ART',0,[9999,12,31,0,0,0],[9999,12,30,21,0,0],
           '2009101104:00:00','2009101101:00:00','9999123100:00:00','9999123021:00:00' ],
      ],
 );

@@ -269,14 +269,14 @@ Oelstrom
 offsetstr
 Ole
 OO
-opensuse
-openSuSE
 OpenSuSE
+openSuSE
+opensuse
 OpenUNIX
 OpenVMS
 Osbourne
-oses
 OSes
+oses
 Ostermiller
 osx
 overmorrow
@@ -286,6 +286,7 @@ Padwardhan
 parseable
 ParseDate
 ParseDateDelta
+ParseDateFormat
 ParseDateString
 ParseDelta
 ParseRecur
@@ -428,8 +429,8 @@ WorkWeekEnd
 WOY
 WOY'th
 ws
-Www
 wWW
+Www
 WXX
 Wyngaard
 Xavi

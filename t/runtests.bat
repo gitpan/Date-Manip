@@ -74,6 +74,7 @@ perl -I../lib date.parse.romanian.t 1
 perl -I../lib date.parse.russian.t 1
 perl -I../lib date.parse.spanish.t 1
 perl -I../lib date.parse.swedish.t 1
+perl -I../lib date.parse.timezone.t 1
 perl -I../lib date.parse_date.common.t 1
 perl -I../lib date.parse_date.iso.t 1
 perl -I../lib date.parse_date.misc.0.t 1
@@ -151,6 +152,7 @@ perl -I../lib orig.getnext.t 1
 perl -I../lib orig.getprev.t 1
 perl -I../lib orig.nthdayofyear.t 1
 perl -I../lib orig.parsedatedelta.t 1
+perl -I../lib orig.parsedateformat.t 1
 perl -I../lib orig.parsedatestring.t 1
 perl -I../lib orig.parserecur.t 1
 perl -I../lib orig.settime.t 1

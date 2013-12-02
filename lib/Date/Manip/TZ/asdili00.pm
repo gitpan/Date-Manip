@@ -6,9 +6,9 @@ Date::Manip::TZ::asdili00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Thu Sep  5 09:35:23 EDT 2013
-#    Data version: tzdata2013d
-#    Code version: tzcode2013d
+#    Generated on: Fri Nov 22 13:03:29 EST 2013
+#    Data version: tzdata2013h
+#    Code version: tzcode2013h
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.41';
+$VERSION='6.42';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -56,7 +56,7 @@ END { undef $VERSION; }
    1976 =>
      [
         [ [1976,5,2,15,0,0],[1976,5,2,23,0,0],'+08:00:00',[8,0,0],
-          'CIT',0,[2000,9,16,15,59,59],[2000,9,16,23,59,59],
+          'WITA',0,[2000,9,16,15,59,59],[2000,9,16,23,59,59],
           '1976050215:00:00','1976050223:00:00','2000091615:59:59','2000091623:59:59' ],
      ],
    2000 =>

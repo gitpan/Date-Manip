@@ -22,6 +22,8 @@ Date::Manip::DM6 - Date manipulation routines
 
    $date = ParseDateString($string);
 
+   $date = ParseDateFormat($format,$string);
+
    @date = UnixDate($date,@format);
    $date = UnixDate($date,@format);
 
@@ -155,6 +157,15 @@ which I could pass "@ARGV" to and have it remove a date from the beginning.
 This parses a string containing a date and returns it. Refer to the
 Date::Manip::Date documentation for valid date formats. The date
 returned is in the local time zone.
+
+=item B<ParseDateFormat>
+
+   $date = ParseDateFormat($format,$string);
+
+This parses a string containing a date based on a format string and
+returns the date. Refer to the Date::Manip::Date documentation for the
+parse_format method for more information. The date returned is in the
+local time zone.
 
 =item B<UnixDate>
 

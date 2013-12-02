@@ -150,8 +150,8 @@ if ($verbose) {
          $startLT = datestr($startLT);
          $endUT   = datestr($endUT);
          $endLT   = datestr($endLT);
-         print "$z  $startUT UTC = $startLT $abbrev isdst=$isdst\n";
-         print "$z  $endUT UTC = $endLT $abbrev isdst=$isdst\n";
+         print "$z  $startUT UT = $startLT $abbrev isdst=$isdst\n";
+         print "$z  $endUT UT = $endLT $abbrev isdst=$isdst\n";
       }
       print "\n"  if ($#zone != 0);
    }

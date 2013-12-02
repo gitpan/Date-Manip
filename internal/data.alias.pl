@@ -421,7 +421,7 @@ foreach my $winz (keys %windows_zones) {
                       ],
    'BRT3BRST'      => [
                        'America/Sao_Paulo'                       ,1932,9999,
-                       'America/Araguaina'                       ,1932,9999,
+                       'America/Araguaina'                       ,1932,2002,
                        'America/Bahia'                           ,1932,2002,
                        'America/Fortaleza'                       ,1932,1989,
                        'America/Maceio'                          ,1932,1989,
@@ -434,7 +434,6 @@ foreach my $winz (keys %windows_zones) {
                       ],
    'CAT-2CAST'     => [
                        'Africa/Khartoum'                         ,1970,1985,
-                       'Africa/Juba'                             ,1970,1985,
                       ],
    'CAT10CAPT'     => [
                        'America/Anchorage'                       ,1945,1945,
@@ -461,13 +460,12 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Tirane'                           ,1943,9999,
                        'Europe/Madrid'                           ,1949,9999,
                        'Europe/Monaco'                           ,1976,9999,
-                       'Europe/Vaduz'                            ,1981,9999,
                        'Europe/Gibraltar'                        ,1982,9999,
                        'Europe/Andorra'                          ,1985,9999,
                        'Africa/Ceuta'                            ,1986,9999,
                        'Europe/Vilnius'                          ,1943,1998,
                        'Europe/Lisbon'                           ,1993,1995,
-                       'Africa/Tripoli'                          ,1951,9999,
+                       'Africa/Tripoli'                          ,1951,1989,
                        'Africa/Algiers'                          ,1944,1978,
                        'Europe/Sofia'                            ,1943,1944,
                        'Europe/Uzhgorod'                         ,1943,1944,
@@ -479,7 +477,7 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Riga'                             ,1943,1943,
                        'Europe/Simferopol'                       ,1943,1943,
                       ],
-   'CET-1WEMT'     => [
+    'CET-1WEMT'     => [
                        'Europe/Madrid'                           ,1946,1946,
                        'Europe/Monaco'                           ,1945,1945,
                        'Europe/Paris'                            ,1945,1945,
@@ -550,7 +548,7 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Helsinki'                         ,1942,9999,
                        'Asia/Gaza'                               ,1957,9999,
                        'Asia/Hebron'                             ,1957,9999,
-                       'Asia/Amman'                              ,1973,9999,
+                       'Asia/Amman'                              ,1973,2011,
                        'Asia/Nicosia'                            ,1975,9999,
                        'Europe/Sofia'                            ,1979,9999,
                        'Europe/Riga'                             ,1989,9999,
@@ -753,7 +751,6 @@ foreach my $winz (keys %windows_zones) {
                       ],
    'NZST-12NZDT'   => [
                        'Pacific/Auckland'                        ,1975,9999,
-                       'Antarctica/McMurdo'                      ,1975,9999,
                       ],
    'OMST-5OMSST'   => [
                        'Asia/Omsk'                               ,1991,1991,
@@ -869,7 +866,7 @@ foreach my $winz (keys %windows_zones) {
                        'Pacific/Efate'                           ,1984,1992,
                       ],
    'WART4WARST'    => [
-                       'America/Argentina/San_Luis'              ,1990,2009,
+                       'America/Argentina/San_Luis'              ,1990,1990,
                        'America/Argentina/Mendoza'               ,1990,1991,
                        'America/Argentina/Jujuy'                 ,1990,1990,
                       ],
@@ -893,6 +890,7 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Madrid'                           ,1917,1939,
                        'Europe/Brussels'                         ,1919,1939,
                        'Europe/Luxembourg'                       ,1919,1939,
+                       'Africa/El_Aaiun'                         ,1977,9999,
                       ],
    'WGT3WGST'      => [
                        'America/Godthab'                         ,1980,9999,

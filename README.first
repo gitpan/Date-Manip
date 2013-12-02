@@ -18,12 +18,12 @@ in the manual.
 
 ===
 
-Date::Manip 6.00 represents a complete reorganization (and almost complete
+Date::Manip 6.xx represents a complete reorganization (and almost complete
 rewrite) of the module. It includes the original functional Date::Manip
 module, and a number of OO modules which now do the real work. The OO
 modules may also be used directly, bypassing the functional interface.
 
-As of 6.00, Date::Manip has full support for all timezones in the standard
+As of 6.xx, Date::Manip has full support for all timezones in the standard
 Olsen database (and also supports all Windows timezone names, and timezones
 suggested by several other standards). Full support for daylight saving
 time is included.
@@ -33,7 +33,7 @@ man pages for a more detailed breakdown of changes made in 6.00, and
 suggestions for a few changes which may be required to get existing code
 to run using the new modules.
 
-It should be noted that version 6.00 required perl 5.10 or higher.
+It should be noted that version 6.xx required perl 5.10 or higher.
 
 Date::Manip 5.xx is integrated into the package (i.e. both 5.xx and 6.xx
 are available in the 6.xx release), so Date::Manip will continue to run

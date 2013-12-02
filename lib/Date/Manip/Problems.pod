@@ -19,7 +19,7 @@ problems.
 
 There is a known memory leak in perl related to named regexp captures
 that directly affects Date::Manip . The leak is in all versions of
-perl up to the following versions:
+perl up to (and including) the following versions:
 
    5.10.1
    5.12.5
@@ -75,8 +75,8 @@ You can find more details here:
 
 =item B<Calculations appear to be off by an hour>
 
-Due to daylight saving time (specifically, the spring change where
-the time typically moves forward from 02:00 to 03:00, any date
+Due to daylight saving time (especially the spring change where
+the time typically moves forward from 02:00 to 03:00), any date
 calculation which would intuitively report a time in that range
 will also move forward (or backward as the case may be).
 
@@ -167,7 +167,7 @@ Date::Manip::Changes6 documentation for this module.
 
 Date::Manip also includes a large number of functions which are NOT
 documented. These are for internal use only.  Please do not use them!
-I can (and do) change their use, and even their name, without notice,
+I can (and do) change their functionality, and even their name, without notice,
 and without apology!  Some of these internal functions even have test
 scripts, but that is not a guarantee that they will not change, nor is
 any support implied. I simply like to run regression tests on as much
@@ -237,7 +237,7 @@ response is the ability to parse almost every conceivable date format.
 Unfortunately, as I've added formats, the parsing routine became more
 and more complicated, and maintaining it was one of the least
 enjoyable aspect in maintaining Date::Manip . In fact, for several
-years I've been extremely reluctant to add new formats due to the fact
+years I'd been extremely reluctant to add new formats due to the fact
 that too often, adding a new format broke other formats.
 
 As I was rewriting Date::Manip, I was looking for ways to improve the
@@ -325,7 +325,7 @@ the most recent version. If you are using a version of perl older than
 tool simply reports a failure in installing Date::Manip.  Technically,
 the problem is not due to Date::Manip itself, but is a result of how
 perl modules are currently managed.  However, since Date::Manip is
-managed by then, it's important to avoid causing this type of problem
+managed by them, it's important to avoid causing this type of problem
 (which I clearly failed to do).
 
 As of Date::Manip 6.10, this problem should no longer occur. Starting

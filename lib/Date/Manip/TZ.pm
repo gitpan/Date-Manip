@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.41';
+$VERSION='6.42';
 END { undef $VERSION; }
 
 # To get rid of a 'used only once' warnings.
@@ -1537,9 +1537,16 @@ sub _abbrx {
 #   off   = the offset
 #   abb   = the abbreviation
 #
+# If $simple is passed in, it will return the simple form (i.e. no
+# appended abbreviation).
+#
 sub _offrx {
-   my($self) = @_;
-   return $$self{'data'}{'offrx'}  if (defined $$self{'data'}{'offrx'});
+   my($self,$simple) = @_;
+   if ($simple) {
+      return $$self{'data'}{'offsimprx'}  if (defined $$self{'data'}{'offsimprx'});
+   } else {
+      return $$self{'data'}{'offrx'}      if (defined $$self{'data'}{'offrx'});
+   }
 
    my($hr) = qr/(?:[0-1][0-9]|2[0-3])/;  # 00 - 23
    my($mn) = qr/(?:[0-5][0-9])/;         # 00 - 59
@@ -1553,8 +1560,18 @@ sub _offrx {
                               )
                  )
                  (?: \s* (?: \( $abb \) | $abb))? /ix;
+   my($re2) = qr/ (?<off> [+-] (?: $hr:$mn:$ss |
+                                   $hr$mn$ss   |
+                                   $hr:?$mn    |
+                                   $hr
+                               )
+                  ) /ix;
+   my $simprx = qr/(?<tzstring>$re2)/;
 
+   $$self{'data'}{'offsimprx'} = $simprx;
    $$self{'data'}{'offrx'} = $re;
+
+   return $$self{'data'}{'offsimprx'}  if ($simple);
    return $$self{'data'}{'offrx'};
 }
 
@@ -1567,7 +1584,7 @@ sub _offrx {
 # functions.
 #
 sub _zrx {
-   my($self) = @_;
+   my($self,$simple) = @_;
    return $$self{'data'}{'zrx'}  if (defined $$self{'data'}{'zrx'});
 
    my $zonerx    = $self->_zonerx();          # (?<zone>america/new_york|...)

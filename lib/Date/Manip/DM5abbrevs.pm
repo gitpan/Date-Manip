@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.41';
+$VERSION='6.42';
 
 END {
    my $tmp;
@@ -143,7 +143,6 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       chot   +0800
       chst   +1000
       chut   +1000
-      cit    +0800
       cjt    +0900
       ckhst  -0930
       ckt    -1000
@@ -178,7 +177,6 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       egst   +0000
       egt    -0100
       ehdt   -0430
-      eit    +0900
       ept    -0400
       est    -0500
       ewt    -0400
@@ -433,7 +431,9 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       wft    +1200
       wgst   -0200
       wgt    -0300
-      wit    +0700
+      wib    +0700
+      wit    +0900
+      wita   +0800
       wmt    +0124
       wsdt   +1400
       wst    +0800
@@ -537,7 +537,6 @@ The following timezones are defined:
       CHOT   +0800
       CHST   +1000
       CHUT   +1000
-      CIT    +0800
       CJT    +0900
       CKHST  -0930
       CKT    -1000
@@ -576,7 +575,6 @@ The following timezones are defined:
       EGST   +0000
       EGT    -0100
       EHDT   -0430
-      EIT    +0900
       EPT    -0400
       EST    -0500
       EWT    -0400
@@ -846,7 +844,9 @@ The following timezones are defined:
       WFT    +1200
       WGST   -0200
       WGT    -0300
-      WIT    +0700
+      WIB    +0700
+      WIT    +0900
+      WITA   +0800
       WMT    +0124
       WSDT   +1400
       WST    +0800

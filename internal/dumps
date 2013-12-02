@@ -10,11 +10,13 @@ for file in `cd tzdata/dump; echo *` ;do
    echo "##########################################################"
    echo "### $tz"
 
-   # Create the new dump
-   examples/dm_zdump -v $tz | tail --lines=+2 > z.dump.new
+   # Create the new dump.  Ignore lines with the year 0001 and 9999.
+
+   examples/dm_zdump -v $tz | egrep -v '0001|9999' > z.dump.new
    ln=`wc -l z.dump.new | awk '{print $1}'`
 
-   # Copy the old dump
+   # Copy the old dump.  Ignore the 2 first and 2 last lines.
+
    tail --lines=+3 tzdata/dump/$file | head --lines=-2 > z.dump.old
    lo=`wc -l z.dump.old | awk '{print $1}'`
 

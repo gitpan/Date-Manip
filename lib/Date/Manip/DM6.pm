@@ -17,6 +17,7 @@ require Exporter;
    ParseDate
    ParseDateString
    ParseDateDelta
+   ParseDateFormat
    ParseRecur
    Date_IsHoliday
    Date_IsWorkDay
@@ -53,7 +54,7 @@ use integer;
 use warnings;
 
 our $VERSION;
-$VERSION='6.41';
+$VERSION='6.42';
 
 ###########################################################################
 
@@ -99,6 +100,15 @@ sub ParseDateString {
    my($string) = @_;
    $string = ''  if (! defined($string));
    my $err = $date->parse($string);
+   return ''  if ($err);
+   my $ret = $date->value('local');
+   return $ret;
+}
+
+sub ParseDateFormat {
+   my($format,$string) = @_;
+   $string = ''  if (! defined($string));
+   my $err = $date->parse_format($format,$string);
    return ''  if ($err);
    my $ret = $date->value('local');
    return $ret;

@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.41';
+$VERSION='6.42';
 END { undef $VERSION; }
 
 ########################################################################
@@ -235,7 +235,6 @@ sub parse {
             # entire date.
 
             $string                     = $string_bak;
-            ($tzstring,$zone,$abb,$off) = ();
          }
 
          # Parse deltas
@@ -246,6 +245,10 @@ sub parse {
          # important conflicts are the ISO 8601 dates (many of which
          # could be interpreted as a delta), but those have already
          # been taken care of.
+         #
+         # We may have already gotten the time:
+         #   3 days ago at midnight UTC
+         # (we already stripped off the 'at midnight UTC' above).
 
          if (! exists $opts{'nodelta'}) {
             ($done,@tmp) =
@@ -1440,7 +1443,6 @@ sub _other_rx {
 
         "${y4}:${m}:${d}";                    # YYYY:MM:DD
 
-
       $daterx = qr/^\s*(?:$daterx)\s*$/i;
       $$dmb{'data'}{'rx'}{'other'}{$rx} = $daterx;
 
@@ -1468,11 +1470,22 @@ sub _other_rx {
 
       $special     = "(?<special>$special)";
       my $secs     = "(?<epoch>[-+]?\\d+)";
+      my $abb      = $$dmb{'data'}{'rx'}{'month_abb'}[0];
+      my $mmm      = "(?<mmm>$abb)";
+      my $y4       = '(?<y>\d\d\d\d)';
+      my $dd       = '(?<d>\d\d)';
+      my $h24      = '(?<h>2[0-3]|[01][0-9])';      # 00-23
+      my $mn       = '(?<mn>[0-5][0-9])';           # 00-59
+      my $ss       = '(?<s>[0-5][0-9])';            # 00-59
+      my $offrx    = $dmt->_offrx('simple');
 
       my $daterx   =
         "${special}|" .       # now
 
-        "epoch\\s+$secs";     # epoch SECS
+        "epoch\\s+$secs|" .   # epoch SECS
+
+        "${dd}\\/${mmm}\\/${y4}:${h24}:${mn}:${ss}\\s*${offrx}";
+                              # Common log format: 10/Oct/2000:13:55:36 -0700
 
       $daterx = qr/^\s*(?:$daterx)\s*$/i;
       $$dmb{'data'}{'rx'}{'other'}{$rx} = $daterx;
@@ -1809,7 +1822,8 @@ sub _parse_datetime_other {
                  $self->_other_rx('miscdatetime'));
 
    if ($string =~ $rx) {
-      my ($special,$epoch) = @+{qw(special epoch)};
+      my ($special,$epoch,$y,$mmm,$d,$h,$mn,$s,$tzstring,$off) =
+        @+{qw(special epoch y mmm d h mn s tzstring off)};
 
       if (defined($special)) {
          my $delta  = $$dmb{'data'}{'wordmatch'}{'offset_time'}{lc($special)};
@@ -1833,6 +1847,10 @@ sub _parse_datetime_other {
          my($err);
          ($err,$date) = $dmt->convert_from_gmt($date);
          return (1,@$date);
+
+      } elsif (defined($y)) {
+         my $m = $$dmb{'data'}{'wordmatch'}{'month_abb'}{lc($mmm)};
+         return (1,$y,$m,$d,$h,$mn,$s,$tzstring,undef,undef,$off);
       }
    }
 
@@ -4537,6 +4555,7 @@ sub list_events {
          }
       }
 
+      return ()  if (! @tmp2);
       @tmp2 = sort { $$a[0]->cmp($$b[0])  ||
                      $$a[1] cmp $$b[1]    ||
                      $$a[2] cmp $$b[2] } @tmp2;
