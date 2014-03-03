@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2013 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2014 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -10,17 +10,25 @@ Date::Manip::Changes5 - changes in Date::Manip 5.xx
 
 =head1 SYNOPSIS
 
-This describes the changes made to the Date::Manip module in the 5.xx
-series of releases.  Major changes are marked with asterisks (*).
+This describes the changes made to the Date::Manip module up to the
+time that 6.00 was released.  Because 6.00 required a newer version
+of perl (5.10 or higher), the old version was maintained.
+
+When Date::Manip 6.10 was released, both versions were bundled
+together (though how it was bundled changed when 6.14 was released).
+
+This document describes all changes made to the old version of
+Date::Manip.
 
 For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 5.xx
+=head1 VERSION 5.65 (Released with 6.37)
 
 As of December 2012, Version 5 of Date::Manip will no longer be modified.
-It is expected that version 5.64 will be the final release.
+The 5.xx version was updated to 5.65 (but no changes were made), and this
+version is expected to be the final release in the 5.xx series.
 
 The one exception is that if someone submits a patch that applies cleanly
 and causes zero failures in the test suite, I will consider adding it on

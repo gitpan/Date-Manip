@@ -1,13 +1,13 @@
 package Date::Manip::Zones;
-# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2014 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 22 13:23:14 EST 2013
-#    Data version: tzdata2013h
-#    Code version: tzcode2013h
+#    Generated on: Thu Feb 27 10:42:58 EST 2014
+#    Data version: tzdata2013i
+#    Code version: tzcode2013i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.42';
+$VERSION='6.43';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,11 +37,11 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2013h';
-$TzcodeVersion = 'tzcode2013h';
+$TzdataVersion = 'tzdata2013i';
+$TzcodeVersion = 'tzcode2013i';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
-$LastYear      = '2063';
+$LastYear      = '2064';
 
 
 %Module = (
@@ -1883,8 +1883,7 @@ $LastYear      = '2063';
                      'asia/qatar',
                      'america/santo_domingo',
                      'america/pangnirtung',
-                     'america/miquelon',
-                     'asia/amman' ],
+                     'america/miquelon' ],
   'awt'         => [ 'america/halifax',
                      'america/blanc-sablon',
                      'america/glace_bay',

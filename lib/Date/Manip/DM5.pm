@@ -1,5 +1,5 @@
 package Date::Manip::DM5;
-# Copyright (c) 1995-2013 Sullivan Beck.  All rights reserved.
+# Copyright (c) 1995-2014 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -220,7 +220,8 @@ use IO::File;
 our($Abbrevs);
 use Date::Manip::DM5abbrevs;
 
-$VERSION='5.65';
+$VERSION='6.43';
+our $DM5_VERSION = '5.65';
 
 ########################################################################
 ########################################################################
@@ -257,7 +258,7 @@ use strict "vars";
 
 sub DateManipVersion {
   print "DEBUG: DateManipVersion\n"  if ($Curr{"Debug"} =~ /trace/);
-  return $VERSION;
+  return $DM5_VERSION;
 }
 
 sub Date_Init {

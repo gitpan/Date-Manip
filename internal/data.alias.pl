@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2014 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -548,7 +548,7 @@ foreach my $winz (keys %windows_zones) {
                        'Europe/Helsinki'                         ,1942,9999,
                        'Asia/Gaza'                               ,1957,9999,
                        'Asia/Hebron'                             ,1957,9999,
-                       'Asia/Amman'                              ,1973,2011,
+                       'Asia/Amman'                              ,1973,9999,
                        'Asia/Nicosia'                            ,1975,9999,
                        'Europe/Sofia'                            ,1979,9999,
                        'Europe/Riga'                             ,1989,9999,

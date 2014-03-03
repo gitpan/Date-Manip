@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2014 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -182,7 +182,6 @@
                      'Asia/Bahrain'                              ,1972,9999,
                      'Asia/Qatar'                                ,1972,9999,
                      'America/Santo_Domingo'                     ,1974,9999,
-                     'Asia/Amman'                                ,2012,9999,
                      'America/Pangnirtung'                       ,1921,1995,
                      'America/Miquelon'                          ,1911,1980,
                     ],
@@ -738,7 +737,7 @@
                      'Europe/Helsinki'                           ,1942,9999,
                      'Asia/Gaza'                                 ,1957,9999,
                      'Asia/Hebron'                               ,1957,9999,
-                     'Asia/Amman'                                ,1973,2012,
+                     'Asia/Amman'                                ,1973,9999,
                      'Asia/Nicosia'                              ,1975,9999,
                      'Europe/Sofia'                              ,1979,9999,
                      'Europe/Riga'                               ,1989,9999,
@@ -772,7 +771,7 @@
                      'Europe/Simferopol'                         ,1924,9999,
                      'Europe/Zaporozhye'                         ,1924,9999,
                      'Europe/Riga'                               ,1926,9999,
-                     'Asia/Amman'                                ,1930,2012,
+                     'Asia/Amman'                                ,1930,9999,
                      'Europe/Bucharest'                          ,1931,9999,
                      'Europe/Chisinau'                           ,1931,9999,
                      'Europe/Uzhgorod'                           ,1991,9999,
@@ -1088,7 +1087,7 @@
                      'Asia/Jerusalem'                            ,1948,1948,
                     ],
    'IDT'         => [
-                     'Asia/Jerusalem'                            ,1940,2072,
+                     'Asia/Jerusalem'                            ,1940,2073,
                      'Asia/Gaza'                                 ,1974,1995,
                      'Asia/Hebron'                               ,1974,1995,
                     ],

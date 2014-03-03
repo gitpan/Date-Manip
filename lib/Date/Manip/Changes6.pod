@@ -1,4 +1,4 @@
-# Copyright (c) 2009-2013 Sullivan Beck. All rights reserved.
+# Copyright (c) 2009-2014 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -33,7 +33,25 @@ incompatible. These are marked with an exclamation mark (!).
 
 =head1 VERSION 6.44  (planned 2014-06-01)
 
-=head1 VERSION 6.43  (planned 2014-03-01)
+=head1 VERSION 6.43  (2014-03-03)
+
+=over 4
+
+=item Several changes to distribution files
+
+I made several changes to Build.PL, Makefile.PL, META.yml in order to
+improve the quality (or kwalitee) of the module.  None of these should
+impact anyone using the module.
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2013i)
+
+=item Documentation fixes
+
+Cleaned up some of the Recur documentation.  Suggested by RT 92794
+
+=back
 
 =head1 VERSION 6.42  (2013-12-02)
 

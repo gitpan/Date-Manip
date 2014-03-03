@@ -1,4 +1,4 @@
-# Copyright (c) 1998-2013 Sullivan Beck. All rights reserved.
+# Copyright (c) 1998-2014 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -29,9 +29,9 @@ The most basic piece of information is the frequency.  For relatively
 simple recurring events, the frequency defines when those events
 occur. For more complicated recurring events, the frequency tells
 approximately when the events occur (but to get the actual
-events, the modifiers must be applied as described below).
+events, certain modifiers must be applied as described below).
 
-Examples include:
+Examples of recurring events include:
 
    the first of every month
    every other day
@@ -49,10 +49,13 @@ but most must be expressed in the format described below in FREQUENCY
 NOTATION. In this document however, the written out form will often be
 used for the sake of clarity.
 
-Since a frequency typically refers to events could happen an infinite
-number of times, you must specify either a date range or a base date
-(or both) in order to determine actual dates on which an event
-occurred.
+Since a frequency typically refers to events that could happen an
+infinite number of times, you usually have to specify a date range to
+get the actual dates.  Some frequencies also require a base date (i.e.
+information about when one such even actually occurred) since the
+frequency is ambiguous.  For example, the frequency 'every other day'
+does not include enough information to specify the dates that the
+event happened on, so you have to explicitly define one.
 
 =item B<Modifier>
 
@@ -60,26 +63,35 @@ Complex recurring events may require the use of modifiers in order to
 get them correct.
 
 For example, in America, many places treat both Thanksgiving and the
-day after as holidays. Thanksgiving is easy to define as the
-frequency:
+day after as holidays. Thanksgiving is easy to define since it is
+defined as:
 
    4th Thursday of every November
 
-but the day after is NOT possible to define only as a frequency.
+In the frequency notation (described below), this would be written as:
+
+   1*11:4:5:0:0:0
+
+The day after Thanksgiving is NOT possible to define in the same way.
 Depending on the year, the day after the 4th Thursday may be the 4th
 or 5th Friday.
 
-The day after Thanksgiving must be defined as a frequency and a modifier:
+The only way to accurately define the day after Thanksgiving is to
+specify a frequency and a modifier:
 
    4th Thursday of every November
    +1 day
+
+In frequency notation, this can be expressed as:
+
+   1*11:4:5:0:0:0*FD1
 
 The syntax for the various modifiers is described below in the
 MODIFIERS section.
 
 =item B<Base date>
 
-All recurrences have a base date which is a date on which a recurring
+Many recurrences have a base date which is a date on which a recurring
 event is based.
 
 The base date is not necessarily a date where the recurring event

@@ -1,18 +1,30 @@
 #!/usr/bin/perl
 
-use Test::More;
-use File::Basename;
+#
+# Test that the POD documentation is complete.
+#
 
-if ($ENV{'TI_SKIPPOD'}) {
-   plan skip_all => "POD tests skipped";
-   exit;
+use strict;
+use Test::More;
+
+# Don't run tests for installs
+unless ( $ENV{RELEASE_TESTING} ) {
+   plan( skip_all => "Author tests not required for installation" );
 }
 
-# Find the test directory
-#
-# Scripts will either be run:
-#    directly (look at $0)
-#    as a test suite (look for ./t and ../t)
+eval "use Test::Pod::Coverage 1.00";
+plan skip_all => "Test::Pod::Coverage 1.00 required for testing POD coverage"
+  if $@;
+
+eval "use File::Basename";
+plan skip_all => "File::Basename required for testing POD coverage"
+  if $@;
+
+# If there is a file pod_coverage.ign, it should be a list of module
+# name substrings to ignore (any module with any of these substrings
+# will be ignored).
+
+# Find the pod_coverage.ign file
 
 my($testdir);
 if (-f "$0") {
@@ -25,13 +37,7 @@ if (-f "$0") {
    $testdir   = '.';
 }
 
-eval "use Test::Pod::Coverage 1.00";
-if ($@) {
-   plan skip_all => "Test::Pod::Coverage 1.00 required for testing POD coverage";
-   exit;
-}
-
-@ign = ();
+my @ign = ();
 if (-f "$testdir/pod_coverage.ign") {
    open(IN,"$testdir/pod_coverage.ign");
    @ign = <IN>;
@@ -39,14 +45,16 @@ if (-f "$testdir/pod_coverage.ign") {
    chomp(@ign);
 }
 
+chdir("..")  if ($testdir eq '.');
+
 if (@ign) {
 
-   @mod = all_modules();
+   my @mod = all_modules();
 
    MOD:
-   foreach $mod (@mod) {
-      foreach $ign (@ign) {
-         next MOD  if ($mod =~ /^\Q$ign\E/);
+   foreach my $mod (@mod) {
+      foreach my $ign (@ign) {
+         next MOD  if ($mod =~ /\Q$ign\E/);
       }
       pod_coverage_ok($mod);
    }

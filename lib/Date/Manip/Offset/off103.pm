@@ -1,14 +1,14 @@
 package #
 Date::Manip::Offset::off103;
-# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2014 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 22 13:13:45 EST 2013
-#    Data version: tzdata2013h
-#    Code version: tzcode2013h
+#    Generated on: Thu Feb 27 10:39:43 EST 2014
+#    Data version: tzdata2013i
+#    Code version: tzcode2013i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -19,7 +19,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.42';
+$VERSION='6.43';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -41,26 +41,26 @@ $Offset        = '+03:00:00';
       'africa/kampala',
       'africa/nairobi',
       'africa/dar_es_salaam',
+      'europe/minsk',
       'africa/addis_ababa',
       'africa/asmara',
       'europe/kaliningrad',
       'asia/aden',
       'asia/kuwait',
       'asia/riyadh',
+      'antarctica/syowa',
       'asia/bahrain',
       'asia/qatar',
       'africa/khartoum',
+      'etc/gmt+3',
+      'p',
       'europe/moscow',
       'europe/samara',
       'europe/volgograd',
-      'etc/gmt+3',
-      'p',
-      'antarctica/syowa',
       'asia/tbilisi',
       'europe/simferopol',
       'asia/yerevan',
       'asia/baku',
-      'europe/minsk',
       'europe/zaporozhye',
       'europe/vilnius',
       'europe/kiev',
@@ -69,7 +69,6 @@ $Offset        = '+03:00:00';
       'europe/riga',
       'europe/tallinn',
       'europe/istanbul',
-      'asia/amman',
       ],
    1 => [
       'eet',
@@ -79,22 +78,23 @@ $Offset        = '+03:00:00';
       'europe/athens',
       'europe/bucharest',
       'europe/chisinau',
-      'africa/cairo',
       'asia/gaza',
       'asia/jerusalem',
+      'asia/hebron',
       'europe/helsinki',
-      'europe/kaliningrad',
       'asia/amman',
       'asia/nicosia',
       'europe/sofia',
       'europe/riga',
       'europe/tallinn',
-      'europe/minsk',
       'europe/vilnius',
       'europe/zaporozhye',
       'europe/kiev',
       'europe/simferopol',
       'europe/uzhgorod',
+      'africa/cairo',
+      'europe/kaliningrad',
+      'europe/minsk',
       'europe/moscow',
       'europe/samara',
       'africa/khartoum',
@@ -104,7 +104,6 @@ $Offset        = '+03:00:00';
       'africa/maseru',
       'africa/windhoek',
       'europe/warsaw',
-      'asia/hebron',
       ],
 );
 

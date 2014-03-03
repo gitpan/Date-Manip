@@ -1,5 +1,5 @@
 package Date::Manip::Lang::english;
-# Copyright (c) 1995-2013 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2014 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -13,7 +13,7 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.42';
+$VERSION='6.43';
 
 
 our($Language,@Encodings,$LangName,$YearAdded);

@@ -1,13 +1,13 @@
 
-# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2014 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 22 13:23:14 EST 2013
-#    Data version: tzdata2013h
-#    Code version: tzcode2013h
+#    Generated on: Thu Feb 27 10:42:58 EST 2014
+#    Data version: tzdata2013i
+#    Code version: tzcode2013i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://ftp.iana.orgtz/tzdata2013h.tar.gz
+   ftp://ftp.iana.orgtz/tzdata2013i.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -1908,13 +1908,14 @@ Date::Manip::TZ module.
      0      +01:57:28   Africa/Bujumbura
      0      +02:00:00   EET
                         Asia/Beirut
-                        Africa/Gaborone
                         Africa/Bujumbura
                         Europe/Sofia
                         Africa/Lubumbashi
                         Africa/Cairo
                         Asia/Gaza
+                        Asia/Hebron
                         Africa/Blantyre
+                        Africa/Gaborone
                         Africa/Harare
                         Africa/Johannesburg
                         Africa/Lusaka
@@ -1930,7 +1931,6 @@ Date::Manip::TZ module.
                         Europe/Helsinki
                         Europe/Tallinn
                         Europe/Kiev
-                        Europe/Minsk
                         Europe/Simferopol
                         Europe/Zaporozhye
                         Europe/Riga
@@ -1940,14 +1940,14 @@ Date::Manip::TZ module.
                         Africa/Kigali
                         Africa/Tripoli
                         Europe/Uzhgorod
-                        Europe/Kaliningrad
                         Etc/GMT+2
                         O
+                        Europe/Kaliningrad
+                        Europe/Minsk
                         Africa/Khartoum
                         Africa/Windhoek
                         Europe/Moscow
                         Europe/Warsaw
-                        Asia/Hebron
      0      +02:00:16   Africa/Kigali
      0      +02:02:04   Europe/Kiev
      0      +02:04:12   Africa/Harare
@@ -2001,26 +2001,26 @@ Date::Manip::TZ module.
                         Africa/Kampala
                         Africa/Nairobi
                         Africa/Dar_es_Salaam
+                        Europe/Minsk
                         Africa/Addis_Ababa
                         Africa/Asmara
                         Europe/Kaliningrad
                         Asia/Aden
                         Asia/Kuwait
                         Asia/Riyadh
+                        Antarctica/Syowa
                         Asia/Bahrain
                         Asia/Qatar
                         Africa/Khartoum
+                        Etc/GMT+3
+                        P
                         Europe/Moscow
                         Europe/Samara
                         Europe/Volgograd
-                        Etc/GMT+3
-                        P
-                        Antarctica/Syowa
                         Asia/Tbilisi
                         Europe/Simferopol
                         Asia/Yerevan
                         Asia/Baku
-                        Europe/Minsk
                         Europe/Zaporozhye
                         Europe/Vilnius
                         Europe/Kiev
@@ -2029,7 +2029,6 @@ Date::Manip::TZ module.
                         Europe/Riga
                         Europe/Tallinn
                         Europe/Istanbul
-                        Asia/Amman
      0      +03:00:56   Indian/Mayotte
      0      +03:01:28   Africa/Mogadishu
      0      +03:06:52   Asia/Riyadh
@@ -2682,22 +2681,23 @@ Date::Manip::TZ module.
                         Europe/Athens
                         Europe/Bucharest
                         Europe/Chisinau
-                        Africa/Cairo
                         Asia/Gaza
                         Asia/Jerusalem
+                        Asia/Hebron
                         Europe/Helsinki
-                        Europe/Kaliningrad
                         Asia/Amman
                         Asia/Nicosia
                         Europe/Sofia
                         Europe/Riga
                         Europe/Tallinn
-                        Europe/Minsk
                         Europe/Vilnius
                         Europe/Zaporozhye
                         Europe/Kiev
                         Europe/Simferopol
                         Europe/Uzhgorod
+                        Africa/Cairo
+                        Europe/Kaliningrad
+                        Europe/Minsk
                         Europe/Moscow
                         Europe/Samara
                         Africa/Khartoum
@@ -2707,7 +2707,6 @@ Date::Manip::TZ module.
                         Africa/Maseru
                         Africa/Windhoek
                         Europe/Warsaw
-                        Asia/Hebron
      1      +03:30:48   Europe/Moscow
      1      +04:00:00   Europe/Moscow
                         Europe/Samara
@@ -2806,14 +2805,14 @@ Date::Manip::TZ module.
                         Australia/Currie
                         Australia/Hobart
                         Australia/Sydney
+                        Australia/Lord_Howe
+                        Antarctica/Macquarie
                         Asia/Vladivostok
                         Asia/Sakhalin
-                        Australia/Lord_Howe
+                        Asia/Khandyga
                         Australia/Lindeman
                         Australia/Brisbane
                         Asia/Magadan
-                        Antarctica/Macquarie
-                        Asia/Khandyga
                         Asia/Ust-Nera
      1      +11:30:00   Australia/Lord_Howe
      1      +12:00:00   Asia/Magadan
@@ -2986,7 +2985,6 @@ altering the order.
                       America/Santo_Domingo
                       America/Pangnirtung
                       America/Miquelon
-                      Asia/Amman
      AWT              America/Halifax
                       America/Blanc-Sablon
                       America/Glace_Bay

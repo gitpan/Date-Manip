@@ -1,8 +1,8 @@
 Build.PL
+Changes
 examples/dm_date
 examples/dm_zdump
 examples/README.examples
-HISTORY
 INSTALL
 internal/benchmarks/NOTES
 internal/benchmarks/parse-1.date_parse.pl
@@ -1023,7 +1023,6 @@ LICENSE
 Makefile.PL
 MANIFEST			This list of files
 META.json
-META.yml
 README
 README.first
 t/.ppo.yaml
@@ -1218,3 +1217,4 @@ t/tz.zone.t
 t/tzdata._ruleinfo.t
 t/tzdata._zoneinfo.t
 t/xtra.now.tx
+META.yml

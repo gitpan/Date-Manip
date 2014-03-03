@@ -1,14 +1,14 @@
 package #
 Date::Manip::TZ::asjeru00;
-# Copyright (c) 2008-2013 Sullivan Beck.  All rights reserved.
+# Copyright (c) 2008-2014 Sullivan Beck.  All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Fri Nov 22 13:03:23 EST 2013
-#    Data version: tzdata2013h
-#    Code version: tzcode2013h
+#    Generated on: Thu Feb 27 10:32:45 EST 2014
+#    Data version: tzdata2013i
+#    Code version: tzcode2013i
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.42';
+$VERSION='6.43';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -995,8 +995,17 @@ END { undef $VERSION; }
           'IDT',1,[2072,10,29,22,59,59],[2072,10,30,1,59,59],
           '2072032500:00:00','2072032503:00:00','2072102922:59:59','2072103001:59:59' ],
         [ [2072,10,29,23,0,0],[2072,10,30,1,0,0],'+02:00:00',[2,0,0],
+          'IST',0,[2073,3,23,23,59,59],[2073,3,24,1,59,59],
+          '2072102923:00:00','2072103001:00:00','2073032323:59:59','2073032401:59:59' ],
+     ],
+   2073 =>
+     [
+        [ [2073,3,24,0,0,0],[2073,3,24,3,0,0],'+03:00:00',[3,0,0],
+          'IDT',1,[2073,10,28,22,59,59],[2073,10,29,1,59,59],
+          '2073032400:00:00','2073032403:00:00','2073102822:59:59','2073102901:59:59' ],
+        [ [2073,10,28,23,0,0],[2073,10,29,1,0,0],'+02:00:00',[2,0,0],
           'IST',0,[9999,12,31,0,0,0],[9999,12,31,2,0,0],
-          '2072102923:00:00','2072103001:00:00','9999123100:00:00','9999123102:00:00' ],
+          '2073102823:00:00','2073102901:00:00','9999123100:00:00','9999123102:00:00' ],
      ],
 );
 

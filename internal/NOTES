@@ -135,9 +135,7 @@ In internal/benchmarks directory
 #########################################################################
 Set the release version
 
-   # DM6
-
-   v=`cat internal/VERSION | tail -1`
+   v=`cat internal/VERSION`
    for i in \
        internal/tzdata \
        internal/gen_dm5abbrevs \
@@ -147,16 +145,6 @@ Set the release version
       mv z $i
    done
    chmod +x internal/tzdata internal/gen_dm5abbrevs examples/dm_*
-
-   # DM5
-
-   v=`cat internal/VERSION | head -1`
-   for i in \
-       lib/Date/Manip/DM5.pm \
-   ;do
-      sed -e "s,VERSION='.*',VERSION='$v'," $i > z
-      mv z $i
-   done
 
 #########################################################################
 Before every release, spellcheck the documents:

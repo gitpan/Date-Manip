@@ -1,4 +1,4 @@
-# Copyright (c) 1995-2013 Sullivan Beck. All rights reserved.
+# Copyright (c) 1995-2014 Sullivan Beck. All rights reserved.
 # This program is free software; you can redistribute it and/or modify it
 # under the same terms as Perl itself.
 
@@ -291,15 +291,16 @@ The negative ratings I see in the CPAN ratings complain that I no
 longer support perl 5.6 and perl 5.8.
 
 With respect to 5.6, perl 5.6 was released in March of 2000 (that's
-before Windows XP which was released in 2001). To be honest, I don't
-really feel much sympathy for this complaint. Software that is 9 years
-old is ANCIENT. People may choose to use it... but please don't
-complain when new software comes out that doesn't support it.
+before Windows XP which was released in 2001). Date::Manip 6.00 was
+released at the end of 2009.  To be honest, I don't really feel much
+sympathy for this complaint. Software that is 9 years old is ANCIENT.
+People may choose to use it... but please don't complain when new
+software comes out that doesn't support it.
 
 The argument for perl 5.8 is much more compelling. Although 5.8 was
-released quite some time ago (July of 2002), there were no major perl
-releases until 5.10 came out in December of 2007, so 5.8 was
-state-of-the art as little as 2 years prior to the release of
+released well before Date::Manip 6.00 (July of 2002), there were no
+major perl releases until 5.10 came out in December of 2007, so 5.8
+was state-of-the art as little as 2 years prior to the release of
 Date::Manip 6.xx.
 
 I agree completely with the argument that abandoning 5.8 only 2 years
@@ -448,7 +449,7 @@ information.
 =item B<Date::Manip has an inconsistent interface>
 
 I've gotten a few complaints that the interface to Date::Manip is
-inconsistent... and I agree (at least when using the functional
+inconsistent... and I agree (at least when referring to the functional
 interfaces).
 
 Date::Manip was originally written in an unplanned way... as a need/want
