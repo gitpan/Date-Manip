@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+use utf8;
 use Test::Inter;
 $t = new Test::Inter 'parse (French)';
 $testdir = '';
@@ -225,7 +226,9 @@ demain => $tomorrow
 
 'Fevrier 3, 2002' => 2002020300:00:00
 
-'février 3, 2002' => 2002020300:00:00
+'FEVRIER 3, 2002' => 2002020300:00:00
+
+'FÉVRIER 3, 2002' => 2002020300:00:00
 
 'f\xE9vrier 3, 2002' => 2002020300:00:00
 

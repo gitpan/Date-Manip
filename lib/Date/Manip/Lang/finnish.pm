@@ -13,7 +13,7 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.43';
+$VERSION='6.44';
 
 
 our($Language,@Encodings,$LangName,$YearAdded);
@@ -21,8 +21,7 @@ our($Language,@Encodings,$LangName,$YearAdded);
 $LangName  = "Finnish";
 $YearAdded = 2012;
 
-# These strings are raw undecoded UTF-8 octets:
-{ no utf8; $Language = {
+$Language = {
   ampm => [
     ['AM', 'A.M.', 'aamulla', 'aamupäivällä', 'aamupaivalla'],
     ['PM', 'P.M.', 'illalla', 'iltapäivällä', 'iltapaivalla'],
@@ -280,8 +279,8 @@ $YearAdded = 2012;
   },
   offset_time => { nyt => '0:0:0:0:0:0:0' },
   on => [''],
-  sephm => ['[.]'],
-  sepms => ['[.]'],
+  sephm => ['\.'],
+  sepms => ['\.'],
   times => {
     'keskipaiva'    => '12:00:00',
     'keskipaivalla' => '12:00:00',
@@ -293,6 +292,6 @@ $YearAdded = 2012;
     'keskiyöllä'    => '00:00:00',
   },
   when => [['sitten'], ['ssa', 'myöhemmin', 'myohemmin']],
-}}
+};
 
 1;

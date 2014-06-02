@@ -336,7 +336,8 @@ Otherwise, the current date is used.
 
 =item B<parse_format>
 
-   $err = $date->parse_format($format,$string);
+   $err          = $date->parse_format($format,$string);
+   ($err,%match) = $date->parse_format($format,$string);
 
 This will parse a date contained in $string based on explicit format
 information contained in $format.
@@ -344,6 +345,10 @@ information contained in $format.
 If the format is invalid, $err will contain an error message.
 If the format is valid, but string doesn't match, an error code
 of 1 is returned.
+
+If called in array context, a hash will be returned containing %+.
+This is primarily useful if the $format string contains some
+named capture groups that you define.  This is discussed below.
 
 $format is a string containing a regular expression with some special
 directives (based on the printf directives). These directives are turned
@@ -355,20 +360,29 @@ The directives available are identical to the printf directives. So,
 if your $format string contains the directive '%Y', it will match a
 4-digit year.
 
-All of the printf directives are available, but with a few simplifications:
+All of the printf directives are available here with a few caveats:
 
    %l        This directive is NOT available.
 
-   %b,%h,%B  will all match a month name or
-             abbreviation
+   %b,%h,%B  These will all match a month name or abbreviation.
 
-   %v,%a,%A  will all match a day abbreviation
-             or name
+   %v,%a,%A  These will all match a day name or abbreviation.
 
-   %z,%Z,%N  will match any time zone string
+   %z,%Z,%N  These will match any time zone string.
 
-   %n        currently not allowed (multi-line
-             matching not currently supported)
+   %n        Multi-line matching is not currently supported,
+             so this directive is not allowed.
+
+   %x        All format directives are converted to a regular
+             expression and then cached (so that a format
+             can be reused without the penalty of doing the
+             conversion to a regular expression with each use).
+             As a result, if you need to set the DateFormat config
+             variable (which determines the meaning of the %x
+             directive), it must be done before a format string
+             containing %x is used. If the DateFormat config variable
+             is set afterwards, the format string will reflect the
+             old, NOT THE NEW, value of DateFormat.
 
 The format string may not over-specify the date. In other words, you
 may not include both a %y and %Y directive or both a %j and %m directive.
@@ -408,13 +422,19 @@ for days, you can use %d or %e and for hours you can use %H or %k.  In
 both cases, the first can only be used if you are guaranteed a 2-digit
 value.
 
-In your format string, you may use capture buffers that can be
-back referenced elsewhere in the regular expression. If you use
-numbered back references, just be aware that all of the directives
-create a single capture buffer (except for the directives like %%
-which match a special character instead of a portion of a date). If
-you use named buffers, do NOT use any of the following as they will
-conflict with the capture buffers created with the standard directives:
+In your format string, you may use capture groups (or back references
+to them) in the regular expression using all of the rules of normal
+regular expressions. Since Date::Manip uses named capture groups
+internally, it is suggested that you also use named groups.  Mixing
+numbered and named groups will work... but it'll be entirely up to you
+to keep track of what numbers refer to which capture groups.
+
+Every printf directive adds one or more named capture groups to the
+regular expression.  If you use named groups in the format string,
+they must not conflict with the ones used internally, or else the
+date will probably not be parsed correctly.
+
+The following named capture groups are used internally:
 
    y
    m
@@ -442,17 +462,24 @@ conflict with the capture buffers created with the standard directives:
    l
    u
 
-To be safe, it is suggested that named capture buffers start with
-a capital letter.
+To be safe, it is suggested that any additional named capture groups
+introduced by the programmer start with a capital letter.  This is
+guaranteed to never conflict with any existing, or future named capture
+groups.
 
-There is one other caveat if the %x directive is used. The format
-is converted to a regular expression and then cached (so that a format
-can be reused without the penalty of doing the conversion to a regular
-expression, so if you need to set the DateFormat config variable (which
-determines the meaning of the %x directive), it must be done before
-a format string containing %x is used. If the DateFormat config
-variable is set afterwards, the format string will reflect the old,
-NOT THE NEW, value of DateFormat.
+In order to get access to the values stored in the additional named
+capture groups, the parse_format function must be called in list
+context, and the %+ array will be returned as the second value.
+
+As an example:
+
+   $string = "before 2014-01-25 after";
+   ($err,%m) = $date->parse_format('(?<PRE>.*?)%Y-%m-%d(?<POST>.*)',$string);
+
+would return a hash (%m) with the following key/value pairs:
+
+   'PRE'  => 'before '
+   'POST' => ' after'
 
 =item B<prev>
 
@@ -1212,6 +1239,23 @@ will work but
 
 will not (because Jul 16, 1996 is Tuesday, not Wednesday).
 
+=head1 A NOTE ABOUT FOREIGN LANGUAGE DATES
+
+Although Date::Manip has some support for parsing dates in foreign
+languages, it must be noted that the formats supported are largely
+based on English equivalents.
+
+There are probably many different dates that are perfectly valid, and
+in common usage, in other languages which do not have an equivalent in
+the English language, and unfortunately, Date::Manip will probably not
+parse these.
+
+You are free to send these to me, and I'll see if there is a way to
+add them in, but I do not guarantee anything.  Without having a
+full-blown language parser (or at least the portion of the language
+that is devoted to calendar and time), most of these formats will
+simply not be supportable.
+
 =head1 VALID TIME FORMATS
 
 There are several categories of time formats supported by Date::Manip.
@@ -1595,7 +1639,7 @@ from the date.
        %C,%u  %a %b %e %H:%M:%S %Z %Y  - Fri Apr 28 17:25:57 EDT 1995
        %g     %a, %d %b %Y %H:%M:%S %Z - Fri, 28 Apr 1995 17:23:15 EDT
        %D     %m/%d/%y                 - 04/28/95
-       %x     %m/%d/%y or %d/%m/%y     - 04/28/95 or 28/04/28
+       %x     %m/%d/%y or %d/%m/%y     - 04/28/95 or 28/04/95
                                          (Depends on DateFormat variable)
        %l     date in ls(1) format (see NOTE 1 below)
                 %b %e %H:%M            - Apr 28 17:23 (*)

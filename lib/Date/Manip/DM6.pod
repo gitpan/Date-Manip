@@ -526,14 +526,15 @@ Returns the day of the week (1 for Monday, 7 for Sunday).
    $secs = Date_SecsSince1970($m,$d,$y,$h,$mn,$s);
 
 Returns the number of seconds since Jan 1, 1970 00:00 (negative if date is
-earlier).
+earlier) in the current timezone.
 
 =item B<Date_SecsSince1970GMT>
 
    $secs = Date_SecsSince1970GMT($m,$d,$y,$h,$mn,$s);
 
 Returns the number of seconds since Jan 1, 1970 00:00 GMT (negative if date
-is earlier).
+is earlier).  Note that the date is still given in the current timezone, NOT
+GMT.
 
 =item B<Date_DaysSince1BC>
 

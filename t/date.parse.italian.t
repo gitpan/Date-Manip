@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+use utf8;
 use Test::Inter;
 $t = new Test::Inter 'parse (Italian)';
 $testdir = '';

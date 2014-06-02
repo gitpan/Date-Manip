@@ -33,6 +33,39 @@ incompatible. These are marked with an exclamation mark (!).
 
 =head1 VERSION 6.44  (planned 2014-06-01)
 
+=over 4
+
+=item B<(*) Improvements to UTF8 handling>
+
+A number of changes based on RT 93545 and other discussion with Yuri Nikulin
+including:
+
+Case insensitive matching of UTF8 strings should work all the time.
+
+Fixed two significant bugs in regexps for parsing dates.
+
+Improvements to UTF8 handling.
+
+Corrected some problems with Russian and added the cp1251 encoding.
+
+One correction to Romanian.
+
+Added several new test scripts.
+
+Preliminary patches were supplied by Yuri.
+
+=item New features
+
+Modified the parse_format function to return %+ if desired.  Mike Cappella
+
+=item Documentation fixes
+
+Clarified some DM6 functions.  David Close.
+
+Fixed a typo.  RT 95619
+
+=back
+
 =head1 VERSION 6.43  (2014-03-03)
 
 =over 4

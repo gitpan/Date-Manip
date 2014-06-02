@@ -13,15 +13,14 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.43';
+$VERSION='6.44';
 
 our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw();
 $LangName  = "Dutch";
 $YearAdded = 1998;
 
-# These strings are raw undecoded UTF-8 octets:
-{ no utf8; $Language = {
+$Language = {
   ampm => [
     [
       'am',
@@ -308,6 +307,6 @@ $YearAdded = 1998;
   sepms => ['[.]', '[m]'],
   times => { middernacht => '00:00:00', noen => '12:00:00' },
   when => [['geleden', 'vroeger', 'eerder'], ['over', 'later']],
-}}
+};
 
 1;

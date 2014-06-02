@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+use utf8;
 use Test::Inter;
 $t = new Test::Inter 'parse (Swedish)';
 $testdir = '';
@@ -40,6 +41,10 @@ $tests="
 'Måndag Maj 3, 2010'     => 2010050300:00:00
 
 'M\xE5ndag Maj 3, 2010'  => 2010050300:00:00
+
+'Mandag Maj 3, 2010 12:30:45'     => 2010050312:30:45
+
+'Mandag Maj 3, 2010 12.30:45'     => 2010050312:30:45
 
 ";
 

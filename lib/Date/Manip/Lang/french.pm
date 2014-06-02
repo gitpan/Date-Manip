@@ -13,15 +13,14 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.43';
+$VERSION='6.44';
 
 our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
 $LangName  = "French";
 $YearAdded = 1996;
 
-# These strings are raw undecoded UTF-8 octets:
-{ no utf8; $Language = {
+$Language = {
   ampm => [['du matin'], ['du soir']],
   at => ['a', 'à'],
   day_abb => [
@@ -153,13 +152,13 @@ $YearAdded = 1996;
   },
   offset_time => { maintenant => '0:0:0:0:0:0:0' },
   on => ['sur'],
-  sephm => ['[h]'],
-  sepms => ['[:]'],
+  sephm => ['h'],
+  sepms => [':'],
   times => { midi => '12:00:00', minuit => '00:00:00' },
   when => [
     ['il y a', 'auparavant', 'dans le passé', 'plus tot', 'plus tôt'],
     ['en', 'plus tard', 'dans l\'avenir', 'a venir', 'à venir', 'dans'],
   ],
-}}
+};
 
 1;

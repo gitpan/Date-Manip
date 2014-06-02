@@ -13,15 +13,14 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.43';
+$VERSION='6.44';
 
 our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 ISO-8859-15 perl);
 $LangName  = "Swedish";
 $YearAdded = 1996;
 
-# These strings are raw undecoded UTF-8 octets:
-{ no utf8; $Language = {
+$Language = {
   ampm => [['FM'], ['EM']],
   at => ['kl', 'kl.', 'klockan'],
   day_abb => [
@@ -148,14 +147,14 @@ $YearAdded = 1996;
   },
   offset_time => { nu => '0:0:0:0:0:0:0' },
   on => ['pa', 'på'],
-  sephm => ['[.]'],
-  sepms => ['[:]'],
+  sephm => ['\.'],
+  sepms => [':'],
   times => {
     'midnatt'       => '00:00:00',
     'mitt pa dagen' => '12:00:00',
     'mitt på dagen' => '12:00:00',
   },
   when => [['sedan'], ['om', 'senare']],
-}}
+};
 
 1;

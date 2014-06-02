@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+use utf8;
 use Test::Inter;
 $t = new Test::Inter 'parse (Romanian)';
 $testdir = '';
@@ -39,7 +40,14 @@ $tests="
 
 'marti iunie 8, 2010'   => 2010060800:00:00
 
+'marþi iunie 8, 2010'   => 2010060800:00:00
+
 'mar\xFEi iunie 8, 2010'   => 2010060800:00:00
+
+'sâmbătă iunie 12, 2010'   => 2010061200:00:00
+
+'duminică iunie 13, 2010'   => 2010061300:00:00
+
 ";
 
 $t->tests(func  => \&test,

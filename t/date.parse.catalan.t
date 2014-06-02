@@ -1,5 +1,6 @@
 #!/usr/bin/perl -w
 
+use utf8;
 use Test::Inter;
 $t = new Test::Inter 'parse (Catalan)';
 $testdir = '';
@@ -38,6 +39,8 @@ $tests="
 'Mar\xE7 5\xE8 2002'  => 2002030500:00:00
 
 'març 5, 2002'        => 2002030500:00:00
+
+\"10e d' Feb\"        => 2000021000:00:00
 
 ";
 

@@ -95,6 +95,22 @@ Free up the '%u', '%h', and '%X' printf formats. Reserve '%X' for
 # TO CONSIDER
 ########################################################################
 
+Multilingual parsing:  Yuri Nikulin
+   language=english,french
+   regexps then support both languages
+
+Special date formats in language file:
+   extra{LABEL} = [ ... ]         extra words of type LABEL
+   offset_date =>
+      FORMAT => 'OFFSET'
+         where FORMAT is similar to parse_format
+         %LABEL is a regexp with any of the words
+         OFFSET can include %y, %d, %w, %m, %h, %mn, $s in them
+   same for offset_time, times, and others
+   ex.
+      offset_time =>  { "%h o'clock" => "%h:00:00" }
+   Support some of the special Russian dates supplied by Yuri Nikulin
+
 Add a method:
    ($date0,$date1) = $date->week_range();
 where $date0 and $date1 are the start and end of the week containing

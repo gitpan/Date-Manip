@@ -13,7 +13,7 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.43';
+$VERSION='6.44';
 
 
 our($Language,@Encodings,$LangName,$YearAdded);
@@ -21,8 +21,7 @@ our($Language,@Encodings,$LangName,$YearAdded);
 $LangName  = "English";
 $YearAdded = 1995;
 
-# These strings are raw undecoded UTF-8 octets:
-{ no utf8; $Language = {
+$Language = {
   ampm => [['AM', 'A.M.'], ['PM', 'P.M.']],
   at => ['at'],
   day_abb => [
@@ -155,6 +154,6 @@ $YearAdded = 1995;
     ['ago', 'past', 'in the past', 'earlier', 'before now'],
     ['in', 'later', 'future', 'in the future', 'from now'],
   ],
-}}
+};
 
 1;

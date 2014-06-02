@@ -13,15 +13,14 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.43';
+$VERSION='6.44';
 
 our($Language,@Encodings,$LangName,$YearAdded);
 @Encodings = qw(utf-8 iso-8859-1 perl);
 $LangName  = "Turkish";
 $YearAdded = 2001;
 
-# These strings are raw undecoded UTF-8 octets:
-{ no utf8; $Language = {
+$Language = {
   ampm => [['ögleden önce', 'ogleden once'], ['öðleden sonra', 'ogleden sonra']],
   at => ['saat'],
   day_abb => [['pzt'], ['sal'], ['çar', 'car'], ['per'], ['cum'], ['cts', 'cmt'], ['paz']],
@@ -151,6 +150,6 @@ $YearAdded = 2001;
     'öðlen'       => '12:00:00',
   },
   when => [['gecmis', 'geçmiþ', 'gecen', 'geçen'], ['gelecek', 'sonra']],
-}}
+};
 
 1;

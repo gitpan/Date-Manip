@@ -26,7 +26,7 @@ use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.43';
+$VERSION='6.44';
 END { undef $VERSION; }
 
 ########################################################################
@@ -607,9 +607,14 @@ sub parse_format {
    }
 
    $$self{'data'}{'set'} = 2;
-   return $self->_parse_check('parse_format',$string,
+   $err = $self->_parse_check('parse_format',$string,
                               $y,$m,$d,$h,$mn,$s,$dow_num,
                               $tzstring,$zone,$abb,$off);
+
+   if (wantarray) {
+      return ($err,%+);
+   }
+   return $err;
 }
 
 BEGIN {
@@ -1701,6 +1706,7 @@ sub _parse_dow {
    }
 
    $string =~ s/\s*$//;
+   $string =~ s/^\s*//;
 
    return (0,$string,$dow)  if ($string);
 
@@ -1869,6 +1875,7 @@ sub _parse_date_other {
 
    my($mmm,$month,$nextprev,$last,$field_y,$field_m,$field_w,$field_d,$nth);
    my($special,$got_m,$n,$got_y);
+
    if ($string =~ $rx) {
       ($y,$mmm,$month,$nextprev,$last,$field_y,$field_m,$field_w,$field_d,$nth,
        $special,$n) =
