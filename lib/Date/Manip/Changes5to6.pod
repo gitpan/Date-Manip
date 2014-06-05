@@ -328,16 +328,16 @@ The following config variables have been removed.
    UpdateCurrTZ     With real time zone handling in
                     place, this is no longer necessary
 
+   IntCharSet      This has been replaced with better support for
+                   international character sets. The Encoding config
+                   variable may be used instead.
+
 =item B<Other config variables deprecated>
 
 The following config variables are deprecated and will be removed
 in some future version:
 
    TZ              Use SetDate or ForceDate instead.
-
-   IntCharSet      This has been replaced with better support for
-                   international character sets. The Encoding config
-                   variable may be used instead.
 
 =item B<Holidays>
 
@@ -496,7 +496,7 @@ was defined as the start of the next business day, but if $timecheck
 was zero, day 0 was defined as the previous business day at the
 same time.
 
-In 6.x, if the check fails, and $timecheck is non-zero, the behavior
+In 6.xx, if the check fails, and $timecheck is non-zero, the behavior
 is the same as before. If $timecheck is zero, day 0 is defined as the
 next business day at the same time.
 
@@ -560,7 +560,7 @@ In Date::Manip 5.xx, the approximate delta between the two dates:
    Jan  7 1998 noon
 
 was +1:11:4:0:0:0:0 (or 1 year, 11 months, 4 weeks).  As of
-Date::Manip 6.0, the delta is +2:0:-0:3:0:0:0 (or 2 years minus 3
+Date::Manip 6.00, the delta is +2:0:-0:3:0:0:0 (or 2 years minus 3
 days). Although this leads to mixed-sign deltas, it is actually
 how more people would think about the delta. It has the additional
 advantage of being MUCH easier and faster to calculate.
@@ -577,8 +577,8 @@ better value is 365.2425, and this is used in version 6.00.
 The formats used in the printf command are slightly different than in the
 old Delta_Format command.
 
-The old formats are described in the Date::Manip manual, and the new ones
-are in the Date::Manip::Delta manual.
+The old formats are described in the Date::Manip::DM5 manual, and the
+new ones are in the Date::Manip::Delta manual.
 
 The new formats are much more flexible and I encourage you to switch over,
 however at this point, the old style formats are officially supported for

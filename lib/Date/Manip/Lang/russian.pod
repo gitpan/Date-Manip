@@ -257,6 +257,7 @@ words:
    вечера
    после полудня
    по полудню
+   пополудню
 
 
 =item B<Each or every>
@@ -718,11 +719,11 @@ day fields).
 
 The following words may be used:
 
-   вчера           -0:0:0:1:0:0:0
-   завтра         +0:0:0:1:0:0:0
-   позавчера   -0:0:0:2:0:0:0
-   послезавтра +0:0:0:2:0:0:0
-   сегодня       0:0:0:0:0:0:0
+   вчера                -0:0:0:1:0:0:0
+   завтра               +0:0:0:1:0:0:0
+   позавчера            -0:0:0:2:0:0:0
+   послезавтра          +0:0:0:2:0:0:0
+   сегодня              0:0:0:0:0:0:0
 
 
 Words that set only the time of day are similar to the English words
@@ -730,8 +731,8 @@ Words that set only the time of day are similar to the English words
 
 The following words may be used:
 
-   полдень       12:00:00
-   полночь       00:00:00
+   полдень              12:00:00
+   полночь              00:00:00
 
 
 Words that set the entire time and date (relative to the current
@@ -741,7 +742,7 @@ In English, the word 'now' is one of these.
 
 The following words may be used:
 
-   сейчас         0:0:0:0:0:0:0
+   сейчас               0:0:0:0:0:0:0
 
 
 =item B<Hour/Minute/Second separators>
@@ -753,16 +754,30 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
 
-   [ч]  [м]
+   ч  м
 
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
+
+с
 
 =back
 

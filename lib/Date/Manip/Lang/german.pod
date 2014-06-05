@@ -36,11 +36,11 @@ exist including full names and abbreviations.
 The following month names may be used:
 
    Januar
-   JÃ¤nner
+   Jänner
 
    Februar
 
-   MÃ¤rz
+   März
    Marz
    Maerz
 
@@ -65,12 +65,12 @@ The following month names may be used:
 
 The following abbreviations may be used:
 
-   JÃ¤n
+   Jän
    Jan
 
    Feb
 
-   MÃ¤r
+   Mär
    Mar
 
    Apr
@@ -245,9 +245,9 @@ The following words may be used:
 Next occurence:
 
    nachsten
-   nÃ¤chsten
+   nächsten
    nachste
-   nÃ¤chste
+   nächste
 
 
 Previous occurence:
@@ -284,7 +284,7 @@ dates in the past or future respectively:
 
    in
    spater
-   spÃ¤ter
+   später
 
 
 =item B<Business mode>
@@ -299,7 +299,7 @@ The following words may be used:
 
    genau
    ungefahr
-   ungefÃ¤hr
+   ungefähr
 
 
 The following words may be used to specify a business delta:
@@ -334,9 +334,9 @@ to the numbers from 1 to 53:
 
    5.
    funfte
-   fÃ¼nfte
-   fÃ¼nf
-   fÃ¼nfter
+   fünfte
+   fünf
+   fünfter
    funf
    funfter
 
@@ -372,9 +372,9 @@ to the numbers from 1 to 53:
 
    12.
    zwolfte
-   zwÃ¶lfte
-   zwÃ¶lf
-   zwÃ¶lften
+   zwölfte
+   zwölf
+   zwölften
    zwolf
    zwolften
 
@@ -388,9 +388,9 @@ to the numbers from 1 to 53:
 
    15.
    funfzehnte
-   fÃ¼nfzehnte
-   fÃ¼nfzehn
-   fÃ¼nfzehnten
+   fünfzehnte
+   fünfzehn
+   fünfzehnten
    funfzehn
    funfzehnten
 
@@ -434,8 +434,8 @@ to the numbers from 1 to 53:
 
    25.
    funfundzwanzigste
-   fÃ¼nfundzwanzigste
-   fÃ¼nfundzwanzigsten
+   fünfundzwanzigste
+   fünfundzwanzigsten
    funfundzwanzigsten
 
    26.
@@ -456,66 +456,66 @@ to the numbers from 1 to 53:
 
    30.
    dreibigste
-   dreiÃŸigste
-   dreiÃŸig
-   dreiÃŸigsten
+   dreißigste
+   dreißig
+   dreißigsten
    dreibig
    dreibigsten
 
 
    31.
    einunddreibigste
-   einunddreiÃŸigste
-   einunddreiÃŸig
-   einunddreiÃŸigsten
+   einunddreißigste
+   einunddreißig
+   einunddreißigsten
    einunddreibig
    einunddreibigsten
 
    32.
-   zweiunddreiÃŸig
-   zweiunddreiÃŸigste
+   zweiunddreißig
+   zweiunddreißigste
    zweiunddreibig
    zweiunddreibigste
 
    33.
-   dreiunddreiÃŸig
-   dreiunddreiÃŸigsten
+   dreiunddreißig
+   dreiunddreißigsten
    dreiunddreibig
    dreiunddreibigsten
 
    34.
-   vierunddreiÃŸig
-   vierunddreiÃŸigste
+   vierunddreißig
+   vierunddreißigste
    vierunddreibig
    vierunddreibigste
 
    35.
-   fÃ¼nfunddreiÃŸig
-   fÃ¼nfunddreiÃŸigste
+   fünfunddreißig
+   fünfunddreißigste
    funfunddreibig
    funfunddreibigste
 
    36.
-   sechsunddreiÃŸig
-   sechsunddreiÃŸigste
+   sechsunddreißig
+   sechsunddreißigste
    sechsunddreibig
    sechsunddreibigste
 
    37.
-   siebenunddreiÃŸig
-   siebenunddreiÃŸigsten
+   siebenunddreißig
+   siebenunddreißigsten
    siebenunddreibig
    siebenunddreibigsten
 
    38.
-   achtunddreiÃŸig
-   achtunddreiÃŸigsten
+   achtunddreißig
+   achtunddreißigsten
    achtunddreibig
    achtunddreibigsten
 
    39.
-   neununddreiÃŸig
-   neununddreiÃŸigsten
+   neununddreißig
+   neununddreißigsten
    neununddreibig
    neununddreibigsten
 
@@ -541,8 +541,8 @@ to the numbers from 1 to 53:
    vierundvierzigsten
 
    45.
-   fÃ¼nfundvierzig
-   fÃ¼nfundvierzigsten
+   fünfundvierzig
+   fünfundvierzigsten
    funfundvierzig
    funfundvierzigsten
 
@@ -563,27 +563,27 @@ to the numbers from 1 to 53:
    neunundvierzigsten
 
    50.
-   fÃ¼nfzig
-   fÃ¼nfzigsten
+   fünfzig
+   fünfzigsten
    funfzig
    funfzigsten
 
 
    51.
-   einundfÃ¼nfzig
-   einundfÃ¼nfzigsten
+   einundfünfzig
+   einundfünfzigsten
    einundfunfzig
    einundfunfzigsten
 
    52.
-   zweiundfÃ¼nfzig
-   zweiundfÃ¼nfzigsten
+   zweiundfünfzig
+   zweiundfünfzigsten
    zweiundfunfzig
    zweiundfunfzigsten
 
    53.
-   dreiundfÃ¼nfzig
-   dreiundfÃ¼nfzigsten
+   dreiundfünfzig
+   dreiundfünfzigsten
    dreiundfunfzig
    dreiundfunfzigsten
 
@@ -643,7 +643,7 @@ The following words may be used:
    gestern              -0:0:0:1:0:0:0
    heute                0:0:0:0:0:0:0
    morgen               +0:0:0:1:0:0:0
-   Ã¼bermorgen          +0:0:0:2:0:0:0
+   übermorgen           +0:0:0:2:0:0:0
 
 
 Words that set only the time of day are similar to the English words
@@ -674,13 +674,28 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
+
+   Not defined in this language
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
 
    Not defined in this language
 

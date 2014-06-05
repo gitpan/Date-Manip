@@ -104,10 +104,10 @@ The following day names may be used:
 
    Fredag
 
-   LÃ¸rdag
+   Lørdag
    Lordag
 
-   SÃ¸ndag
+   Søndag
    Sondag
 
 
@@ -123,10 +123,10 @@ The following abbreviations may be used:
 
    Fre
 
-   LÃ¸r
+   Lør
    Lor
 
-   SÃ¸n
+   Søn
    Son
 
 
@@ -155,14 +155,14 @@ These are the names (and abbreviations) for the fields in a delta.  There are
 The names and abbreviations for these fields are:
 
    ar
-   Ã¥r
+   år
 
    maneder
-   mÃ¥neder
+   måneder
    man
    maned
-   mÃ¥n
-   mÃ¥ned
+   mån
+   måned
 
    uger
    u
@@ -236,7 +236,7 @@ The following words may be used:
 Next occurence:
 
    naste
-   nÃ¦ste
+   næste
 
 
 Previous occurence:
@@ -281,7 +281,7 @@ but now this list is not used except to force the delta to be standard.
 The following words may be used:
 
    pracist
-   prÃ¦cist
+   præcist
    circa
 
 
@@ -298,7 +298,7 @@ to the numbers from 1 to 53:
 
    1.
    forste
-   fÃ¸rste
+   første
    en
 
    2.
@@ -552,7 +552,7 @@ English, you would use ON:
 The following words may be used:
 
    pa
-   pÃ¥
+   på
 
 
 =item B<Words that set the date, time, or both>
@@ -570,7 +570,7 @@ The following words may be used:
 
    idag                 0:0:0:0:0:0:0
    igar                 -0:0:0:1:0:0:0
-   igÃ¥r                -0:0:0:1:0:0:0
+   igår                 -0:0:0:1:0:0:0
    imorgen              +0:0:0:1:0:0:0
 
 
@@ -581,7 +581,7 @@ The following words may be used:
 
    midnat               00:00:00
    midt pa dagen        12:00:00
-   midt pÃ¥ dagen       12:00:00
+   midt på dagen        12:00:00
 
 
 Words that set the entire time and date (relative to the current
@@ -603,15 +603,30 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
 
-   [.]  [:]
+   \.  :
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
+
+   Not defined in this language
 
 
 =back

@@ -39,7 +39,7 @@ The following month names may be used:
 
    Fevereiro
 
-   MarÃ§o
+   Março
    Marco
 
    Abril
@@ -97,7 +97,7 @@ The following day names may be used:
 
    Segunda
 
-   TerÃ§a
+   Terça
    Terca
 
    Quarta
@@ -106,7 +106,7 @@ The following day names may be used:
 
    Sexta
 
-   SÃ¡bado
+   Sábado
    Sabado
 
    Domingo
@@ -124,7 +124,7 @@ The following abbreviations may be used:
 
    Sex
 
-   SÃ¡b
+   Sáb
    Sab
 
    Dom
@@ -161,7 +161,7 @@ The names and abbreviations for these fields are:
    a
 
    meses
-   mÃªs
+   mês
    mes
    m
 
@@ -239,23 +239,23 @@ The following words may be used:
 Next occurence:
 
    proxima
-   prÃ³xima
+   próxima
    proximo
-   prÃ³ximo
+   próximo
 
 
 Previous occurence:
 
    ultima
-   Ãºltima
+   última
    ultimo
-   Ãºltimo
+   último
 
 
 Last occurence:
 
    ultimo
-   Ãºltimo
+   último
 
 
 =item B<Delta words for going forward/backward in time>
@@ -272,7 +272,7 @@ The following words may be used to specify deltas that refer to
 dates in the past or future respectively:
 
    a
-   Ã 
+   à
 
    em
    passadas
@@ -304,271 +304,271 @@ The following words may be used to specify a business delta:
 Numbers may be spelled out in a variety of ways.  The following sets correspond
 to the numbers from 1 to 53:
 
-   1Âº
+   1º
    um
    primeiro
 
-   2Âº
+   2º
    dois
    segundo
 
-   3Âº
-   trÃªs
+   3º
+   três
    tres
    terceiro
 
-   4Âº
+   4º
    quatro
    quarto
 
-   5Âº
+   5º
    cinco
    quinto
 
-   6Âº
+   6º
    seis
    sexto
 
-   7Âº
+   7º
    sete
    setimo
-   sÃ©timo
+   sétimo
 
-   8Âº
+   8º
    oito
    oitavo
 
-   9Âº
+   9º
    nove
    nono
 
-   10Âº
+   10º
    dez
    decimo
-   dÃ©cimo
+   décimo
 
 
-   11Âº
+   11º
    onze
    decimo primeiro
-   dÃ©cimo primeiro
+   décimo primeiro
 
-   12Âº
+   12º
    doze
    decimo segundo
-   dÃ©cimo segundo
+   décimo segundo
 
-   13Âº
+   13º
    treze
    decimo terceiro
-   dÃ©cimo terceiro
+   décimo terceiro
 
-   14Âº
+   14º
    quatorze
    decimo quarto
-   dÃ©cimo quarto
+   décimo quarto
 
-   15Âº
+   15º
    quinze
    decimo quinto
-   dÃ©cimo quinto
+   décimo quinto
 
-   16Âº
+   16º
    dezasseis
    decimo sexto
-   dÃ©cimo sexto
+   décimo sexto
 
-   17Âº
+   17º
    dezessete
    decimo setimo
-   dÃ©cimo sÃ©timo
+   décimo sétimo
 
-   18Âº
+   18º
    dezoito
    decimo oitavo
-   dÃ©cimo oitavo
+   décimo oitavo
 
-   19Âº
+   19º
    dezanove
    decimo nono
-   dÃ©cimo nono
+   décimo nono
 
-   20Âº
+   20º
    vinte
    vigesimo
-   vigÃ©simo
+   vigésimo
 
 
-   21Âº
+   21º
    vinte e um
    vigesimo primeiro
-   vigÃ©simo primeiro
+   vigésimo primeiro
 
-   22Âº
+   22º
    vinte e dois
    vigesimo segundo
-   vigÃ©simo segundo
+   vigésimo segundo
 
-   23Âº
-   vinte e trÃªs
+   23º
+   vinte e três
    vinte e tres
    vigesimo terceiro
-   vigÃ©simo terceiro
+   vigésimo terceiro
 
-   24Âº
+   24º
    vinte e quatro
    vigesimo quarto
-   vigÃ©simo quarto
+   vigésimo quarto
 
-   25Âº
+   25º
    vinte cinco
    vigesimo quinto
-   vigÃ©simo quinto
+   vigésimo quinto
 
-   26Âº
+   26º
    vinte seis
    vigesimo sexto
-   vigÃ©simo sexto
+   vigésimo sexto
 
-   27Âº
+   27º
    vinte sete
    vigesimo setimo
-   vigÃ©simo sÃ©timo
+   vigésimo sétimo
 
-   28Âº
+   28º
    vinte e oito
    vigesimo oitavo
-   vigÃ©simo oitavo
+   vigésimo oitavo
 
-   29Âº
+   29º
    vinte e nove
    vigesimo nono
-   vigÃ©simo nono
+   vigésimo nono
 
-   30Âº
+   30º
    trinta
    trigesimo
-   trigÃ©simo
+   trigésimo
 
 
-   31Âº
+   31º
    trinta e um
    trigesimo primeiro
-   trigÃ©simo primeiro
+   trigésimo primeiro
 
-   32Âº
+   32º
    trinta e dois
-   trigÃ©simo segundo
+   trigésimo segundo
    trigesimo segundo
 
-   33Âº
-   trinta e trÃªs
+   33º
+   trinta e três
    trinta e tres
-   trigÃ©simo terceiro
+   trigésimo terceiro
    trigesimo terceiro
 
-   34Âº
+   34º
    trinta e quatro
-   trigÃ©simo quarto
+   trigésimo quarto
    trigesimo quarto
 
-   35Âº
+   35º
    trinta e cinco
-   trigÃ©simo quinto
+   trigésimo quinto
    trigesimo quinto
 
-   36Âº
+   36º
    trinta e seis
-   trigÃ©simo sexto
+   trigésimo sexto
    trigesimo sexto
 
-   37Âº
+   37º
    trinta e sete
-   trigÃ©simo sÃ©timo
+   trigésimo sétimo
    trigesimo setimo
 
-   38Âº
+   38º
    trinta e oito
-   trigÃ©simo oitavo
+   trigésimo oitavo
    trigesimo oitavo
 
-   39Âº
+   39º
    trinta e nove
-   trigÃ©simo nono
+   trigésimo nono
    trigesimo nono
 
-   40Âº
+   40º
    quarenta
-   quadragÃ©simo
+   quadragésimo
    quadragesimo
 
 
-   41Âº
+   41º
    quarenta e um
-   quadragÃ©simo primeiro
+   quadragésimo primeiro
    quadragesimo primeiro
 
-   42Âº
+   42º
    quarenta e dois
-   quadragÃ©simo segundo
+   quadragésimo segundo
    quadragesimo segundo
 
-   43Âº
-   quarenta e trÃªs
+   43º
+   quarenta e três
    quarenta e tres
-   quadragÃ©simo terceiro
+   quadragésimo terceiro
    quadragesimo terceiro
 
-   44Âº
+   44º
    quarenta e quatro
-   quadragÃ©simo quarto
+   quadragésimo quarto
    quadragesimo quarto
 
-   45Âº
+   45º
    quarenta e cinco
-   quadragÃ©simo quinto
+   quadragésimo quinto
    quadragesimo quinto
 
-   46Âº
+   46º
    quarenta e seis
-   quadragÃ©simo sexto
+   quadragésimo sexto
    quadragesimo sexto
 
-   47Âº
+   47º
    quarenta e sete
-   quadragÃ©simo sÃ©timo
+   quadragésimo sétimo
    quadragesimo setimo
 
-   48Âº
+   48º
    quarenta e oito
-   quadragÃ©simo oitavo
+   quadragésimo oitavo
    quadragesimo oitavo
 
-   49Âº
+   49º
    quarenta e nove
-   quadragÃ©simo nono
+   quadragésimo nono
    quadragesimo nono
 
-   50Âº
+   50º
    cinquenta
-   quinquagÃ©simo
+   quinquagésimo
    quinquagesimo
 
 
-   51Âº
+   51º
    cinquenta e um
-   quinquagÃ©simo primeiro
+   quinquagésimo primeiro
    quinquagesimo primeiro
 
-   52Âº
+   52º
    cinquenta e dois
-   quinquagÃ©simo segundo
+   quinquagésimo segundo
    quinquagesimo segundo
 
-   53Âº
-   cinqÃ¼enta e trÃªs anos
+   53º
+   cinqüenta e três anos
    cinquenta e tres anos
-   quinquagÃ©simo terceiro
+   quinquagésimo terceiro
    quinquagesimo terceiro
 
 
@@ -586,7 +586,7 @@ use the word AT in the example:
 The following words may be used:
 
    as
-   Ã s
+   às
 
 
 Another word is used to designate one member of a set.  In English,
@@ -626,7 +626,7 @@ day fields).
 The following words may be used:
 
    amanha               +0:0:0:1:0:0:0
-   amanhÃ£              +0:0:0:1:0:0:0
+   amanhã               +0:0:0:1:0:0:0
    hoje                 0:0:0:0:0:0:0
    ontem                -0:0:0:1:0:0:0
 
@@ -659,13 +659,28 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
+
+   Not defined in this language
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
 
    Not defined in this language
 

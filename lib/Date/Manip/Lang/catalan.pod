@@ -39,7 +39,7 @@ The following month names may be used:
 
    Febrer
 
-   MarÃ§
+   Març
    Marc
 
    Abril
@@ -285,7 +285,7 @@ Next occurence:
 
    proper
    seguent
-   segÃ¼ent
+   següent
 
 
 Previous occurence:
@@ -300,9 +300,9 @@ Last occurence:
    darrer
    darrera
    ultim
-   Ãºltim
+   últim
    ultima
-   Ãºltima
+   última
    passat
 
 
@@ -322,9 +322,9 @@ dates in the past or future respectively:
    fa
 
    d'aqui a
-   d'aquÃ­ a
+   d'aquí a
    mes tard
-   mÃ©s tard
+   més tard
 
 
 =item B<Business mode>
@@ -367,250 +367,250 @@ to the numbers from 1 to 53:
    quart
    quatre
 
-   5Ã¨
+   5è
    5e
    cinque
-   CinquÃ¨
+   Cinquè
    cinc
 
-   6Ã¨
+   6è
    6e
    sise
-   sisÃ¨
+   sisè
    sis
 
-   7Ã¨
+   7è
    7e
    sete
-   setÃ¨
+   setè
    set
 
-   8Ã¨
+   8è
    8e
    vuite
-   vuitÃ¨
+   vuitè
    vuit
 
-   9Ã¨
+   9è
    9e
    nove
-   novÃ¨
+   novè
    nou
 
-   10Ã¨
+   10è
    10e
    dese
-   desÃ¨
+   desè
    deu
 
 
-   11Ã¨
+   11è
    11e
    onze
-   onzÃ¨
+   onzè
 
-   12Ã¨
+   12è
    12e
    dotze
-   dotzÃ¨
+   dotzè
 
-   13Ã¨
+   13è
    13e
    tretze
-   tretzÃ¨
+   tretzè
 
-   14Ã¨
+   14è
    14e
    catorze
-   catorzÃ¨
+   catorzè
 
-   15Ã¨
+   15è
    15e
    quinze
-   quinzÃ¨
+   quinzè
 
-   16Ã¨
+   16è
    16e
    setze
-   setzÃ¨
+   setzè
 
-   17Ã¨
+   17è
    17e
    dissete
-   dissetÃ¨
+   dissetè
    disset
 
-   18Ã¨
+   18è
    18e
    divuite
-   divuitÃ¨
+   divuitè
    divuit
 
-   19Ã¨
+   19è
    19e
    dinove
-   dinovÃ¨e
+   dinovèe
    dinou
 
-   20Ã¨
+   20è
    20e
    vinte
-   vintÃ¨
+   vintè
    vint
 
 
-   21Ã¨
+   21è
    21e
    vint-i-une
-   vint-i-unÃ¨
+   vint-i-unè
    vint-i-u
 
-   22Ã¨
+   22è
    22e
    vint-i-dose
-   vint-i-dosÃ¨
+   vint-i-dosè
    vint-i-dos
 
-   23Ã¨
+   23è
    23e
    vint-i-trese
-   vint-i-tresÃ¨
+   vint-i-tresè
    vint-i-tres
 
-   24Ã¨
+   24è
    24e
    vint-i-quatre
-   vint-i-quatrÃ¨
+   vint-i-quatrè
 
-   25Ã¨
+   25è
    25e
    vint-i-cinque
-   vint-i-cinquÃ¨
+   vint-i-cinquè
 
-   26Ã¨
+   26è
    26e
    vint-i-sise
-   vint-i-sisÃ¨
+   vint-i-sisè
 
-   27Ã¨
+   27è
    27e
    vint-i-sete
-   vint-i-setÃ¨
+   vint-i-setè
 
-   28Ã¨
+   28è
    28e
    vint-i-vuite
-   vint-i-vuitÃ¨
+   vint-i-vuitè
 
-   29Ã¨
+   29è
    29e
    vint-i-nove
-   vint-i-novÃ¨
+   vint-i-novè
 
-   30Ã¨
+   30è
    30e
    trente
-   trentÃ¨
+   trentè
    trenta
 
 
-   31Ã¨
+   31è
    31e
    trenta-une
-   trenta-unÃ¨
+   trenta-unè
    trenta-u
 
-   32Ã¨
+   32è
    32e
    trenta-dos
 
-   33Ã¨
+   33è
    33e
    trenta-tres
 
-   34Ã¨
+   34è
    34e
    trenta-quatre
 
-   35Ã¨
+   35è
    35e
    trenta-cinc
 
-   36Ã¨
+   36è
    36e
    trenta-sis
 
-   37Ã¨
+   37è
    37e
    trenta-set
-   trenta-setÃ¨
+   trenta-setè
    trenta-sete
 
-   38Ã¨
+   38è
    38e
    trenta-vuit
 
-   39Ã¨
+   39è
    39e
    trenta-nou
 
-   40Ã¨
+   40è
    40e
    quaranta
 
 
-   41Ã¨
+   41è
    41e
    quaranta-un
 
-   42Ã¨
+   42è
    42e
    quaranta-dos
 
-   43Ã¨
+   43è
    43e
    quaranta-tres
 
-   44Ã¨
+   44è
    44e
    quaranta-quatre
 
-   45Ã¨
+   45è
    45e
    quaranta-cinc
 
-   46Ã¨
+   46è
    46e
    quaranta-sis
 
-   47Ã¨
+   47è
    47e
    quaranta-set
 
-   48Ã¨
+   48è
    48e
    quaranta-vuit
    quaranta-vuitena
 
-   49Ã¨
+   49è
    49e
    quaranta-nou
 
-   50Ã¨
+   50è
    50e
-   cinquantÃ¨
+   cinquantè
    cinquante
 
 
-   51Ã¨
+   51è
    51e
    cinquanta-un
 
-   52Ã¨
+   52è
    52e
    cinquanta-dos
 
-   53Ã¨
+   53è
    53e
    cinquanta-tres
 
@@ -672,8 +672,8 @@ The following words may be used:
    ahir                 -0:0:0:1:0:0:0
    dema                 +0:0:0:1:0:0:0
    dema passat          +0:0:0:2:0:0:0
-   demÃ                 +0:0:0:1:0:0:0
-   demÃ  passat         +0:0:0:2:0:0:0
+   demà                 +0:0:0:1:0:0:0
+   demà passat          +0:0:0:2:0:0:0
    idag                 0:0:0:0:0:0:0
 
 
@@ -706,13 +706,28 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
+
+   Not defined in this language
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
 
    Not defined in this language
 

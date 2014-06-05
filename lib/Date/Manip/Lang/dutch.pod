@@ -418,8 +418,8 @@ to the numbers from 1 to 53:
    twee-en-twintig
    tweeentwintig
    tweeentwintigste
-   tweeÃ«ntwintig
-   tweeÃ«ntwintigste
+   tweeëntwintig
+   tweeëntwintigste
 
    23ste
    drieentwintigstetiende
@@ -428,8 +428,8 @@ to the numbers from 1 to 53:
    drie-en-twintig
    drieentwintig
    drieentwintigste
-   drieÃ«ntwintig
-   drieÃ«ntwintigste
+   drieëntwintig
+   drieëntwintigste
 
    24ste
    vierentwintigstetiende
@@ -499,14 +499,14 @@ to the numbers from 1 to 53:
    32ste
    tweeendertig
    tweeendertigste
-   tweeÃ«ndertig
-   tweeÃ«ndertigste
+   tweeëndertig
+   tweeëndertigste
 
    33ste
    drieendertig
    drieendertigste
-   drieÃ«ndertig
-   drieÃ«ndertigste
+   drieëndertig
+   drieëndertigste
 
    34ste
    vierendertig
@@ -542,14 +542,14 @@ to the numbers from 1 to 53:
    eenenveertigste
 
    42ste
-   tweeÃ«nveertig
-   tweeÃ«nveertigste
+   tweeënveertig
+   tweeënveertigste
    tweeenveertig
    tweeenveertigste
 
    43ste
-   drieÃ«nveertig
-   drieÃ«nveertigste
+   drieënveertig
+   drieënveertigste
    drieenveertig
    drieenveertigste
 
@@ -587,14 +587,14 @@ to the numbers from 1 to 53:
    eenenvijftigste
 
    52ste
-   tweeÃ«nvijftig
-   tweeÃ«nvijftigste
+   tweeënvijftig
+   tweeënvijftigste
    tweeenvijftig
    tweeenvijftigste
 
    53ste
-   drieÃ«nvijftig
-   drieÃ«nvijftigste
+   drieënvijftig
+   drieënvijftigste
    drieenvijftig
    drieenvijftigste
 
@@ -686,16 +686,31 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
 
    [.]  [.]
    [uh]  [m]
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
+
+   Not defined in this language
 
 
 =back

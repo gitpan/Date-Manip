@@ -20,13 +20,14 @@ use strict;
 use integer;
 use utf8;
 use IO::File;
+use Storable qw(dclone);
 #use re 'debug';
 
 use Date::Manip::Base;
 use Date::Manip::TZ;
 
 our $VERSION;
-$VERSION='6.44';
+$VERSION='6.45';
 END { undef $VERSION; }
 
 ########################################################################
@@ -612,7 +613,8 @@ sub parse_format {
                               $tzstring,$zone,$abb,$off);
 
    if (wantarray) {
-      return ($err,%+);
+      my %tmp = %{ dclone(\%+) };
+      return ($err,%tmp);
    }
    return $err;
 }

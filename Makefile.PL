@@ -43,7 +43,7 @@ if ($EU_MM_V < 6.64) {
 
 WriteMakefile(
    NAME             => "Date::Manip",
-   VERSION          => "6.44",
+   VERSION          => "6.45",
    ABSTRACT         => "Date manipulation routines",
    LICENSE          => "perl",
    ($EU_MM_V >= 6.48

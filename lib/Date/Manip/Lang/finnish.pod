@@ -55,12 +55,12 @@ The following month names may be used:
    toukokuun
    toukokuuta
 
-   kes√§kuu
+   kes‰kuu
    kesakuu
    kesakuun
    kesakuuta
 
-   hein√§kuu
+   hein‰kuu
    heinakuu
    heinakuun
    heinakuuta
@@ -99,10 +99,10 @@ The following abbreviations may be used:
    touko
 
    kesa
-   kes√§
+   kes‰
 
    heina
-   hein√§
+   hein‰
 
    elo
 
@@ -191,8 +191,8 @@ The names and abbreviations for these fields are:
    viikko
 
    paivaa
-   p√§iv√§√§
-   p√§iv√§
+   p‰iv‰‰
+   p‰iv‰
    paiva
    pv
 
@@ -221,13 +221,13 @@ words:
    AM
    A.M.
    aamulla
-   aamup√§iv√§ll√§
+   aamup‰iv‰ll‰
    aamupaivalla
 
    PM
    P.M.
    illalla
-   iltap√§iv√§ll√§
+   iltap‰iv‰ll‰
    iltapaivalla
 
 
@@ -292,7 +292,7 @@ dates in the past or future respectively:
    sitten
 
    ssa
-   my√∂hemmin
+   myˆhemmin
    myohemmin
 
 
@@ -306,7 +306,7 @@ but now this list is not used except to force the delta to be standard.
 
 The following words may be used:
 
-   t√§sm√§lleen
+   t‰sm‰lleen
    tasmalleen
    tasan
    noin
@@ -317,7 +317,7 @@ The following words may be used:
 The following words may be used to specify a business delta:
 
    arkipaiva
-   arkip√§iv√§
+   arkip‰iv‰
 
 
 =item B<Numbers>
@@ -326,7 +326,7 @@ Numbers may be spelled out in a variety of ways.  The following sets correspond
 to the numbers from 1 to 53:
 
    1.
-   ensimm√§inen
+   ensimm‰inen
    ensimmainen
    yksi
 
@@ -339,9 +339,9 @@ to the numbers from 1 to 53:
    kolme
 
    4.
-   nelj√§s
+   nelj‰s
    neljas
-   nelj√§
+   nelj‰
    nelja
 
    5.
@@ -353,9 +353,9 @@ to the numbers from 1 to 53:
    kuusi
 
    7.
-   seitsem√§s
+   seitsem‰s
    seitsemas
-   seitsem√§n
+   seitsem‰n
    seitseman
 
    8.
@@ -363,9 +363,9 @@ to the numbers from 1 to 53:
    kahdeksan
 
    9.
-   yhdeks√§s
+   yhdeks‰s
    yhdeksas
-   yhdeks√§n
+   yhdeks‰n
    yhdeksan
 
    10.
@@ -386,9 +386,9 @@ to the numbers from 1 to 53:
    kolmastoista
 
    14.
-   nelj√§toista
+   nelj‰toista
    neljatoista
-   nelj√§stoista
+   nelj‰stoista
    neljastoista
 
    15.
@@ -400,9 +400,9 @@ to the numbers from 1 to 53:
    kuudestoista
 
    17.
-   seitsem√§ntoista
+   seitsem‰ntoista
    seitsemantoista
-   seitsem√§stoista
+   seitsem‰stoista
    seitsemastoista
 
    18.
@@ -410,202 +410,202 @@ to the numbers from 1 to 53:
    kahdeksastoista
 
    19.
-   yhdeks√§ntoista
+   yhdeks‰ntoista
    yhdeksantoista
-   yhdeks√§stoista
+   yhdeks‰stoista
    yhdeksastoista
 
    20.
    kahdeskymmenes
-   kaksikymment√§
+   kaksikymment‰
    kaksikymmenta
 
 
    21.
-   kahdeskymmenesensimm√§inen
+   kahdeskymmenesensimm‰inen
    kahdeskymmenesensimmainen
-   kaksikymment√§yksi
+   kaksikymment‰yksi
    kaksikymmentayksi
 
    22.
    kahdeskymmenestoinen
-   kaksikymment√§kaksi
+   kaksikymment‰kaksi
    kaksikymmentakaksi
 
    23.
    kahdeskymmeneskolmas
-   kaksikymment√§kolme
+   kaksikymment‰kolme
    kaksikymmentakolme
 
    24.
-   kahdeskymmenesnelj√§s
+   kahdeskymmenesnelj‰s
    kahdeskymmenesneljas
-   kaksikymment√§nelj√§
+   kaksikymment‰nelj‰
    kaksikymmentanelja
 
    25.
    kahdeskymmenesviides
-   kaksikymment√§viisi
+   kaksikymment‰viisi
    kaksikymmentaviisi
 
    26.
    kahdeskymmeneskuudes
-   kaksikymment√§kuusi
+   kaksikymment‰kuusi
    kaksikymmentakuusi
 
    27.
-   kahdeskymmenesseitsem√§s
+   kahdeskymmenesseitsem‰s
    kahdeskymmenesseitsemas
-   kaksikymment√§seitsem√§n
+   kaksikymment‰seitsem‰n
    kaksikymmentaseitseman
 
    28.
    kahdeskymmeneskahdeksas
-   kaksikymment√§kahdeksan
+   kaksikymment‰kahdeksan
    kaksikymmentakahdeksan
 
    29.
-   kahdeskymmenesyhdeks√§s
+   kahdeskymmenesyhdeks‰s
    kahdeskymmenesyhdeksas
-   kaksikymment√§yhdeks√§n
+   kaksikymment‰yhdeks‰n
    kaksikymmentayhdeksan
 
    30.
    kolmaskymmene
-   kolmekymment√§
+   kolmekymment‰
    kolmekymmenta
 
 
    31.
-   kolmaskymmenesensimm√§inen
+   kolmaskymmenesensimm‰inen
    kolmaskymmenesensimmainen
-   kolmekymment√§yksi
+   kolmekymment‰yksi
    kolmekymmentayksi
 
    32.
    kolmaskymmenestoinen
-   kolmekymment√§kaksi
+   kolmekymment‰kaksi
    kolmekymmentakaksi
 
    33.
    kolmaskymmeneskolmas
-   kolmekymment√§kolme
+   kolmekymment‰kolme
    kolmekymmentakolme
 
    34.
-   kolmaskymmenesnelj√§s
+   kolmaskymmenesnelj‰s
    kolmaskymmenesneljas
-   kolmekymment√§nelj√§
+   kolmekymment‰nelj‰
    kolmekymmentanelja
 
    35.
    kolmaskymmenesviides
-   kolmekymment√§viisi
+   kolmekymment‰viisi
    kolmekymmentaviisi
 
    36.
    kolmaskymmeneskuudes
-   kolmekymment√§kuusi
+   kolmekymment‰kuusi
    kolmekymmentakuusi
 
    37.
-   kolmaskymmenesseitsem√§s
+   kolmaskymmenesseitsem‰s
    kolmaskymmenesseitsemas
-   kolmekymment√§seitsem√§n
+   kolmekymment‰seitsem‰n
    kolmekymmentaseitseman
 
    38.
    kolmaskymmeneskahdeksas
-   kolmekymment√§kahdeksan
+   kolmekymment‰kahdeksan
    kolmekymmentakahdeksan
 
    39.
-   kolmaskymmenesyhdeks√§s
+   kolmaskymmenesyhdeks‰s
    kolmaskymmenesyhdeksas
-   kolmekymment√§yhdeks√§n
+   kolmekymment‰yhdeks‰n
    kolmekymmentayhdeksan
 
    40.
-   nelj√§skymmenes
+   nelj‰skymmenes
    neljaskymmenes
-   nelj√§kymment√§
+   nelj‰kymment‰
    neljakymmenta
 
 
    41.
-   nelj√§skymmenesensimm√§inen
+   nelj‰skymmenesensimm‰inen
    neljaskymmenesensimmainen
-   nelj√§kymment√§yksi
+   nelj‰kymment‰yksi
    neljakymmentayksi
 
    42.
-   nelj√§skymmenestoinen
+   nelj‰skymmenestoinen
    neljaskymmenestoinen
-   nelj√§kymment√§kaksi
+   nelj‰kymment‰kaksi
    neljakymmentakaksi
 
    43.
-   nelj√§skymmeneskolmas
+   nelj‰skymmeneskolmas
    neljaskymmeneskolmas
-   nelj√§kymment√§kolme
+   nelj‰kymment‰kolme
    neljakymmentakolme
 
    44.
-   nelj√§skymmenesnelj√§s
+   nelj‰skymmenesnelj‰s
    neljaskymmenesneljas
-   nelj√§kymment√§nelj√§
-   neljakymment√§nelja
+   nelj‰kymment‰nelj‰
+   neljakymment‰nelja
 
    45.
-   nelj√§skymmenesviides
+   nelj‰skymmenesviides
    neljaskymmenesviides
-   nelj√§kymment√§viisi
+   nelj‰kymment‰viisi
    neljakymmentaviisi
 
    46.
-   nelj√§skymmeneskuudes
+   nelj‰skymmeneskuudes
    neljaskymmeneskuudes
-   nelj√§kymment√§kuusi
+   nelj‰kymment‰kuusi
    neljakymmentakuusi
 
    47.
-   nelj√§skymmenesseitsem√§s
+   nelj‰skymmenesseitsem‰s
    neljaskymmenesseitsemas
-   nelj√§kymment√§seitsem√§n
+   nelj‰kymment‰seitsem‰n
    neljakymmentaseitseman
 
    48.
-   nelj√§skymmeneskahdeksas
+   nelj‰skymmeneskahdeksas
    neljaskymmeneskahdeksas
-   nelj√§kymment√§kahdeksan
+   nelj‰kymment‰kahdeksan
    neljakymmentakahdeksan
 
    49.
-   nelj√§skymmenesyhdeks√§s
+   nelj‰skymmenesyhdeks‰s
    neljaskymmenesyhdeksas
-   nelj√§kymment√§yhdeks√§n
+   nelj‰kymment‰yhdeks‰n
    neljakymmentayhdeksan
 
    50.
    viideskymmenes
-   viisikymment√§
+   viisikymment‰
    viisikymmenta
 
 
    51.
-   viideskymmenesensimm√§inen
+   viideskymmenesensimm‰inen
    viideskymmenesensimmainen
-   viisikymment√§yksi
+   viisikymment‰yksi
    viisikymmentayksi
 
    52.
    viideskymmenestoinen
-   viisikymment√§kaksi
+   viisikymment‰kaksi
    viisikymmentakaksi
 
    53.
    viideskymmeneskolmas
-   viisikymment√§kolme
+   viisikymment‰kolme
    viisikymmentakolme
 
 
@@ -662,8 +662,8 @@ The following words may be used:
    huomenna             +0:0:0:1:0:0:0
    tanaan               0:0:0:0:0:0:0
    toissapaivana        -0:0:0:2:0:0:0
-   toissap√§iv√§n√§     -0:0:0:2:0:0:0
-   t√§n√§√§n            0:0:0:0:0:0:0
+   toissap‰iv‰n‰        -0:0:0:2:0:0:0
+   t‰n‰‰n               0:0:0:0:0:0:0
    yesterdayeilen       -0:0:0:1:0:0:0
    ylihuomenna          +0:0:0:2:0:0:0
 
@@ -675,12 +675,12 @@ The following words may be used:
 
    keskipaiva           12:00:00
    keskipaivalla        12:00:00
-   keskip√§iv√§         12:00:00
-   keskip√§iv√§ll√§     12:00:00
+   keskip‰iv‰           12:00:00
+   keskip‰iv‰ll‰        12:00:00
    keskiyo              00:00:00
    keskiyolla           00:00:00
-   keskiy√∂             00:00:00
-   keskiy√∂ll√§         00:00:00
+   keskiyˆ              00:00:00
+   keskiyˆll‰           00:00:00
 
 
 Words that set the entire time and date (relative to the current
@@ -702,15 +702,30 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
 
-   [.]  [.]
+   \.  \.
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
+
+   Not defined in this language
 
 
 =back

@@ -6,9 +6,9 @@ Date::Manip::TZ::amrio_00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Thu Feb 27 10:32:41 EST 2014
-#    Data version: tzdata2013i
-#    Code version: tzcode2013i
+#    Generated on: Tue May 20 13:40:30 EDT 2014
+#    Data version: tzdata2014c
+#    Code version: tzcode2014c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.44';
+$VERSION='6.45';
 END { undef $VERSION; }
 
 %Dates         = (

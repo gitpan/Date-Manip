@@ -104,10 +104,10 @@ The following day names may be used:
 
    fredag
 
-   lÃ¸rdag
+   lørdag
    loerdag
 
-   sÃ¸ndag
+   søndag
    soendag
 
 
@@ -123,10 +123,10 @@ The following abbreviations may be used:
 
    fre
 
-   lÃ¸r
+   lør
    loer
 
-   sÃ¸n
+   søn
    soen
 
 
@@ -155,13 +155,13 @@ These are the names (and abbreviations) for the fields in a delta.  There are
 The names and abbreviations for these fields are:
 
    aar
-   Ã¥r
-   Ã¥
+   år
+   å
    aa
 
    maaneder
-   mÃ¥neder
-   mÃ¥ned
+   måneder
+   måned
    mnd
    maaned
    mnd
@@ -295,7 +295,7 @@ Numbers may be spelled out in a variety of ways.  The following sets correspond
 to the numbers from 1 to 53:
 
    1.
-   fÃ¸rste
+   første
    foerste
    en
 
@@ -324,9 +324,9 @@ to the numbers from 1 to 53:
    syv
 
    8.
-   Ã¥ttende
+   åttende
    aattende
-   Ã¥tte
+   åtte
    aatte
 
    9.
@@ -380,7 +380,7 @@ to the numbers from 1 to 53:
 
 
    21.
-   tjuefÃ¸rste
+   tjueførste
    tjuefoerste
    tjueen
 
@@ -409,9 +409,9 @@ to the numbers from 1 to 53:
    tjuesyv
 
    28.
-   tjueÃ¥ttende
+   tjueåttende
    tjueaattende
-   tjueÃ¥tte
+   tjueåtte
    tjueaatte
 
    29.
@@ -424,7 +424,7 @@ to the numbers from 1 to 53:
 
 
    31.
-   trettifÃ¸rste
+   trettiførste
    trettifoerste
    trettien
 
@@ -453,9 +453,9 @@ to the numbers from 1 to 53:
    trettisyv
 
    38.
-   trettiÃ¥ttende
+   trettiåttende
    trettiaattende
-   trettiÃ¥tte
+   trettiåtte
    trettiaatte
 
    39.
@@ -463,64 +463,64 @@ to the numbers from 1 to 53:
    trettini
 
    40.
-   fÃ¸rtiende
+   førtiende
    foertiende
-   fÃ¸rti
+   førti
    foerti
 
 
    41.
-   fÃ¸rtifÃ¸rste
+   førtiførste
    foertifoerste
-   fÃ¸rtien
+   førtien
    foertien
 
    42.
-   fÃ¸rtiandre
+   førtiandre
    foertiandre
-   fÃ¸rtito
+   førtito
    foertito
 
    43.
-   fÃ¸rtitredje
+   førtitredje
    foertitredje
-   fÃ¸rtitre
+   førtitre
    foertitre
 
    44.
-   fÃ¸rtifjerde
+   førtifjerde
    foertifjerde
-   fÃ¸rtifire
+   førtifire
    foertifire
 
    45.
-   fÃ¸rtifemte
+   førtifemte
    foertifemte
-   fÃ¸rtifem
+   førtifem
    foertifem
 
    46.
-   fÃ¸rtisjette
+   førtisjette
    foertisjette
-   fÃ¸rtiseks
+   førtiseks
    foertiseks
 
    47.
-   fÃ¸rtisyvende
+   førtisyvende
    foertisyvende
-   fÃ¸rtisyv
+   førtisyv
    foertisyv
 
    48.
-   fÃ¸rtiÃ¥ttende
+   førtiåttende
    foertiaattende
-   fÃ¸rtiÃ¥tte
+   førtiåtte
    foertiaatte
 
    49.
-   fÃ¸rtiniende
+   førtiniende
    foertiniende
-   fÃ¸rtini
+   førtini
    foertini
 
    50.
@@ -529,7 +529,7 @@ to the numbers from 1 to 53:
 
 
    51.
-   femtifÃ¸rste
+   femtiførste
    femtifoerste
    femtien
 
@@ -568,7 +568,7 @@ you would use the words IN or OF:
 
 The following words may be used:
 
-   fÃ¸rste
+   første
    foerste
 
 
@@ -579,7 +579,7 @@ English, you would use ON:
 
 The following words may be used:
 
-   pÃ¥
+   på
    paa
 
 
@@ -598,7 +598,7 @@ The following words may be used:
 
    i dag                0:0:0:0:0:0:0
    i gaar               -0:0:0:1:0:0:0
-   i gÃ¥r               -0:0:0:1:0:0:0
+   i går                -0:0:0:1:0:0:0
    i morgen             +0:0:0:1:0:0:0
 
 
@@ -609,7 +609,7 @@ The following words may be used:
 
    midnatt              00:00:00
    midt paa dagen       12:00:00
-   midt pÃ¥ dagen       12:00:00
+   midt på dagen        12:00:00
 
 
 Words that set the entire time and date (relative to the current
@@ -620,7 +620,7 @@ In English, the word 'now' is one of these.
 The following words may be used:
 
    naa                  0:0:0:0:0:0:0
-   nÃ¥                  0:0:0:0:0:0:0
+   nå                   0:0:0:0:0:0:0
 
 
 =item B<Hour/Minute/Second separators>
@@ -632,13 +632,28 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
+
+   Not defined in this language
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
 
    Not defined in this language
 

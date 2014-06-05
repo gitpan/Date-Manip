@@ -94,19 +94,19 @@ exist including full names and abbreviations.
 
 The following day names may be used:
 
-   LunedÃ¬
+   Lunedì
    Lunedi
 
-   MartedÃ¬
+   Martedì
    Martedi
 
-   MercoledÃ¬
+   Mercoledì
    Mercoledi
 
-   GiovedÃ¬
+   Giovedì
    Giovedi
 
-   VenerdÃ¬
+   Venerdì
    Venerdi
 
    Sabato
@@ -423,7 +423,7 @@ to the numbers from 1 to 53:
    trentiduesima
 
    33mo
-   trentatrÃ©
+   trentatré
    trentatre
    trentitreesime
 
@@ -506,7 +506,7 @@ to the numbers from 1 to 53:
    cinquantiduesime
 
    53mo
-   cinquantatrÃ©
+   cinquantatré
    cinquantatre
    cinquantitreesimo
 
@@ -595,13 +595,28 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
+
+   Not defined in this language
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
 
    Not defined in this language
 

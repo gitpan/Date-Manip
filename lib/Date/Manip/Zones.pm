@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Thu Feb 27 10:42:58 EST 2014
-#    Data version: tzdata2013i
-#    Code version: tzcode2013i
+#    Generated on: Tue May 20 13:49:22 EDT 2014
+#    Data version: tzdata2014c
+#    Code version: tzcode2014c
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.44';
+$VERSION='6.45';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,8 +37,8 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2013i';
-$TzcodeVersion = 'tzcode2013i';
+$TzdataVersion = 'tzdata2014c';
+$TzcodeVersion = 'tzcode2014c';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
 $LastYear      = '2064';
@@ -236,6 +236,7 @@ $LastYear      = '2064';
   'antarctica/palmer'                  => 'anpalm00',
   'antarctica/rothera'                 => 'anroth00',
   'antarctica/syowa'                   => 'ansyow00',
+  'antarctica/troll'                   => 'antrol00',
   'antarctica/vostok'                  => 'anvost00',
   'asia/aden'                          => 'asaden00',
   'asia/almaty'                        => 'asalma00',
@@ -680,6 +681,7 @@ $LastYear      = '2064';
   'antarctica/palmer'                  => 'Antarctica/Palmer',
   'antarctica/rothera'                 => 'Antarctica/Rothera',
   'antarctica/syowa'                   => 'Antarctica/Syowa',
+  'antarctica/troll'                   => 'Antarctica/Troll',
   'antarctica/vostok'                  => 'Antarctica/Vostok',
   'asia/aden'                          => 'Asia/Aden',
   'asia/almaty'                        => 'Asia/Almaty',
@@ -1125,6 +1127,7 @@ $LastYear      = '2064';
   'antarctica/palmer'                  => 'antarctica/palmer',
   'antarctica/rothera'                 => 'antarctica/rothera',
   'antarctica/syowa'                   => 'antarctica/syowa',
+  'antarctica/troll'                   => 'antarctica/troll',
   'antarctica/vostok'                  => 'antarctica/vostok',
   'asia/aden'                          => 'asia/aden',
   'asia/almaty'                        => 'asia/almaty',
@@ -2055,7 +2058,8 @@ $LastYear      = '2064';
                      'europe/sofia',
                      'europe/athens',
                      'europe/kiev',
-                     'europe/zaporozhye' ],
+                     'europe/zaporozhye',
+                     'antarctica/troll' ],
   'cet'         => [ 'cet',
                      'europe/belgrade',
                      'europe/budapest',
@@ -2876,7 +2880,8 @@ $LastYear      = '2064';
   'urat'        => [ 'asia/oral' ],
   'urut'        => [ 'asia/urumqi' ],
   'ut'          => [ 'ut' ],
-  'utc'         => [ 'utc' ],
+  'utc'         => [ 'utc',
+                     'antarctica/troll' ],
   'uyhst'       => [ 'america/montevideo' ],
   'uyst'        => [ 'america/montevideo' ],
   'uyt'         => [ 'america/montevideo' ],

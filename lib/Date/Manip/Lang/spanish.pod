@@ -98,14 +98,14 @@ The following day names may be used:
 
    Martes
 
-   MiÃ©rcoles
+   Miércoles
    Miercoles
 
    Jueves
 
    Viernes
 
-   SÃ¡bado
+   Sábado
    Sabado
 
    Domingo
@@ -117,14 +117,14 @@ The following abbreviations may be used:
 
    Mar
 
-   MiÃ©
+   Mié
    Mie
 
    Jue
 
    Vie
 
-   SÃ¡b
+   Sáb
    Sab
 
    Dom
@@ -159,8 +159,8 @@ The names and abbreviations for these fields are:
    ano
    ano
    anos
-   aÃ±os
-   aÃ±o
+   años
+   año
 
    meses
    m
@@ -250,7 +250,7 @@ Previous occurence:
 Last occurence:
 
    ultimo
-   Ãºltimo
+   último
 
 
 =item B<Delta words for going forward/backward in time>
@@ -336,8 +336,8 @@ to the numbers from 1 to 53:
    7o
    7a
    siete
-   sÃ©ptimo
-   sÃ©ptima
+   séptimo
+   séptima
    septimo
    septima
 
@@ -356,8 +356,8 @@ to the numbers from 1 to 53:
    10o
    10a
    diez
-   dÃ©cimo
-   dÃ©cima
+   décimo
+   décima
    decimo
    decima
 
@@ -365,75 +365,75 @@ to the numbers from 1 to 53:
    11o
    11a
    once
-   undÃ©cimo
+   undécimo
    undecimo
-   dÃ©cimo primero
-   dÃ©cimo primera
+   décimo primero
+   décimo primera
    decimo primero
    decimo primera
 
    12o
    12a
    doce
-   dÃ©cimo segundo
-   dÃ©cimo segunda
+   décimo segundo
+   décimo segunda
    decimo segundo
    decimo segunda
 
    13o
    13a
    trece
-   dÃ©cimo tercero
-   dÃ©cimo tercera
+   décimo tercero
+   décimo tercera
    decimo tercero
    decimo tercera
 
    14o
    14a
    catorce
-   dÃ©cimo cuarto
-   dÃ©cimo cuarta
+   décimo cuarto
+   décimo cuarta
    decimo cuarto
    decimo cuarta
 
    15o
    15a
    quince
-   dÃ©cimo quinto
-   dÃ©cimo quinta
+   décimo quinto
+   décimo quinta
    decimo quinto
    decimo quinta
 
    16o
    16a
-   diecisÃ©is
+   dieciséis
    dieciseis
-   dÃ©cimo sexto
-   dÃ©cimo sexta
+   décimo sexto
+   décimo sexta
    decimo sexto
    decimo sexta
 
    17o
    17a
    diecisiete
-   dÃ©cimo sÃ©ptimo
-   dÃ©cimo sÃ©ptima
+   décimo séptimo
+   décimo séptima
    decimo septimo
    decimo septima
 
    18o
    18a
    dieciocho
-   dÃ©cimo octavo
-   dÃ©cimo octava
+   décimo octavo
+   décimo octava
    decimo octavo
    decimo octava
 
    19o
    19a
    diecinueve
-   dÃ©cimo noveno
-   dÃ©cimo novena
+   décimo noveno
+   décimo novena
    decimo noveno
    decimo novena
 
@@ -442,8 +442,8 @@ to the numbers from 1 to 53:
    veinte
    vigesimo
    vigesima
-   vigÃ©simo
-   vigÃ©sima
+   vigésimo
+   vigésima
 
 
    21o
@@ -451,83 +451,83 @@ to the numbers from 1 to 53:
    veintiuno
    veintiuna
    veintiun
-   vigÃ©simo primero
-   vigÃ©simo primera
+   vigésimo primero
+   vigésimo primera
    vigesimo primero
    vigesimo primera
 
    22o
    22a
-   veintidÃ³s
+   veintidós
    veintidos
-   vigÃ©simo segundo
-   vigÃ©simo segunda
+   vigésimo segundo
+   vigésimo segunda
    vigesimo segundo
    vigesimo segunda
 
    23o
    23a
-   veintitrÃ©s
+   veintitrés
    veintitres
-   vigÃ©simo tercero
-   vigÃ©simo tercera
+   vigésimo tercero
+   vigésimo tercera
    vigesimo tercero
    vigesimo tercera
 
    24o
    24a
    veinticuatro
-   vigÃ©simo cuarto
-   vigÃ©simo cuarta
+   vigésimo cuarto
+   vigésimo cuarta
    vigesimo cuarto
    vigesimo cuarta
 
    25o
    25a
    veinticinco
-   vigÃ©simo quinto
-   vigÃ©simo quinta
+   vigésimo quinto
+   vigésimo quinta
    vigesimo quinto
    vigesimo quinta
 
    26o
    26a
-   veintisÃ©is
+   veintiséis
    veintiseis
-   vigÃ©simo sexto
-   vigÃ©simo sexta
+   vigésimo sexto
+   vigésimo sexta
    vigesimo sexto
    vigesimo sexta
 
    27o
    27a
    veintisiete
-   vigÃ©simo sÃ©ptimo
-   vigÃ©simo sÃ©ptima
+   vigésimo séptimo
+   vigésimo séptima
    vigesimo septimo
    vigesimo septima
 
    28o
    28a
    veintiocho
-   vigÃ©simo octavo
-   vigÃ©simo octava
+   vigésimo octavo
+   vigésimo octava
    vigesimo octavo
    vigesimo octava
 
    29o
    29a
    veintinueve
-   vigÃ©simo noveno
-   vigÃ©simo novena
+   vigésimo noveno
+   vigésimo novena
    vigesimo noveno
    vigesimo novena
 
    30o
    30a
    treinta
-   trigÃ©simo
-   trigÃ©sima
+   trigésimo
+   trigésima
    trigesimo
    trigesima
 
@@ -536,81 +536,81 @@ to the numbers from 1 to 53:
    31a
    treinta y uno
    treinta y una
-   trigÃ©simo primero
-   trigÃ©simo primera
+   trigésimo primero
+   trigésimo primera
    trigesimo primero
    trigesimo primera
 
    32o
    32a
    treinta y dos
-   trigÃ©simo segundo
+   trigésimo segundo
    trigesimo segundo
-   trigÃ©simo segunda
+   trigésimo segunda
    trigesimo segunda
 
    33o
    33a
    treinta y tres
-   trigÃ©simo tercero
+   trigésimo tercero
    trigesimo tercero
-   trigÃ©simo tercera
+   trigésimo tercera
    trigesimo tercera
 
    34o
    34a
    treinta y cuatro
-   trigÃ©simo cuarto
+   trigésimo cuarto
    trigesimo cuarto
-   trigÃ©simo cuarta
+   trigésimo cuarta
    trigesimo cuarta
 
    35o
    35a
    treinta y cinco
-   trigÃ©simo quinto
+   trigésimo quinto
    trigesimo quinto
-   trigÃ©simo quinta
+   trigésimo quinta
    trigesimo quinta
 
    36o
    36a
    treinta y seis
-   trigÃ©simo sexto
+   trigésimo sexto
    trigesimo sexto
-   trigÃ©simo sexta
+   trigésimo sexta
    trigesimo sexta
 
    37o
    37a
    treinta y siete
-   trigÃ©simo sÃ©ptimo
+   trigésimo séptimo
    trigesimo septimo
-   trigÃ©simo sÃ©ptima
+   trigésimo séptima
    trigesimo septima
 
    38o
    38a
    treinta y ocho
-   trigÃ©simo octavo
+   trigésimo octavo
    trigesimo octavo
-   trigÃ©simo octava
+   trigésimo octava
    trigesimo octava
 
    39o
    39a
    treinta y nueve
-   trigÃ©simo noveno
+   trigésimo noveno
    trigesimo noveno
-   trigÃ©simo novena
+   trigésimo novena
    trigesimo novena
 
    40o
    40a
    cuarenta
-   cuadragÃ©simo
+   cuadragésimo
    cuadragesimo
-   cuadragÃ©sima
+   cuadragésima
    cuadragesima
 
 
@@ -618,80 +618,80 @@ to the numbers from 1 to 53:
    41a
    cuarenta y uno
    cuarenta y una
-   cuadragÃ©simo primero
-   cuadragÃ©simo primera
+   cuadragésimo primero
+   cuadragésimo primera
    cuadragesimo primero
    cuadragesimo primera
 
    42o
    42a
    cuarenta y dos
-   cuadragÃ©simo segundo
+   cuadragésimo segundo
    cuadragesimo segundo
-   cuadragÃ©simo segunda
+   cuadragésimo segunda
    cuadragesimo segunda
 
    43o
    43a
    cuarenta y tres
-   cuadragÃ©simo tercero
+   cuadragésimo tercero
    cuadragesimo tercero
-   cuadragÃ©simo tercera
+   cuadragésimo tercera
    cuadragesimo tercera
 
    44o
    44a
    cuarenta y cuatro
-   cuadragÃ©simo cuarto
+   cuadragésimo cuarto
    cuadragesimo cuarto
-   cuadragÃ©simo cuarta
+   cuadragésimo cuarta
    cuadragesimo cuarta
 
    45o
    45a
    cuarenta y cinco
-   cuadragÃ©simo quinto
+   cuadragésimo quinto
    cuadragesimo quinto
-   cuadragÃ©simo quinta
+   cuadragésimo quinta
    cuadragesimo quinta
 
    46o
    46a
    cuarenta y seis
-   cuadragÃ©simo sexto
+   cuadragésimo sexto
    cuadragesimo sexto
-   cuadragÃ©simo sexta
+   cuadragésimo sexta
    cuadragesimo sexta
 
    47o
    47a
    cuarenta y siete
-   cuadragÃ©simo sÃ©ptimo
+   cuadragésimo séptimo
    cuadragesimo septimo
-   cuadragÃ©simo sÃ©ptima
+   cuadragésimo séptima
    cuadragesimo septima
 
    48o
    48a
    cuarenta y ocho
-   cuadragÃ©simo octavo
+   cuadragésimo octavo
    cuadragesimo octavo
-   cuadragÃ©simo octava
+   cuadragésimo octava
    cuadragesimo octava
 
    49o
    49a
    cuarenta y nueve
-   cuadragÃ©simo noveno
+   cuadragésimo noveno
    cuadragesimo noveno
-   cuadragÃ©simo novena
+   cuadragésimo novena
    cuadragesimo novena
 
    50o
    50a
    cincuenta
-   quincuagÃ©simo
-   quincuagÃ©sima
+   quincuagésimo
+   quincuagésima
    quincuagesimo
    quincuagesima
 
@@ -700,25 +700,25 @@ to the numbers from 1 to 53:
    51a
    cincuenta y uno
    cincuenta y una
-   quincuagÃ©simo primero
-   quincuagÃ©simo primera
+   quincuagésimo primero
+   quincuagésimo primera
    quincuagesimo primero
    quincuagesimo primera
 
    52o
    52a
    cincuenta y dos
-   quincuagÃ©simo segundo
+   quincuagésimo segundo
    quincuagesimo segundo
-   quincuagÃ©simo segunda
+   quincuagésimo segunda
    quincuagesimo segunda
 
    53o
    53a
    cincuenta y tres
-   quincuagÃ©simo tercero
+   quincuagésimo tercero
    quincuagesimo tercero
-   quincuagÃ©simo tercera
+   quincuagésimo tercera
    quincuagesimo tercera
 
 
@@ -806,13 +806,28 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
+
+   Not defined in this language
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
 
    Not defined in this language
 

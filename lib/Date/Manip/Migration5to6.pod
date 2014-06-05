@@ -66,7 +66,7 @@ If you use either the ConvTZ or TZ config variables, you should
 replace them with either SetDate or ForceDate. See the
 Date::Manip::Config document for information.
 
-The TZ variable will continue to work until Dec 2013 at which point
+The TZ variable will continue to work until Dec 2015 at which point
 it will be removed.
 
 =item B<Other deprecated config variables>
@@ -74,7 +74,7 @@ it will be removed.
 The following config variables have been deprecated, but will continue
 to function (though they will be removed at a future date):
 
-   TZ           (removed Dec 2013)
+   TZ           (removed Dec 2015)
 
 The following variables have been removed. If you use any of them,
 you may need to modify your scripts:

@@ -31,7 +31,7 @@ incompatible. These are marked with an exclamation mark (!).
 
 =head1 VERSION 6.45  (planned 2014-09-01)
 
-=head1 VERSION 6.44  (planned 2014-06-01)
+=head1 VERSION 6.44  2014-06-01
 
 =over 4
 
@@ -57,6 +57,10 @@ Preliminary patches were supplied by Yuri.
 =item New features
 
 Modified the parse_format function to return %+ if desired.  Mike Cappella
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2014c)
 
 =item Documentation fixes
 
@@ -209,7 +213,7 @@ If at all possible, please use Date::Manip 6.xx instead.
 
 The following config variables have been removed.
 
-   IntCharset
+   IntCharSet
    RecurNumFudgeDays
 
 =back

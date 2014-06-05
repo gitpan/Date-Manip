@@ -158,7 +158,7 @@ sub write_pod {
    }
 
    if (exists $$lang{"sepfr"}) {
-      $words{"sepfr"} = $$lang{"sepfr";
+      $words{"sepfr"} = $$lang{"sepfr"};
    } else {
       $words{'sepfr'} = $undef;
    }
@@ -521,7 +521,7 @@ decimal point (.).  Some languages may specify a different separator
 that might be used.  If this is done, it is a regular expression.
 
 The decimal point is ALWAYS allowed for all languages.  If a language allows
-another separater, it is listed here:
+another separator, it is listed here:
 
 $words{sepfr}
 

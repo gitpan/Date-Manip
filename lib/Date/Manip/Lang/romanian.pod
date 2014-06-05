@@ -99,6 +99,7 @@ The following day names may be used:
 
    marți
    marti
+   marþi
 
    miercuri
 
@@ -648,15 +649,15 @@ day fields).
 The following words may be used:
 
    alaltaieri           -0:0:0:2:0:0:0
-   alaltăieri          -0:0:0:2:0:0:0
+   alaltăieri           -0:0:0:2:0:0:0
    astazi               0:0:0:0:0:0:0
-   astăzi              0:0:0:0:0:0:0
+   astăzi               0:0:0:0:0:0:0
    azi                  0:0:0:0:0:0:0
    ieri                 -0:0:0:1:0:0:0
    miine                +0:0:0:1:0:0:0
-   mîine               +0:0:0:1:0:0:0
+   mîine                +0:0:0:1:0:0:0
    poimiine             +0:0:0:2:0:0:0
-   poimîine            +0:0:0:2:0:0:0
+   poimîine             +0:0:0:2:0:0:0
 
 
 Words that set only the time of day are similar to the English words
@@ -665,9 +666,9 @@ Words that set only the time of day are similar to the English words
 The following words may be used:
 
    amiaza               12:00:00
-   amiază              12:00:00
+   amiază               12:00:00
    miezul noptii        00:00:00
-   miezul nopții       00:00:00
+   miezul nopții        00:00:00
 
 
 Words that set the entire time and date (relative to the current
@@ -689,13 +690,28 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
+
+   Not defined in this language
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
 
    Not defined in this language
 

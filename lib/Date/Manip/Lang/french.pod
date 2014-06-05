@@ -37,7 +37,7 @@ The following month names may be used:
 
    janvier
 
-   fÃ©vrier
+   février
    fevrier
 
    mars
@@ -50,7 +50,7 @@ The following month names may be used:
 
    juillet
 
-   aoÃ»t
+   août
    aout
 
    septembre
@@ -59,7 +59,7 @@ The following month names may be used:
 
    novembre
 
-   dÃ©cembre
+   décembre
    decembre
 
 
@@ -68,10 +68,10 @@ The following abbreviations may be used:
    jan
    jan.
 
-   fÃ©v
+   fév
    fev
    fev.
-   fÃ©v.
+   fév.
 
    mar
    mar.
@@ -88,10 +88,10 @@ The following abbreviations may be used:
    juil
    juil.
 
-   aoÃ»t
+   août
    aout
    aout.
-   aoÃ»t.
+   août.
 
    sept
    sept.
@@ -102,10 +102,10 @@ The following abbreviations may be used:
    nov
    nov.
 
-   dÃ©c
+   déc
    dec
    dec.
-   dÃ©c.
+   déc.
 
 
 =item B<Day names and abbreviations>
@@ -179,11 +179,11 @@ These are the names (and abbreviations) for the fields in a delta.  There are
 The names and abbreviations for these fields are:
 
    annees
-   annÃ©es
+   années
    an
    annee
    ans
-   annÃ©e
+   année
 
    mois
    m
@@ -195,7 +195,7 @@ The names and abbreviations for these fields are:
    j
    jour
    journee
-   journÃ©e
+   journée
 
    heures
    h
@@ -267,11 +267,11 @@ Next occurence:
 Previous occurence:
 
    precedent
-   prÃ©cÃ©dent
+   précédent
    precedente
-   prÃ©cÃ©dente
+   précédente
    derniere
-   derniÃ¨re
+   dernière
 
 
 Last occurence:
@@ -294,15 +294,15 @@ dates in the past or future respectively:
 
    il y a
    auparavant
-   dans le passÃ©
+   dans le passé
    plus tot
-   plus tÃ´t
+   plus tôt
 
    en
    plus tard
    dans l'avenir
    a venir
-   Ã  venir
+   à venir
    dans
 
 
@@ -341,267 +341,267 @@ to the numbers from 1 to 53:
    2e
    deux
    deuxieme
-   deuxiÃ¨me
+   deuxième
 
    3e
    trois
    troisieme
-   troisiÃ¨me
+   troisième
 
    4e
    quatre
    quatrieme
-   quatriÃ¨me
+   quatrième
 
    5e
    cinq
    cinquieme
-   cinquiÃ¨me
+   cinquième
 
    6e
    six
    sixieme
-   sixiÃ¨me
+   sixième
 
    7e
    sept
    septieme
-   septiÃ¨me
+   septième
 
    8e
    huit
    huitieme
-   huitiÃ¨me
+   huitième
 
    9e
    neuf
    neuvieme
-   neuviÃ¨me
+   neuvième
 
    10e
    dix
    dixieme
-   dixiÃ¨me
+   dixième
 
 
    11e
    onze
    onzieme
-   onziÃ¨me
+   onzième
 
    12e
    douze
    douzieme
-   douziÃ¨me
+   douzième
 
    13e
    treize
    treizieme
-   treiziÃ¨me
+   treizième
 
    14e
    quatorze
    quatorzieme
-   quatorziÃ¨me
+   quatorzième
 
    15e
    quinze
    quinzieme
-   quinziÃ¨me
+   quinzième
 
    16e
    seize
    seizieme
-   seiziÃ¨me
+   seizième
 
    17e
    dix-sept
    dix-septieme
-   dix-septiÃ¨me
+   dix-septième
 
    18e
    dix-huit
    dix-huitieme
-   dix-huitiÃ¨me
+   dix-huitième
 
    19e
    dix-neuf
    dix-neuvieme
-   dix-neuviÃ¨me
+   dix-neuvième
 
    20e
    vingt
    vingtieme
-   vingtiÃ¨me
+   vingtième
 
 
    21e
    vingt et un
    vingt et unieme
-   vingt et uniÃ¨me
+   vingt et unième
 
    22e
    vingt-deux
    vingt-deuxieme
-   vingt-deuxiÃ¨me
+   vingt-deuxième
 
    23e
    vingt-trois
    vingt-troisieme
-   vingt-troisiÃ¨me
+   vingt-troisième
 
    24e
    vingt-quatre
    vingt-quatrieme
-   vingt-quatriÃ¨me
+   vingt-quatrième
 
    25e
    vingt-cinq
    vingt-cinquieme
-   vingt-cinquiÃ¨me
+   vingt-cinquième
 
    26e
    vingt-six
    vingt-sixieme
-   vingt-sixiÃ¨me
+   vingt-sixième
 
    27e
    vingt-sept
    vingt-septieme
-   vingt-septiÃ¨me
+   vingt-septième
 
    28e
    vingt-huit
    vingt-huitieme
-   vingt-huitiÃ¨me
+   vingt-huitième
 
    29e
    vingt-neuf
    vingt-neuvieme
-   vingt-neuviÃ¨me
+   vingt-neuvième
 
    30e
    trente
    trentieme
-   trentiÃ¨me
+   trentième
 
 
    31e
    trente et un
    trente et unieme
-   trente et uniÃ¨me
+   trente et unième
 
    32e
    trente-deux
    trente-deuxieme
-   trente-deuxiÃ¨me
+   trente-deuxième
 
    33e
    trente-trois
    trente-troisieme
-   trente-troisiÃ¨me
+   trente-troisième
 
    34e
    trente-quatre
    trente-quatrieme
-   trente-quatriÃ¨me
+   trente-quatrième
 
    35e
    trente-cinq
    trente-cinquieme
-   trente-cinquiÃ¨me
+   trente-cinquième
 
    36e
    trente-six
    trente-sixieme
-   trente-sixiÃ¨me
+   trente-sixième
 
    37e
    trente-sept
    trente-septieme
-   trente-septiÃ¨me
+   trente-septième
 
    38e
    trente-huit
    trente-huitieme
-   trente-huitiÃ¨me
+   trente-huitième
 
    39e
    trente-neuf
    trente-neuvieme
-   trente-neuviÃ¨me
+   trente-neuvième
 
    40e
    quarante
    quarantieme
-   quarantiÃ¨me
+   quarantième
 
 
    41e
    quarante et un
    quarante et unieme
-   quarante et uniÃ¨me
+   quarante et unième
 
    42e
    quarante-deux
    quarante-deuxieme
-   quarante-deuxiÃ¨me
+   quarante-deuxième
 
    43e
    quarante-trois
    quarante-troisieme
-   quarante-troisiÃ¨me
+   quarante-troisième
 
    44e
    quarante-quatre
    quarante-quatrieme
-   quarante-quatriÃ¨me
+   quarante-quatrième
 
    45e
    quarante-cinq
    quarante-cinquieme
-   quarante-cinquiÃ¨me
+   quarante-cinquième
 
    46e
    quarante-six
    quarante-sixieme
-   quarante-sixiÃ¨me
+   quarante-sixième
 
    47e
    quarante-sept
    quarante-septieme
-   quarante-septiÃ¨me
+   quarante-septième
 
    48e
    quarante-huit
    quarante-huitieme
-   quarante-huitiÃ¨me
+   quarante-huitième
 
    49e
    quarante-neuf
    quarante-neuvieme
-   quarante-neuviÃ¨me
+   quarante-neuvième
 
    50e
    cinquante
    cinquantieme
-   cinquantiÃ¨me
+   cinquantième
 
 
    51e
    cinquante et un
    cinquante et unieme
-   cinquante et uniÃ¨me
+   cinquante et unième
 
    52e
    cinquante-deux
    cinquante-deuxieme
-   cinquante-deuxiÃ¨me
+   cinquante-deuxième
 
    53e
    cinquante-trois
    cinquante-troisieme
-   cinquante-troisiÃ¨me
+   cinquante-troisième
 
 
 =item B<Ignored words>
@@ -618,7 +618,7 @@ use the word AT in the example:
 The following words may be used:
 
    a
-   Ã 
+   à
 
 
 Another word is used to designate one member of a set.  In English,
@@ -690,15 +690,30 @@ Some languages use different pairs.  For example, French allows you to
 specify the time as 13h30:20, so it would use the following pairs:
 
    : :
-   [h] [:]
+   h :
 
 The first column is the hour-minute separator and the second column is
-the minute-second separator.  Both are perl regular expressions.
+the minute-second separator.  Both are perl regular expressions.  When
+creating a new translation, be aware that regular expressions with utf-8
+characters may be tricky.  For example, don't include the expression '[x]'
+where 'x' is a utf-8 character.
 
 A pair of colons is ALWAY allowed for all languages.  If a language allows
 additional pairs, they are listed here:
 
-   [h]  [:]
+   h  :
+
+
+=item B<Fractional second separator>
+
+When specifying fractional seconds, the most common way is to use a
+decimal point (.).  Some languages may specify a different separator
+that might be used.  If this is done, it is a regular expression.
+
+The decimal point is ALWAYS allowed for all languages.  If a language allows
+another separator, it is listed here:
+
+   Not defined in this language
 
 
 =back
