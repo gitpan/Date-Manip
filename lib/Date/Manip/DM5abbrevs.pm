@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.45';
+$VERSION='6.46';
 
 END {
    my $tmp;
@@ -296,6 +296,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       mpt    +1000
       msd    +0400
       msk    +0400
+      msm    +0500
       mst    -0700
       must   +0500
       mut    +0400
@@ -411,7 +412,6 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       uzt    +0500
       v      +0900
       vet    -0430
-      vlasst +1000
       vlast  +1100
       vlat   +1100
       volst  +0400
@@ -704,6 +704,7 @@ The following timezones are defined:
       MPT    +1000
       MSD    +0400
       MSK    +0400
+      MSM    +0500
       MST    -0700
       MUST   +0500
       MUT    +0400
@@ -824,7 +825,6 @@ The following timezones are defined:
       UZT    +0500
       V      +0900
       VET    -0430
-      VLASST +1000
       VLAST  +1100
       VLAT   +1100
       VOLST  +0400

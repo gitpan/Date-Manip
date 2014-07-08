@@ -5,9 +5,9 @@
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue May 20 13:49:22 EDT 2014
-#    Data version: tzdata2014c
-#    Code version: tzcode2014c
+#    Generated on: Tue Jul  8 08:54:26 EDT 2014
+#    Data version: tzdata2014e
+#    Code version: tzcode2014e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ This module is automatically generated. It contains a complete list of
 time zones specified in the standard zoneinfo (or Olson) databases
 obtained from:
 
-   ftp://ftp.iana.orgtz/tzdata2014c.tar.gz
+   ftp://ftp.iana.orgtz/tzdata2014e.tar.gz
 
 All information is stored in variables, so this module provide no
 routines for dealing with time zone information. For routines related
@@ -1061,9 +1061,9 @@ default alias can be overridden as described above.
      URAT-4URAST                          Asia/Oral
      URAT-5URAST                          Asia/Oral
      UYT3UYST                             America/Montevideo
-     VLAST-9VLASST                        Asia/Vladivostok
      VLAT-10VLAST                         Asia/Vladivostok
                                           Asia/Khandyga
+     VLAT-9VLAST                          Asia/Vladivostok
      VOLT-3VOLST                          Europe/Volgograd
      VOLT-4VOLST                          Europe/Volgograd
      VUT-11VUST                           Pacific/Efate
@@ -3747,6 +3747,7 @@ altering the order.
                       Europe/Uzhgorod
                       Europe/Riga
                       Europe/Tallinn
+     MSM              Europe/Moscow
      MST              America/Denver
                       America/Phoenix
                       America/Creston
@@ -3993,7 +3994,6 @@ altering the order.
                       Asia/Tashkent
      V                V
      VET              America/Caracas
-     VLASST           Asia/Vladivostok
      VLAST            Asia/Vladivostok
                       Asia/Khandyga
      VLAT             Asia/Vladivostok

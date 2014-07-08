@@ -5,9 +5,9 @@ package Date::Manip::Zones;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue May 20 13:49:22 EDT 2014
-#    Data version: tzdata2014c
-#    Code version: tzcode2014c
+#    Generated on: Tue Jul  8 08:54:26 EDT 2014
+#    Data version: tzdata2014e
+#    Code version: tzcode2014e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -18,7 +18,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.45';
+$VERSION='6.46';
 END { undef $VERSION; }
 
 our ($TzdataVersion,$TzcodeVersion,
@@ -37,8 +37,8 @@ END {
    undef %Offmod;
 }
 
-$TzdataVersion = 'tzdata2014c';
-$TzcodeVersion = 'tzcode2014c';
+$TzdataVersion = 'tzdata2014e';
+$TzcodeVersion = 'tzcode2014e';
 $FirstDate     = '0001010200:00:00';
 $LastDate      = '9999123100:00:00';
 $LastYear      = '2064';
@@ -1641,8 +1641,8 @@ $LastYear      = '2064';
   'urat-4urast'                        => 'asia/oral',
   'urat-5urast'                        => 'asia/oral',
   'uyt3uyst'                           => 'america/montevideo',
-  'vlast-9vlasst'                      => 'asia/vladivostok',
   'vlat-10vlast'                       => 'asia/vladivostok',
+  'vlat-9vlast'                        => 'asia/vladivostok',
   'volt-3volst'                        => 'europe/volgograd',
   'volt-4volst'                        => 'europe/volgograd',
   'vut-11vust'                         => 'pacific/efate',
@@ -2645,6 +2645,7 @@ $LastYear      = '2064';
                      'europe/uzhgorod',
                      'europe/riga',
                      'europe/tallinn' ],
+  'msm'         => [ 'europe/moscow' ],
   'mst'         => [ 'america/denver',
                      'america/phoenix',
                      'america/creston',
@@ -2891,7 +2892,6 @@ $LastYear      = '2064';
                      'asia/tashkent' ],
   'v'           => [ 'v' ],
   'vet'         => [ 'america/caracas' ],
-  'vlasst'      => [ 'asia/vladivostok' ],
   'vlast'       => [ 'asia/vladivostok',
                      'asia/khandyga' ],
   'vlat'        => [ 'asia/vladivostok',

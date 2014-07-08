@@ -185,6 +185,7 @@ The names and abbreviations for these fields are:
    m
    mon
    month
+   mons
 
    weeks
    w
@@ -206,11 +207,13 @@ The names and abbreviations for these fields are:
    mn
    min
    minute
+   mins
 
    seconds
    s
    sec
    second
+   secs
 
 
 =item B<Morning/afternoon times>

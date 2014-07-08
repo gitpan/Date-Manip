@@ -13,7 +13,7 @@ use warnings;
 use utf8;
 
 our($VERSION);
-$VERSION='6.45';
+$VERSION='6.46';
 
 
 our($Language,@Encodings,$LangName,$YearAdded);
@@ -46,12 +46,12 @@ $Language = {
   each => ['each', 'every'],
   fields => [
     ['years', 'y', 'yr', 'year', 'yrs'],
-    ['months', 'm', 'mon', 'month'],
+    ['months', 'm', 'mon', 'month', 'mons'],
     ['weeks', 'w', 'wk', 'wks', 'week'],
     ['days', 'd', 'day'],
     ['hours', 'h', 'hr', 'hrs', 'hour'],
-    ['minutes', 'mn', 'min', 'minute'],
-    ['seconds', 's', 'sec', 'second'],
+    ['minutes', 'mn', 'min', 'minute', 'mins'],
+    ['seconds', 's', 'sec', 'second', 'secs'],
   ],
   last => ['last', 'final'],
   mode => [['exactly', 'approximately'], ['business']],

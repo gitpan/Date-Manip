@@ -27,9 +27,39 @@ For the most part, Date::Manip has remained backward compatible at
 every release, but occasionally, a change is made which is backward
 incompatible. These are marked with an exclamation mark (!).
 
-=head1 VERSION 6.46  (planned 2014-12-01)
+=head1 VERSION 6.47  (planned 2014-12-01)
 
-=head1 VERSION 6.45  (planned 2014-09-01)
+=head1 VERSION 6.46  (planned 2014-09-01)
+
+=head1 VERSION 6.45  2014-07-08
+
+=over 4
+
+=item Broken distribution
+
+The distribution contained an temporary edit file that caused problems.
+RT 96459
+
+=item Time zone fixes
+
+Newest zoneinfo data (tzdata 2014e)
+
+=item Language fixes
+
+Added some plural abbreviations that were missing.  RT 96944
+
+=back
+
+=head1 VERSION 6.45  2014-06-05
+
+=over 4
+
+=item Fixed a test
+
+One test was failing (reported in RT 96249 as well as several CPAN Tester
+reports).
+
+=back
 
 =head1 VERSION 6.44  2014-06-01
 

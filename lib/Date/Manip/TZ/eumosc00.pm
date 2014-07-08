@@ -6,9 +6,9 @@ Date::Manip::TZ::eumosc00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue May 20 13:40:39 EDT 2014
-#    Data version: tzdata2014c
-#    Code version: tzcode2014c
+#    Generated on: Tue Jul  8 08:52:41 EDT 2014
+#    Data version: tzdata2014e
+#    Code version: tzcode2014e
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.45';
+$VERSION='6.46';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -83,7 +83,7 @@ END { undef $VERSION; }
           'MSD',1,[1921,3,20,18,59,59],[1921,3,20,22,59,59],
           '1921021420:00:00','1921021500:00:00','1921032018:59:59','1921032022:59:59' ],
         [ [1921,3,20,19,0,0],[1921,3,21,0,0,0],'+05:00:00',[5,0,0],
-          'MSD',1,[1921,8,31,18,59,59],[1921,8,31,23,59,59],
+          'MSM',1,[1921,8,31,18,59,59],[1921,8,31,23,59,59],
           '1921032019:00:00','1921032100:00:00','1921083118:59:59','1921083123:59:59' ],
         [ [1921,8,31,19,0,0],[1921,8,31,23,0,0],'+04:00:00',[4,0,0],
           'MSD',1,[1921,9,30,19,59,59],[1921,9,30,23,59,59],

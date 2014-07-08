@@ -849,7 +849,7 @@ foreach my $winz (keys %windows_zones) {
    'UYT3UYST'      => [
                        'America/Montevideo'                      ,1959,9999,
                       ],
-   'VLAST-9VLASST' => [
+   'VLAT-9VLAST'   => [
                        'Asia/Vladivostok'                        ,1991,1991,
                       ],
    'VLAT-10VLAST'  => [

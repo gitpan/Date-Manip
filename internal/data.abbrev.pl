@@ -1364,6 +1364,9 @@
                      'Europe/Riga'                               ,1940,1989,
                      'Europe/Tallinn'                            ,1940,1989,
                     ],
+   'MSM'         => [
+                     'Europe/Moscow'                             ,1921,1921,
+                    ],
    'MST'         => [
                      'America/Denver'                            ,1883,9999,
                      'America/Phoenix'                           ,1883,9999,
@@ -1848,9 +1851,6 @@
                     ],
    'VET'         => [
                      'America/Caracas'                           ,1912,9999,
-                    ],
-   'VLASST'      => [
-                     'Asia/Vladivostok'                          ,1991,1991,
                     ],
    'VLAST'       => [
                      'Asia/Vladivostok'                          ,1981,2010,
