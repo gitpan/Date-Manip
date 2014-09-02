@@ -24,7 +24,7 @@ require Date::Manip::Zones;
 use Date::Manip::Base;
 
 our $VERSION;
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 # To get rid of a 'used only once' warnings.

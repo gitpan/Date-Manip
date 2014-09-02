@@ -6,9 +6,9 @@ Date::Manip::TZ::askras00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:52:36 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:06:03 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -323,8 +323,14 @@ END { undef $VERSION; }
    2011 =>
      [
         [ [2011,3,26,19,0,0],[2011,3,27,3,0,0],'+08:00:00',[8,0,0],
-          'KRAT',0,[9999,12,31,0,0,0],[9999,12,31,8,0,0],
-          '2011032619:00:00','2011032703:00:00','9999123100:00:00','9999123108:00:00' ],
+          'KRAT',0,[2014,10,25,17,59,59],[2014,10,26,1,59,59],
+          '2011032619:00:00','2011032703:00:00','2014102517:59:59','2014102601:59:59' ],
+     ],
+   2014 =>
+     [
+        [ [2014,10,25,18,0,0],[2014,10,26,1,0,0],'+07:00:00',[7,0,0],
+          'KRAT',0,[9999,12,31,0,0,0],[9999,12,31,7,0,0],
+          '2014102518:00:00','2014102601:00:00','9999123100:00:00','9999123107:00:00' ],
      ],
 );
 

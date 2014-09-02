@@ -94,7 +94,7 @@ exist including full names and abbreviations.
 
 The following day names may be used:
 
-   Måndag
+   MÃ¥ndag
    Mandag
 
    Tisdag
@@ -105,16 +105,16 @@ The following day names may be used:
 
    Fredag
 
-   Lördag
+   LÃ¶rdag
    Lordag
 
-   Söndag
+   SÃ¶ndag
    Sondag
 
 
 The following abbreviations may be used:
 
-   Mån
+   MÃ¥n
    Man
 
    Tis
@@ -125,10 +125,10 @@ The following abbreviations may be used:
 
    Fre
 
-   Lör
+   LÃ¶r
    Lor
 
-   Sön
+   SÃ¶n
    Son
 
 
@@ -157,14 +157,14 @@ These are the names (and abbreviations) for the fields in a delta.  There are
 The names and abbreviations for these fields are:
 
    ar
-   år
+   Ã¥r
 
    manader
-   månader
+   mÃ¥nader
    man
    manad
-   mån
-   månad
+   mÃ¥n
+   mÃ¥nad
 
    veckor
    v
@@ -236,19 +236,19 @@ The following words may be used:
 Next occurence:
 
    nasta
-   nästa
+   nÃ¤sta
 
 
 Previous occurence:
 
    forra
-   förra
+   fÃ¶rra
 
 
 Last occurence:
 
    forra
-   förra
+   fÃ¶rra
    senaste
 
 
@@ -283,7 +283,7 @@ The following words may be used:
 
    exakt
    ungefar
-   ungefär
+   ungefÃ¤r
 
 
 The following words may be used to specify a business delta:
@@ -301,10 +301,10 @@ to the numbers from 1 to 53:
    en
    ett
    forsta
-   första
+   fÃ¶rsta
 
    2:a
-   två
+   tvÃ¥
    tva
    andra
 
@@ -315,7 +315,7 @@ to the numbers from 1 to 53:
    4:e
    fyra
    fjarde
-   fjärde
+   fjÃ¤rde
 
    5:e
    fem
@@ -324,17 +324,17 @@ to the numbers from 1 to 53:
    6:e
    sex
    sjatte
-   sjätte
+   sjÃ¤tte
 
    7:e
    sju
    sjunde
 
    8:e
-   åtta
+   Ã¥tta
    atta
    attonde
-   åttonde
+   Ã¥ttonde
 
    9:e
    nio
@@ -390,10 +390,10 @@ to the numbers from 1 to 53:
    tjugoen
    tjugoett
    tjugoforsta
-   tjugoförsta
+   tjugofÃ¶rsta
 
    22:a
-   tjugotvå
+   tjugotvÃ¥
    tjugotva
    tjugoandra
 
@@ -404,7 +404,7 @@ to the numbers from 1 to 53:
    24:e
    tjugofyra
    tjugofjarde
-   tjugofjärde
+   tjugofjÃ¤rde
 
    25:e
    tjugofem
@@ -413,17 +413,17 @@ to the numbers from 1 to 53:
    26:e
    tjugosex
    tjugosjatte
-   tjugosjätte
+   tjugosjÃ¤tte
 
    27:e
    tjugosju
    tjugosjunde
 
    28:e
-   tjugoåtta
+   tjugoÃ¥tta
    tjugoatta
    tjugoattonde
-   tjugoåttonde
+   tjugoÃ¥ttonde
 
    29:e
    tjugonio
@@ -438,10 +438,10 @@ to the numbers from 1 to 53:
    trettioen
    trettioett
    trettioforsta
-   trettioförsta
+   trettiofÃ¶rsta
 
    32:a
-   trettiotvå
+   trettiotvÃ¥
    trettiotva
    trettioandra
 
@@ -452,7 +452,7 @@ to the numbers from 1 to 53:
    34:e
    trettiofyra
    trettiofjarde
-   trettiofjärde
+   trettiofjÃ¤rde
 
    35:e
    trettiofem
@@ -461,17 +461,17 @@ to the numbers from 1 to 53:
    36:e
    trettiosex
    trettiosjatte
-   trettiosjätte
+   trettiosjÃ¤tte
 
    37:e
    trettiosju
    trettiosjunde
 
    38:e
-   trettioåtta
+   trettioÃ¥tta
    trettioatta
    trettioattonde
-   trettioåttonde
+   trettioÃ¥ttonde
 
    39:e
    trettionio
@@ -486,10 +486,10 @@ to the numbers from 1 to 53:
    fyrtioen
    fyrtioett
    fyrtioforsta
-   fyrtioförsta
+   fyrtiofÃ¶rsta
 
    42:a
-   fyrtiotvå
+   fyrtiotvÃ¥
    fyrtiotva
    fyrtioandra
 
@@ -500,7 +500,7 @@ to the numbers from 1 to 53:
    44:e
    fyrtiofyra
    fyrtiofjarde
-   fyrtiofjärde
+   fyrtiofjÃ¤rde
 
    45:e
    fyrtiofem
@@ -509,17 +509,17 @@ to the numbers from 1 to 53:
    46:e
    fyrtiosex
    fyrtiosjatte
-   fyrtiosjätte
+   fyrtiosjÃ¤tte
 
    47:e
    fyrtiosju
    fyrtiosjunde
 
    48:e
-   fyrtioåtta
+   fyrtioÃ¥tta
    fyrtioatta
    fyrtioattonde
-   fyrtioåttonde
+   fyrtioÃ¥ttonde
 
    49:e
    fyrtionio
@@ -534,10 +534,10 @@ to the numbers from 1 to 53:
    femtioen
    femtioett
    femtioforsta
-   femtioförsta
+   femtiofÃ¶rsta
 
    52:a
-   femtiotvå
+   femtiotvÃ¥
    femtiotva
    femtioandra
 
@@ -583,7 +583,7 @@ English, you would use ON:
 The following words may be used:
 
    pa
-   på
+   pÃ¥
 
 
 =item B<Words that set the date, time, or both>
@@ -601,7 +601,7 @@ The following words may be used:
 
    idag                 0:0:0:0:0:0:0
    igar                 -0:0:0:1:0:0:0
-   igår                 -0:0:0:1:0:0:0
+   igÃ¥r                 -0:0:0:1:0:0:0
    imorgon              +0:0:0:1:0:0:0
 
 
@@ -612,7 +612,7 @@ The following words may be used:
 
    midnatt              00:00:00
    mitt pa dagen        12:00:00
-   mitt på dagen        12:00:00
+   mitt pÃ¥ dagen        12:00:00
 
 
 Words that set the entire time and date (relative to the current

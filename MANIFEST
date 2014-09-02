@@ -29,7 +29,6 @@ internal/TODO
 internal/translate
 internal/tzdata
 internal/unicode
-internal/VERSION
 internal/windows.compare
 lib/Date/Manip.pm
 lib/Date/Manip.pod
@@ -559,16 +558,6 @@ lib/Date/Manip/Offset/off463.pm
 lib/Date/Manip/Offset/off464.pm
 lib/Date/Manip/Offset/off465.pm
 lib/Date/Manip/Offset/off466.pm
-lib/Date/Manip/Offset/off467.pm
-lib/Date/Manip/Offset/off468.pm
-lib/Date/Manip/Offset/off469.pm
-lib/Date/Manip/Offset/off470.pm
-lib/Date/Manip/Offset/off471.pm
-lib/Date/Manip/Offset/off472.pm
-lib/Date/Manip/Offset/off473.pm
-lib/Date/Manip/Offset/off474.pm
-lib/Date/Manip/Offset/off475.pm
-lib/Date/Manip/Offset/off476.pm
 lib/Date/Manip/Problems.pod
 lib/Date/Manip/Recur.pm
 lib/Date/Manip/Recur.pod
@@ -580,9 +569,7 @@ lib/Date/Manip/TZ/afaccr00.pm
 lib/Date/Manip/TZ/afaddi00.pm
 lib/Date/Manip/TZ/afalgi00.pm
 lib/Date/Manip/TZ/afasma00.pm
-lib/Date/Manip/TZ/afbama00.pm
 lib/Date/Manip/TZ/afbang00.pm
-lib/Date/Manip/TZ/afbanj00.pm
 lib/Date/Manip/TZ/afbiss00.pm
 lib/Date/Manip/TZ/afblan00.pm
 lib/Date/Manip/TZ/afbraz00.pm
@@ -590,13 +577,10 @@ lib/Date/Manip/TZ/afbuju00.pm
 lib/Date/Manip/TZ/afcair00.pm
 lib/Date/Manip/TZ/afcasa00.pm
 lib/Date/Manip/TZ/afceut00.pm
-lib/Date/Manip/TZ/afcona00.pm
-lib/Date/Manip/TZ/afdaka00.pm
 lib/Date/Manip/TZ/afdar_00.pm
 lib/Date/Manip/TZ/afdjib00.pm
 lib/Date/Manip/TZ/afdoua00.pm
 lib/Date/Manip/TZ/afel_a00.pm
-lib/Date/Manip/TZ/affree00.pm
 lib/Date/Manip/TZ/afgabo00.pm
 lib/Date/Manip/TZ/afhara00.pm
 lib/Date/Manip/TZ/afjoha00.pm
@@ -606,7 +590,6 @@ lib/Date/Manip/TZ/afkiga00.pm
 lib/Date/Manip/TZ/afkins00.pm
 lib/Date/Manip/TZ/aflago00.pm
 lib/Date/Manip/TZ/aflibr00.pm
-lib/Date/Manip/TZ/aflome00.pm
 lib/Date/Manip/TZ/afluan00.pm
 lib/Date/Manip/TZ/aflubu00.pm
 lib/Date/Manip/TZ/aflusa00.pm
@@ -619,10 +602,7 @@ lib/Date/Manip/TZ/afmonr00.pm
 lib/Date/Manip/TZ/afnair00.pm
 lib/Date/Manip/TZ/afndja00.pm
 lib/Date/Manip/TZ/afniam00.pm
-lib/Date/Manip/TZ/afnoua00.pm
-lib/Date/Manip/TZ/afouag00.pm
 lib/Date/Manip/TZ/afport00.pm
-lib/Date/Manip/TZ/afsao_00.pm
 lib/Date/Manip/TZ/aftrip00.pm
 lib/Date/Manip/TZ/aftuni00.pm
 lib/Date/Manip/TZ/afwind00.pm
@@ -782,8 +762,8 @@ lib/Date/Manip/TZ/asbang00.pm
 lib/Date/Manip/TZ/asbeir00.pm
 lib/Date/Manip/TZ/asbish00.pm
 lib/Date/Manip/TZ/asbrun00.pm
+lib/Date/Manip/TZ/aschit00.pm
 lib/Date/Manip/TZ/aschoi00.pm
-lib/Date/Manip/TZ/aschon00.pm
 lib/Date/Manip/TZ/ascolo00.pm
 lib/Date/Manip/TZ/asdama00.pm
 lib/Date/Manip/TZ/asdhak00.pm
@@ -791,7 +771,6 @@ lib/Date/Manip/TZ/asdili00.pm
 lib/Date/Manip/TZ/asduba00.pm
 lib/Date/Manip/TZ/asdush00.pm
 lib/Date/Manip/TZ/asgaza00.pm
-lib/Date/Manip/TZ/asharb00.pm
 lib/Date/Manip/TZ/ashebr00.pm
 lib/Date/Manip/TZ/asho_c00.pm
 lib/Date/Manip/TZ/ashong00.pm
@@ -803,7 +782,6 @@ lib/Date/Manip/TZ/asjeru00.pm
 lib/Date/Manip/TZ/askabu00.pm
 lib/Date/Manip/TZ/askamc00.pm
 lib/Date/Manip/TZ/askara00.pm
-lib/Date/Manip/TZ/askash00.pm
 lib/Date/Manip/TZ/askath00.pm
 lib/Date/Manip/TZ/askhan00.pm
 lib/Date/Manip/TZ/askolk00.pm
@@ -833,6 +811,7 @@ lib/Date/Manip/TZ/assama00.pm
 lib/Date/Manip/TZ/asseou00.pm
 lib/Date/Manip/TZ/asshan00.pm
 lib/Date/Manip/TZ/assing00.pm
+lib/Date/Manip/TZ/assred00.pm
 lib/Date/Manip/TZ/astaip00.pm
 lib/Date/Manip/TZ/astash00.pm
 lib/Date/Manip/TZ/astbil00.pm
@@ -855,7 +834,6 @@ lib/Date/Manip/TZ/atfaro00.pm
 lib/Date/Manip/TZ/atmade00.pm
 lib/Date/Manip/TZ/atreyk00.pm
 lib/Date/Manip/TZ/atsout00.pm
-lib/Date/Manip/TZ/atst_h00.pm
 lib/Date/Manip/TZ/atstan00.pm
 lib/Date/Manip/TZ/auadel00.pm
 lib/Date/Manip/TZ/aubris00.pm

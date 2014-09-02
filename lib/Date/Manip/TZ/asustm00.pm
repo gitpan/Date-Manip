@@ -6,9 +6,9 @@ Date::Manip::TZ::asustm00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:52:42 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:06:00 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -326,8 +326,14 @@ END { undef $VERSION; }
           'MAGT',0,[2011,9,12,11,59,59],[2011,9,12,23,59,59],
           '2011032615:00:00','2011032703:00:00','2011091211:59:59','2011091223:59:59' ],
         [ [2011,9,12,12,0,0],[2011,9,12,23,0,0],'+11:00:00',[11,0,0],
-          'VLAT',0,[9999,12,31,0,0,0],[9999,12,31,11,0,0],
-          '2011091212:00:00','2011091223:00:00','9999123100:00:00','9999123111:00:00' ],
+          'VLAT',0,[2014,10,25,14,59,59],[2014,10,26,1,59,59],
+          '2011091212:00:00','2011091223:00:00','2014102514:59:59','2014102601:59:59' ],
+     ],
+   2014 =>
+     [
+        [ [2014,10,25,15,0,0],[2014,10,26,1,0,0],'+10:00:00',[10,0,0],
+          'VLAT',0,[9999,12,31,0,0,0],[9999,12,31,10,0,0],
+          '2014102515:00:00','2014102601:00:00','9999123100:00:00','9999123110:00:00' ],
      ],
 );
 

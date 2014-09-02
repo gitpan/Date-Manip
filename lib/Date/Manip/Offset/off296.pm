@@ -6,9 +6,9 @@ Date::Manip::Offset::off296;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:53:11 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:23:30 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -19,7 +19,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -28,46 +28,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-02:00:00';
+$Offset        = '-03:06:28';
 
 %Offset        = (
    0 => [
-      'atlantic/south_georgia',
-      'etc/gmt-2',
-      'america/noronha',
-      'america/scoresbysund',
-      'atlantic/cape_verde',
-      'atlantic/azores',
-      'b',
-      ],
-   1 => [
       'america/sao_paulo',
-      'america/montevideo',
-      'america/godthab',
-      'america/miquelon',
-      'america/argentina/buenos_aires',
-      'america/argentina/cordoba',
-      'america/argentina/tucuman',
-      'america/argentina/catamarca',
-      'america/argentina/jujuy',
-      'america/argentina/la_rioja',
-      'america/argentina/mendoza',
-      'america/argentina/rio_gallegos',
-      'america/argentina/salta',
-      'america/argentina/san_juan',
-      'america/argentina/san_luis',
-      'america/argentina/ushuaia',
-      'america/araguaina',
-      'america/bahia',
-      'america/fortaleza',
-      'america/maceio',
-      'america/recife',
-      'america/danmarkshavn',
-      'america/belem',
-      'america/goose_bay',
-      'atlantic/stanley',
-      'america/pangnirtung',
-      'antarctica/palmer',
       ],
 );
 

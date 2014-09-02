@@ -37,7 +37,7 @@ The following month names may be used:
 
    janvier
 
-   février
+   fÃ©vrier
    fevrier
 
    mars
@@ -50,7 +50,7 @@ The following month names may be used:
 
    juillet
 
-   août
+   aoÃ»t
    aout
 
    septembre
@@ -59,7 +59,7 @@ The following month names may be used:
 
    novembre
 
-   décembre
+   dÃ©cembre
    decembre
 
 
@@ -68,10 +68,10 @@ The following abbreviations may be used:
    jan
    jan.
 
-   fév
+   fÃ©v
    fev
    fev.
-   fév.
+   fÃ©v.
 
    mar
    mar.
@@ -88,10 +88,10 @@ The following abbreviations may be used:
    juil
    juil.
 
-   août
+   aoÃ»t
    aout
    aout.
-   août.
+   aoÃ»t.
 
    sept
    sept.
@@ -102,10 +102,10 @@ The following abbreviations may be used:
    nov
    nov.
 
-   déc
+   dÃ©c
    dec
    dec.
-   déc.
+   dÃ©c.
 
 
 =item B<Day names and abbreviations>
@@ -179,11 +179,11 @@ These are the names (and abbreviations) for the fields in a delta.  There are
 The names and abbreviations for these fields are:
 
    annees
-   années
+   annÃ©es
    an
    annee
    ans
-   année
+   annÃ©e
 
    mois
    m
@@ -195,7 +195,7 @@ The names and abbreviations for these fields are:
    j
    jour
    journee
-   journée
+   journÃ©e
 
    heures
    h
@@ -267,11 +267,11 @@ Next occurence:
 Previous occurence:
 
    precedent
-   précédent
+   prÃ©cÃ©dent
    precedente
-   précédente
+   prÃ©cÃ©dente
    derniere
-   dernière
+   derniÃ¨re
 
 
 Last occurence:
@@ -294,15 +294,15 @@ dates in the past or future respectively:
 
    il y a
    auparavant
-   dans le passé
+   dans le passÃ©
    plus tot
-   plus tôt
+   plus tÃ´t
 
    en
    plus tard
    dans l'avenir
    a venir
-   à venir
+   Ã  venir
    dans
 
 
@@ -341,267 +341,267 @@ to the numbers from 1 to 53:
    2e
    deux
    deuxieme
-   deuxième
+   deuxiÃ¨me
 
    3e
    trois
    troisieme
-   troisième
+   troisiÃ¨me
 
    4e
    quatre
    quatrieme
-   quatrième
+   quatriÃ¨me
 
    5e
    cinq
    cinquieme
-   cinquième
+   cinquiÃ¨me
 
    6e
    six
    sixieme
-   sixième
+   sixiÃ¨me
 
    7e
    sept
    septieme
-   septième
+   septiÃ¨me
 
    8e
    huit
    huitieme
-   huitième
+   huitiÃ¨me
 
    9e
    neuf
    neuvieme
-   neuvième
+   neuviÃ¨me
 
    10e
    dix
    dixieme
-   dixième
+   dixiÃ¨me
 
 
    11e
    onze
    onzieme
-   onzième
+   onziÃ¨me
 
    12e
    douze
    douzieme
-   douzième
+   douziÃ¨me
 
    13e
    treize
    treizieme
-   treizième
+   treiziÃ¨me
 
    14e
    quatorze
    quatorzieme
-   quatorzième
+   quatorziÃ¨me
 
    15e
    quinze
    quinzieme
-   quinzième
+   quinziÃ¨me
 
    16e
    seize
    seizieme
-   seizième
+   seiziÃ¨me
 
    17e
    dix-sept
    dix-septieme
-   dix-septième
+   dix-septiÃ¨me
 
    18e
    dix-huit
    dix-huitieme
-   dix-huitième
+   dix-huitiÃ¨me
 
    19e
    dix-neuf
    dix-neuvieme
-   dix-neuvième
+   dix-neuviÃ¨me
 
    20e
    vingt
    vingtieme
-   vingtième
+   vingtiÃ¨me
 
 
    21e
    vingt et un
    vingt et unieme
-   vingt et unième
+   vingt et uniÃ¨me
 
    22e
    vingt-deux
    vingt-deuxieme
-   vingt-deuxième
+   vingt-deuxiÃ¨me
 
    23e
    vingt-trois
    vingt-troisieme
-   vingt-troisième
+   vingt-troisiÃ¨me
 
    24e
    vingt-quatre
    vingt-quatrieme
-   vingt-quatrième
+   vingt-quatriÃ¨me
 
    25e
    vingt-cinq
    vingt-cinquieme
-   vingt-cinquième
+   vingt-cinquiÃ¨me
 
    26e
    vingt-six
    vingt-sixieme
-   vingt-sixième
+   vingt-sixiÃ¨me
 
    27e
    vingt-sept
    vingt-septieme
-   vingt-septième
+   vingt-septiÃ¨me
 
    28e
    vingt-huit
    vingt-huitieme
-   vingt-huitième
+   vingt-huitiÃ¨me
 
    29e
    vingt-neuf
    vingt-neuvieme
-   vingt-neuvième
+   vingt-neuviÃ¨me
 
    30e
    trente
    trentieme
-   trentième
+   trentiÃ¨me
 
 
    31e
    trente et un
    trente et unieme
-   trente et unième
+   trente et uniÃ¨me
 
    32e
    trente-deux
    trente-deuxieme
-   trente-deuxième
+   trente-deuxiÃ¨me
 
    33e
    trente-trois
    trente-troisieme
-   trente-troisième
+   trente-troisiÃ¨me
 
    34e
    trente-quatre
    trente-quatrieme
-   trente-quatrième
+   trente-quatriÃ¨me
 
    35e
    trente-cinq
    trente-cinquieme
-   trente-cinquième
+   trente-cinquiÃ¨me
 
    36e
    trente-six
    trente-sixieme
-   trente-sixième
+   trente-sixiÃ¨me
 
    37e
    trente-sept
    trente-septieme
-   trente-septième
+   trente-septiÃ¨me
 
    38e
    trente-huit
    trente-huitieme
-   trente-huitième
+   trente-huitiÃ¨me
 
    39e
    trente-neuf
    trente-neuvieme
-   trente-neuvième
+   trente-neuviÃ¨me
 
    40e
    quarante
    quarantieme
-   quarantième
+   quarantiÃ¨me
 
 
    41e
    quarante et un
    quarante et unieme
-   quarante et unième
+   quarante et uniÃ¨me
 
    42e
    quarante-deux
    quarante-deuxieme
-   quarante-deuxième
+   quarante-deuxiÃ¨me
 
    43e
    quarante-trois
    quarante-troisieme
-   quarante-troisième
+   quarante-troisiÃ¨me
 
    44e
    quarante-quatre
    quarante-quatrieme
-   quarante-quatrième
+   quarante-quatriÃ¨me
 
    45e
    quarante-cinq
    quarante-cinquieme
-   quarante-cinquième
+   quarante-cinquiÃ¨me
 
    46e
    quarante-six
    quarante-sixieme
-   quarante-sixième
+   quarante-sixiÃ¨me
 
    47e
    quarante-sept
    quarante-septieme
-   quarante-septième
+   quarante-septiÃ¨me
 
    48e
    quarante-huit
    quarante-huitieme
-   quarante-huitième
+   quarante-huitiÃ¨me
 
    49e
    quarante-neuf
    quarante-neuvieme
-   quarante-neuvième
+   quarante-neuviÃ¨me
 
    50e
    cinquante
    cinquantieme
-   cinquantième
+   cinquantiÃ¨me
 
 
    51e
    cinquante et un
    cinquante et unieme
-   cinquante et unième
+   cinquante et uniÃ¨me
 
    52e
    cinquante-deux
    cinquante-deuxieme
-   cinquante-deuxième
+   cinquante-deuxiÃ¨me
 
    53e
    cinquante-trois
    cinquante-troisieme
-   cinquante-troisième
+   cinquante-troisiÃ¨me
 
 
 =item B<Ignored words>
@@ -618,7 +618,7 @@ use the word AT in the example:
 The following words may be used:
 
    a
-   à
+   Ã 
 
 
 Another word is used to designate one member of a set.  In English,

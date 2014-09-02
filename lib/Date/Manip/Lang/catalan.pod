@@ -39,7 +39,7 @@ The following month names may be used:
 
    Febrer
 
-   Març
+   MarÃ§
    Marc
 
    Abril
@@ -285,7 +285,7 @@ Next occurence:
 
    proper
    seguent
-   següent
+   segÃ¼ent
 
 
 Previous occurence:
@@ -300,9 +300,9 @@ Last occurence:
    darrer
    darrera
    ultim
-   últim
+   Ãºltim
    ultima
-   última
+   Ãºltima
    passat
 
 
@@ -322,9 +322,9 @@ dates in the past or future respectively:
    fa
 
    d'aqui a
-   d'aquí a
+   d'aquÃ­ a
    mes tard
-   més tard
+   mÃ©s tard
 
 
 =item B<Business mode>
@@ -367,250 +367,250 @@ to the numbers from 1 to 53:
    quart
    quatre
 
-   5è
+   5Ã¨
    5e
    cinque
-   Cinquè
+   CinquÃ¨
    cinc
 
-   6è
+   6Ã¨
    6e
    sise
-   sisè
+   sisÃ¨
    sis
 
-   7è
+   7Ã¨
    7e
    sete
-   setè
+   setÃ¨
    set
 
-   8è
+   8Ã¨
    8e
    vuite
-   vuitè
+   vuitÃ¨
    vuit
 
-   9è
+   9Ã¨
    9e
    nove
-   novè
+   novÃ¨
    nou
 
-   10è
+   10Ã¨
    10e
    dese
-   desè
+   desÃ¨
    deu
 
 
-   11è
+   11Ã¨
    11e
    onze
-   onzè
+   onzÃ¨
 
-   12è
+   12Ã¨
    12e
    dotze
-   dotzè
+   dotzÃ¨
 
-   13è
+   13Ã¨
    13e
    tretze
-   tretzè
+   tretzÃ¨
 
-   14è
+   14Ã¨
    14e
    catorze
-   catorzè
+   catorzÃ¨
 
-   15è
+   15Ã¨
    15e
    quinze
-   quinzè
+   quinzÃ¨
 
-   16è
+   16Ã¨
    16e
    setze
-   setzè
+   setzÃ¨
 
-   17è
+   17Ã¨
    17e
    dissete
-   dissetè
+   dissetÃ¨
    disset
 
-   18è
+   18Ã¨
    18e
    divuite
-   divuitè
+   divuitÃ¨
    divuit
 
-   19è
+   19Ã¨
    19e
    dinove
-   dinovèe
+   dinovÃ¨e
    dinou
 
-   20è
+   20Ã¨
    20e
    vinte
-   vintè
+   vintÃ¨
    vint
 
 
-   21è
+   21Ã¨
    21e
    vint-i-une
-   vint-i-unè
+   vint-i-unÃ¨
    vint-i-u
 
-   22è
+   22Ã¨
    22e
    vint-i-dose
-   vint-i-dosè
+   vint-i-dosÃ¨
    vint-i-dos
 
-   23è
+   23Ã¨
    23e
    vint-i-trese
-   vint-i-tresè
+   vint-i-tresÃ¨
    vint-i-tres
 
-   24è
+   24Ã¨
    24e
    vint-i-quatre
-   vint-i-quatrè
+   vint-i-quatrÃ¨
 
-   25è
+   25Ã¨
    25e
    vint-i-cinque
-   vint-i-cinquè
+   vint-i-cinquÃ¨
 
-   26è
+   26Ã¨
    26e
    vint-i-sise
-   vint-i-sisè
+   vint-i-sisÃ¨
 
-   27è
+   27Ã¨
    27e
    vint-i-sete
-   vint-i-setè
+   vint-i-setÃ¨
 
-   28è
+   28Ã¨
    28e
    vint-i-vuite
-   vint-i-vuitè
+   vint-i-vuitÃ¨
 
-   29è
+   29Ã¨
    29e
    vint-i-nove
-   vint-i-novè
+   vint-i-novÃ¨
 
-   30è
+   30Ã¨
    30e
    trente
-   trentè
+   trentÃ¨
    trenta
 
 
-   31è
+   31Ã¨
    31e
    trenta-une
-   trenta-unè
+   trenta-unÃ¨
    trenta-u
 
-   32è
+   32Ã¨
    32e
    trenta-dos
 
-   33è
+   33Ã¨
    33e
    trenta-tres
 
-   34è
+   34Ã¨
    34e
    trenta-quatre
 
-   35è
+   35Ã¨
    35e
    trenta-cinc
 
-   36è
+   36Ã¨
    36e
    trenta-sis
 
-   37è
+   37Ã¨
    37e
    trenta-set
-   trenta-setè
+   trenta-setÃ¨
    trenta-sete
 
-   38è
+   38Ã¨
    38e
    trenta-vuit
 
-   39è
+   39Ã¨
    39e
    trenta-nou
 
-   40è
+   40Ã¨
    40e
    quaranta
 
 
-   41è
+   41Ã¨
    41e
    quaranta-un
 
-   42è
+   42Ã¨
    42e
    quaranta-dos
 
-   43è
+   43Ã¨
    43e
    quaranta-tres
 
-   44è
+   44Ã¨
    44e
    quaranta-quatre
 
-   45è
+   45Ã¨
    45e
    quaranta-cinc
 
-   46è
+   46Ã¨
    46e
    quaranta-sis
 
-   47è
+   47Ã¨
    47e
    quaranta-set
 
-   48è
+   48Ã¨
    48e
    quaranta-vuit
    quaranta-vuitena
 
-   49è
+   49Ã¨
    49e
    quaranta-nou
 
-   50è
+   50Ã¨
    50e
-   cinquantè
+   cinquantÃ¨
    cinquante
 
 
-   51è
+   51Ã¨
    51e
    cinquanta-un
 
-   52è
+   52Ã¨
    52e
    cinquanta-dos
 
-   53è
+   53Ã¨
    53e
    cinquanta-tres
 
@@ -672,8 +672,8 @@ The following words may be used:
    ahir                 -0:0:0:1:0:0:0
    dema                 +0:0:0:1:0:0:0
    dema passat          +0:0:0:2:0:0:0
-   demà                 +0:0:0:1:0:0:0
-   demà passat          +0:0:0:2:0:0:0
+   demÃ                  +0:0:0:1:0:0:0
+   demÃ  passat          +0:0:0:2:0:0:0
    idag                 0:0:0:0:0:0:0
 
 

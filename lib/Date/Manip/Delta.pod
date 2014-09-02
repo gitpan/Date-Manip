@@ -314,7 +314,12 @@ sign of the next larger element.  So the following are equivalent:
    -4 hr 3 min 2 sec
    -4 hr -3 min -2 sec
 
-The valid strings (in English) specifying the field type are:
+The valid strings describing each of the fields is contained in "Delta field
+names" section of the appropriate Date::Manip::Lang::<LANGUAGE> document.
+Refer to the Date::Manip::Lang document for a list of languages.
+
+For example, for English, the document is Date::Manip::Lang::English and
+the field names include strings like:
 
    y:  y, yr, year, years
    m:  m, mon, month, months
@@ -324,7 +329,8 @@ The valid strings (in English) specifying the field type are:
    mn: mn, min, minute, minutes
    s:  s, sec, second, seconds
 
-Other languages have similar abbreviations.
+This list may not be complete.  You should refer to the language document
+for the full list.
 
 The "seconds" string may be omitted.  The sign, number, and string may
 all be separated from each other by any amount of whitespace. The

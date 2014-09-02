@@ -314,6 +314,11 @@ Miscellaneous information:
   Date::Manip::Lang       - information about the languages
                             supported by Date::Manip and how
                             to add a new language
+  Date::Manip::Lang::<Language>
+                          - a description of the parseable
+                            words in a language (see
+                            Date::Manip::Lang for the list
+                            of languages)
 
 Information about the module and administrative things:
 

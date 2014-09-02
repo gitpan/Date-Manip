@@ -36,11 +36,11 @@ exist including full names and abbreviations.
 The following month names may be used:
 
    Januar
-   Jänner
+   JÃ¤nner
 
    Februar
 
-   März
+   MÃ¤rz
    Marz
    Maerz
 
@@ -65,12 +65,12 @@ The following month names may be used:
 
 The following abbreviations may be used:
 
-   Jän
+   JÃ¤n
    Jan
 
    Feb
 
-   Mär
+   MÃ¤r
    Mar
 
    Apr
@@ -245,9 +245,9 @@ The following words may be used:
 Next occurence:
 
    nachsten
-   nächsten
+   nÃ¤chsten
    nachste
-   nächste
+   nÃ¤chste
 
 
 Previous occurence:
@@ -284,7 +284,7 @@ dates in the past or future respectively:
 
    in
    spater
-   später
+   spÃ¤ter
 
 
 =item B<Business mode>
@@ -299,7 +299,7 @@ The following words may be used:
 
    genau
    ungefahr
-   ungefähr
+   ungefÃ¤hr
 
 
 The following words may be used to specify a business delta:
@@ -334,9 +334,9 @@ to the numbers from 1 to 53:
 
    5.
    funfte
-   fünfte
-   fünf
-   fünfter
+   fÃ¼nfte
+   fÃ¼nf
+   fÃ¼nfter
    funf
    funfter
 
@@ -372,9 +372,9 @@ to the numbers from 1 to 53:
 
    12.
    zwolfte
-   zwölfte
-   zwölf
-   zwölften
+   zwÃ¶lfte
+   zwÃ¶lf
+   zwÃ¶lften
    zwolf
    zwolften
 
@@ -388,9 +388,9 @@ to the numbers from 1 to 53:
 
    15.
    funfzehnte
-   fünfzehnte
-   fünfzehn
-   fünfzehnten
+   fÃ¼nfzehnte
+   fÃ¼nfzehn
+   fÃ¼nfzehnten
    funfzehn
    funfzehnten
 
@@ -434,8 +434,8 @@ to the numbers from 1 to 53:
 
    25.
    funfundzwanzigste
-   fünfundzwanzigste
-   fünfundzwanzigsten
+   fÃ¼nfundzwanzigste
+   fÃ¼nfundzwanzigsten
    funfundzwanzigsten
 
    26.
@@ -456,66 +456,66 @@ to the numbers from 1 to 53:
 
    30.
    dreibigste
-   dreißigste
-   dreißig
-   dreißigsten
+   dreiÃŸigste
+   dreiÃŸig
+   dreiÃŸigsten
    dreibig
    dreibigsten
 
 
    31.
    einunddreibigste
-   einunddreißigste
-   einunddreißig
-   einunddreißigsten
+   einunddreiÃŸigste
+   einunddreiÃŸig
+   einunddreiÃŸigsten
    einunddreibig
    einunddreibigsten
 
    32.
-   zweiunddreißig
-   zweiunddreißigste
+   zweiunddreiÃŸig
+   zweiunddreiÃŸigste
    zweiunddreibig
    zweiunddreibigste
 
    33.
-   dreiunddreißig
-   dreiunddreißigsten
+   dreiunddreiÃŸig
+   dreiunddreiÃŸigsten
    dreiunddreibig
    dreiunddreibigsten
 
    34.
-   vierunddreißig
-   vierunddreißigste
+   vierunddreiÃŸig
+   vierunddreiÃŸigste
    vierunddreibig
    vierunddreibigste
 
    35.
-   fünfunddreißig
-   fünfunddreißigste
+   fÃ¼nfunddreiÃŸig
+   fÃ¼nfunddreiÃŸigste
    funfunddreibig
    funfunddreibigste
 
    36.
-   sechsunddreißig
-   sechsunddreißigste
+   sechsunddreiÃŸig
+   sechsunddreiÃŸigste
    sechsunddreibig
    sechsunddreibigste
 
    37.
-   siebenunddreißig
-   siebenunddreißigsten
+   siebenunddreiÃŸig
+   siebenunddreiÃŸigsten
    siebenunddreibig
    siebenunddreibigsten
 
    38.
-   achtunddreißig
-   achtunddreißigsten
+   achtunddreiÃŸig
+   achtunddreiÃŸigsten
    achtunddreibig
    achtunddreibigsten
 
    39.
-   neununddreißig
-   neununddreißigsten
+   neununddreiÃŸig
+   neununddreiÃŸigsten
    neununddreibig
    neununddreibigsten
 
@@ -541,8 +541,8 @@ to the numbers from 1 to 53:
    vierundvierzigsten
 
    45.
-   fünfundvierzig
-   fünfundvierzigsten
+   fÃ¼nfundvierzig
+   fÃ¼nfundvierzigsten
    funfundvierzig
    funfundvierzigsten
 
@@ -563,27 +563,27 @@ to the numbers from 1 to 53:
    neunundvierzigsten
 
    50.
-   fünfzig
-   fünfzigsten
+   fÃ¼nfzig
+   fÃ¼nfzigsten
    funfzig
    funfzigsten
 
 
    51.
-   einundfünfzig
-   einundfünfzigsten
+   einundfÃ¼nfzig
+   einundfÃ¼nfzigsten
    einundfunfzig
    einundfunfzigsten
 
    52.
-   zweiundfünfzig
-   zweiundfünfzigsten
+   zweiundfÃ¼nfzig
+   zweiundfÃ¼nfzigsten
    zweiundfunfzig
    zweiundfunfzigsten
 
    53.
-   dreiundfünfzig
-   dreiundfünfzigsten
+   dreiundfÃ¼nfzig
+   dreiundfÃ¼nfzigsten
    dreiundfunfzig
    dreiundfunfzigsten
 
@@ -643,7 +643,7 @@ The following words may be used:
    gestern              -0:0:0:1:0:0:0
    heute                0:0:0:0:0:0:0
    morgen               +0:0:0:1:0:0:0
-   übermorgen           +0:0:0:2:0:0:0
+   Ã¼bermorgen           +0:0:0:2:0:0:0
 
 
 Words that set only the time of day are similar to the English words

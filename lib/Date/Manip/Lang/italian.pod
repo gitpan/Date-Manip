@@ -94,19 +94,19 @@ exist including full names and abbreviations.
 
 The following day names may be used:
 
-   Lunedì
+   LunedÃ¬
    Lunedi
 
-   Martedì
+   MartedÃ¬
    Martedi
 
-   Mercoledì
+   MercoledÃ¬
    Mercoledi
 
-   Giovedì
+   GiovedÃ¬
    Giovedi
 
-   Venerdì
+   VenerdÃ¬
    Venerdi
 
    Sabato
@@ -423,7 +423,7 @@ to the numbers from 1 to 53:
    trentiduesima
 
    33mo
-   trentatré
+   trentatrÃ©
    trentatre
    trentitreesime
 
@@ -506,7 +506,7 @@ to the numbers from 1 to 53:
    cinquantiduesime
 
    53mo
-   cinquantatré
+   cinquantatrÃ©
    cinquantatre
    cinquantitreesimo
 

@@ -6,9 +6,9 @@ Date::Manip::TZ::ammetl00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:52:35 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:06:06 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -194,7 +194,7 @@ END { undef $VERSION; }
           'PDT',1,[1983,10,30,8,59,59],[1983,10,30,1,59,59],
           '1983042410:00:00','1983042403:00:00','1983103008:59:59','1983103001:59:59' ],
         [ [1983,10,30,9,0,0],[1983,10,30,1,0,0],'-08:00:00',[-8,0,0],
-          'MeST',0,[9999,12,31,0,0,0],[9999,12,30,16,0,0],
+          'PST',0,[9999,12,31,0,0,0],[9999,12,30,16,0,0],
           '1983103009:00:00','1983103001:00:00','9999123100:00:00','9999123016:00:00' ],
      ],
 );

@@ -6,9 +6,9 @@ Date::Manip::Offset::off227;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:53:10 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:23:30 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -19,7 +19,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -28,43 +28,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '+11:00:00';
+$Offset        = '+11:06:28';
 
 %Offset        = (
    0 => [
-      'pacific/pohnpei',
-      'pacific/kosrae',
-      'pacific/efate',
-      'pacific/guadalcanal',
-      'pacific/noumea',
-      'asia/sakhalin',
-      'asia/vladivostok',
-      'asia/kamchatka',
-      'asia/magadan',
-      'asia/anadyr',
-      'etc/gmt+11',
-      'x',
-      'antarctica/macquarie',
-      'pacific/kwajalein',
-      'pacific/majuro',
-      'antarctica/casey',
-      'asia/ust-nera',
-      'asia/khandyga',
-      ],
-   1 => [
-      'australia/melbourne',
-      'australia/currie',
-      'australia/hobart',
-      'australia/sydney',
-      'australia/lord_howe',
-      'antarctica/macquarie',
-      'asia/vladivostok',
-      'asia/sakhalin',
-      'asia/khandyga',
-      'australia/lindeman',
-      'australia/brisbane',
-      'asia/magadan',
-      'asia/ust-nera',
+      'pacific/wake',
       ],
 );
 

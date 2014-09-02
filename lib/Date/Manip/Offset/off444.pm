@@ -6,9 +6,9 @@ Date::Manip::Offset::off444;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:53:11 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:23:30 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -19,7 +19,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -28,11 +28,24 @@ END {
    undef %Offset;
 }
 
-$Offset        = '-08:59:48';
+$Offset        = '-10:00:00';
 
 %Offset        = (
    0 => [
-      'pacific/gambier',
+      'pacific/honolulu',
+      'pacific/tahiti',
+      'pacific/rarotonga',
+      'america/adak',
+      'etc/gmt-10',
+      'k',
+      'pacific/kiritimati',
+      'america/anchorage',
+      ],
+   1 => [
+      'pacific/apia',
+      'america/adak',
+      'america/nome',
+      'pacific/midway',
       ],
 );
 

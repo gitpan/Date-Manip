@@ -6,9 +6,9 @@ Date::Manip::TZ::asomsk00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:52:34 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:06:10 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -323,8 +323,14 @@ END { undef $VERSION; }
    2011 =>
      [
         [ [2011,3,26,20,0,0],[2011,3,27,3,0,0],'+07:00:00',[7,0,0],
-          'OMST',0,[9999,12,31,0,0,0],[9999,12,31,7,0,0],
-          '2011032620:00:00','2011032703:00:00','9999123100:00:00','9999123107:00:00' ],
+          'OMST',0,[2014,10,25,18,59,59],[2014,10,26,1,59,59],
+          '2011032620:00:00','2011032703:00:00','2014102518:59:59','2014102601:59:59' ],
+     ],
+   2014 =>
+     [
+        [ [2014,10,25,19,0,0],[2014,10,26,1,0,0],'+06:00:00',[6,0,0],
+          'OMST',0,[9999,12,31,0,0,0],[9999,12,31,6,0,0],
+          '2014102519:00:00','2014102601:00:00','9999123100:00:00','9999123106:00:00' ],
      ],
 );
 

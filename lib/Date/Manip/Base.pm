@@ -25,7 +25,7 @@ use Encode qw(encode_utf8 from_to find_encoding decode _utf8_off _utf8_on is_utf
 require Date::Manip::Lang::index;
 
 our $VERSION;
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 ###############################################################################
@@ -1924,7 +1924,7 @@ sub _hms_fields {
 
    my ($h,$m,$s) = @fields;
    return (1)  if ($h > 24  ||  $m > 59  ||  $s > 59  ||
-                   ($h==24  &&  ($m  ||  $s)));
+                   ($h==24  &&  ($m > 0 ||  $s > 0)));
 
    #
    # Format

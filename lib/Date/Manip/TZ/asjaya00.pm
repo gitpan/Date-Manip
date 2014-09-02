@@ -6,9 +6,9 @@ Date::Manip::TZ::asjaya00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:52:38 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:06:00 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -44,7 +44,7 @@ END { undef $VERSION; }
    1944 =>
      [
         [ [1944,8,31,15,0,0],[1944,9,1,0,30,0],'+09:30:00',[9,30,0],
-          'CST',0,[1963,12,31,14,29,59],[1963,12,31,23,59,59],
+          'ACST',0,[1963,12,31,14,29,59],[1963,12,31,23,59,59],
           '1944083115:00:00','1944090100:30:00','1963123114:29:59','1963123123:59:59' ],
      ],
    1963 =>

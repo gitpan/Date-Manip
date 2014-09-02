@@ -6,9 +6,9 @@ Date::Manip::TZ::astoky00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:52:40 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:06:10 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -44,14 +44,14 @@ END { undef $VERSION; }
    1895 =>
      [
         [ [1895,12,31,15,0,0],[1896,1,1,0,0,0],'+09:00:00',[9,0,0],
-          'CJT',0,[1937,12,31,14,59,59],[1937,12,31,23,59,59],
-          '1895123115:00:00','1896010100:00:00','1937123114:59:59','1937123123:59:59' ],
+          'JCST',0,[1937,9,30,14,59,59],[1937,9,30,23,59,59],
+          '1895123115:00:00','1896010100:00:00','1937093014:59:59','1937093023:59:59' ],
      ],
    1937 =>
      [
-        [ [1937,12,31,15,0,0],[1938,1,1,0,0,0],'+09:00:00',[9,0,0],
+        [ [1937,9,30,15,0,0],[1937,10,1,0,0,0],'+09:00:00',[9,0,0],
           'JST',0,[1948,5,1,16,59,59],[1948,5,2,1,59,59],
-          '1937123115:00:00','1938010100:00:00','1948050116:59:59','1948050201:59:59' ],
+          '1937093015:00:00','1937100100:00:00','1948050116:59:59','1948050201:59:59' ],
      ],
    1948 =>
      [

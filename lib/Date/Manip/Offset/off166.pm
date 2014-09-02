@@ -6,9 +6,9 @@ Date::Manip::Offset::off166;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:53:10 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:23:30 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -19,7 +19,7 @@ use warnings;
 require 5.010000;
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 our ($Offset,%Offset);
@@ -28,43 +28,11 @@ END {
    undef %Offset;
 }
 
-$Offset        = '+07:00:00';
+$Offset        = '+07:06:40';
 
 %Offset        = (
    0 => [
-      'indian/christmas',
       'asia/ho_chi_minh',
-      'asia/phnom_penh',
-      'asia/vientiane',
-      'asia/bangkok',
-      'asia/novokuznetsk',
-      'asia/novosibirsk',
-      'asia/jakarta',
-      'asia/hovd',
-      'asia/pontianak',
-      'asia/omsk',
-      'asia/krasnoyarsk',
-      'etc/gmt+7',
-      't',
-      'antarctica/davis',
-      'asia/irkutsk',
-      'asia/chongqing',
-      'asia/choibalsan',
-      'asia/ulaanbaatar',
-      'asia/kuala_lumpur',
-      'asia/singapore',
-      ],
-   1 => [
-      'asia/omsk',
-      'asia/novokuznetsk',
-      'asia/novosibirsk',
-      'asia/dhaka',
-      'asia/almaty',
-      'asia/qyzylorda',
-      'asia/krasnoyarsk',
-      'asia/bishkek',
-      'asia/dushanbe',
-      'asia/tashkent',
       ],
 );
 

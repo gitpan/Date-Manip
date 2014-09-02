@@ -32,7 +32,7 @@ use strict;
 use warnings;
 
 our($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 
 END {
    my $tmp;
@@ -73,10 +73,15 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       idle   +1200
 
       a      -0100
-      acst   -0400
+      acdt   +1030
+      acst   +0930
       act    -0500
+      acwdt  +0945
+      acwst  +0845
       addt   -0200
       adt    -0300
+      aedt   +1100
+      aest   +1000
       aft    +0430
       ahdt   -0900
       ahst   -1000
@@ -99,6 +104,8 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       ashst  +0500
       asht   +0400
       ast    -0400
+      awdt   +0900
+      awst   +0800
       awt    -0300
       azomt  +0000
       azost  +0000
@@ -137,13 +144,11 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       cgt    -0200
       chadt  +1345
       chast  +1245
-      chat   +0830
       chdt   -0530
       chost  +1000
       chot   +0800
       chst   +1000
       chut   +1000
-      cjt    +0900
       ckhst  -0930
       ckt    -1000
       clst   -0300
@@ -156,7 +161,6 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       cut    +0220
       cvst   -0100
       cvt    -0100
-      cwst   +0845
       cwt    -0500
       cxt    +0700
       d      -0400
@@ -186,7 +190,6 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       fjt    +1200
       fkst   -0300
       fkt    -0400
-      fmt    -0053
       fnst   -0100
       fnt    -0200
       fort   +0500
@@ -252,11 +255,12 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       isst   +0000
       ist    +0200
       javt   +0720
+      jcst   +0900
       jdt    +1000
       jst    +0900
+      jwst   +0800
       k      -1000
       kart   +0500
-      kast   +0500
       kdt    +1000
       kgst   +0600
       kgt    +0600
@@ -266,14 +270,14 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       krast  +0800
       krat   +0800
       kst    +0900
-      kuyst  +0300
+      kuyst  +0500
       kuyt   +0300
       kwat   -1200
       l      -1100
-      lhst   +1100
+      lhdt   +1100
+      lhst   +1030
       lint   +1400
       lkt    +0600
-      lont   +0700
       m      -1200
       madmt  +0100
       madst  +0000
@@ -286,7 +290,7 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       mawt   +0500
       mddt   -0500
       mdt    -0600
-      mest   -0800
+      mest   +0200
       met    +0100
       mht    +1200
       mist   +1100
@@ -368,11 +372,12 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       sbt    +1100
       sct    +0400
       sdmt   -0440
+      sdt    -1000
       sgt    +0800
       shest  +0600
       shet   +0500
-      slst   +0100
       smt    +0216
+      sret   +1100
       srt    -0300
       sst    -1100
       stat   +0400
@@ -402,7 +407,6 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       ulat   +0800
       urast  +0500
       urat   +0400
-      urut   +0600
       ut     +0000
       utc    +0000
       uyhst  -0230
@@ -436,8 +440,9 @@ $Date::Manip::DM5::Abbrevs = join(' ',qw(
       wita   +0800
       wmt    +0124
       wsdt   +1400
-      wst    +0800
+      wsst   +1300
       x      +1100
+      xjt    +0600
       y      +1200
       yakst  +1000
       yakt   +1000
@@ -461,8 +466,10 @@ The following timezones are defined:
 
       A      -0100
       ACDT   +1030
-      ACST   -0400
+      ACST   +0930
       ACT    -0500
+      ACWDT  +0945
+      ACWST  +0845
       ADDT   -0200
       ADT    -0300
       AEDT   +1100
@@ -490,6 +497,7 @@ The following timezones are defined:
       ASHT   +0400
       AST    -0400
       AT     -0200
+      AWDT   +0900
       AWST   +0800
       AWT    -0300
       AZOMT  +0000
@@ -531,13 +539,11 @@ The following timezones are defined:
       CGT    -0200
       CHADT  +1345
       CHAST  +1245
-      CHAT   +0830
       CHDT   -0530
       CHOST  +1000
       CHOT   +0800
       CHST   +1000
       CHUT   +1000
-      CJT    +0900
       CKHST  -0930
       CKT    -1000
       CLDT   -0300
@@ -551,7 +557,6 @@ The following timezones are defined:
       CUT    +0220
       CVST   -0100
       CVT    -0100
-      CWST   +0845
       CWT    -0500
       CXT    +0700
       D      -0400
@@ -584,7 +589,6 @@ The following timezones are defined:
       FJT    +1200
       FKST   -0300
       FKT    -0400
-      FMT    -0053
       FNST   -0100
       FNT    -0200
       FORT   +0500
@@ -656,11 +660,12 @@ The following timezones are defined:
       IST    +0200
       IT     +0330
       JAVT   +0720
+      JCST   +0900
       JDT    +1000
       JST    +0900
+      JWST   +0800
       K      -1000
       KART   +0500
-      KAST   +0500
       KDT    +1000
       KGST   +0600
       KGT    +0600
@@ -670,14 +675,14 @@ The following timezones are defined:
       KRAST  +0800
       KRAT   +0800
       KST    +0900
-      KUYST  +0300
+      KUYST  +0500
       KUYT   +0300
       KWAT   -1200
       L      -1100
-      LHST   +1100
+      LHDT   +1100
+      LHST   +1030
       LINT   +1400
       LKT    +0600
-      LONT   +0700
       M      -1200
       MADMT  +0100
       MADST  +0000
@@ -690,7 +695,7 @@ The following timezones are defined:
       MAWT   +0500
       MDDT   -0500
       MDT    -0600
-      MEST   -0800
+      MEST   +0200
       MESZ   +0200
       MET    +0100
       METDST +0200
@@ -780,11 +785,12 @@ The following timezones are defined:
       SBT    +1100
       SCT    +0400
       SDMT   -0440
+      SDT    -1000
       SGT    +0800
       SHEST  +0600
       SHET   +0500
-      SLST   +0100
       SMT    +0216
+      SRET   +1100
       SRT    -0300
       SST    -1100
       STAT   +0400
@@ -815,7 +821,6 @@ The following timezones are defined:
       ULAT   +0800
       URAST  +0500
       URAT   +0400
-      URUT   +0600
       UT     +0000
       UTC    +0000
       UYHST  -0230
@@ -849,8 +854,9 @@ The following timezones are defined:
       WITA   +0800
       WMT    +0124
       WSDT   +1400
-      WST    +0800
+      WSST   +1300
       X      +1100
+      XJT    +0600
       Y      +1200
       YAKST  +1000
       YAKT   +1000

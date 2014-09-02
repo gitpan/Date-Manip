@@ -6,9 +6,9 @@ Date::Manip::TZ::ancase00;
 
 # This file was automatically generated.  Any changes to this file will
 # be lost the next time 'tzdata' is run.
-#    Generated on: Tue Jul  8 08:52:43 EDT 2014
-#    Data version: tzdata2014e
-#    Code version: tzcode2014e
+#    Generated on: Thu Aug 21 13:06:01 EDT 2014
+#    Data version: tzdata2014f
+#    Code version: tzcode2014f
 
 # This module contains data from the zoneinfo time zone database.  The original
 # data was obtained from the URL:
@@ -25,7 +25,7 @@ END {
 }
 
 our ($VERSION);
-$VERSION='6.46';
+$VERSION='6.47';
 END { undef $VERSION; }
 
 %Dates         = (
@@ -38,7 +38,7 @@ END { undef $VERSION; }
    1969 =>
      [
         [ [1969,1,1,0,0,0],[1969,1,1,8,0,0],'+08:00:00',[8,0,0],
-          'WST',0,[2009,10,17,17,59,59],[2009,10,18,1,59,59],
+          'AWST',0,[2009,10,17,17,59,59],[2009,10,18,1,59,59],
           '1969010100:00:00','1969010108:00:00','2009101717:59:59','2009101801:59:59' ],
      ],
    2009 =>
@@ -50,7 +50,7 @@ END { undef $VERSION; }
    2010 =>
      [
         [ [2010,3,4,15,0,0],[2010,3,4,23,0,0],'+08:00:00',[8,0,0],
-          'WST',0,[2011,10,27,17,59,59],[2011,10,28,1,59,59],
+          'AWST',0,[2011,10,27,17,59,59],[2011,10,28,1,59,59],
           '2010030415:00:00','2010030423:00:00','2011102717:59:59','2011102801:59:59' ],
      ],
    2011 =>
@@ -62,7 +62,7 @@ END { undef $VERSION; }
    2012 =>
      [
         [ [2012,2,21,17,0,0],[2012,2,22,1,0,0],'+08:00:00',[8,0,0],
-          'WST',0,[9999,12,31,0,0,0],[9999,12,31,8,0,0],
+          'AWST',0,[9999,12,31,0,0,0],[9999,12,31,8,0,0],
           '2012022117:00:00','2012022201:00:00','9999123100:00:00','9999123108:00:00' ],
      ],
 );

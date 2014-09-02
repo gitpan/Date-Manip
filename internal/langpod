@@ -84,6 +84,7 @@ sub write_pod {
 
    my $out  = new IO::File;
    $out->open("> ${langdir}/${mod}.pod");
+   binmode $out, ":encoding(UTF-8)";
 
    my %words;
 

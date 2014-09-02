@@ -135,7 +135,7 @@ In internal/benchmarks directory
 #########################################################################
 Set the release version
 
-   v=`cat internal/VERSION`
+   v=`pwd | sed -e 's,^.*-,,'`
    for i in \
        internal/tzdata \
        internal/gen_dm5abbrevs \

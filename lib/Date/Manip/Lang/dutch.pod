@@ -418,8 +418,8 @@ to the numbers from 1 to 53:
    twee-en-twintig
    tweeentwintig
    tweeentwintigste
-   tweeëntwintig
-   tweeëntwintigste
+   tweeÃ«ntwintig
+   tweeÃ«ntwintigste
 
    23ste
    drieentwintigstetiende
@@ -428,8 +428,8 @@ to the numbers from 1 to 53:
    drie-en-twintig
    drieentwintig
    drieentwintigste
-   drieëntwintig
-   drieëntwintigste
+   drieÃ«ntwintig
+   drieÃ«ntwintigste
 
    24ste
    vierentwintigstetiende
@@ -499,14 +499,14 @@ to the numbers from 1 to 53:
    32ste
    tweeendertig
    tweeendertigste
-   tweeëndertig
-   tweeëndertigste
+   tweeÃ«ndertig
+   tweeÃ«ndertigste
 
    33ste
    drieendertig
    drieendertigste
-   drieëndertig
-   drieëndertigste
+   drieÃ«ndertig
+   drieÃ«ndertigste
 
    34ste
    vierendertig
@@ -542,14 +542,14 @@ to the numbers from 1 to 53:
    eenenveertigste
 
    42ste
-   tweeënveertig
-   tweeënveertigste
+   tweeÃ«nveertig
+   tweeÃ«nveertigste
    tweeenveertig
    tweeenveertigste
 
    43ste
-   drieënveertig
-   drieënveertigste
+   drieÃ«nveertig
+   drieÃ«nveertigste
    drieenveertig
    drieenveertigste
 
@@ -587,14 +587,14 @@ to the numbers from 1 to 53:
    eenenvijftigste
 
    52ste
-   tweeënvijftig
-   tweeënvijftigste
+   tweeÃ«nvijftig
+   tweeÃ«nvijftigste
    tweeenvijftig
    tweeenvijftigste
 
    53ste
-   drieënvijftig
-   drieënvijftigste
+   drieÃ«nvijftig
+   drieÃ«nvijftigste
    drieenvijftig
    drieenvijftigste
 

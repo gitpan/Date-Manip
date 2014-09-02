@@ -9,6 +9,13 @@
 # +1 significant release
 ########################################################################
 
+Check performance if changing
+   sub ... {
+      return &sub(...)
+   }
+to
+      goto &sub(...)
+
 In Recur.pm, handle encodings in parse
 
 Add delta.parse_LANG tests
