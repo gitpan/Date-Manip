@@ -220,7 +220,7 @@ use IO::File;
 our($Abbrevs);
 use Date::Manip::DM5abbrevs;
 
-$VERSION='6.47';
+$VERSION='6.48';
 our $DM5_VERSION = '5.65';
 
 ########################################################################
@@ -4118,6 +4118,14 @@ sub _Delta_Normalize {
   # be a negative delta).
 
   my($y,$mon,$w,$d,$h,$m,$s)=_Delta_Split($delta);
+
+  $y   = 0  if (! $y);
+  $mon = 0  if (! $mon);
+  $w   = 0  if (! $w);
+  $d   = 0  if (! $d);
+  $h   = 0  if (! $h);
+  $m   = 0  if (! $m);
+  $s   = 0  if (! $s);
 
   # We need to make sure that the signs of all parts of a delta are the
   # same.  The easiest way to do this is to convert all of the large
